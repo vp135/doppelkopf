@@ -1,106 +1,103 @@
 import base.*;
+
+import javax.swing.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class DokoServer {
 
     private final Logger log = new Logger(this.getClass().getName());
-
-    private static String KREUZ = "Kreuz";
-    private static String PIK = "Pik";
-    private static String HERZ = "Herz";
-    private static String KARO = "Karo";
-
-    private static String ZEHN = "10";
-    private static String BUBE = "Bube";
-    private static String DAME = "Dame";
-    private static String KOENIG = "Koenig";
-    private static String ASS = "Ass";
+    //private final ServerDebug debug;
 
 
-
-    private Stich stich;
-    private List<Stich> stichList;
     Random random = new Random(System.currentTimeMillis());
 
-    private boolean lobby = true;
-    private int currentPlayer = 0;
+    //private boolean lobby = true;
+
     private int currentStichNumber =0;
-    private int beginner =0;
-    private boolean schwein = false;
-    private HashMap<Integer,Integer> points;
-    private boolean wait4NextRound = false;
-    private HashMap<Integer,Boolean> readyMap;
     private boolean wait4Gesund = false;
+    private boolean wait4NextRound = false;
+    private boolean schwein = false;
+    //private boolean gameIsStarted = false;
+    private Stich stich;
+    private List<Stich> stichList;
+    private List<Card> armutCards;
+    private HashMap<Integer,Boolean> readyMap;
+    private HashMap<Integer,Integer> points;
+    private HashMap<Integer,String> gameSelection = new HashMap<>();
+
+    private int beginner =0;
+    private int currentPlayer = 0;
     private String selectedGame = GameSelected.NORMAL;
 
-    private HashMap<Integer,String> gameSelection = new HashMap<>();
     private int aufspieler = -1;
     private int armutplayer = -1;
-    private List<Card> armutCards;
-    private int player2Ask =-1;
+    private int hochzeitSpieler = -1;
     private int spectator=4;
+    private int player2Ask =-1;
 
-    private List<Player> players = new ArrayList<>();
+    private final ConcurrentLinkedQueue<RequestObject> queue = new ConcurrentLinkedQueue<>();
+
+    public final List<Player> players = new ArrayList<>();
+    private boolean wait4Partner;
 
 
     public DokoServer(int port){
         createCardList();
         new Thread(() -> startTCPServer(port)).start();
-        //matchmaking();
+        //debug = new ServerDebug();
     }
 
-    private List<Card> createCardList(){
+    public static List<Card> createCardList(){
         List<Card> cardList = new ArrayList<>();
-        cardList.add(new Card(ZEHN, KREUZ));
-        cardList.add(new Card(ZEHN, KREUZ));
-        cardList.add(new Card(BUBE, KREUZ));
-        cardList.add(new Card(BUBE, KREUZ));
-        cardList.add(new Card(DAME, KREUZ));
-        cardList.add(new Card(DAME, KREUZ));
-        cardList.add(new Card(KOENIG, KREUZ));
-        cardList.add(new Card(KOENIG, KREUZ));
-        cardList.add(new Card(ASS, KREUZ));
-        cardList.add(new Card(ASS, KREUZ));
 
-        cardList.add(new Card(ZEHN, PIK));
-        cardList.add(new Card(ZEHN, PIK));
-        cardList.add(new Card(BUBE, PIK));
-        cardList.add(new Card(BUBE, PIK));
-        cardList.add(new Card(DAME, PIK));
-        cardList.add(new Card(DAME, PIK));
-        cardList.add(new Card(KOENIG, PIK));
-        cardList.add(new Card(KOENIG, PIK));
-        cardList.add(new Card(ASS, PIK));
-        cardList.add(new Card(ASS, PIK));
+        cardList.add(new Card(Statics.ZEHN, Statics.KREUZ,false));
+        cardList.add(new Card(Statics.ZEHN, Statics.KREUZ,false));
+        cardList.add(new Card(Statics.BUBE, Statics.KREUZ,true));
+        cardList.add(new Card(Statics.BUBE, Statics.KREUZ,true));
+        cardList.add(new Card(Statics.DAME, Statics.KREUZ,true));
+        cardList.add(new Card(Statics.DAME, Statics.KREUZ,true));
+        cardList.add(new Card(Statics.KOENIG, Statics.KREUZ,false));
+        cardList.add(new Card(Statics.KOENIG, Statics.KREUZ,false));
+        cardList.add(new Card(Statics.ASS, Statics.KREUZ,false));
+        cardList.add(new Card(Statics.ASS, Statics.KREUZ,false));
 
-        cardList.add(new Card(ZEHN, HERZ));
-        cardList.add(new Card(ZEHN, HERZ));
-        cardList.add(new Card(BUBE, HERZ));
-        cardList.add(new Card(BUBE, HERZ));
-        cardList.add(new Card(DAME, HERZ));
-        cardList.add(new Card(DAME, HERZ));
-        cardList.add(new Card(KOENIG, HERZ));
-        cardList.add(new Card(KOENIG, HERZ));
-        cardList.add(new Card(ASS, HERZ));
-        cardList.add(new Card(ASS, HERZ));
+        cardList.add(new Card(Statics.ZEHN, Statics.PIK,false));
+        cardList.add(new Card(Statics.ZEHN, Statics.PIK,false));
+        cardList.add(new Card(Statics.BUBE, Statics.PIK,true));
+        cardList.add(new Card(Statics.BUBE, Statics.PIK,true));
+        cardList.add(new Card(Statics.DAME, Statics.PIK,true));
+        cardList.add(new Card(Statics.DAME, Statics.PIK,true));
+        cardList.add(new Card(Statics.KOENIG, Statics.PIK,false));
+        cardList.add(new Card(Statics.KOENIG, Statics.PIK,false));
+        cardList.add(new Card(Statics.ASS, Statics.PIK,false));
+        cardList.add(new Card(Statics.ASS, Statics.PIK,false));
 
-        cardList.add(new Card(ZEHN, KARO));
-        cardList.add(new Card(ZEHN, KARO));
-        cardList.add(new Card(BUBE, KARO));
-        cardList.add(new Card(BUBE, KARO));
-        cardList.add(new Card(DAME, KARO));
-        cardList.add(new Card(DAME, KARO));
-        cardList.add(new Card(KOENIG, KARO));
-        cardList.add(new Card(KOENIG, KARO));
-        cardList.add(new Card(ASS, KARO));
-        cardList.add(new Card(ASS, KARO));
+        cardList.add(new Card(Statics.ZEHN, Statics.HERZ, true));
+        cardList.add(new Card(Statics.ZEHN, Statics.HERZ,true));
+        cardList.add(new Card(Statics.BUBE, Statics.HERZ,true));
+        cardList.add(new Card(Statics.BUBE, Statics.HERZ,true));
+        cardList.add(new Card(Statics.DAME, Statics.HERZ,true));
+        cardList.add(new Card(Statics.DAME, Statics.HERZ,true));
+        cardList.add(new Card(Statics.KOENIG, Statics.HERZ,false));
+        cardList.add(new Card(Statics.KOENIG, Statics.HERZ,false));
+        cardList.add(new Card(Statics.ASS, Statics.HERZ,false));
+        cardList.add(new Card(Statics.ASS, Statics.HERZ,false));
+
+        cardList.add(new Card(Statics.ZEHN, Statics.KARO, true));
+        cardList.add(new Card(Statics.ZEHN, Statics.KARO,true));
+        cardList.add(new Card(Statics.BUBE, Statics.KARO,true));
+        cardList.add(new Card(Statics.BUBE, Statics.KARO,true));
+        cardList.add(new Card(Statics.DAME, Statics.KARO,true));
+        cardList.add(new Card(Statics.DAME, Statics.KARO,true));
+        cardList.add(new Card(Statics.KOENIG, Statics.KARO,true));
+        cardList.add(new Card(Statics.KOENIG, Statics.KARO,true));
+        cardList.add(new Card(Statics.ASS, Statics.KARO,true));
+        cardList.add(new Card(Statics.ASS, Statics.KARO,true));
 
         return cardList;
     }
@@ -118,32 +115,32 @@ public class DokoServer {
             log.info("Socket creation failed:\n"+ e);
         }
         while (true) {
-            Socket connectionSocket = null;
+            Socket connectionSocket;
             try {
+                assert socket != null;
                 connectionSocket = socket.accept();
                 log.info("Connection established");
                 if (connectionSocket != null) {
-                    Socket finalConnectionSocket1 = connectionSocket;
                     new Thread(() -> {
-                        boolean running = true;
-                        while (running) {
+                        while (!connectionSocket.isClosed()) {
                             BufferedReader br;
                             try {
-                                br = new BufferedReader(new InputStreamReader(finalConnectionSocket1.getInputStream()));
+                                br = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
                                 String in = br.readLine();
                                 if (in != null) {
-                                    handleInput(finalConnectionSocket1, in);
-                                    //log.info("Received: " + in);
-
+                                    handleInput(connectionSocket, in);
                                 } else {
                                     log.info("socket => null");
-                                    running = false;
-                                    finalConnectionSocket1.close();
+                                    connectionSocket.close();
                                 }
                             } catch (IOException e) {
                                 if (e instanceof SocketException) {
                                     log.info("socket => null");
-                                    running = false;
+                                    try{
+                                        connectionSocket.close();
+                                    }catch (IOException ex){
+                                        ex.printStackTrace();
+                                    }
                                 }
                                 log.error(e.toString());
                             }
@@ -166,14 +163,19 @@ public class DokoServer {
         aufspieler = -1;
         currentStichNumber =0;
         send2All(new GameType(selectedGame));
+        checkParty();
         send2All(new Wait4Player(players.stream().filter(p -> p.getNumber()==player).findAny().get().getName()));
+    }
+
+    private void checkParty() {
+        players.forEach(player -> log.info(player.getName()+": "+(player.isRe() ? "ist Re":"ist Kontra")));
     }
 
     private void handleInput(Socket socketConnection, String in) {
         RequestObject requestObject;
         try {
             requestObject = RequestObject.fromString(in);
-            if(requestObject.getCommand()!=TcpHeartbeat.COMMAND){
+            if(!requestObject.getCommand().equals(TcpHeartbeat.COMMAND)){
                 log.info("Received: " + requestObject.getCommand());
             }
             switch (requestObject.getCommand()) {
@@ -182,7 +184,7 @@ public class DokoServer {
                         stich = new Stich();
                         currentStichNumber += 1;
                     }
-                    stich.getCardMap().put(currentPlayer, new Card(
+                    stich.addCard(players.get(currentPlayer),new Card(
                             requestObject.getParams().get("wert").getAsString(),
                             requestObject.getParams().get("farbe").getAsString()));
                     send2All(new CurrentStich(stich.getCardMap()));
@@ -199,27 +201,34 @@ public class DokoServer {
 
                     if (stich.getCardMap().size() > 3) {
                         try {
-                            int winner = stich.getWinner(selectedGame, currentPlayer, schwein);
+                            int winner = stich.getWinner(selectedGame, schwein);
 
-                        stichList.add(stich);
-                        try{
-                            points.put(winner, points.get(winner) + stich.calculatePoints());
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        log.info("Winner: " + winner + "(" + stich.getCardMap().get(winner) + ")");
-                        currentPlayer = winner;
-                        send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner).findFirst().get().getName(),"hat Stich(e)"));
-                        if (currentStichNumber > 9) {
-                            send2All(new GameEnd(points,stichList));
-                            wait4NextRound= true;
-                            readyMap = new HashMap<>();
-                            for (int i=0;i<players.size();i++){
-                                readyMap.put(i,false);
+                            stichList.add(stich);
+                            try{
+                                points.put(winner, points.get(winner) + stich.calculatePoints());
                             }
-                            break;
-                        }
+                            catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            //log.info("Winner: " + winner + "(" + stich.getCardMap().get(winner) + ")");
+                            currentPlayer = winner;
+                            if(wait4Partner && hochzeitSpieler!=winner && currentStichNumber<4){
+                                players.get(winner).setRe(true);
+                                wait4Partner = false;
+                            }
+                            send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
+                                    .findFirst().get().getName(),"hat Stich(e)"));
+                            if (currentStichNumber > 9) {
+                                EndDialog e = new EndDialog(players,stichList);
+                                send2All(new GameEnd(e.getReString1(),e.getReString2(),e.getKontraString1(),e.getKontraString2()));
+                                //send2All(new GameEnd(points,stichList,players));
+                                wait4NextRound= true;
+                                readyMap = new HashMap<>();
+                                for (int i=0;i<players.size();i++){
+                                    readyMap.put(i,false);
+                                }
+                                break;
+                            }
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
@@ -235,23 +244,33 @@ public class DokoServer {
                     break;
                 }
                 case AddPlayer.COMMAND:{
-                    players.add(new Player(requestObject.getParams().get("player").getAsString(),
-                            players.size(),socketConnection,false));
+                    String name = requestObject.getParams().get("player").getAsString();
+                    if(players.stream().noneMatch(player -> player.getName().equals(name))) {
+                        players.add(new Player(requestObject.getParams().get("player").getAsString(),
+                                players.size(), socketConnection, false));
 
-                    List<String> list = new ArrayList<>();
-                    players.forEach(p->list.add(p.getName()));
-                    send2All(new PlayersInLobby(list));
-                    if(players.size()>4) {
-                        players.get(spectator).setSpectator(true);
+                        List<String> list = new ArrayList<>();
+                        players.forEach(p -> list.add(p.getName()));
+                        send2All(new PlayersInLobby(list));
+                        if (players.size() > 4) {
+                            players.get(spectator).setSpectator(true);
+                        }
                     }
-
+                    else{
+                        players.stream().filter(player -> player.getName().equals(name)).findFirst().ifPresent(player -> {
+                            player.setSocket(socketConnection);
+                            List<String> list = new ArrayList<>();
+                            players.forEach(p -> list.add(p.getName()));
+                            sendReply(player, new PlayersInLobby(list));
+                        });
+                    }
                     break;
                 }
                 case StartGame.COMMAND:{
                     send2All(new StartGame());
                     send2All(new AnnounceSpectator(spectator));
                     shuffleCards();
-                    lobby=false;
+                    //lobby=false;
                     break;
                 }
                 case ReadyForNextRound.COMMAND:{
@@ -284,17 +303,18 @@ public class DokoServer {
                         askNextPlayer2GetArmut();
                     }
                     else if(requestObject.getParams().get("receiver").getAsString().equals(SendCards.POOR)){
-                        sendReply(players.stream().filter(player ->
-                                player.getNumber()==armutplayer).findFirst().get().getSocket(),
-                                requestObject.toJson());
+                        sendReply(players.get(armutplayer),
+                                requestObject);
+                        players.get(armutplayer).setRe(true);
                         runGame(beginner);
                     }
                     break;
                 }
                 case GetArmut.COMMAND:{
                     if(requestObject.getParams().get("getArmut").getAsBoolean()){
-                        sendReply(players.get(requestObject.getParams().get("player").getAsInt()).getSocket(),
-                                new SendCards(armutCards,SendCards.RICH).toJson());
+                        sendReply(players.get(requestObject.getParams().get("player").getAsInt()),
+                                new SendCards(armutCards,SendCards.RICH));
+                        players.get(requestObject.getParams().get("player").getAsInt()).setRe(true);
                     }else{
                         askNextPlayer2GetArmut();
                     }
@@ -305,9 +325,8 @@ public class DokoServer {
                     break;
                 }
                 case CurrentStich.LAST:{
-                    sendReply(players.get(requestObject.getParams().get("player").getAsInt()).getSocket(),
-                            new CurrentStich(stichList.get(currentStichNumber-2).getCardMap(),
-                                    requestObject.getParams().get("player").getAsInt()).toJson());
+                    sendReply(players.get(requestObject.getParams().get("player").getAsInt()),
+                            new CurrentStich(stichList.get(currentStichNumber-2).getCardMap(),true));
                     break;
                 }
                 case TcpHeartbeat.COMMAND:{
@@ -315,7 +334,7 @@ public class DokoServer {
                     break;
                 }
                 case AbortGame.COMMAND:{
-                    send2All(new GameEnd(points,stichList));
+                    send2All(new GameEnd(points,stichList,players));
                     wait4NextRound= true;
                     readyMap = new HashMap<>();
                     for (int i=0;i<players.size();i++){
@@ -325,8 +344,8 @@ public class DokoServer {
                 }
                 case ShowStich.COMMAND:{
                     try {
-                        send2All(CurrentStich.specificStich(stichList.get(requestObject.getParams()
-                                .get("stichNumber").getAsInt()).getCardMap()));
+                        send2All(new CurrentStich(stichList.get(requestObject.getParams()
+                                .get("stichNumber").getAsInt()).getCardMap(),CurrentStich.SPECIFIC));
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
@@ -339,7 +358,18 @@ public class DokoServer {
         }catch (Exception ex){
             ex.printStackTrace();
         }
+        //showDebug();
     }
+
+    private void removeCardFromCurrentPlayersHand(Card c) {
+        for(Card card:players.get(currentPlayer).getHand()){
+            if(card.farbe.equals(c.farbe) && card.value.equals(c.value)){
+                players.get(currentPlayer).getHand().remove(card);
+                break;
+            }
+        }
+    }
+
 
     private void nextGame() {
         if(selectedGame.equals(GameSelected.NORMAL)
@@ -354,7 +384,12 @@ public class DokoServer {
                     spectator = 0;
                 }
             }
-            players.forEach(player -> player.setSpectator(false));
+            players.forEach(player ->{
+                player.setSpectator(false);
+                player.setRe(false);
+            });
+            wait4Partner = false;
+            hochzeitSpieler = -1;
             if(players.size()>4) {
                 players.get(spectator).setSpectator(true);
                 send2All(new AnnounceSpectator(spectator));
@@ -363,11 +398,10 @@ public class DokoServer {
         shuffleCards();
     }
 
-    private void send2All(RequestObject requestObject) {
-        log.info("Send to All: "+ requestObject.getCommand());
+    public void send2All(RequestObject message) {
         players.forEach(player ->{
             System.out.println(player.getName());
-            sendReply(player.getSocket(),requestObject.toJson());
+            sendReply(player,message);
         });
     }
 
@@ -387,7 +421,7 @@ public class DokoServer {
 
         if(player2Ask!=armutplayer){
             log.info("Ask "+ players.get(player2Ask).getName());
-            sendReply(players.stream().filter(p -> p.getNumber()==player2Ask).findAny().get().getSocket(),new GetArmut().toJson());
+            sendReply(players.stream().filter(p -> p.getNumber()==player2Ask).findAny().get(),new GetArmut());
         }
         else {
             send2All(new DisplayMessage("Armut wurde nicht mitgenommen, es wird neu ausgeteilt"));
@@ -399,10 +433,15 @@ public class DokoServer {
         if(selection.values().stream().allMatch(p->p.equals(GameSelected.NORMAL))){
             selectedGame = GameSelected.NORMAL;
             aufspieler=-1;
+            players.forEach(player -> {
+                if(player.hasCard(Statics.KREUZ,Statics.DAME)){
+                    player.setRe(true);
+                }
+            });
             send2All(new DisplayMessage("normales Spiel"));
             runGame(beginner);
         }
-        else if(selection.values().contains(GameSelected.KOENIGE)){
+        else if(selection.containsValue(GameSelected.KOENIGE)){
             int index =-1;
             for (int i: selection.keySet()){
                 if(selection.get(i).equals(GameSelected.KOENIGE)){
@@ -418,14 +457,14 @@ public class DokoServer {
             }
             shuffleCards();
         }
-        else if(selection.values().contains(GameSelected.DAMEN)
-                ||selection.values().contains(GameSelected.BUBEN)
-                ||selection.values().contains(GameSelected.BUBENDAMEN)
-                ||selection.values().contains(GameSelected.FLEISCHLOS)
-                ||selection.values().contains(GameSelected.KREUZ)
-                ||selection.values().contains(GameSelected.PIK)
-                ||selection.values().contains(GameSelected.HERZ)
-                ||selection.values().contains(GameSelected.KARO)){
+        else if(selection.containsValue(GameSelected.DAMEN)
+                || selection.containsValue(GameSelected.BUBEN)
+                || selection.containsValue(GameSelected.BUBENDAMEN)
+                || selection.containsValue(GameSelected.FLEISCHLOS)
+                || selection.containsValue(GameSelected.KREUZ)
+                || selection.containsValue(GameSelected.PIK)
+                || selection.containsValue(GameSelected.HERZ)
+                || selection.containsValue(GameSelected.KARO)){
             int checkPlayer = beginner;
             while(true){
                 if(selection.containsKey(checkPlayer)
@@ -440,6 +479,7 @@ public class DokoServer {
                     selectedGame = selection.get(checkPlayer);
                     aufspieler = checkPlayer;
                     send2All(new DisplayMessage(players.get(aufspieler).getName()+ " spielt "+selectedGame+"."));
+                    players.get(aufspieler).setRe(true);
                     runGame(aufspieler);
                     return;
                 }
@@ -451,7 +491,7 @@ public class DokoServer {
                 }
             }
         }
-        else if (selection.values().contains(GameSelected.ARMUT)){
+        else if (selection.containsValue(GameSelected.ARMUT)){
             int index =-1;
             for (int i: selection.keySet()){
                 if(selection.get(i).equals(GameSelected.ARMUT)){
@@ -462,30 +502,58 @@ public class DokoServer {
 
             int finalIndex = index;
             armutplayer = finalIndex;
-            send2All(new DisplayMessage(players.get(finalIndex).getName()+ " hat eine "+selectedGame+"."));
-            sendReply(players.stream().filter(p -> p.getNumber()==finalIndex).findAny().get().getSocket(),
-                    new SelectCards4Armut().toJson());
+            send2All(new DisplayMessage(players.get(finalIndex).getName()+ " hat nur "+
+                    players.get(finalIndex).getHand().stream().filter(card -> card.trumpf).count() +" Trumpf."));
+            sendReply(players.stream().filter(p -> p.getNumber()==finalIndex).findAny().get(),
+                    new SelectCards4Armut());
         }
+        else if(selection.containsValue(GameSelected.HOCHZEIT)){
+            selectedGame = GameSelected.NORMAL;
+            aufspieler=-1;
+            for(Integer i :selection.keySet()) {
+                if(selection.get(i).equals(GameSelected.HOCHZEIT)){
+                    players.get(i).setRe(true);
+                    send2All(new DisplayMessage(players.get(i).getName() + " möchte heiraten"));
+                    break;
+                }
+            }
+            wait4Partner = true;
+            runGame(beginner);
+        }
+        wait4Gesund = false;
     }
 
-    public void sendReply(Socket connection, String msg) {
-        new Thread(() -> {
-                try {
-                    PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(connection.getOutputStream())), true);
-                    out.println(msg + "\n");
-                } catch (IOException ex) {
-                    log.error(ex.toString());
+    public void sendReply(Player player, RequestObject message) {
+        if(!player.getSocket().isClosed()) {
+            new Thread(() -> {
+                boolean sent = false;
+                while (!sent) {
+                    try {
+                        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(player.getSocket().getOutputStream())), true);
+                        String s = message.toJson();
+                        System.out.println("length: " + s.getBytes().length + "\noutMessage: " + s);
+                        out.println(s + "\n");
+                        sent = true;
+                    } catch (IOException ex) {
+                        log.error(ex.toString());
+                        sent = false;
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-        }).start();
+            }).start();
+        }
     }
 
     private void shuffleCards() {
         for (Player player1 : players) {
             send2All(new UpdateUserPanel(player1.getName(), ""));
         }
-        stichList= new ArrayList<>();
+        stichList = new ArrayList<>();
         random = new Random(System.currentTimeMillis());
-
         List<Card> cardList = createCardList();
 
         players.forEach(player -> {
@@ -501,9 +569,8 @@ public class DokoServer {
 
         for (Player player : players) {
             if (!player.isSpectator()) {
-                Socket socket = player.getSocket();
-                String cards = new Cards(player.getHand()).toJson();
-                sendReply(socket, cards);
+                Cards cards = new Cards(player.getHand());
+                sendReply(player, cards);
             }
         }
 
@@ -513,8 +580,40 @@ public class DokoServer {
         armutplayer =-1;
         schwein = false;
         gameSelection = new HashMap<>();
+        //showDebug();
         send2All(new SelectGame());
 
     }
 
+
+    @Override
+    public String toString() {
+        return "<html>" + selectedGame + "<br>" +
+                spectator + "<br>" +
+                currentPlayer + "<br>";
+    }
+
+
+    public void startGame() {
+        send2All(new StartGame());
+        if(spectator>players.size()) {
+            log.info(players.get(spectator) + " is watching the game");
+        }
+        send2All(new AnnounceSpectator(spectator));
+        shuffleCards();
+    }
+
+    public void abortGame(String player) {
+        //TODO: Send Message to End Current Game --> Set all variables
+        players.stream().filter(p->p.getName().equals(player)).findFirst().ifPresent(p->aufspieler = p.getNumber());
+        //send2All(new MessageEndGame("server",stichList,players));
+        shuffleCards();
+    }
+
+    /*
+    public static void createEndDialog(JFrame frame, List<Player> players,List<Stich> stichList) {
+        EndDialog e = new EndDialog(players,stichList,frame);
+        //e.showDialog();
+    }
+     */
 }
