@@ -1,10 +1,6 @@
 import base.*;
 import base.messages.MessageAllPlayers;
-import base.messages.MessageEndGame;
-import base.messages.MessageStartGame;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,14 +14,17 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
 
     private final Logger log = new Logger(this.getClass().getName());
+
+
 
     Socket socket;
     static Main m;
@@ -81,10 +80,18 @@ public class Main {
 
     private Map<Card,JLabel> labelMap;
 
-    private AutoResetEvent ev = new AutoResetEvent(true);
+    private final AutoResetEvent ev = new AutoResetEvent(true);
     private boolean isAdmin;
     private JFrame admin_panel;
-    private boolean adminOpen;
+
+    public int getPort() {
+        return port;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
+
 
     public static void main(String[] args) {
         UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
@@ -151,6 +158,7 @@ public class Main {
                 openTCPConnection("127.0.0.1", Integer.parseInt(port.getText()),false);
                 sendingThread();
                 SendByTCP(new AddPlayer(name));
+                SendByTCP(new GetVersion(name,DokoServer.VERSION));
                 inputs.add(start);
             } else if (!port.getText().trim().equals("")) {
                 name = playername.getText();
@@ -191,6 +199,7 @@ public class Main {
                         new Configuration(name, hostname.getText(), Integer.parseInt(port.getText())).saveConfig();
                         create.setEnabled(false);
                         sendingThread();
+                        SendByTCP(new GetVersion(name,DokoServer.VERSION));
                     } else {
                         join.setText("beitreten");
                         log.info("beitreten");
@@ -219,7 +228,7 @@ public class Main {
         JButton button_abortGame = new JButton("Spiel abbrechen");
         JTextField stichNumber = new JTextField();
         JButton button_showStich = new JButton("Stich anzeigen");
-        JButton button_reset = new JButton("alle Clients aktuallisieren");
+        JButton button_reset = new JButton("alle Clients aktualisieren");
 
         adminMainPanel.add(button_abortGame);
         adminMainPanel.add(new JLabel(""));
@@ -229,44 +238,16 @@ public class Main {
         admin_panel.add(adminMainPanel);
         admin_panel.pack();
         admin_panel.setVisible(true);
-        adminOpen = true;
 
-        button_abortGame.addActionListener(e ->
-        {
-            SendByTCP(new AbortGame());;
-        });
-        try {
-            //button_showStich.addActionListener(e -> SendByTcp(new ShowStich(Integer.parseInt(stichNumber.getText()))));
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        button_reset.addActionListener(e ->{
-            //dokoServer.sendAllInfos();
-        });
+        button_abortGame.addActionListener(e -> SendByTCP(new AbortGame()));
 
         JButton button_selectGame = new JButton("Spiel auswählen");
-        button_selectGame.addActionListener(e -> {
-            dokoServer.send2All(new SelectGame());
-        });
+        button_selectGame.addActionListener(e -> dokoServer.send2All(new SelectGame()));
 
         adminMainPanel.add(button_selectGame);
 
-        JButton button_endDialog = new JButton("Enddialog");
-        button_endDialog.addActionListener(e -> {
-            //dokoServer.createEndDialog();
-        });
-        adminMainPanel.add(button_endDialog);
-
         JButton button_close = new JButton("close");
-        button_close.addActionListener(e -> {
-            admin_panel.dispose();
-            adminOpen = false;
-        });
-
-
-
-
+        button_close.addActionListener(e -> admin_panel.dispose());
     }
 
     AtomicBoolean wait = new AtomicBoolean(true);
@@ -335,225 +316,167 @@ public class Main {
         }).start();
     }
 
-    private void tcpHeartbeat(){
-        new Thread(() -> {
-            while(true){
-                //SendByTcp(new TcpHeartbeat(name));
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    log.error(e.toString());
-                }
-            }
-        }).start();
-    }
-
     private void handleInput(String serverReply) {
-        System.out.println("handlelength: " + serverReply.getBytes().length);
         RequestObject message = RequestObject.fromString(serverReply);
-        System.out.println("type: " + message.getCommand());
-        if (message != null) {
-            switch (message.getCommand()) {
-                case "a":{
-                    System.out.println("m: "+message.toJson().getBytes().length);
-                    break;
+        log.info("received: " +message.getCommand());
+        switch (message.getCommand()) {
+            case PlayersInLobby.COMMAND: {
+                playerList.removeAll();
+                players = new ArrayList<>();
+                DefaultListModel<String> model = new DefaultListModel<>();
+                message.getParams().get("players").getAsJsonArray().forEach(player -> {
+                    model.addElement(player.getAsString());
+                    players.add(player.getAsString());
+                });
+                playerList.setModel(model);
+                if (players.size() > 3) {
+                    start.setEnabled(true);
                 }
-                case PlayersInLobby.COMMAND:{
-                    playerList.removeAll();
-                    players = new ArrayList<>();
-                    DefaultListModel<String> model = new DefaultListModel<>();
-                    message.getParams().get("players").getAsJsonArray().forEach(player->{
-                        model.addElement(player.getAsString());
-                        players.add(player.getAsString());
-                    });
-                    playerList.setModel(model);
-                    if(players.size()>3){
-                        start.setEnabled(true);
-                    }
-                    join.setEnabled(false);
-                    break;
+                join.setEnabled(false);
+                break;
+            }
+            case Cards.COMMAND: {
+                selectedGame = GameSelected.NORMAL;
+                JsonArray array = message.getParams().getAsJsonArray("cards");
+                updateTable();
+                panel.removeAll();
+                hand = new ArrayList<>();
+                array.forEach(card -> {
+                    Card c = new Card(card.getAsString().split(" ")[1],
+                            card.getAsString().split(" ")[0]);
+                    hand.add(c);
+                });
+                createCardButtons(hand);
+                if (players.indexOf(name) != spectator) {
+                    addOtherButtons(hand);
                 }
-                case Cards.COMMAND: {
-                    selectedGame = GameSelected.NORMAL;
-                    JsonArray array = message.getParams().getAsJsonArray("cards");
-                    updateTable();
-                    panel.removeAll();
-                    hand = new ArrayList<>();
-                    array.forEach(card ->{
-                        Card c =new Card(card.getAsString().split(" ")[1],
-                                card.getAsString().split(" ")[0]);
-                        hand.add(c);
-                    });
-                    createCardButtons(hand);
-                    if(players.indexOf(name)!=spectator) {
-                        addOtherButtons(hand);
-                    }
-                    topLabel_1.setText("");
-                    topLabel_2.setText("");
-                    panel.revalidate();
-                    panel.repaint();
-                    break;
+                topLabel_1.setText("");
+                topLabel_2.setText("");
+                panel.revalidate();
+                panel.repaint();
+                break;
+            }
+            case CurrentStich.CURRENT: {
+                handleCurrentStich(message);
+                break;
+            }
+            case CurrentStich.LAST: {
+            }
+            case CurrentStich.SPECIFIC: {
+                showLastStich(message);
+                break;
+            }
+            case Wait4Player.COMMAND: {
+                if (message.getParams().get("player").getAsString().equals(name)) {
+                    topLabel_2.setText("Du bist am Zug");
+                    wait4Player = true;
+                } else {
+                    topLabel_2.setText(message.getParams().get("player").getAsString() + " ist am Zug");
                 }
-                case CurrentStich.CURRENT:{
-                    handleCurrentStich(message);
-                    break;
+                break;
+            }
+            case MessageAllPlayers.TYPE: {
+                MessageAllPlayers m = MessageAllPlayers.fromString(serverReply);
+                playerList.removeAll();
+                players = new ArrayList<>();
+                DefaultListModel<String> model = new DefaultListModel<>();
+                m.getPlayers().forEach(player -> {
+                    model.addElement(player);
+                    players.add(player);
+                });
+                playerList.setModel(model);
+                if (players.size() > 0) {
+                    start.setEnabled(true);
                 }
-                case CurrentStich.LAST:{}
-                case CurrentStich.SPECIFIC:{
-                    showLastStich(message);
-                    break;
-                }
-                case Wait4Player.COMMAND:{
-                    if(message.getParams().get("player").getAsString().equals(name)) {
-                        topLabel_2.setText("Du bist am Zug");
-                        wait4Player =true;
-                    }
-                    else{
-                        topLabel_2.setText(message.getParams().get("player").getAsString() + " ist am Zug");
-                    }
-                    break;
-                }
-                case MessageAllPlayers.TYPE:{
-                    MessageAllPlayers m = MessageAllPlayers.fromString(serverReply);
-                    playerList.removeAll();
-                    players = new ArrayList<>();
-                    DefaultListModel<String> model = new DefaultListModel<>();
-                    m.getPlayers().forEach(player->{
-                        model.addElement(player);
-                        players.add(player);
-                    });
-                    playerList.setModel(model);
-                    if(players.size()>0){
-                        start.setEnabled(true);
-                    }
-                    break;
-                }
-                case MessageStartGame.TYPE:{}
-                case StartGame.COMMAND:{
-                    m.createUI();
-                    break;
-                }
-                case GameEnd.COMMAND:{}
-                case MessageEndGame.TYPE:{
-                    cardPos1.setText("");
-                    cardPos2.setText("");
-                    cardPos3.setText("");
-                    cardPos4.setText("");
-                    updateTable();
-                    /*
-                    StringBuilder msg = new StringBuilder();
-                    for(int i = 0; i<players.size();i++){
-                        msg.append(players.get(i)).append(":").append(message.getParams().get("result").getAsJsonArray().get(i))
-                        .append("\n");
-                    }
-                    int sum = 0;
-                    msg.append("Stiche:\n");
-                    for (int i = 0; i<10; i++) {
-                        if(message.getParams().has("s"+ i)) {
-                            sum +=message.getParams().get("s"+i).getAsInt();
-                            msg.append(message.getParams().get("s"+i).getAsInt()).append("(")
-                                    .append(players.get(message.getParams().get("w"+i).getAsInt()))
-                                    .append(")").append("\n");
+                break;
+            }
+            case StartGame.COMMAND: {
+                m.createUI();
+                break;
+            }
+            case GameEnd.COMMAND: {
+                cardPos1.setText("");
+                cardPos2.setText("");
+                cardPos3.setText("");
+                cardPos4.setText("");
+                updateTable();
+                EndDialog e = new EndDialog(
+                        message.getParams().get("re1").getAsString(),
+                        message.getParams().get("re2").getAsString(),
+                        message.getParams().get("kontra1").getAsString(),
+                        message.getParams().get("kontra2").getAsString());
+                e.showDialog(this);
+                clearTable();
+                schweinExists = false;
+                selectCards = false;
+                SendByTCP(new ReadyForNextRound(players.indexOf(name)));
+                break;
+            }
+            case SelectGame.COMMAND: {
+                controlPanel.setVisible(players.indexOf(name) != spectator);
+                break;
+            }
+            case GameType.COMMAND: {
+                selectedGame = message.getParams().get(GameType.COMMAND).getAsString();
+                if (hand != null && hand.size() > 0) {
+                    createCardButtons(SortHand.sort(hand, selectedGame, schweinExists));
+                    if (selectedGame.equals(GameSelected.NORMAL)
+                            || selectedGame.equals(GameSelected.KARO)
+                            || selectedGame.equals(GameSelected.ARMUT)) {
+                        if (hand.stream().filter(p -> p.farbe.equals(Statics.KARO) && p.value.equals(Statics.ASS)).count() > 1) {
+                            SendByTCP(new SchweinExists());
+                            schweinExists = true;
+                        } else {
+                            schweinExists = false;
                         }
                     }
-                    int rest = 240-sum;
-                    if(rest>0){
-                        msg.append("Punkte nach Spielabbruch: ").append(rest);
-                    }
-                    */
-                    EndDialog e = new EndDialog(
-                            message.getParams().get("re1").getAsString(),
-                            message.getParams().get("re2").getAsString(),
-                            message.getParams().get("kontra1").getAsString(),
-                            message.getParams().get("kontra2").getAsString());
-                    e.showDialog(this);
-                    //EndDialog e = new EndDialog(players, stichList);
-                    //JOptionPane.showMessageDialog(mainFrame, msg.toString());
-                    clearTable();
-                    schweinExists= false;
-                    selectCards = false;
-                    SendByTCP(new ReadyForNextRound(players.indexOf(name)));
-                    break;
                 }
-                case SelectGame.COMMAND:{
-                    //addOtherButtons(hand);
-                    controlPanel.setVisible(players.indexOf(name) != spectator);
-                    break;
-                }
-                case GameType.COMMAND:{
-                    selectedGame = message.getParams().get(GameType.COMMAND).getAsString();
-                    if(hand!=null && hand.size()>0) {
-                        createCardButtons(SortHand.sort(hand, selectedGame, schweinExists));
-                        if (selectedGame.equals(GameSelected.NORMAL)
-                                || selectedGame.equals(GameSelected.KARO)
-                                || selectedGame.equals(GameSelected.ARMUT)) {
-                            if (hand.stream().filter(p -> p.farbe.equals(Statics.KARO) && p.value.equals(Statics.ASS)).count() > 1) {
-                                SendByTCP(new SchweinExists());
-                                schweinExists = true;
-                            } else {
-                                schweinExists = false;
-                            }
-                        }
-                    }
-                    break;
-                }
-                case SelectCards4Armut.COMMAND:{
-                    selectCards4Armut(SendCards.RICH);
-                    break;
-                }
-                case SendCards.COMMAND:{
-                    List<Card> list = new ArrayList<>();
-                    message.getParams().get("cards").getAsJsonArray().forEach(card-> list.add(
+                break;
+            }
+            case SelectCards4Armut.COMMAND: {
+                selectCards4Armut(SendCards.RICH);
+                break;
+            }
+            case SendCards.COMMAND: {
+                List<Card> list = new ArrayList<>();
+                message.getParams().get("cards").getAsJsonArray().forEach(card -> list.add(
                         new Card(card.getAsString().split(" ")[1],
                                 card.getAsString().split(" ")[0])));
-                    hand.addAll(list);
-                    createCardButtons(SortHand.sortNormal(hand, schweinExists));
-                    if(message.getParams().get("receiver").getAsString().equals(SendCards.RICH)) {
-                        selectCards4Armut(SendCards.POOR);
-                    }
-                    break;
+                hand.addAll(list);
+                createCardButtons(SortHand.sortNormal(hand, schweinExists));
+                if (message.getParams().get("receiver").getAsString().equals(SendCards.RICH)) {
+                    selectCards4Armut(SendCards.POOR);
                 }
-                case GetArmut.COMMAND:{
-                    if(JOptionPane.showConfirmDialog(mainFrame,"Armut mitnehmen?",
-                            "Armut mitnehmen",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-                        SendByTCP(new GetArmut(players.indexOf(name),true));
-                    }
-                    else{
-                        SendByTCP(new GetArmut(players.indexOf(name),false));
-                    }
-                    break;
+                break;
+            }
+            case GetArmut.COMMAND: {
+                if (JOptionPane.showConfirmDialog(mainFrame, "Armut mitnehmen?",
+                        "Armut mitnehmen", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    SendByTCP(new GetArmut(players.indexOf(name), true));
+                } else {
+                    SendByTCP(new GetArmut(players.indexOf(name), false));
                 }
-                case DisplayMessage.COMMAND:{
-                    topLabel_1.setText(message.getParams().get("message").getAsString());
-                    break;
+                break;
+            }
+            case DisplayMessage.COMMAND: {
+                topLabel_1.setText(message.getParams().get("message").getAsString());
+                break;
+            }
+            case UpdateUserPanel.COMMAND: {
+                updateUserPanel(message);
+                break;
+            }
+            case AnnounceSpectator.COMMAND: {
+                spectator = message.getParams().get("player").getAsInt();
+                break;
+            }
+            case GetVersion.COMMAND: {
+                if (!DokoServer.VERSION.equals(message.getParams().get("version").getAsString())) {
+                    JOptionPane.showMessageDialog(createJoinFrame,
+                            "Version(Server): " + message.getParams().get("version").getAsString() + "\n" +
+                                    "Version(lokal): " + DokoServer.VERSION);
                 }
-                case UpdateUserPanel.COMMAND:{
-                    updateUserPanel(message);
-                    break;
-                }
-                case AnnounceSpectator.COMMAND:{
-                    spectator=message.getParams().get("player").getAsInt();
-                    break;
-                }
-                case AllInfos.COMMAND:{
-                    List<Card> list = new ArrayList<>();
-                    for(JsonElement o:message.getParams().get("cards").getAsJsonArray()){
-                        list.add(new Card(o.getAsJsonObject().get("value").getAsString(),
-                                o.getAsJsonObject().get("farbe").getAsString()));
-                    }
-                    hand = list;
-                    createCardButtons(hand);
-                    if(message.getParams().get("wait4Gesund").getAsBoolean()){
-                        addOtherButtons(hand);
-                        controlPanel.setVisible(true);
-                    }else{
-                        controlPanel.setVisible(false);
-                    }
-                    wait4Player = message.getParams().get("wait").getAsBoolean();
-                    selectedGame = message.getParams().get("wait4Gesund").getAsString();
-                    break;
-                }
-
+                break;
             }
         }
     }
@@ -771,7 +694,6 @@ public class Main {
             icon = new ImageIcon(ImageIO.read(new File(path)));
             image = ImageIO.read(new File(path));
             int imageWidth = image.getWidth();
-            //double width =  (mainFrame.getSize().getWidth()/size);
             double faktor = ((mainFrame.getSize().getWidth()/size)-6)/(double)imageWidth;
             BufferedImage after = new BufferedImage((int)mainFrame.getSize().getWidth()/size,
                     (int)(mainFrame.getSize().getHeight()-(panel.getSize().getHeight()))/3, BufferedImage.TYPE_INT_ARGB);
@@ -820,10 +742,11 @@ public class Main {
                 else {
                     if (wait4Player) {
                         wait4Player = false;
-                        if(m.SendByTCP(new PutCard(card.farbe, card.value))){
-                            hand.remove(card);
-                            label.setVisible(false);
-                        }
+                        hand.remove(card);
+                        label.setVisible(false);
+                        cardPos4 = getCardLabel(card,false);
+                        updateTable();
+                        m.SendByTCP(new PutCard(card.farbe, card.value));
                         topLabel_1.setText("");
                         if (hand!=null) {
                             createCardButtons(SortHand.sort(hand,selectedGame,schweinExists));
@@ -994,34 +917,35 @@ public class Main {
         }).start();
     }
 
-    public boolean SendByTCP(RequestObject message) {
-        return SendByTCP(message,true);
+    public void SendByTCP(RequestObject message) {
+        SendByTCP(message,true);
     }
 
-    public boolean SendByTCP(RequestObject message, boolean retry){
-        boolean rc = false;
-        lastMessage = null;
-        while (socket==null){
-            log.info("Connection was lost. Try to Reconnect");
-            openTCPConnection(this.hostname,this.port,false);
-        }
-        try {
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
-            out.println(message.toJson());
-            rc = true;
-        } catch (IOException e) {
-            log.info("Error while sending Message: " + e.getMessage());
-            if (retry) {
-                lastMessage = message;
-                ev.set();
+    public void SendByTCP(RequestObject message, boolean retry){
+        log.info("Sending command: "+ message.getCommand());
+        new Thread(() -> {
+            lastMessage = null;
+            while (socket==null){
+                log.info("Connection was lost. Try to Reconnect");
+                openTCPConnection(getHostname(),getPort(),false);
             }
-        }
-        return rc;
+            try {
+                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                out.println(message.toJson());
+            } catch (IOException e) {
+                log.info("Error while sending Message: " + e.getMessage());
+                if (retry) {
+                    lastMessage = message;
+                    ev.set();
+                }
+            }
+        }).start();
     }
 
 
     private void createUI(){
-        mainFrame = new JFrame("Doppelkopf_client V 2.0.0 " + name );
+
+        mainFrame = new JFrame("Doppelkopf Version "+DokoServer.VERSION + " " + name );
         mainPanel =new JPanel(new GridBagLayout());
         topPanel = new JPanel(new GridLayout(1,3));
         GridBagConstraints c = new GridBagConstraints();
@@ -1086,8 +1010,6 @@ public class Main {
             }
         });
 
-        tcpHeartbeat();
-
         mainFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -1141,9 +1063,7 @@ public class Main {
         //1x3
         JPanel tableButtons = new JPanel(new GridLayout(3,1));
         JButton button_lastStich = new JButton("letzter Stich");
-        button_lastStich.addActionListener(e ->{
-            SendByTCP(new CurrentStich(new HashMap<>(),CurrentStich.LAST));
-        });
+        button_lastStich.addActionListener(e -> SendByTCP(new CurrentStich(new HashMap<>(),players.indexOf(name),true)));
         JButton button_clearTable = new JButton("Tisch leeren");
         button_clearTable.addActionListener(e -> clearTable());
         tableButtons.add(button_lastStich);
