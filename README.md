@@ -1,4 +1,4 @@
 # doppelkopf
 Download 
-http://chstuff.myftp.org/doppelkopf.zip
+https://github.com/vp135/doppelkopf/releases/tag/v2.1.0
 
