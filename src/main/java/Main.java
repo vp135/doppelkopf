@@ -14,10 +14,8 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
@@ -31,10 +29,13 @@ public class Main {
     JPanel panel;
     JPanel mainPanel;
     JPanel table;
-    JPanel topPanel;
-    JLabel topLabel_1;
-    JLabel topLabel_2;
+    JLabel serverMessageLabel;
+    JLabel gameMessageLabel;
     JFrame mainFrame;
+
+
+
+    private final Random random = new Random(System.currentTimeMillis());
 
     private String selectedGame = GameSelected.NORMAL;
     private List<Card> hand;
@@ -42,14 +43,10 @@ public class Main {
     private JPanel controlPanel;
     private List<String> players = new ArrayList<>();
     private final JList<String> playerList = new JList<>();
-    private JLabel cardPos1;
-    private JLabel cardPos2;
-    private JLabel cardPos3;
-    private JLabel cardPos4;
-    private final JTextArea userLabel_1 = new JTextArea();
-    private final JTextArea userLabel_2 = new JTextArea();
-    private final JTextArea userLabel_3 = new JTextArea();
-    private final JTextArea userLabel_4 = new JTextArea();
+    private JLabel userLabel_1;
+    private JLabel userLabel_2;
+    private JLabel userLabel_3;
+    private JLabel userLabel_4;
     private JButton sortNormal;
     private JButton hochzeit;
     private JButton sortBuben;
@@ -83,6 +80,10 @@ public class Main {
     private final AutoResetEvent ev = new AutoResetEvent(true);
     private boolean isAdmin;
     private JFrame admin_panel;
+    private int cardSize;
+    private JLabel tableLable;
+    private Graphics playArea;
+    private JLayeredPane layeredPane;
 
     public int getPort() {
         return port;
@@ -119,7 +120,6 @@ public class Main {
 
     public void createOrJoin() {
         log.info("starting Lobby UI");
-        //new Thread(() -> {
         Configuration c = Configuration.fromFile();
         createJoinFrame = new JFrame();
         JPanel panel = new JPanel(new GridLayout(1, 2));
@@ -138,7 +138,7 @@ public class Main {
         JButton create = new JButton("server erstellen");
         join = new JButton("beitreten");
         start = new JButton("start");
-        start.setEnabled(false);
+        start.setEnabled(true);
         panel.add(playerList);
         inputs.add(create);
         inputs.add(join);
@@ -155,9 +155,12 @@ public class Main {
                 dokoServer = new DokoServer(Integer.parseInt(port.getText()));
                 create.setEnabled(false);
                 join.setEnabled(false);
-                openTCPConnection("127.0.0.1", Integer.parseInt(port.getText()),false);
+                while(!dokoServer.listening) {
+                    log.info("not listening");
+                }
                 sendingThread();
-                SendByTCP(new AddPlayer(name));
+                openTCPConnection("127.0.0.1", Integer.parseInt(port.getText()),false);
+                //SendByTCP(new AddPlayer(name));
                 SendByTCP(new GetVersion(name,DokoServer.VERSION));
                 inputs.add(start);
             } else if (!port.getText().trim().equals("")) {
@@ -210,7 +213,6 @@ public class Main {
         });
         start.addActionListener(e -> {
             isAdmin = true;
-            createAdminUI();
             dokoServer.startGame();
         });
         createJoinFrame.pack();
@@ -218,7 +220,6 @@ public class Main {
         createJoinFrame.setVisible(true);
         createJoinFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         createJoinFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //}).start();
     }
 
     private void createAdminUI() {
@@ -257,8 +258,8 @@ public class Main {
             if(!reconnect) {
                 try {
                     socket = new Socket(hostname, port);
-                    Listen(hostname, port);
                     log.info("Connected to Server");
+                    Listen(hostname, port);
                 } catch (IOException e) {
                     log.info("Could not connect to Server: " + e);
                 }
@@ -301,7 +302,6 @@ public class Main {
                         try {
                             if ((ServerReply = in.readLine()) != null) {
                                 if (ServerReply.length() > 0) {
-                                    System.out.println("ServerReply: " + ServerReply);
                                     handleInput(ServerReply);
                                 }
                             }
@@ -347,31 +347,28 @@ public class Main {
                     hand.add(c);
                 });
                 createCardButtons(hand);
-                if (players.indexOf(name) != spectator) {
-                    addOtherButtons(hand);
-                }
-                topLabel_1.setText("");
-                topLabel_2.setText("");
+                addOtherButtons(hand);
+                serverMessageLabel.setText("");
+                gameMessageLabel.setText("");
                 panel.revalidate();
                 panel.repaint();
                 break;
             }
-            case CurrentStich.CURRENT: {
-                handleCurrentStich(message);
+            case PutCard.COMMAND: {
+                handlePutCard(message);
                 break;
             }
-            case CurrentStich.LAST: {
-            }
+            case CurrentStich.LAST: { }
             case CurrentStich.SPECIFIC: {
                 showLastStich(message);
                 break;
             }
             case Wait4Player.COMMAND: {
                 if (message.getParams().get("player").getAsString().equals(name)) {
-                    topLabel_2.setText("Du bist am Zug");
+                    gameMessageLabel.setText("Du bist am Zug");
                     wait4Player = true;
                 } else {
-                    topLabel_2.setText(message.getParams().get("player").getAsString() + " ist am Zug");
+                    gameMessageLabel.setText(message.getParams().get("player").getAsString() + " ist am Zug");
                 }
                 break;
             }
@@ -395,10 +392,6 @@ public class Main {
                 break;
             }
             case GameEnd.COMMAND: {
-                cardPos1.setText("");
-                cardPos2.setText("");
-                cardPos3.setText("");
-                cardPos4.setText("");
                 updateTable();
                 EndDialog e = new EndDialog(
                         message.getParams().get("re1").getAsString(),
@@ -406,7 +399,7 @@ public class Main {
                         message.getParams().get("kontra1").getAsString(),
                         message.getParams().get("kontra2").getAsString());
                 e.showDialog(this);
-                clearTable();
+                clearPlayArea();
                 schweinExists = false;
                 selectCards = false;
                 SendByTCP(new ReadyForNextRound(players.indexOf(name)));
@@ -414,6 +407,7 @@ public class Main {
             }
             case SelectGame.COMMAND: {
                 controlPanel.setVisible(players.indexOf(name) != spectator);
+                createCardButtons(hand);
                 break;
             }
             case GameType.COMMAND: {
@@ -423,7 +417,8 @@ public class Main {
                     if (selectedGame.equals(GameSelected.NORMAL)
                             || selectedGame.equals(GameSelected.KARO)
                             || selectedGame.equals(GameSelected.ARMUT)) {
-                        if (hand.stream().filter(p -> p.farbe.equals(Statics.KARO) && p.value.equals(Statics.ASS)).count() > 1) {
+                        if (hand.stream().filter(p -> p.farbe.equals(Statics.KARO)
+                                && p.value.equals(Statics.ASS)).count() > 1) {
                             SendByTCP(new SchweinExists());
                             schweinExists = true;
                         } else {
@@ -459,7 +454,7 @@ public class Main {
                 break;
             }
             case DisplayMessage.COMMAND: {
-                topLabel_1.setText(message.getParams().get("message").getAsString());
+                serverMessageLabel.setText(message.getParams().get("message").getAsString());
                 break;
             }
             case UpdateUserPanel.COMMAND: {
@@ -468,6 +463,12 @@ public class Main {
             }
             case AnnounceSpectator.COMMAND: {
                 spectator = message.getParams().get("player").getAsInt();
+                if(players.size()>5 && players.get(spectator).equals(name)) {
+                    SendByTCP(new DisplayMessage("Du bist jetzt Zuschauer"));
+                    hand.clear();
+                    clearPlayArea();
+                    createCardButtons(hand);
+                }
                 break;
             }
             case GetVersion.COMMAND: {
@@ -481,7 +482,8 @@ public class Main {
         }
     }
 
-    private void showLastStich(RequestObject stich) {
+
+    private void showLastStich( RequestObject stich) {
 
         JLabel cardPos1 = new JLabel();
         JLabel cardPos2 = new JLabel();
@@ -542,6 +544,83 @@ public class Main {
         letzterStich.setVisible(true);
     }
 
+    private JLabel getCardLabel(Card card,boolean bCropped){
+        String path = System.getProperty("user.dir")+"\\resources\\" + card.farbe + card.value + ".PNG";
+        BufferedImage image;
+        ImageIcon icon = null;
+        int size = 10;
+        if (hand!=null && hand.size()>10){
+            size = hand.size();
+        }
+        try {
+            icon = new ImageIcon(ImageIO.read(new File(path)));
+            image = ImageIO.read(new File(path));
+            int imageWidth = image.getWidth();
+            double faktor = ((mainFrame.getSize().getWidth()/size)-6)/(double)imageWidth;
+            BufferedImage after = new BufferedImage((int)mainFrame.getSize().getWidth()/size,
+                    (int)(mainFrame.getSize().getHeight()-(panel.getSize().getHeight()))/3, BufferedImage.TYPE_INT_ARGB);
+            AffineTransform at = new AffineTransform();
+            //at.scale(0.1, 0.1);
+            at.scale(faktor, faktor);
+            AffineTransformOp scaleOp =
+                    new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            after = scaleOp.filter(image, after);
+            if(bCropped) {
+                BufferedImage cropped;
+                cropped = after.getSubimage(0, 0, ((int)mainFrame.getSize().getWidth()/size-6), 110);
+                icon.setImage(cropped);
+            }
+            else{
+                icon.setImage(after);
+            }
+        } catch (Exception e) {
+            log.error(e.toString());
+        }
+        JLabel label = new JLabel(icon);
+        label.setSize(new Dimension((int)mainFrame.getSize().getWidth()/size,110));
+        return label;
+    }
+
+
+
+
+
+    private void drawCard2Position(Card card, int pos, Graphics graphics, int canvasSize){
+        drawCard2Position(card,pos,graphics,canvasSize,canvasSize);
+    }
+
+    private void drawCard2Position(Card card, int pos, Graphics graphics, int canvasHeight, int canvasWidth){
+        int cardHeight = cardSize;
+        AffineTransform at;
+        int distFromCenter = cardSize/2;
+        int theta =  15 - random.nextInt(31);
+        int distVar = distFromCenter +  10 - random.nextInt(21);
+        BufferedImage img =getIcon4Table(card,cardHeight);
+        int halfHeight = canvasHeight/2;
+        int halfWidth = canvasWidth/2;
+        int anchorY = halfHeight;
+        int anchorX = halfWidth;
+        switch (pos){
+            case 0:
+                anchorY= halfHeight + distVar;
+                break;
+            case 1:
+                anchorX = halfWidth - distVar;
+                theta += 90;
+                break;
+            case 2:
+                anchorY = halfHeight - distVar;
+                break;
+            case 3:
+                anchorX = halfWidth + distVar;
+                theta += 90;
+                break;
+        }
+        at = AffineTransform.getRotateInstance(Math.toRadians(theta),anchorX,anchorY);
+        at.translate(anchorX-(cardHeight*0.67/2),anchorY-cardHeight/2);
+        ((Graphics2D) graphics).drawImage(img, at, null);
+    }
+
     private void updateUserPanel(RequestObject object) {
 
         int ownNumber = players.indexOf(name);
@@ -560,18 +639,15 @@ public class Main {
 
         switch (tmpList.indexOf(otherNumber)){
             case 1:{
-                userLabel_1.setText(object.getParams().get("player").getAsString()+"\n" +
-                        object.getParams().get("text").getAsString());
+                userLabel_1.setText(object.getParams().get("text").getAsString());
                 break;
             }
             case 2:{
-                userLabel_2.setText(object.getParams().get("player").getAsString()+"\n" +
-                        object.getParams().get("text").getAsString());
+                userLabel_2.setText(object.getParams().get("text").getAsString());
                 break;
             }
             case 3:{
-                userLabel_3.setText(object.getParams().get("player").getAsString()+"\n" +
-                        object.getParams().get("text").getAsString()+"     ");
+                userLabel_3.setText(object.getParams().get("text").getAsString());
                 break;
             }
             case 0:{
@@ -612,19 +688,18 @@ public class Main {
             if(card.trumpf) {
                 cards2Send.add(card);
                 cardLabels2Send.add(labelMap.get(card));
-                labelMap.get(card).setBorder(new LineBorder(Color.RED, 3));
+                labelMap.get(card).setBorder(new LineBorder(Color.RED, 2));
             }
         });
     }
 
-    private void handleCurrentStich(RequestObject stich) {
-        cardPos1 =new JLabel();
-        cardPos2 =new JLabel();
-        cardPos3 =new JLabel();
-        cardPos4 =new JLabel();
+    int currentCardsOnTable = 0;
+
+    private void handlePutCard(RequestObject object){
         int ownNumber = players.indexOf(name);
         List<Integer> tmpList= new ArrayList<>();
         int i = ownNumber;
+
         while (tmpList.size()<4){
             if(i!=spectator){
                 tmpList.add(i);
@@ -635,133 +710,126 @@ public class Main {
             }
         }
 
+        if(currentCardsOnTable>3){
+            clearPlayArea();
+            letzterStich.dispose();
+            updateTable();
+            currentCardsOnTable = 0;
+        }
 
-        int numbCardsOnTable = 0;
-        for(int j = 0;j<tmpList.size();j++) {
-            if(stich.getParams().has(String.valueOf(tmpList.get(j)))) {
-                numbCardsOnTable++;
-                if (j == 0) {
-                    cardPos4 = getCardLabel(new Card(
-                                    stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
-                                    stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0]),
-                            false);
-                } else if (j == 1) {
-                    cardPos1 = getCardLabel(new Card(
-                                    stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
-                                    stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0]),
-                            false);
-                } else if (j == 2) {
-                    cardPos2 = getCardLabel(new Card(
-                                    stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
-                                    stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0]),
-                            false);
-                } else if (j == 3) {
-                    cardPos3 = getCardLabel(new Card(
-                                    stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
-                                    stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0]),
-                            false);
-                }
+        int player = object.getParams().get("player").getAsInt();
+        Card card = new Card(
+                object.getParams().get("wert").getAsString(),
+                object.getParams().get("farbe").getAsString());
+
+        for(int j :tmpList){
+            if(player==j){
+                drawCard2Position(card,tmpList.indexOf(j),playArea, table.getHeight(), table.getWidth());
+                break;
             }
         }
-        if(numbCardsOnTable==1){
-            if(letzterStich!=null) {
-                letzterStich.dispose();
-            }
-        }
+
+        currentCardsOnTable++;
+
         updateTable();
+
     }
 
-    private void createCardButtons(List<Card> cards){
+    private void createCardButtons(List<Card> cards) {
         panel.removeAll();
         labelMap = new HashMap<>();
-        cards.forEach(this::createCardButton);
-        if(players.indexOf(name)!=spectator){
-            addOtherButtons(cards);
-        }
+        cards.forEach(this::getCardLabel4Hand);
         panel.revalidate();
         panel.repaint();
     }
 
-    private JLabel getCardLabel(Card card,boolean bCropped){
+    private BufferedImage getIcon4Table(Card card, int cardHeight){
         String path = System.getProperty("user.dir")+"\\resources\\" + card.farbe + card.value + ".PNG";
-        BufferedImage image;
+        BufferedImage image = null;
         ImageIcon icon = null;
-        int size = 10;
-        if (hand!=null && hand.size()>10){
-            size = hand.size();
-        }
         try {
             icon = new ImageIcon(ImageIO.read(new File(path)));
             image = ImageIO.read(new File(path));
-            int imageWidth = image.getWidth();
-            double faktor = ((mainFrame.getSize().getWidth()/size)-6)/(double)imageWidth;
-            BufferedImage after = new BufferedImage((int)mainFrame.getSize().getWidth()/size,
-                    (int)(mainFrame.getSize().getHeight()-(panel.getSize().getHeight()))/3, BufferedImage.TYPE_INT_ARGB);
+            int cardWidth = (int)(cardHeight*0.67);
+            double faktor = (double)cardWidth/(double)image.getWidth();
+            BufferedImage after = new BufferedImage(
+                    cardWidth,
+                    cardHeight,
+                    BufferedImage.TYPE_INT_ARGB);
             AffineTransform at = new AffineTransform();
-            //at.scale(0.1, 0.1);
             at.scale(faktor, faktor);
             AffineTransformOp scaleOp =
                     new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
             after = scaleOp.filter(image, after);
-            if(bCropped) {
-                BufferedImage cropped;
-                cropped = after.getSubimage(0, 0, ((int)mainFrame.getSize().getWidth()/size-6), 110);
-                icon.setImage(cropped);
-            }
-            else{
-                icon.setImage(after);
-            }
+            image = after;
+            icon.setImage(after);
         } catch (Exception e) {
-            log.error(e.toString());
+            log.warn(e.toString());
         }
-        JLabel label = new JLabel(icon);
-        label.setSize(new Dimension((int)mainFrame.getSize().getWidth()/size,110));
-        return label;
+        return image;
     }
 
-    private void createCardButton(Card card) {
-        JLabel label = getCardLabel(card,true);
+    private void getCardLabel4Hand(Card card){
+        String path = System.getProperty("user.dir")+"\\resources\\" + card.farbe + card.value + ".PNG";
+        JLabel label = new JLabel();
+        BufferedImage image;
+        ImageIcon icon = null;
+        try {
+            icon = new ImageIcon(ImageIO.read(new File(path)));
+            image = ImageIO.read(new File(path));
+            int cardWidth4Hand = panel.getWidth()/hand.size();
+            int cardHeight4Hand = (int)((double)cardWidth4Hand/0.67);
+            int cardHeight = Math.min(cardHeight4Hand, mainFrame.getHeight() / 30 * 8);
+
+            int cardWidth = (int)(cardHeight*0.67);
+            label.setPreferredSize(new Dimension(cardWidth,cardHeight));
+            double faktor = (double)cardWidth/(double)image.getWidth();
+            BufferedImage after = new BufferedImage(
+                    cardWidth,
+                    cardHeight,
+                    BufferedImage.TYPE_INT_ARGB);
+            AffineTransform at = new AffineTransform();
+            at.scale(faktor, faktor);
+            AffineTransformOp scaleOp =
+                    new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+            after = scaleOp.filter(image, after);
+            icon.setImage(after);
+        } catch (Exception e) {
+            log.warn(e.toString());
+        }
+        label.setIcon(icon);
+
         labelMap.put(card,label);
         label.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(selectCards){
-                    if(cardLabels2Send.size()<3 && !cardLabels2Send.contains(label)){
+                if (selectCards) {
+                    if (cardLabels2Send.size() < 3 && !cardLabels2Send.contains(label)) {
                         cards2Send.add(card);
                         cardLabels2Send.add(label);
-                        label.setBorder(new LineBorder(Color.RED,3));
-                    }
-                    else {
-                        if(cardLabels2Send.contains(label)){
+                        label.setBorder(new LineBorder(Color.RED,2));
+                    } else {
+                        if (cardLabels2Send.contains(label)) {
                             cards2Send.remove(card);
                             cardLabels2Send.remove(label);
-                            label.setBorder(new LineBorder(Color.BLACK,3));
+                            label.setBorder(new LineBorder(Color.BLACK,2));
                         }
                     }
-                }
-                else {
+                } else {
                     if (wait4Player) {
                         wait4Player = false;
                         hand.remove(card);
                         label.setVisible(false);
-                        cardPos4 = getCardLabel(card,false);
-                        updateTable();
-                        m.SendByTCP(new PutCard(card.farbe, card.value));
-                        topLabel_1.setText("");
-                        if (hand!=null) {
-                            createCardButtons(SortHand.sort(hand,selectedGame,schweinExists));
-                        }
+
+                        m.SendByTCP(new PutCard(players.indexOf(name), card.farbe, card.value));
+                        serverMessageLabel.setText("");
                     }
                 }
             }
         });
         panel.add(label);
-        Dimension d = new Dimension(mainFrame.getWidth(),label.getHeight());
-        panel.setPreferredSize(d);
-        panel.setMaximumSize(d);
-        panel.setMinimumSize(d);
-        panel.setSize(d);
     }
+
 
     private void addOtherButtons(List<Card> cards){
 
@@ -784,7 +852,6 @@ public class Main {
             controlPanel.setVisible(false);
             controlPanel.removeAll();
         });
-        //controlPanel.setVisible(true);
 
         sortNormal.addActionListener(e->{
             createCardButtons(SortHand.sortNormal(hand, schweinExists));
@@ -879,11 +946,12 @@ public class Main {
             controlPanel.add(hochzeit);
         }
         controlPanel.add(vorbehalt);
-        Dimension d = new Dimension(mainFrame.getSize().width,mainFrame.getSize().height/(16));
+        Dimension d = new Dimension(mainFrame.getSize().width,mainFrame.getSize().height/(30));
         controlPanel.setMaximumSize(d);
         controlPanel.setMinimumSize(d);
         controlPanel.setPreferredSize(d);
         controlPanel.setSize(d);
+        controlPanel.setVisible(true);
     }
 
     private void deselectAllSortButtons(){
@@ -944,59 +1012,65 @@ public class Main {
 
 
     private void createUI(){
-
         mainFrame = new JFrame("Doppelkopf Version "+DokoServer.VERSION + " " + name );
         mainPanel =new JPanel(new GridBagLayout());
-        topPanel = new JPanel(new GridLayout(1,3));
+        mainFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        mainFrame.add(mainPanel);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        cardSize = mainFrame.getHeight()/30*8;
         GridBagConstraints c = new GridBagConstraints();
-        topLabel_1 = new JLabel("");
-        topLabel_2 = new JLabel("");
+        serverMessageLabel = new JLabel("");
+        gameMessageLabel = new JLabel("");
 
-        table = new JPanel(new GridLayout(3,5));
+        layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
+        layeredPane.setSize(layeredPane.getPreferredSize());
+        layeredPane.setMinimumSize(layeredPane.getPreferredSize());
+        layeredPane.setMaximumSize(layeredPane.getPreferredSize());
+        layeredPane.setBackground(Color.GREEN);
+        createPlayArea();
+        createHUD();
+
         panel = new JPanel(new GridLayout(1,14));
         controlPanel = new JPanel(new GridLayout(1,6));
 
-
-
         c.gridx=0;
         c.gridy=0;
-        c.gridheight=5;
+        c.gridheight=20;
+        c.gridwidth=1;
+        c.weighty=20;
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.NORTH;
+        mainPanel.add(layeredPane,c);
+        c.gridx=0;
+        c.gridy=20;
+        c.weighty=8;
+        c.gridheight=8;
         c.gridwidth=1;
         c.fill = GridBagConstraints.BOTH;
-        c.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(table,c);
-        c.gridx=0;
-        c.gridy=5;
-        c.gridheight=1;
-        c.gridwidth=1;
-        c.anchor = GridBagConstraints.NORTH;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        mainPanel.add(topPanel,c);
-        c.gridx=0;
-        c.gridy=6;
-        c.gridheight=4;
-        c.gridwidth=1;
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.SOUTH;
         mainPanel.add(panel,c);
+        panel.setPreferredSize(new Dimension(mainFrame.getWidth(),mainFrame.getHeight()/30*8));
+        panel.setMinimumSize(panel.getPreferredSize());
+        panel.setMaximumSize(panel.getPreferredSize());
+        panel.setSize(panel.getPreferredSize());
         c.gridx=0;
-        c.gridy=10;
-        c.gridheight=1;
+        c.gridy=28;
+        c.gridheight=2;
         c.gridwidth=1;
+        c.weighty=2;
         c.anchor = GridBagConstraints.SOUTH;
         mainPanel.add(controlPanel,c);
-        cardPos1 = new JLabel();
-        cardPos2 = new JLabel();
-        cardPos3 = new JLabel();
-        cardPos4 = new JLabel();
-        updateTable();
+        controlPanel.setPreferredSize(new Dimension(mainFrame.getWidth(),mainFrame.getHeight()/15));
+        controlPanel.setSize(controlPanel.getPreferredSize());
+        controlPanel.setMinimumSize(controlPanel.getPreferredSize());
+        controlPanel.setMaximumSize(controlPanel.getPreferredSize());
+
         controlPanel.setVisible(false);
 
-        mainFrame.add(mainPanel);
         createJoinFrame.setVisible(false);
-        mainFrame.pack();
-        mainFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
-        mainFrame.setVisible(true);
-        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
         mainFrame.addWindowListener(new WindowAdapter() {
             @Override
@@ -1021,54 +1095,90 @@ public class Main {
                 }
             }
         });
-
     }
 
-    private void clearTable(){
-        cardPos1 = new JLabel();
-        cardPos2 = new JLabel();
-        cardPos3 = new JLabel();
-        cardPos4 = new JLabel();
+    private void setPanelSizes(JPanel p, Dimension d){
+        p.setPreferredSize(d);
+        p.setSize(p.getPreferredSize());
+        p.setMinimumSize(p.getPreferredSize());
+        p.setMaximumSize(p.getPreferredSize());
+    }
+
+    private void createHUD() {
+        JPanel hud = new JPanel(new GridLayout(3,3));
+        setPanelSizes(hud, new Dimension(layeredPane.getWidth()-15, mainFrame.getHeight() / 15 * 10));
+        hud.setBackground(new Color(0,0,0,0));
+
+
+
+        userLabel_1= new JLabel();
+        userLabel_1.setVerticalAlignment(SwingConstants.CENTER);
+        userLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+
+
+        userLabel_2 = new JLabel();
+        userLabel_2.setVerticalAlignment(SwingConstants.TOP);
+        userLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+
+
+        userLabel_3 = new JLabel();
+        userLabel_3.setVerticalAlignment(SwingConstants.CENTER);
+        userLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
+
+
+        userLabel_4 = new JLabel();
+        userLabel_4.setVerticalAlignment(SwingConstants.BOTTOM);
+        userLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+
+
+        hud.add(new JLabel());
+        hud.add(userLabel_2);
+        hud.add(new JLabel());
+        hud.add(userLabel_1);
+        hud.add(new JLabel());
+        hud.add(userLabel_3);
+        hud.add(createControlButtonPanel());
+        hud.add(userLabel_4);
+        hud.add(createMessageLabelPanel());
+
+
+        layeredPane.add(hud,2);
+    }
+
+    BufferedImage img;
+    private void createPlayArea() {
+        table = new JPanel();
+        setPanelSizes(table, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
+        table.setBackground(new Color(0,0,0,0));
+        img = new BufferedImage(table.getWidth(), table.getWidth(), BufferedImage.TYPE_INT_ARGB);
+        playArea = img.getGraphics();
+        playArea.drawImage(img, 0, 0, table.getHeight(), table.getWidth(), null);
+        tableLable = new JLabel(new ImageIcon(img));
+        table.add(tableLable);
+        layeredPane.add(table,1);
+    }
+
+    private void clearPlayArea(){
+        img = new BufferedImage(table.getWidth(), table.getWidth(), BufferedImage.TYPE_INT_ARGB);
+        playArea = img.getGraphics();
+        playArea.drawImage(img, 0, 0, table.getHeight(), table.getWidth(), null);
+        tableLable = new JLabel(new ImageIcon(img));
+        table.removeAll();
+        table.add(tableLable);
         updateTable();
     }
 
-    private void updateTable() {
-        table.removeAll();
-        //1x1
-        table.add(new JLabel());
-        //2x1
-        JPanel panel2 = new JPanel(new BorderLayout());
-        panel2.add(userLabel_2,BorderLayout.EAST);
-        table.add(panel2);
-        //3x1
-        table.add(cardPos2);
-        //4x1
-        table.add(new JLabel());
-        //5x1
-        table.add(new JLabel());
-        //1x2
-        JPanel panel1 = new JPanel(new BorderLayout());
-        panel1.add(userLabel_1,BorderLayout.WEST);
-        table.add(panel1);
-        //2x2
-        table.add(cardPos1);
-        //3x2
-        table.add(new JLabel());
-        //4x2
-        table.add(cardPos3);
-        //5x2
-        JPanel panel3 = new JPanel(new BorderLayout());
-        panel3.add(userLabel_3,BorderLayout.EAST);
-        table.add(panel3);
-        //1x3
-        JPanel tableButtons = new JPanel(new GridLayout(3,1));
+
+    private JPanel createControlButtonPanel(){
+        JPanel tableButtons = new JPanel(new GridLayout(3, 1));
         JButton button_lastStich = new JButton("letzter Stich");
-        button_lastStich.addActionListener(e -> SendByTCP(new CurrentStich(new HashMap<>(),players.indexOf(name),true)));
+        button_lastStich.addActionListener(e -> SendByTCP(new CurrentStich(new HashMap<>(), players.indexOf(name), true)));
+        //button_lastStich.addActionListener(e -> showLastStich());
         JButton button_clearTable = new JButton("Tisch leeren");
-        button_clearTable.addActionListener(e -> clearTable());
+        button_clearTable.addActionListener(e -> clearPlayArea());
         tableButtons.add(button_lastStich);
         tableButtons.add(button_clearTable);
-        if (isAdmin){
+        if (isAdmin) {
             JButton button_adminPanel = new JButton("Admin");
             tableButtons.add(button_adminPanel);
             button_adminPanel.addActionListener(e -> {
@@ -1076,22 +1186,28 @@ public class Main {
                 createAdminUI();
             });
         }
-        table.add(tableButtons);
-        //2x3
-        table.add(new JLabel());
-        //3x3
-        table.add(cardPos4);
-        //4x3
-        JPanel panel4 = new JPanel(new BorderLayout());
-        panel4.add(userLabel_4,BorderLayout.SOUTH);
-        table.add(panel4);
-        //5x3
-        JPanel panel5 = new JPanel(new GridLayout(2,1));
-        panel5.add(topLabel_1);
-        panel5.add(topLabel_2);
-        table.add(panel5);
-        //
+        return tableButtons;
+    }
+
+    private JPanel createMessageLabelPanel(){
+        JPanel panel = new JPanel(new GridLayout(2, 1));
+        panel.add(serverMessageLabel);
+        panel.add(gameMessageLabel);
+        return panel;
+    }
+
+    private void clearTable(){
+        updateTable();
+    }
+
+    private void updateTable(){
+        tableLable.revalidate();
+        tableLable.repaint();
         table.revalidate();
         table.repaint();
+        layeredPane.revalidate();
+        layeredPane.repaint();
     }
+
+
 }

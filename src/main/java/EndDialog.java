@@ -48,11 +48,12 @@ public class EndDialog{
         builder1.append("<html>Re(").append(rePoints).append(")<br><hr>");
         builder2.append("<html>Kontra(").append(kontraPoints).append(")<br><hr>");
         players.forEach(player -> {
-            if(player.isRe()){
-                builder1.append(player.getName()).append("(").append(player.getPoints()).append(")").append("<br>");
-            }
-            else{
-                builder2.append(player.getName()).append("(").append(player.getPoints()).append(")").append("<br>");
+            if(!player.isSpectator()) {
+                if (player.isRe()) {
+                    builder1.append(player.getName()).append("(").append(player.getPoints()).append(")").append("<br>");
+                } else {
+                    builder2.append(player.getName()).append("(").append(player.getPoints()).append(")").append("<br>");
+                }
             }
         });
         builder1.append("</html>");
