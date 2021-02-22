@@ -9,11 +9,13 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.stream.Collectors;
 
 public class DokoServer {
 
     public final static String VERSION = "2.1.0";
-    private final Logger log = new Logger(this.getClass().getName());
+    public static final long TIMEOUT = 1000;
+    private final Logger log = new Logger(this.getClass().getName(),1);
     Random random = new Random(System.currentTimeMillis());
 
     private final AutoResetEvent ev = new AutoResetEvent(true);
@@ -48,62 +50,11 @@ public class DokoServer {
     ConcurrentLinkedDeque<MessageOut> outMessages = new ConcurrentLinkedDeque<>();
 
 
-    public DokoServer(int port){
-        createCardList();
+    public DokoServer(int port, Configuration c){
+        log.setLoglevel(c.logLevel);
         inMessageHandling();
         outMessageHandling();
         startTCPServer(port);
-    }
-
-
-    public static List<Card> createCardList(){
-        List<Card> cardList = new ArrayList<>();
-
-        cardList.add(new Card(Statics.ZEHN, Statics.KREUZ,false));
-        cardList.add(new Card(Statics.ZEHN, Statics.KREUZ,false));
-        cardList.add(new Card(Statics.BUBE, Statics.KREUZ,true));
-        cardList.add(new Card(Statics.BUBE, Statics.KREUZ,true));
-        cardList.add(new Card(Statics.DAME, Statics.KREUZ,true));
-        cardList.add(new Card(Statics.DAME, Statics.KREUZ,true));
-        cardList.add(new Card(Statics.KOENIG, Statics.KREUZ,false));
-        cardList.add(new Card(Statics.KOENIG, Statics.KREUZ,false));
-        cardList.add(new Card(Statics.ASS, Statics.KREUZ,false));
-        cardList.add(new Card(Statics.ASS, Statics.KREUZ,false));
-
-        cardList.add(new Card(Statics.ZEHN, Statics.PIK,false));
-        cardList.add(new Card(Statics.ZEHN, Statics.PIK,false));
-        cardList.add(new Card(Statics.BUBE, Statics.PIK,true));
-        cardList.add(new Card(Statics.BUBE, Statics.PIK,true));
-        cardList.add(new Card(Statics.DAME, Statics.PIK,true));
-        cardList.add(new Card(Statics.DAME, Statics.PIK,true));
-        cardList.add(new Card(Statics.KOENIG, Statics.PIK,false));
-        cardList.add(new Card(Statics.KOENIG, Statics.PIK,false));
-        cardList.add(new Card(Statics.ASS, Statics.PIK,false));
-        cardList.add(new Card(Statics.ASS, Statics.PIK,false));
-
-        cardList.add(new Card(Statics.ZEHN, Statics.HERZ, true));
-        cardList.add(new Card(Statics.ZEHN, Statics.HERZ,true));
-        cardList.add(new Card(Statics.BUBE, Statics.HERZ,true));
-        cardList.add(new Card(Statics.BUBE, Statics.HERZ,true));
-        cardList.add(new Card(Statics.DAME, Statics.HERZ,true));
-        cardList.add(new Card(Statics.DAME, Statics.HERZ,true));
-        cardList.add(new Card(Statics.KOENIG, Statics.HERZ,false));
-        cardList.add(new Card(Statics.KOENIG, Statics.HERZ,false));
-        cardList.add(new Card(Statics.ASS, Statics.HERZ,false));
-        cardList.add(new Card(Statics.ASS, Statics.HERZ,false));
-
-        cardList.add(new Card(Statics.ZEHN, Statics.KARO, true));
-        cardList.add(new Card(Statics.ZEHN, Statics.KARO,true));
-        cardList.add(new Card(Statics.BUBE, Statics.KARO,true));
-        cardList.add(new Card(Statics.BUBE, Statics.KARO,true));
-        cardList.add(new Card(Statics.DAME, Statics.KARO,true));
-        cardList.add(new Card(Statics.DAME, Statics.KARO,true));
-        cardList.add(new Card(Statics.KOENIG, Statics.KARO,true));
-        cardList.add(new Card(Statics.KOENIG, Statics.KARO,true));
-        cardList.add(new Card(Statics.ASS, Statics.KARO,true));
-        cardList.add(new Card(Statics.ASS, Statics.KARO,true));
-
-        return cardList;
     }
 
 
@@ -176,7 +127,7 @@ public class DokoServer {
         new Thread(() -> {
             while(true){
                 try {
-                    ev.waitOne();
+                    ev.waitOne(TIMEOUT);
                     while(inMessages.peek()!=null) {
                         log.info("messages to handle: " + inMessages.size());
                         handleInput(Objects.requireNonNull(inMessages.peek()));
@@ -199,14 +150,13 @@ public class DokoServer {
         switch (requestObject.getCommand()) {
             case PutCard.COMMAND: {
                 if (stich == null || stich.getCardMap().size() > 3) {
-                    stich = new Stich();
-                    currentStichNumber += 1;
+                    stich = new Stich(players, currentStichNumber);
+                    currentStichNumber++;
                 }
                 stich.addCard(players.get(currentPlayer),new Card(
                         requestObject.getParams().get("wert").getAsString(),
                         requestObject.getParams().get("farbe").getAsString()));
                 send2All(requestObject);
-                //send2All(new CurrentStich(stich.getCardMap()));
                 currentPlayer++;
                 if(currentPlayer==spectator){
                     currentPlayer++;
@@ -357,6 +307,10 @@ public class DokoServer {
                     queueOut(players.get(requestObject.getParams().get("player").getAsInt()),
                             new SendCards(armutCards,SendCards.RICH));
                     players.get(requestObject.getParams().get("player").getAsInt()).setRe(true, "ist arm");
+                    players.stream().filter(player -> player.getNumber()!=requestObject.getParams().get("player").getAsInt())
+                            .collect(Collectors.toList()).forEach(player -> queueOut(player,new DisplayMessage(
+                            players.get(requestObject.getParams().get("player").getAsInt()).getName() + " nimmt die Armut auf"
+                    )));
                 }else{
                     send2All(new DisplayMessage(
                             players.get(requestObject.getParams().get("player").getAsInt()).getName()
@@ -614,7 +568,7 @@ public class DokoServer {
 
     public void queueOut(Socket socket, RequestObject message, boolean resetEvent){
         outMessages.offer(new MessageOut(socket,message));
-        log.error("added message: " + message.getCommand());
+        log.info("added message: " + message.getCommand());
         if(resetEvent) {
             ev.set();
         }
@@ -625,7 +579,7 @@ public class DokoServer {
         new Thread(() -> {
             while (true){
                 try {
-                    ev.waitOne(5000);
+                    ev.waitOne(TIMEOUT);
                     while(outMessages.peek()!=null){
                         if(sendReply(outMessages.peek())) {
                             outMessages.poll();
@@ -644,7 +598,7 @@ public class DokoServer {
         }
         stichList = new ArrayList<>();
         random = new Random(System.currentTimeMillis());
-        List<Card> cardList = createCardList();
+        List<Card> cardList = Card.createCardList();
 
         players.forEach(player -> {
             player.setHand(new ArrayList<>());
@@ -688,5 +642,9 @@ public class DokoServer {
         */
         send2All(new AnnounceSpectator(spectator));
         shuffleCards();
+    }
+
+    public Stich getStich(int stichNumber) {
+        return stichList.get(stichNumber);
     }
 }

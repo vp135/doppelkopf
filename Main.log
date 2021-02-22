@@ -1,0 +1,8 @@
+2021-02-23 00:14:53 - info - 22 - Main - not listening
+2021-02-23 00:14:53 - info - 22 - Main - queue: AddPlayer
+2021-02-23 00:14:53 - info - 22 - Main - queue: getVersion
+2021-02-23 00:14:53 - info - 29 - Main - Connected to Server
+2021-02-23 00:14:54 - info - 21 - Main - Sending to server: AddPlayer
+2021-02-23 00:14:54 - info - 21 - Main - Sending to server: getVersion
+2021-02-23 00:14:54 - info - 30 - Main - received: PlayersInLobby
+2021-02-23 00:14:54 - info - 30 - Main - received: getVersion

@@ -11,7 +11,13 @@ public class Configuration {
 
     public String name;
     public String server;
+    public int logLevel=1;
     public int port;
+    public int angle24=90;
+    public int angle13=0;
+    public int angleVariation =15;
+    public int distanceFromCenter = 50;
+    public int distanceVariation = 10;
 
     public Configuration(String name, String server, int port) {
         this.name = name;
