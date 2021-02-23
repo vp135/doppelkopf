@@ -1,11 +1,11 @@
 {
   "name": "Volker",
   "server": "127.0.0.1",
-  "logLevel": 3,
+  "logLevel": 1,
   "port": 5000,
   "angle24": 90,
   "angle13": 0,
-  "angleVariation": 10,
-  "distanceFromCenter": 40,
-  "distanceVariation": 20
+  "angleVariation": 15,
+  "distanceFromCenter": 50,
+  "distanceVariation": 10
 }

@@ -19,6 +19,10 @@ public class Configuration {
     public int distanceFromCenter = 50;
     public int distanceVariation = 10;
 
+    public Configuration() {
+
+    }
+
     public Configuration(String name, String server, int port) {
         this.name = name;
         this.server = server;
@@ -37,8 +41,11 @@ public class Configuration {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return fromString(builder.toString());
         }
-        return fromString(builder.toString());
+        else{
+            return new Configuration();
+        }
     }
 
     public void saveConfig() {
