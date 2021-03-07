@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class DokoServer {
 
-    public final static String VERSION = "2.1.0";
+    public final static String VERSION = "3.1.0";
     public static final long TIMEOUT = 1000;
     private final Logger log = new Logger(this.getClass().getName(),1);
     Random random = new Random(System.currentTimeMillis());
@@ -193,10 +193,7 @@ public class DokoServer {
                             }
                         }
                         send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
-                                .findFirst().get().getName(),
-                                createUserPanelString(players.stream().filter(p->p.getNumber()==winner).findFirst().get(),
-                                        true)
-                        ));
+                                .findFirst().get().getName()," hat Stich(e)"));
                         if (currentStichNumber > 9) {
                             EndDialog e = new EndDialog(players,stichList);
                             send2All(new GameEnd(e.getReString1(),e.getReString2(),e.getKontraString1(),e.getKontraString2()));
@@ -324,8 +321,10 @@ public class DokoServer {
                 break;
             }
             case CurrentStich.LAST:{
-                queueOut(players.get(requestObject.getParams().get("player").getAsInt()),
-                        new CurrentStich(stichList.get(currentStichNumber-2).getCardMap(),CurrentStich.LAST));
+                if(stichList.size()>1) {
+                    queueOut(players.get(requestObject.getParams().get("player").getAsInt()),
+                            new CurrentStich(stichList.get(currentStichNumber - 2).getCardMap(), CurrentStich.LAST));
+                }
                 break;
             }
             case AbortGame.COMMAND:{
@@ -352,20 +351,12 @@ public class DokoServer {
                 break;
             }
             default:{
-
+                log.warn(String.format("no handler for message type: %s", requestObject.getCommand()));
             }
         }
     }
 
-    private String createUserPanelString(Player player, boolean hatStich) {
-        StringBuilder s = new StringBuilder();
-        s.append("<html>").append(player.getName());
-        if(hatStich){
-            s.append("<br>hat Stich(e)");
-        }
-        s.append("</hmtl>");
-        return s.toString();
-    }
+
 
     private int getTrumpfCardCount(JsonObject object) {
         JsonArray array = object.get("cards").getAsJsonArray();
@@ -386,9 +377,9 @@ public class DokoServer {
                 beginner=0;
             }
             if(players.size()>4) {
-                spectator++;
-                if (spectator > players.size() - 1) {
-                    spectator = 0;
+                spectator = beginner-1;
+                if (spectator<0){
+                    spectator = players.size()-1;
                 }
             }
             players.forEach(player ->{
@@ -399,8 +390,8 @@ public class DokoServer {
             hochzeitSpieler = -1;
             if(players.size()>4) {
                 players.get(spectator).setSpectator(true);
-                send2All(new AnnounceSpectator(spectator));
             }
+            send2All(new AnnounceSpectator(spectator));
         }
         shuffleCards();
     }
@@ -445,6 +436,7 @@ public class DokoServer {
     }
 
     private void setGameToPlay(HashMap<Integer,String> selection) {
+        wait4Gesund = false;
         players.forEach(player -> player.setRe(false));
         if(selection.values().stream().allMatch(p->p.equals(GameSelected.NORMAL))){
             selectedGame = GameSelected.NORMAL;
@@ -538,7 +530,7 @@ public class DokoServer {
             wait4Partner = true;
             runGame(beginner);
         }
-        wait4Gesund = false;
+
     }
 
     public boolean sendReply(MessageOut message) {
@@ -594,7 +586,7 @@ public class DokoServer {
 
     private void shuffleCards() {
         for (Player player1 : players) {
-            send2All(new UpdateUserPanel(player1.getName(),createUserPanelString(player1, false)));
+            send2All(new UpdateUserPanel(player1.getName(),""));
         }
         stichList = new ArrayList<>();
         random = new Random(System.currentTimeMillis());
@@ -617,6 +609,7 @@ public class DokoServer {
                 queueOut(player, cards);
             }
         }
+
         wait4Gesund = true;
         armutplayer =-1;
         schwein = false;
@@ -635,13 +628,27 @@ public class DokoServer {
 
     public void startGame() {
         send2All(new StartGame());
-        /*
-        if(spectator>players.size()) {
-            log.info(players.get(spectator) + " is watching the game");
+        try {
+            Thread.sleep(3500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        */
         send2All(new AnnounceSpectator(spectator));
         shuffleCards();
+    }
+
+
+    public void startGame(int starter) {
+        send2All(new StartGame());
+        beginner = starter-1;
+
+        try {
+            Thread.sleep(3500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        nextGame();
+        //shuffleCards();
     }
 
     public Stich getStich(int stichNumber) {

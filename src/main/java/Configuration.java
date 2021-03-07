@@ -18,6 +18,7 @@ public class Configuration {
     public int angleVariation =15;
     public int distanceFromCenter = 50;
     public int distanceVariation = 10;
+    public boolean redrawCards = false;
 
     public Configuration() {
 

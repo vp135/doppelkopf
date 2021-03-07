@@ -56,9 +56,8 @@ public class Main {
     private JButton sortKaro;
     private JButton sortArmut;
     private JButton koenige;
-    private ArrayList<Card> cards2Send;
-    private List<JLabel> cardLabels2Send;
-    private Dimension frameSize = new Dimension(100,100);
+    private ArrayList<Card> cards2Send = new ArrayList<>();
+    private List<JLabel> cardLabels2Send = new ArrayList<>();
     private DokoServer dokoServer;
     private JButton start;
     private JButton join;
@@ -82,20 +81,19 @@ public class Main {
     private JLayeredPane layeredPane;
     private Configuration c;
     private final ConcurrentLinkedDeque<RequestObject> outMessages = new ConcurrentLinkedDeque<>();
-    private ServerConfig serverConfig = new ServerConfig();
+    private final ServerConfig serverConfig = new ServerConfig();
     private JButton sendCardsButton;
     private int armutCardCount;
     private final AtomicBoolean wait = new AtomicBoolean(true);
-
-
-
-    public int getPort() {
-        return port;
-    }
-
-    public String getHostname() {
-        return hostname;
-    }
+    private JPanel hud;
+    private JPanel bottomPanel;
+    private HashMap<Integer, Card> tableStich = new HashMap<>();
+    private boolean bTest;
+    private final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
+    private final HashMap<String,BufferedImage> cardImages = new HashMap<>();
+    private int cardWidth4Hand;
+    private int cardHeight4Hand;
+    private static final double RATIO = 0.67;
 
 
     public static void main(String[] args) {
@@ -121,6 +119,9 @@ public class Main {
         UIManager.put("TextArea.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
         UIManager.put("TextArea.background",Color.BLACK);
         UIManager.put("TextArea.foreground",Color.WHITE);
+        UIManager.put("CheckBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("CheckBox.background",Color.BLACK);
+        UIManager.put("CheckBox.foreground",Color.WHITE);
         UIManager.put("OptionPane.messageForeground",Color.WHITE);
     }
 
@@ -168,7 +169,6 @@ public class Main {
         else{
             log.warn("socket was unexpectedly closed - Trying to reopen connection");
             socket = null;
-            //openTCPConnection(hostname, port);
         }
         return sent;
     }
@@ -198,8 +198,10 @@ public class Main {
         userOptions.add(new JLabel("max relative Abweichung des Abstands"));
         JTextField distanceVariationField = new JTextField();
         userOptions.add(distanceVariationField);
+        JCheckBox repositionCards = new JCheckBox("Karten neu verteilen");
+        userOptions.add(repositionCards);
         JButton optionsTestButton = new JButton("Einstellungen Testen");
-        userOptions.add( optionsTestButton);
+        userOptions.add(optionsTestButton);
 
 
         panel.add(inputs);
@@ -225,7 +227,7 @@ public class Main {
 
         optionsTestButton.addActionListener(e -> {
             overrideConfig(angle24Field, angle13Field, angleVariationField, distanceField,
-                    distanceVariationField, hostname, port, false);
+                    distanceVariationField, repositionCards, hostname, port, false);
             createOptionsTestFrame();
         });
 
@@ -238,6 +240,7 @@ public class Main {
             angleVariationField.setText(String.valueOf(c.angleVariation));
             distanceField.setText(String.valueOf(c.distanceFromCenter));
             distanceVariationField.setText(String.valueOf(c.distanceVariation));
+            repositionCards.setSelected(c.redrawCards);
 
         }
 
@@ -265,8 +268,8 @@ public class Main {
             }
             overrideConfig(angle24Field, angle13Field,
                     angleVariationField, distanceField,
-                    distanceVariationField, hostname,
-                    port, true);
+                    distanceVariationField, repositionCards,
+                    hostname, port, true);
         });
 
         join.addActionListener(e -> {
@@ -299,8 +302,8 @@ public class Main {
                         log.info("verbunden");
                         overrideConfig(angle24Field, angle13Field,
                                 angleVariationField, distanceField,
-                                distanceVariationField, hostname,
-                                port, true);
+                                distanceVariationField, repositionCards
+                                ,hostname, port, true);
                         create.setEnabled(false);
                         queueOutMessage(new GetVersion(name,DokoServer.VERSION));
                     } else {
@@ -313,7 +316,8 @@ public class Main {
         });
         start.addActionListener(e -> {
             isAdmin = true;
-            dokoServer.startGame();
+            dokoServer.startGame(Math.max(playerList.getSelectedIndex(), 0));
+            //dokoServer.startGame();
         });
         createJoinFrame.pack();
         createJoinFrame.add(panel);
@@ -323,29 +327,33 @@ public class Main {
     }
 
     private void createOptionsTestFrame() {
-        JPanel panel = new JPanel();
-        setComponentSizes(panel, new Dimension(createJoinFrame.getWidth(), createJoinFrame.getHeight() / 15 * 10));
-        panel.setBackground(new Color(0,0,0,255));
-        BufferedImage img = new BufferedImage(panel.getWidth(), panel.getWidth(), BufferedImage.TYPE_INT_ARGB);
-        Graphics g = img.getGraphics();
-        g.drawImage(img, 0, 0, panel.getHeight(), panel.getWidth(), null);
-        int size = createJoinFrame.getHeight()/30*8;
-        JLabel label = new JLabel(new ImageIcon(img));
-        label.setBackground(new Color(0,0,0,255));
-        panel.add(label);
-        for(int i = 0;i<4;i++){
-            drawCard2Position(Card.randomCard(),size,i,g,panel.getHeight(),panel.getWidth());
+        bTest = true;
+        createUI(bTest);
+        hand = new ArrayList<>();
+        List<Card> list = Card.createCardList();
+        while(hand.size()<10){
+            hand.add(Card.randomCard(list,random));
         }
-        JFrame testFrame = new JFrame("Test");
-        testFrame.add(panel);
-        testFrame.pack();
-        testFrame.setVisible(true);
+        createCardButtons(hand);
+        addOtherButtons(hand);
+
+        userLabel_1.setText("Spieler 1");
+        userLabel_2.setText("Spieler 2");
+        userLabel_3.setText("Spieler 3");
+        userLabel_4.setText("Spieler 4");
+        serverMessageLabel.setText("Dieses Feld wird vom Server verwendet");
+        gameMessageLabel.setText("Dieses Feld wird vom Client verwendet");
+        tableStich = new HashMap<>();
+        for(int i = 0;i<4;i++){
+            tableStich.put(i,Card.randomCard(list,random));
+        }
+
     }
 
     private void overrideConfig(JTextField angle24Field, JTextField angle13Field,
                                 JTextField angleVariationField, JTextField distanceField,
-                                JTextField distanceVariationField, JTextField hostname,
-                                JTextField port, boolean save) {
+                                JTextField distanceVariationField, JCheckBox repositionCards,
+                                JTextField hostname, JTextField port, boolean save) {
         c.name = name;
         c.server = hostname.getText();
         c.port = Integer.parseInt(port.getText());
@@ -354,6 +362,7 @@ public class Main {
         c.angleVariation = Integer.parseInt(angleVariationField.getText());
         c.distanceFromCenter = Integer.parseInt(distanceField.getText());
         c.distanceVariation = Integer.parseInt(distanceVariationField.getText());
+        c.redrawCards = repositionCards.isSelected();
         if(save) {
             c.saveConfig();
         }
@@ -475,7 +484,7 @@ public class Main {
                 break;
             }
             case StartGame.COMMAND: {
-                m.createUI();
+                m.createUI(false);
                 break;
             }
             case GameEnd.COMMAND: {
@@ -564,7 +573,7 @@ public class Main {
                 new Card(card.getAsString().split(" ")[1],
                         card.getAsString().split(" ")[0])));
         hand.addAll(list);
-        createCardButtons(SortHand.sortNormal(hand, schweinExists));
+        createCardButtons(hand=SortHand.sortNormal(hand, schweinExists));
         if (message.getParams().get("receiver").getAsString().equals(SendCards.RICH)) {
             selectCards4Armut(SendCards.POOR, list.size());
         }
@@ -573,7 +582,8 @@ public class Main {
     private void handleGameType(RequestObject message) {
         selectedGame = message.getParams().get(GameType.COMMAND).getAsString();
         if (hand != null && hand.size() > 0) {
-            createCardButtons(SortHand.sort(hand, selectedGame, schweinExists));
+            hand = SortHand.sort(hand,selectedGame,schweinExists);
+            createCardButtons(hand);
             if (selectedGame.equals(GameSelected.NORMAL)
                     || selectedGame.equals(GameSelected.KARO)
                     || selectedGame.equals(GameSelected.ARMUT)) {
@@ -632,8 +642,8 @@ public class Main {
         addOtherButtons(hand);
         serverMessageLabel.setText("");
         gameMessageLabel.setText("");
-        panel.revalidate();
-        panel.repaint();
+        bottomPanel.revalidate();
+        bottomPanel.repaint();
     }
 
     private void handlePlayersInLobby(RequestObject message) {
@@ -743,17 +753,12 @@ public class Main {
     }
 
 
-    private void drawCard2Position(Card card,int cardSize, int pos, Graphics graphics, int canvasSize){
-        drawCard2Position(card,cardSize,pos,graphics,canvasSize,canvasSize);
-    }
-
     private void drawCard2Position(Card card,int cardSize, int pos, Graphics graphics, int canvasHeight, int canvasWidth){
-        int cardHeight = cardSize;
         AffineTransform at;
         int distFromCenter = cardSize*c.distanceFromCenter/100;
         int theta = c.angleVariation - random.nextInt(c.angleVariation*2 + 1);
         int distVar = distFromCenter +  c.distanceVariation - random.nextInt(c.distanceVariation*2 + 1);
-        BufferedImage img =getIcon4Table(card,cardHeight);
+        BufferedImage img = cardImages.get(card.farbe+card.value);
         int halfHeight = canvasHeight/2;
         int halfWidth = canvasWidth/2;
         int anchorY = halfHeight;
@@ -777,7 +782,7 @@ public class Main {
                 break;
         }
         at = AffineTransform.getRotateInstance(Math.toRadians(theta),anchorX,anchorY);
-        at.translate(anchorX-(cardHeight*0.67/2),anchorY-cardHeight/2);
+        at.translate(anchorX-(cardSize*RATIO/2),anchorY-(double)cardSize/2);
         Graphics2D g = (Graphics2D) graphics;
         g.drawImage(img, at, null);
     }
@@ -800,23 +805,56 @@ public class Main {
 
         switch (tmpList.indexOf(otherNumber)){
             case 1:{
-                userLabel_1.setText(object.getParams().get("text").getAsString());
+                userLabel_1.setText(createUserLabelString(
+                        object.getParams().get("text").getAsString(),
+                        object.getParams().get("player").getAsString(),
+                        true));
                 break;
             }
             case 2:{
-                userLabel_2.setText(object.getParams().get("text").getAsString());
+                userLabel_2.setText(createUserLabelString(
+                        object.getParams().get("text").getAsString(),
+                        object.getParams().get("player").getAsString(),
+                        true));
                 break;
             }
             case 3:{
-                userLabel_3.setText(object.getParams().get("text").getAsString());
+                userLabel_3.setText(createUserLabelString(
+                        object.getParams().get("text").getAsString(),
+                        object.getParams().get("player").getAsString(),
+                        true));
                 break;
             }
             case 0:{
-                userLabel_4.setText(object.getParams().get("text").getAsString());
+                if(object.getParams().get("player").getAsString().equals(name)){
+                    userLabel_4.setText(createUserLabelString(
+                            object.getParams().get("text").getAsString(),
+                            "Du",
+                            false));
+                }
+                else{
+                    userLabel_4.setText(createUserLabelString(
+                            object.getParams().get("text").getAsString(),
+                            object.getParams().get("player").getAsString(),
+                            true));
+                }
                 break;
             }
         }
         updateTable();
+    }
+
+    private static String createUserLabelString(String msg, String player, boolean append2Name) {
+        StringBuilder s = new StringBuilder();
+        s.append("<html>");
+        if (append2Name) {
+            s.append(player);
+        }
+        if(msg.length()>0) {
+            s.append("<br>hat Stich(e)");
+        }
+        s.append("</hmtl>");
+        return s.toString();
     }
 
     private void selectCards4Armut(String receiver){
@@ -824,17 +862,19 @@ public class Main {
     }
 
     private void selectCards4Armut(String receiver, int count) {
-        armutCardCount = count;
+
         controlPanel.removeAll();
         selectCards = true;
         cards2Send = new ArrayList<>();
         cardLabels2Send = new ArrayList<>();
         String buttonText="";
         if (receiver.equals(SendCards.RICH)){
+            armutCardCount = (int) hand.stream().filter(card -> card.trumpf).count();
             buttonText = "Armut anbieten";
             autoSelectArmutCards();
         }
         else if(receiver.equals(SendCards.POOR)){
+            armutCardCount = count;
             buttonText = count + " Karten zurueckgeben";
         }
         sendCardsButton = new JButton(buttonText);
@@ -844,7 +884,7 @@ public class Main {
         sendCardsButton.addActionListener(e -> {
             queueOutMessage(new SendCards(cards2Send,receiver));
             hand.removeAll(cards2Send);
-            createCardButtons(SortHand.sort(hand,selectedGame,schweinExists));
+            createCardButtons(hand=SortHand.sort(hand,selectedGame,schweinExists));
             cardLabels2Send = new ArrayList<>();
             selectCards = false;
             controlPanel.setVisible(false);
@@ -887,6 +927,7 @@ public class Main {
             }
             updateTable();
             currentCardsOnTable = 0;
+            tableStich.clear();
         }
 
         int player = object.getParams().get("player").getAsInt();
@@ -897,111 +938,107 @@ public class Main {
         for(int j :tmpList){
             if(player==j){
                 drawCard2Position(card,cardSize, tmpList.indexOf(j),playArea, table.getHeight(), table.getWidth());
+                tableStich.put(tmpList.indexOf(j),card);
                 break;
             }
         }
-
         currentCardsOnTable++;
-
         updateTable();
-
     }
 
     private void createCardButtons(List<Card> cards) {
         panel.removeAll();
         labelMap = new HashMap<>();
-        setComponentSizes(panel,new Dimension((int)(cardSize*0.67*hand.size()),panel.getHeight()));
+        setComponentSizes(panel,new Dimension((int)(cardSize*RATIO*hand.size()),panel.getHeight()));
         cards.forEach(this::getCardLabel4Hand);
         panel.revalidate();
         panel.repaint();
     }
 
-    private BufferedImage getIcon4Table(Card card, int cardHeight){
-        String path = System.getProperty("user.dir")+"\\resources\\" + card.farbe + card.value + ".PNG";
-        BufferedImage image = null;
-        ImageIcon icon;
-        try {
-            icon = new ImageIcon(ImageIO.read(new File(path)));
-            image = ImageIO.read(new File(path));
-            int cardWidth = (int)(cardHeight*0.67);
-            double faktor = (double)cardWidth/(double)image.getWidth();
-            BufferedImage after = new BufferedImage(
-                    cardWidth,
-                    cardHeight,
-                    BufferedImage.TYPE_INT_ARGB);
-            AffineTransform at = new AffineTransform();
-            at.scale(faktor, faktor);
-            AffineTransformOp scaleOp =
-                    new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-            after = scaleOp.filter(image, after);
-            image = after;
-            icon.setImage(after);
-        } catch (Exception e) {
-            log.warn(e.toString());
-        }
-        return image;
+
+    private void createCards() {
+        cardWidth4Hand = panel.getWidth() / 13;
+        cardHeight4Hand = (int) (cardWidth4Hand / RATIO);
+
+
+        Card.UNIQUE_CARDS.forEach(s -> {
+            String path = System.getProperty("user.dir") + "\\resources\\" + s + ".PNG";
+            BufferedImage image;
+            ImageIcon icon;
+            try {
+                icon = new ImageIcon(ImageIO.read(new File(path)));
+                image = ImageIO.read(new File(path));
+
+                double factor = Math.min(cardHeight4Hand, cardSize) * RATIO / (double) image.getWidth();
+                BufferedImage cardImage = new BufferedImage(
+                        (int) (Math.min(cardHeight4Hand, cardSize) * RATIO),
+                        Math.min(cardHeight4Hand, cardSize),
+                        BufferedImage.TYPE_INT_ARGB);
+                AffineTransform at = new AffineTransform();
+                at.scale(factor, factor);
+                AffineTransformOp scaleOp =
+                        new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+                cardImage = scaleOp.filter(image, cardImage);
+                icon.setImage(cardImage);
+                cardIcons.put(s, icon);
+
+                if (Math.min(cardHeight4Hand, cardSize) == cardHeight4Hand) {
+                    factor = cardSize * RATIO / (double) image.getWidth();
+                    cardImage = new BufferedImage(
+                            (int) (cardSize * RATIO),
+                            cardSize,
+                            BufferedImage.TYPE_INT_ARGB);
+                    AffineTransform at2 = new AffineTransform();
+                    at2.scale(factor, factor);
+                    scaleOp = new AffineTransformOp(at2, AffineTransformOp.TYPE_BILINEAR);
+                    cardImage = scaleOp.filter(image, cardImage);
+                }
+                cardImages.put(s, cardImage);
+            } catch (Exception e) {
+                log.warn(e.toString());
+            }
+        });
     }
 
-    private void getCardLabel4Hand(Card card){
-        String path = System.getProperty("user.dir")+"\\resources\\" + card.farbe + card.value + ".PNG";
-        JLabel label = new JLabel();
-        BufferedImage image;
-        ImageIcon icon = null;
-        try {
-            icon = new ImageIcon(ImageIO.read(new File(path)));
-            image = ImageIO.read(new File(path));
-            int cardWidth4Hand = panel.getWidth()/hand.size();
-            int cardHeight4Hand = (int)((double)cardWidth4Hand/0.67);
-            int cardHeight = Math.min(cardHeight4Hand, mainFrame.getHeight() / 30 * 8);
 
-            int cardWidth = (int)(cardHeight*0.67);
-            setComponentSizes(label,new Dimension(cardWidth,cardHeight));
-            double faktor = (double)cardWidth/(double)image.getWidth();
-            BufferedImage after = new BufferedImage(
-                    cardWidth,
-                    cardHeight,
-                    BufferedImage.TYPE_INT_ARGB);
-            AffineTransform at = new AffineTransform();
-            at.scale(faktor, faktor);
-            AffineTransformOp scaleOp =
-                    new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-            after = scaleOp.filter(image, after);
-            icon.setImage(after);
-        } catch (Exception e) {
-            log.warn(e.toString());
-        }
-        label.setIcon(icon);
+
+
+    private void getCardLabel4Hand(Card card){
+        JPanel p = new JPanel();
+        JLabel label = new JLabel();
+        label.setIcon(cardIcons.get(card.farbe+card.value));
 
         labelMap.put(card,label);
         label.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (selectCards) {
-                    if (cardLabels2Send.size() < armutCardCount && !cardLabels2Send.contains(label)) {
+                    if (!cardLabels2Send.contains(label)) {
                         cards2Send.add(card);
                         cardLabels2Send.add(label);
                         label.setBorder(new LineBorder(Color.RED,2));
                     } else {
-                        if (cardLabels2Send.contains(label)) {
-                            cards2Send.remove(card);
-                            cardLabels2Send.remove(label);
-                            label.setBorder(new LineBorder(Color.BLACK,2));
-                        }
+                        cards2Send.remove(card);
+                        cardLabels2Send.remove(label);
+                        label.setBorder(new LineBorder(Color.BLACK, 2));
                     }
                     sendCardsButton.setEnabled(cardLabels2Send.size() == armutCardCount);
                 } else {
-                    if (wait4Player) {
+                    if (wait4Player || bTest) {
                         wait4Player = false;
                         hand.remove(card);
                         label.setVisible(false);
                         m.queueOutMessage(new PutCard(players.indexOf(name), card.farbe, card.value));
                         serverMessageLabel.setText("");
-                        createCardButtons(hand);
+                        if(c.redrawCards) {
+                            createCardButtons(hand);
+                        }
                     }
                 }
             }
         });
-        panel.add(label);
+        p.add(label);
+        panel.add(p);
     }
 
 
@@ -1028,73 +1065,73 @@ public class Main {
         });
 
         sortNormal.addActionListener(e->{
-            createCardButtons(SortHand.sortNormal(hand, schweinExists));
+            createCardButtons(hand=SortHand.sortNormal(hand, schweinExists));
             deselectAllSortButtons();
             sortNormal.setBackground(Color.GREEN);
             selectedGame = GameSelected.NORMAL;
         });
         sortDamen.addActionListener(e->{
-            createCardButtons(SortHand.sortDamenSolo(hand));
+            createCardButtons(hand=SortHand.sortDamenSolo(hand));
             deselectAllSortButtons();
             sortDamen.setBackground(Color.GREEN);
             selectedGame = GameSelected.DAMEN;
         });
         sortBuben.addActionListener(e->{
-            createCardButtons(SortHand.sortBubenSolo(hand));
+            createCardButtons(hand=SortHand.sortBubenSolo(hand));
             deselectAllSortButtons();
             sortBuben.setBackground(Color.GREEN);
             selectedGame = GameSelected.BUBEN;
         });
         sortBubenDamen.addActionListener(e->{
-            createCardButtons(SortHand.sortBubenDamenSolo(hand));
+            createCardButtons(hand=SortHand.sortBubenDamenSolo(hand));
             deselectAllSortButtons();
             sortBubenDamen.setBackground(Color.GREEN);
             selectedGame = GameSelected.BUBENDAMEN;
         });
         sortFleisch.addActionListener(e->{
-            createCardButtons(SortHand.sortFleischlos(hand));
+            createCardButtons(hand=SortHand.sortFleischlos(hand));
             deselectAllSortButtons();
             sortFleisch.setBackground(Color.GREEN);
             selectedGame = GameSelected.FLEISCHLOS;
         });
         sortKreuz.addActionListener(e -> {
-            createCardButtons(SortHand.sortKreuz(hand));
+            createCardButtons(hand=SortHand.sortKreuz(hand));
             deselectAllSortButtons();
             sortKreuz.setBackground(Color.GREEN);
             selectedGame = GameSelected.KREUZ;
         });
         sortPik.addActionListener(e -> {
-            createCardButtons(SortHand.sortPik(hand));
+            createCardButtons(hand=SortHand.sortPik(hand));
             deselectAllSortButtons();
             sortPik.setBackground(Color.GREEN);
             selectedGame = GameSelected.PIK;
         });
         sortHerz.addActionListener(e -> {
-            createCardButtons(SortHand.sortHerz(hand));
+            createCardButtons(hand=SortHand.sortHerz(hand));
             deselectAllSortButtons();
             sortHerz.setBackground(Color.GREEN);
             selectedGame = GameSelected.HERZ;
         });
         sortKaro.addActionListener(e -> {
-            createCardButtons(SortHand.sortKaro(hand, schweinExists));
+            createCardButtons(hand=SortHand.sortKaro(hand, schweinExists));
             deselectAllSortButtons();
             sortKaro.setBackground(Color.GREEN);
             selectedGame = GameSelected.KARO;
         });
         sortArmut.addActionListener(e -> {
-            createCardButtons(SortHand.sortArmut(hand, schweinExists));
+            createCardButtons(hand=SortHand.sortArmut(hand, schweinExists));
             deselectAllSortButtons();
             sortArmut.setBackground(Color.GREEN);
             selectedGame = GameSelected.ARMUT;
         });
         koenige.addActionListener(e->{
-            createCardButtons(SortHand.sortKaro(hand, schweinExists));
+            createCardButtons(hand=SortHand.sortKaro(hand, schweinExists));
             deselectAllSortButtons();
             koenige.setBackground(Color.GREEN);
             selectedGame = GameSelected.KOENIGE;
         });
         hochzeit.addActionListener(e -> {
-            createCardButtons(SortHand.sortNormal(hand,schweinExists));
+            createCardButtons(hand=SortHand.sortNormal(hand,schweinExists));
             deselectAllSortButtons();
             hochzeit.setBackground(Color.GREEN);
             selectedGame = GameSelected.HOCHZEIT;
@@ -1110,6 +1147,7 @@ public class Main {
         controlPanel.add(sortPik);
         controlPanel.add(sortHerz);
         controlPanel.add(sortKaro);
+
         if(cards.stream().filter(p->p.trumpf).count()<4){
             controlPanel.add(sortArmut);
         }
@@ -1119,6 +1157,7 @@ public class Main {
         if(cards.stream().filter(p->p.value.equals(Statics.DAME)&&p.farbe.equals(Statics.KREUZ)).count()>1){
             controlPanel.add(hochzeit);
         }
+
         controlPanel.add(vorbehalt);
         Dimension d = new Dimension(mainFrame.getSize().width,mainFrame.getSize().height/(30));
         controlPanel.setMaximumSize(d);
@@ -1145,99 +1184,141 @@ public class Main {
 
     public void queueOutMessage(RequestObject message){
         log.info("queue: " + message.getCommand());
-        if(message.getCommand().equals(AddPlayer.COMMAND)){
-            outMessages.forEach(requestObject -> {
-                if(requestObject.getCommand().equals(AddPlayer.COMMAND)){
-                    outMessages.remove(requestObject);
-                }
-            });
-            outMessages.addFirst(message);
+        if(!bTest) {
+            if (message.getCommand().equals(AddPlayer.COMMAND)) {
+                outMessages.forEach(requestObject -> {
+                    if (requestObject.getCommand().equals(AddPlayer.COMMAND)) {
+                        outMessages.remove(requestObject);
+                    }
+                });
+                outMessages.addFirst(message);
+            } else {
+                outMessages.offer(message);
+            }
+            ev.set();
         }
-        else{
-            outMessages.offer(message);
-        }
-        ev.set();
     }
 
 
-    private void createUI(){
+    private void createUI(boolean test){
+        Toolkit.getDefaultToolkit().setDynamicLayout(false);
+        log.info("creating UI");
         mainFrame = new JFrame("Doppelkopf Version "+DokoServer.VERSION + " " + name );
         mainPanel =new JPanel(new GridBagLayout());
-        mainFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        mainFrame.setExtendedState(createJoinFrame.getExtendedState());
+        mainFrame.setLocation(createJoinFrame.getLocation().x,createJoinFrame.getLocation().y);
         mainFrame.add(mainPanel);
         mainFrame.pack();
         mainFrame.setVisible(true);
-        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        mainFrame.setSize(createJoinFrame.getSize());
         cardSize = mainFrame.getHeight()/30*8;
         GridBagConstraints c = new GridBagConstraints();
         serverMessageLabel = new JLabel("");
         gameMessageLabel = new JLabel("");
 
         layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
-        layeredPane.setSize(layeredPane.getPreferredSize());
-        layeredPane.setMinimumSize(layeredPane.getPreferredSize());
-        layeredPane.setMaximumSize(layeredPane.getPreferredSize());
+        setComponentSizes(layeredPane,new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
+        log.info("creating play area");
         createPlayArea();
+        log.info("creating hud");
         createHUD();
 
-        panel = new JPanel(new GridLayout(1,14));
-        controlPanel = new JPanel(new GridLayout(1,6));
+        //panel = new JPanel();
+        panel = new JPanel(new GridLayout(1,13));
 
+
+        log.info("setting components");
         c.gridx=0;
         c.gridy=0;
         c.gridheight=20;
         c.gridwidth=1;
         c.weighty=20;
-        c.fill = GridBagConstraints.BOTH;
         c.anchor = GridBagConstraints.NORTH;
         mainPanel.add(layeredPane,c);
+        bottomPanel = new JPanel(new BorderLayout());
+        setComponentSizes(bottomPanel,new Dimension(mainFrame.getWidth(),mainFrame.getHeight()/30*9));
         c.gridx=0;
-        c.gridy=20;
-        c.weighty=8;
-        c.gridheight=8;
+        c.gridy=21;
+        c.weighty=9;
+        c.gridheight=9;
         c.gridwidth=1;
-        //c.fill = GridBagConstraints.BOTH;
-        c.anchor = GridBagConstraints.SOUTH;
-        mainPanel.add(panel,c);
-        setComponentSizes(panel,new Dimension(mainFrame.getWidth(),mainFrame.getHeight()/30*8));
-        c.gridx=0;
-        c.gridy=28;
-        c.gridheight=2;
-        c.gridwidth=1;
-        c.weighty=2;
-        c.anchor = GridBagConstraints.SOUTH;
-        mainPanel.add(controlPanel,c);
-        setComponentSizes(controlPanel,new Dimension(mainFrame.getWidth(),mainFrame.getHeight()/15));
+        mainPanel.add(bottomPanel,c);
 
+        controlPanel = new JPanel(new GridLayout(1,6));
+
+        bottomPanel.add(controlPanel,BorderLayout.NORTH);
+        bottomPanel.add(panel);
         controlPanel.setVisible(false);
 
-        createJoinFrame.setVisible(false);
+        log.info("components set");
 
-        mainFrame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                int reply = JOptionPane.showOptionDialog(mainFrame,"Wirklich beenden?", "Beenden?",
-                        JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new String[]{"Ja","Nein"},
-                        null);
-                if (reply == JOptionPane.YES_OPTION) {
-                    System.exit(0);
-                }
-            }
-        });
-
-        mainFrame.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                if (e.getComponent().getSize().getWidth()!=frameSize.getWidth()){
-                    frameSize = e.getComponent().getSize();
-                    if (hand!=null) {
-                        createCardButtons(SortHand.sortNormal(hand, schweinExists));
+        if(!test) {
+            mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            mainFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    int reply = JOptionPane.showOptionDialog(mainFrame, "Wirklich beenden?", "Beenden?",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Ja", "Nein"},
+                            null);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        System.exit(0);
                     }
                 }
+            });
+        }
+
+
+        log.info("listeners added");
+        redrawEverything();
+        log.info("finished UI creation");
+
+
+        new Thread(() -> {
+            if(!test) {
+                try {
+                    Thread.sleep(2500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                createJoinFrame.setVisible(false);
+                createJoinFrame.dispose();
+                mainFrame.addComponentListener(new ComponentAdapter() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
+                        redrawEverything();
+                    }
+                });
             }
-        });
+        }).start();
+
+        log.info("disposed of lobby frame");
     }
+
+    private void redrawEverything() {
+        log.info("starting to redraw");
+        cardSize = mainFrame.getHeight() / 30 * 8;
+        setComponentSizes(layeredPane, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
+        setComponentSizes(table, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
+        setComponentSizes(hud, new Dimension(layeredPane.getWidth() - 15, mainFrame.getHeight() / 15 * 10));
+        setComponentSizes(bottomPanel, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 30 * 9));
+        setComponentSizes(panel, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 30 * 8));
+        setComponentSizes(controlPanel, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15));
+        createCards();
+        if (hand != null) {
+            createCardButtons(hand);
+            clearPlayArea();
+            tableStich.keySet().forEach(i ->
+                    drawCard2Position(tableStich.get(i), cardSize, i, playArea, table.getHeight(), table.getWidth()));
+            if (selectCards) {
+                cards2Send.clear();
+                cardLabels2Send.clear();
+            }
+        }
+
+        log.info("redraw finished");
+    }
+
+
 
     private void setComponentSizes(JComponent p, Dimension d){
         p.setPreferredSize(d);
@@ -1247,8 +1328,8 @@ public class Main {
     }
 
     private void createHUD() {
-        JPanel hud = new JPanel(new GridLayout(3,3));
-        setComponentSizes(hud, new Dimension(layeredPane.getWidth()-15, mainFrame.getHeight() / 15 * 10));
+        hud = new JPanel(new GridLayout(3,3));
+        //setComponentSizes(hud, new Dimension(layeredPane.getWidth()-15, mainFrame.getHeight() / 15 * 10));
         hud.setBackground(new Color(0,0,0,0));
 
 
@@ -1256,19 +1337,19 @@ public class Main {
         userLabel_1= new JLabel();
         userLabel_1.setOpaque(true);
         userLabel_1.setVerticalAlignment(SwingConstants.CENTER);
-        userLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+        userLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
         userLabel_2 = new JLabel();
         userLabel_2.setOpaque(true);
         userLabel_2.setVerticalAlignment(SwingConstants.TOP);
-        userLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+        userLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
         userLabel_3 = new JLabel();
         userLabel_3.setOpaque(true);
         userLabel_3.setVerticalAlignment(SwingConstants.CENTER);
-        userLabel_3.setHorizontalAlignment(SwingConstants.RIGHT);
+        userLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
         userLabel_4 = new JLabel();
         userLabel_4.setOpaque(true);
         userLabel_4.setVerticalAlignment(SwingConstants.BOTTOM);
-        userLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+        userLabel_4.setHorizontalAlignment(SwingConstants.LEFT);
 
 
         hud.add(new JLabel());
@@ -1280,7 +1361,6 @@ public class Main {
         hud.add(createControlButtonPanel());
         hud.add(userLabel_4);
         hud.add(createMessageLabelPanel());
-
 
         layeredPane.add(hud,2);
     }
@@ -1314,7 +1394,6 @@ public class Main {
         JPanel buttons = new JPanel(new GridLayout(3, 1));
         JButton button_lastStich = new JButton("letzter Stich");
         button_lastStich.addActionListener(e -> queueOutMessage(new CurrentStich(new HashMap<>(), players.indexOf(name), true)));
-        //button_lastStich.addActionListener(e -> showLastStich());
         JButton button_clearTable = new JButton("Tisch leeren");
         button_clearTable.addActionListener(e -> clearPlayArea());
         buttons.add(button_lastStich);

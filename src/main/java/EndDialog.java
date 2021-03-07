@@ -30,15 +30,15 @@ public class EndDialog{
         players.forEach(player -> player.setPoints(0));
         stichList.forEach(stich -> {
             players.get(stich.getWinner()).addPoints(stich.getPoints());
-            if(players.get(stich.getWinner()).isRe()){
-                builderRe.append(stich.getPoints())
-                        .append("(").append(stich.getExtraPoints()).append(")")
-                        .append("(").append(players.get(stich.getWinner()).getName()).append(")");
+            if(players.get(stich.getWinner()).isRe()) {
+                builderRe.append(stich.getPoints());
+                builderRe.append(stich.getExtraPoints());
+                builderRe.append("(").append(players.get(stich.getWinner()).getName()).append(")");
             }
             else {
-                builderKontra.append(stich.getPoints())
-                        .append("(").append(stich.getExtraPoints()).append(")")
-                        .append("(").append(players.get(stich.getWinner()).getName()).append(")");
+                builderKontra.append(stich.getPoints());
+                builderKontra.append(stich.getExtraPoints());
+                builderKontra.append("(").append(players.get(stich.getWinner()).getName()).append(")");
             }
             builderKontra.append("<br>");
             builderRe.append("<br>");
