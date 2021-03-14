@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Main {
 
     private final Logger log = new Logger(this.getClass().getName(),1);
+    private final ArrayList<JButton> buttonList;
 
     Socket socket;
     static Main m;
@@ -94,6 +95,7 @@ public class Main {
     private int cardWidth4Hand;
     private int cardHeight4Hand;
     private static final double RATIO = 0.67;
+    private int aufspieler;
 
 
     public static void main(String[] args) {
@@ -127,6 +129,31 @@ public class Main {
 
     public Main(){
         outMessageHandling();
+        sortNormal = new JButton("Gesund");
+        sortBuben = new JButton("Buben");
+        sortDamen = new JButton("Damen");
+        sortBubenDamen = new JButton("Buben-Damen");
+        sortFleisch = new JButton("Fleischlos");
+        sortKreuz = new JButton("Kreuz");
+        sortPik = new JButton("Pik");
+        sortHerz = new JButton("Herz");
+        sortKaro = new JButton("Karo");
+        sortArmut = new JButton("Armut");
+        hochzeit = new JButton("Hochzeit");
+        koenige = new JButton(">4 Koenige");
+        buttonList = new ArrayList<>();
+        buttonList.add(sortNormal);
+        buttonList.add(sortBuben);
+        buttonList.add(sortDamen);
+        buttonList.add(sortBubenDamen);
+        buttonList.add(sortFleisch);
+        buttonList.add(sortKreuz);
+        buttonList.add(sortPik);
+        buttonList.add(sortHerz);
+        buttonList.add(sortKaro);
+        buttonList.add(sortArmut);
+        buttonList.add(hochzeit);
+        buttonList.add(koenige);
     }
 
     public void outMessageHandling(){
@@ -472,7 +499,9 @@ public class Main {
             }
             case CurrentStich.LAST: { }
             case CurrentStich.SPECIFIC: {
-                showLastStich(message);
+                if(letzterStich==null) {
+                    showLastStich(message);
+                }
                 break;
             }
             case Wait4Player.COMMAND: {
@@ -533,6 +562,7 @@ public class Main {
 
     private void handleAnnounceSpectator(RequestObject message) {
         spectator = message.getParams().get("player").getAsInt();
+        aufspieler = message.getParams().get("starter").getAsInt();
         if(players.size()>5 && players.get(spectator).equals(name)) {
             queueOutMessage(new DisplayMessage("Du bist jetzt Zuschauer"));
             hand.clear();
@@ -596,6 +626,7 @@ public class Main {
                 }
             }
         }
+        aufspieler = -1;
     }
 
     private void handleGameEnd(RequestObject message) {
@@ -844,17 +875,31 @@ public class Main {
         updateTable();
     }
 
-    private static String createUserLabelString(String msg, String player, boolean append2Name) {
+    private String createUserLabelString(String msg, String player, boolean append2Name) {
         StringBuilder s = new StringBuilder();
-        s.append("<html>");
+        String color = "white";
+        try {
+            if (aufspieler > -1 && player.equals(players.get(aufspieler))) {
+                color = "red";
+            }
+        }catch (Exception ex){
+            log.error("Aufspieler: " +aufspieler);
+        }
         if (append2Name) {
             s.append(player);
         }
         if(msg.length()>0) {
             s.append("<br>hat Stich(e)");
         }
-        s.append("</hmtl>");
-        return s.toString();
+        return addColor(s.toString(),color);
+    }
+
+    private static String addColor(String s, String color){
+        return "<html><font color=\"" +
+                color +
+                "\">" +
+                s +
+                "</font></html>";
     }
 
     private void selectCards4Armut(String receiver){
@@ -1045,18 +1090,6 @@ public class Main {
     private void addOtherButtons(List<Card> cards){
 
         controlPanel.removeAll();
-        sortNormal = new JButton("Gesund");
-        sortBuben = new JButton("Buben");
-        sortDamen = new JButton("Damen");
-        sortBubenDamen = new JButton("Buben-Damen");
-        sortFleisch = new JButton("Fleischlos");
-        sortKreuz = new JButton("Kreuz");
-        sortPik = new JButton("Pik");
-        sortHerz = new JButton("Herz");
-        sortKaro = new JButton("Karo");
-        sortArmut = new JButton("Armut");
-        hochzeit = new JButton("Hochzeit");
-        koenige = new JButton(">4 Koenige");
         JButton vorbehalt = new JButton("OK");
         vorbehalt.addActionListener(e ->{
             queueOutMessage(new GameSelected(players.indexOf(name),selectedGame));
@@ -1168,17 +1201,7 @@ public class Main {
     }
 
     private void deselectAllSortButtons(){
-        sortNormal.setBackground(Color.BLACK);
-        sortDamen.setBackground(Color.BLACK);
-        sortBuben.setBackground(Color.BLACK);
-        sortBubenDamen.setBackground(Color.BLACK);
-        sortFleisch.setBackground(Color.BLACK);
-        sortKreuz.setBackground(Color.BLACK);
-        sortPik.setBackground(Color.BLACK);
-        sortHerz.setBackground(Color.BLACK);
-        sortKaro.setBackground(Color.BLACK);
-        sortArmut.setBackground(Color.BLACK);
-        koenige.setBackground(Color.BLACK);
+        buttonList.forEach(button-> button.setBackground(Color.BLACK));
     }
 
 

@@ -3,17 +3,19 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Collectors;
 
 public class DokoServer {
 
-    public final static String VERSION = "3.1.0";
+    public final static String VERSION = "3.2.1";
     public static final long TIMEOUT = 1000;
     private final Logger log = new Logger(this.getClass().getName(),1);
     Random random = new Random(System.currentTimeMillis());
@@ -87,19 +89,18 @@ public class DokoServer {
                                         inMessages.offer(new MessageIn(connectionSocket,in));
                                         ev.set();
                                     } else {
-                                        log.info("socket => null");
+                                        log.info("incoming data was null "+ players.stream().filter(player -> player.getSocket().equals(connectionSocket)).findFirst().get().getName());
                                         connectionSocket.close();
                                     }
                                 } catch (IOException e) {
                                     if (e instanceof SocketException) {
-                                        log.info("socket => null");
+                                        log.info(e.toString()+ players.stream().filter(player -> player.getSocket().equals(connectionSocket)).findFirst().get().getName());
                                         try{
                                             connectionSocket.close();
                                         }catch (IOException ex){
-                                            ex.printStackTrace();
+                                            log.error(ex.toString());
                                         }
                                     }
-                                    log.error(e.toString());
                                 }
                             }
                         }).start();
@@ -150,7 +151,7 @@ public class DokoServer {
         switch (requestObject.getCommand()) {
             case PutCard.COMMAND: {
                 if (stich == null || stich.getCardMap().size() > 3) {
-                    stich = new Stich(players, currentStichNumber);
+                    stich = new Stich(players, currentStichNumber, selectedGame);
                     currentStichNumber++;
                 }
                 stich.addCard(players.get(currentPlayer),new Card(
@@ -170,7 +171,7 @@ public class DokoServer {
 
                 if (stich.getCardMap().size() > 3) {
                     try {
-                        int winner = stich.getWinner(selectedGame, schwein);
+                        int winner = stich.getWinner(schwein);
 
                         stichList.add(stich);
                         try{
@@ -238,7 +239,7 @@ public class DokoServer {
             }
             case StartGame.COMMAND:{
                 send2All(new StartGame());
-                send2All(new AnnounceSpectator(spectator));
+                send2All(new AnnounceSpectator(spectator,aufspieler));
                 shuffleCards();
                 break;
             }
@@ -322,8 +323,13 @@ public class DokoServer {
             }
             case CurrentStich.LAST:{
                 if(stichList.size()>1) {
-                    queueOut(players.get(requestObject.getParams().get("player").getAsInt()),
-                            new CurrentStich(stichList.get(currentStichNumber - 2).getCardMap(), CurrentStich.LAST));
+                    try {
+                        CurrentStich cs = new CurrentStich(stichList.get(currentStichNumber - 1).getCardMap(), CurrentStich.LAST);
+                        queueOut(players.get(requestObject.getParams().get("player").getAsInt()), cs);
+                    }
+                    catch (Exception ex){
+                        log.warn(ex.toString());
+                    }
                 }
                 break;
             }
@@ -391,7 +397,7 @@ public class DokoServer {
             if(players.size()>4) {
                 players.get(spectator).setSpectator(true);
             }
-            send2All(new AnnounceSpectator(spectator));
+            send2All(new AnnounceSpectator(spectator,aufspieler));
         }
         shuffleCards();
     }
@@ -584,9 +590,11 @@ public class DokoServer {
         }).start();
     }
 
+
+
     private void shuffleCards() {
         for (Player player1 : players) {
-            send2All(new UpdateUserPanel(player1.getName(),""));
+            send2All(new UpdateUserPanel(player1.getName(), ""));
         }
         stichList = new ArrayList<>();
         random = new Random(System.currentTimeMillis());
@@ -633,7 +641,7 @@ public class DokoServer {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        send2All(new AnnounceSpectator(spectator));
+        send2All(new AnnounceSpectator(spectator,aufspieler));
         shuffleCards();
     }
 
