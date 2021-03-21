@@ -30,12 +30,15 @@ public class EndDialog{
         players.forEach(player -> player.setPoints(0));
         stichList.forEach(stich -> {
             players.get(stich.getWinner()).addPoints(stich.getPoints());
-            //rest.set(rest.get() - stich.getPoints());
-            if(players.get(stich.getWinner()).isRe()){
-                builderRe.append(stich.getPoints()).append("(").append(players.get(stich.getWinner()).getName()).append(")");
+            if(players.get(stich.getWinner()).isRe()) {
+                builderRe.append(stich.getPoints());
+                builderRe.append(stich.getExtraPoints());
+                builderRe.append("(").append(players.get(stich.getWinner()).getName()).append(")");
             }
             else {
-                builderKontra.append(stich.getPoints()).append("(").append(players.get(stich.getWinner()).getName()).append(")");
+                builderKontra.append(stich.getPoints());
+                builderKontra.append(stich.getExtraPoints());
+                builderKontra.append("(").append(players.get(stich.getWinner()).getName()).append(")");
             }
             builderKontra.append("<br>");
             builderRe.append("<br>");
@@ -48,11 +51,12 @@ public class EndDialog{
         builder1.append("<html>Re(").append(rePoints).append(")<br><hr>");
         builder2.append("<html>Kontra(").append(kontraPoints).append(")<br><hr>");
         players.forEach(player -> {
-            if(player.isRe()){
-                builder1.append(player.getName()).append("(").append(player.getPoints()).append(")").append("<br>");
-            }
-            else{
-                builder2.append(player.getName()).append("(").append(player.getPoints()).append(")").append("<br>");
+            if(!player.isSpectator()) {
+                if (player.isRe()) {
+                    builder1.append(player.getName()).append("(").append(player.getPoints()).append(")").append("<br>");
+                } else {
+                    builder2.append(player.getName()).append("(").append(player.getPoints()).append(")").append("<br>");
+                }
             }
         });
         builder1.append("</html>");

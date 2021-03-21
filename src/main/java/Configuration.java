@@ -11,7 +11,18 @@ public class Configuration {
 
     public String name;
     public String server;
+    public int logLevel=1;
     public int port;
+    public int angle24=90;
+    public int angle13=0;
+    public int angleVariation =15;
+    public int distanceFromCenter = 50;
+    public int distanceVariation = 10;
+    public boolean redrawCards = false;
+
+    public Configuration() {
+
+    }
 
     public Configuration(String name, String server, int port) {
         this.name = name;
@@ -31,8 +42,11 @@ public class Configuration {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return fromString(builder.toString());
         }
-        return fromString(builder.toString());
+        else{
+            return new Configuration();
+        }
     }
 
     public void saveConfig() {

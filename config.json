@@ -1,5 +1,12 @@
 {
   "name": "Volker",
   "server": "127.0.0.1",
-  "port": 5000
+  "logLevel": 4,
+  "port": 5000,
+  "angle24": 0,
+  "angle13": 0,
+  "angleVariation": 0,
+  "distanceFromCenter": 70,
+  "distanceVariation": 0,
+  "redrawCards": true
 }
