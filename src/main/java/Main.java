@@ -1,4 +1,7 @@
 import base.*;
+import base.doko.*;
+import base.doko.messages.*;
+import base.messages.*;
 import base.messages.MessageAllPlayers;
 import com.google.gson.JsonArray;
 
@@ -45,18 +48,18 @@ public class Main {
     private JLabel userLabel_2;
     private JLabel userLabel_3;
     private JLabel userLabel_4;
-    private JButton sortNormal;
-    private JButton hochzeit;
-    private JButton sortBuben;
-    private JButton sortDamen;
-    private JButton sortBubenDamen;
-    private JButton sortFleisch;
-    private JButton sortKreuz;
-    private JButton sortPik;
-    private JButton sortHerz;
-    private JButton sortKaro;
-    private JButton sortArmut;
-    private JButton koenige;
+    private final JButton sortNormal;
+    private final JButton hochzeit;
+    private final JButton sortBuben;
+    private final JButton sortDamen;
+    private final JButton sortBubenDamen;
+    private final JButton sortFleisch;
+    private final JButton sortKreuz;
+    private final JButton sortPik;
+    private final JButton sortHerz;
+    private final JButton sortKaro;
+    private final JButton sortArmut;
+    private final JButton koenige;
     private ArrayList<Card> cards2Send = new ArrayList<>();
     private List<JLabel> cardLabels2Send = new ArrayList<>();
     private DokoServer dokoServer;
@@ -490,6 +493,7 @@ public class Main {
                 break;
             }
             case Cards.COMMAND: {
+                deselectAllSortButtons();
                 handleCards(message);
                 break;
             }
@@ -635,11 +639,14 @@ public class Main {
                 message.getParams().get("re1").getAsString(),
                 message.getParams().get("re2").getAsString(),
                 message.getParams().get("kontra1").getAsString(),
-                message.getParams().get("kontra2").getAsString());
+                message.getParams().get("kontra2").getAsString(),
+                message.getParams().get("remain").getAsInt());
         e.showDialog(this);
         clearPlayArea();
         schweinExists = false;
         selectCards = false;
+        wait4Player = false;
+        hand = new ArrayList<>();
         queueOutMessage(new ReadyForNextRound(players.indexOf(name)));
     }
 

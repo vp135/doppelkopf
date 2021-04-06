@@ -1,9 +1,11 @@
 import base.*;
+import base.doko.*;
+import base.doko.messages.*;
+import base.messages.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.awt.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -196,13 +198,7 @@ public class DokoServer {
                         send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
                                 .findFirst().get().getName()," hat Stich(e)"));
                         if (currentStichNumber > 9) {
-                            EndDialog e = new EndDialog(players,stichList);
-                            send2All(new GameEnd(e.getReString1(),e.getReString2(),e.getKontraString1(),e.getKontraString2()));
-                            wait4NextRound= true;
-                            readyMap = new HashMap<>();
-                            for (int i=0;i<players.size();i++){
-                                readyMap.put(i,false);
-                            }
+                            EndIt();
                             break;
                         }
                     }catch (Exception ex){
@@ -322,9 +318,9 @@ public class DokoServer {
                 break;
             }
             case CurrentStich.LAST:{
-                if(stichList.size()>1) {
+                if(stichList.size()>0) {
                     try {
-                        CurrentStich cs = new CurrentStich(stichList.get(currentStichNumber - 1).getCardMap(), CurrentStich.LAST);
+                        CurrentStich cs = new CurrentStich(stichList.get(stichList.size()-1).getCardMap(), CurrentStich.LAST);
                         queueOut(players.get(requestObject.getParams().get("player").getAsInt()), cs);
                     }
                     catch (Exception ex){
@@ -334,12 +330,7 @@ public class DokoServer {
                 break;
             }
             case AbortGame.COMMAND:{
-                send2All(new GameEnd(points,stichList,players));
-                wait4NextRound= true;
-                readyMap = new HashMap<>();
-                for (int i=0;i<players.size();i++){
-                    readyMap.put(i,false);
-                }
+                EndIt();
                 break;
             }
             case ShowStich.COMMAND:{
@@ -362,6 +353,15 @@ public class DokoServer {
         }
     }
 
+    private void EndIt() {
+        EndDialog e = new EndDialog(players,stichList);
+        send2All(new GameEnd(e.getReString1(),e.getReString2(),e.getKontraString1(),e.getKontraString2(),e.getRemaining()));
+        wait4NextRound= true;
+        readyMap = new HashMap<>();
+        for (int i=0;i<players.size();i++){
+            readyMap.put(i,false);
+        }
+    }
 
 
     private int getTrumpfCardCount(JsonObject object) {

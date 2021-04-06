@@ -1,5 +1,5 @@
-import base.Card;
-import base.GameSelected;
+import base.doko.Card;
+import base.doko.messages.GameSelected;
 
 import java.util.ArrayList;
 import java.util.List;
