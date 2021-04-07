@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -280,14 +281,6 @@ public class DokoServer {
                     send2All(new DisplayMessage(Strings.getString(Strings.ARMUT_RETURN,
                             players.get(armutplayer).getName(),
                             getTrumpfCardCount(requestObject.getParams()))));
-                    /*
-                    send2All(new DisplayMessage(
-                            players.get(armutplayer).getName()
-                                    +" bekommt "
-                                    + getTrumpfCardCount(requestObject.getParams())
-                                    + " Trumpf zurück"));
-
-                     */
                     queueOut(players.get(armutplayer),
                             requestObject);
                     players.get(armutplayer).setRe(true, "ist reich");
@@ -578,6 +571,16 @@ public class DokoServer {
             while (true){
                 try {
                     ev.waitOne(TIMEOUT);
+                    if(outMessages.peek()==null){
+                        if(outMessages.peek()==null){
+                            try {
+                                outMessages.offer(new MessageOut(players.get(0).getSocket(),
+                                        new DisplayMessage(LocalDateTime.now().toString())));
+                            }catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
                     while(outMessages.peek()!=null){
                         if(sendReply(outMessages.peek())) {
                             outMessages.poll();

@@ -143,16 +143,16 @@ public class EndDialog{
         panel.add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    public void showDialog(Main main){
+    public void showDialog(JFrame frame){
         if(panel!=null) {
-            JDialog d = new JDialog(main.mainFrame);
+            JDialog d = new JDialog(frame);
             //d.setSize(300,300);
             buttonOK.addActionListener(e -> d.dispose());
             d.setModal(true);
             d.setTitle("Ergebnis");
             d.getContentPane().add(panel);
             d.pack();
-            d.setLocationRelativeTo(main.mainFrame);
+            d.setLocationRelativeTo(frame);
             d.setVisible(true);
         }
     }
