@@ -17,14 +17,14 @@ public class ComHandler {
     private final String hostname;
     private final int port;
     private String name;
-    private IInputputHandler handler;
+    private IInputputHandler client;
 
     public final AtomicBoolean wait = new AtomicBoolean(false);
 
-    public ComHandler(String hostname, int port,IInputputHandler handler){
+    public ComHandler(String hostname, int port,IInputputHandler client){
         this.hostname = hostname;
         this.port = port;
-        this.handler = handler;
+        this.client = client;
         outMessageHandling();
     }
 
@@ -105,7 +105,7 @@ public class ComHandler {
                         try {
                             if ((ServerReply = in.readLine()) != null) {
                                 if (ServerReply.length() > 0) {
-                                    handler.handleInput(ServerReply);
+                                    client.handleInput(RequestObject.fromString(ServerReply));
                                 }
                             }
                         } catch (Exception ex) {
@@ -142,8 +142,8 @@ public class ComHandler {
     }
 
 
-    public void setHandler(Doppelkopf_client handler) {
-        this.handler = handler;
+    public void setClient(DokoClient handler) {
+        this.client = handler;
     }
 
     public void setName(String name){

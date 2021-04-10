@@ -1,5 +1,5 @@
 import base.Logger;
-import base.doko.messages.StartGame;
+import base.messages.StartGame;
 import base.messages.GetVersion;
 import base.messages.PlayersInLobby;
 import base.messages.RequestObject;
@@ -7,10 +7,8 @@ import base.messages.RequestObject;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main implements IInputputHandler{
 
@@ -19,9 +17,11 @@ public class Main implements IInputputHandler{
     static Main m;
 
 
+
     private String name;
     private List<String> players = new ArrayList<>();
     private final JList<String> playerList = new JList<>();
+    private BaseServer server;
     private DokoServer dokoServer;
     private JButton start;
     private JButton join;
@@ -59,6 +59,7 @@ public class Main implements IInputputHandler{
         UIManager.put("CheckBox.background",Color.BLACK);
         UIManager.put("CheckBox.foreground",Color.WHITE);
         UIManager.put("OptionPane.messageForeground",Color.WHITE);
+        Toolkit.getDefaultToolkit().setDynamicLayout(false);
     }
 
     public Main(){
@@ -222,7 +223,7 @@ public class Main implements IInputputHandler{
     }
 
     private void createOptionsTestFrame() {
-        Doppelkopf_client client = new Doppelkopf_client(null,new ArrayList<>(),c);
+        DokoClient client = new DokoClient(null,new ArrayList<>(),c);
         client.createUI(
                 createJoinFrame.getExtendedState(),
                 createJoinFrame.getX(),
@@ -250,8 +251,7 @@ public class Main implements IInputputHandler{
     }
 
 
-    public void handleInput(String serverReply) {
-        RequestObject message = RequestObject.fromString(serverReply);
+    public void handleInput(RequestObject message) {
         log.info("received: " +message.getCommand());
         switch (message.getCommand()) {
             case PlayersInLobby.COMMAND: {
@@ -259,7 +259,7 @@ public class Main implements IInputputHandler{
                 break;
             }
             case StartGame.COMMAND: {
-                handleStart();
+                handleStart(message);
                 break;
             }
             case GetVersion.COMMAND: {
@@ -295,9 +295,9 @@ public class Main implements IInputputHandler{
         join.setText("verbunden");
     }
 
-    private void handleStart() {
-        Doppelkopf_client client = new Doppelkopf_client(handler,players,c);
-        handler.setHandler(client);
+    private void handleStart(RequestObject message) {
+        DokoClient client = new DokoClient(handler,players,c);
+        handler.setClient(client);
         client.createUI(
                 createJoinFrame.getExtendedState(),
                 createJoinFrame.getX(),

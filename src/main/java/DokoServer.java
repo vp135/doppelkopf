@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Collectors;
 
-public class DokoServer {
+public class DokoServer extends BaseServer {
 
     public final static String VERSION = "3.2.1";
     public static final long TIMEOUT = 1000;
@@ -31,7 +31,7 @@ public class DokoServer {
     private boolean schwein = false;
     private Stich stich;
     private List<Stich> stichList;
-    private List<Card> armutCards;
+    private List<BaseCard> armutCards;
     private HashMap<Integer,Boolean> readyMap;
     private HashMap<Integer,Integer> points;
     private HashMap<Integer,String> gameSelection = new HashMap<>();
@@ -234,12 +234,14 @@ public class DokoServer {
                 }
                 break;
             }
-            case StartGame.COMMAND:{
+            /*case StartGame.COMMAND:{
                 send2All(new StartGame());
                 send2All(new AnnounceSpectator(spectator,aufspieler));
                 shuffleCards();
                 break;
             }
+
+             */
             case ReadyForNextRound.COMMAND:{
                 if(wait4NextRound){
                     readyMap.put(requestObject.getParams().get("player").getAsInt(),true);
@@ -638,7 +640,7 @@ public class DokoServer {
 
 
     public void startGame() {
-        send2All(new StartGame());
+        send2All(new StartGame("DOKO"));
         try {
             Thread.sleep(3500);
         } catch (InterruptedException e) {
@@ -649,18 +651,7 @@ public class DokoServer {
     }
 
 
-    public void startGame(int starter) {
-        send2All(new StartGame());
-        beginner = starter-1;
 
-        try {
-            Thread.sleep(3500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        nextGame();
-        //shuffleCards();
-    }
 
     public Stich getStich(int stichNumber) {
         return stichList.get(stichNumber);
