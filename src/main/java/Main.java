@@ -1,4 +1,5 @@
 import base.Logger;
+import base.Statics;
 import base.messages.StartGame;
 import base.messages.GetVersion;
 import base.messages.PlayersInLobby;
@@ -9,6 +10,8 @@ import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 
 public class Main implements IInputputHandler{
 
@@ -16,13 +19,10 @@ public class Main implements IInputputHandler{
 
     static Main m;
 
-
-
     private String name;
     private List<String> players = new ArrayList<>();
     private final JList<String> playerList = new JList<>();
     private BaseServer server;
-    private DokoServer dokoServer;
     private JButton start;
     private JButton join;
     private JFrame createJoinFrame;
@@ -31,8 +31,9 @@ public class Main implements IInputputHandler{
 
     private Configuration c;
 
-    private final ComHandler handler;
+    private ComClient comClient;
     private boolean isAdmin;
+    private JComboBox<Statics.game> gameList;
 
     public static void main(String[] args) {
         m = new Main();
@@ -64,7 +65,6 @@ public class Main implements IInputputHandler{
 
     public Main(){
         modifyUIManager();
-        handler = new ComHandler(hostname,port, this);
         createOrJoin();
     }
 
@@ -113,6 +113,9 @@ public class Main implements IInputputHandler{
         join = new JButton("beitreten");
         start = new JButton("start");
         start.setEnabled(false);
+        gameList = new JComboBox<>();
+        gameList.setModel(new DefaultComboBoxModel<>(Statics.game.values()));
+
         rightPanel.add(playerList);
         rightPanel.add(userOptions);
         panel.add(rightPanel);
@@ -140,12 +143,11 @@ public class Main implements IInputputHandler{
 
         create.addActionListener(e -> {
             name = playername.getText();
-            handler.setName(name);
             if (!playername.getText().trim().equals("") && !port.getText().trim().equals("")) {
-                dokoServer = new DokoServer(Integer.parseInt(port.getText()),c);
+                server = new BaseServer(c, new ComServer(Integer.parseInt(port.getText())));
                 create.setEnabled(false);
                 join.setEnabled(false);
-                while(!dokoServer.listening) {
+                while(!server.comServer.listening) {
                     log.info("not listening");
                     try {
                         Thread.sleep(100);
@@ -153,11 +155,10 @@ public class Main implements IInputputHandler{
                         log.error(interruptedException.toString());
                     }
                 }
-                handler.openTCPConnection("127.0.0.1", Integer.parseInt(port.getText()));
-                handler.queueOutMessage(new GetVersion(name,DokoServer.VERSION));
-                inputs.add(start);
-            } else if (!port.getText().trim().equals("")) {
-                dokoServer = new DokoServer(Integer.parseInt(port.getText()),c);
+                comClient = new ComClient(hostname.getName(),Integer.parseInt(port.getText()), this,name);
+                comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
+                comClient.start();
+                inputs.add(gameList);
                 inputs.add(start);
             }
             overrideConfig(angle24Field, angle13Field,
@@ -168,16 +169,16 @@ public class Main implements IInputputHandler{
 
         join.addActionListener(e -> {
             name = playername.getText();
-            handler.setName(name);
             this.port = Integer.parseInt(port.getText());
             new Thread(() -> {
                 name = playername.getText().trim();
                 if (!name.equals("")) {
-                    handler.openTCPConnection(hostname.getText(), Integer.parseInt(port.getText()));
+                    comClient = new ComClient(hostname.getName(),Integer.parseInt(port.getText()), this,name);
+                    comClient.start();
                     log.info("verbinde");
                     int dots = 0;
                     long time = System.currentTimeMillis()+5000;
-                    while (handler.wait.get() && System.currentTimeMillis()<time) {
+                    while (comClient.wait.get() && System.currentTimeMillis()<time) {
                         if (dots > 3) {
                             dots = 0;
                         }
@@ -193,7 +194,7 @@ public class Main implements IInputputHandler{
                             log.error(interruptedException.toString());
                         }
                     }
-                    if (handler.socketNotNull()){
+                    if (comClient.socketNotNull()){
                         join.setText("verbunden");
                         log.info("verbunden");
                         overrideConfig(angle24Field, angle13Field,
@@ -201,9 +202,9 @@ public class Main implements IInputputHandler{
                                 distanceVariationField, repositionCards
                                 ,hostname, port, true);
                         create.setEnabled(false);
-                        handler.queueOutMessage(new GetVersion(name,DokoServer.VERSION));
+                        comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
                     } else {
-                        handler.clearQueue();
+                        comClient.clearQueue();
                         join.setText("beitreten");
                         log.info("beitreten");
                     }
@@ -213,13 +214,25 @@ public class Main implements IInputputHandler{
         });
         start.addActionListener(e -> {
             isAdmin = true;
-            dokoServer.startGame(Math.max(playerList.getSelectedIndex(), 0));
+            startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem()));
         });
         createJoinFrame.pack();
         createJoinFrame.add(panel);
         createJoinFrame.setVisible(true);
         createJoinFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         createJoinFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    private void startGameServer(Statics.game game) {
+        switch (game){
+            case DOKO:
+                server = new DokoServer(server);
+                break;
+            case SKAT:
+                server = new SkatServer(server);
+                break;
+        }
+        server.startGame();
     }
 
     private void createOptionsTestFrame() {
@@ -271,10 +284,10 @@ public class Main implements IInputputHandler{
 
 
     private void handleGetVersion(RequestObject message) {
-        if (!DokoServer.VERSION.equals(message.getParams().get("version").getAsString())) {
+        if (!Statics.VERSION.equals(message.getParams().get("version").getAsString())) {
             JOptionPane.showMessageDialog(createJoinFrame,
                     "Version(Server): " + message.getParams().get("version").getAsString() + "\n" +
-                            "Version(lokal): " + DokoServer.VERSION);
+                            "Version(lokal): " + Statics.VERSION);
         }
     }
 
@@ -296,8 +309,16 @@ public class Main implements IInputputHandler{
     }
 
     private void handleStart(RequestObject message) {
-        DokoClient client = new DokoClient(handler,players,c);
-        handler.setClient(client);
+        BaseClient client = null;
+        switch (Statics.game.valueOf(message.getParams().get("game").getAsString())){
+            case DOKO:
+                client = new DokoClient(comClient,players,c);
+                break;
+            case SKAT:
+                client = new SkatClient(comClient,players,c);
+                break;
+        }
+        comClient.setClient(client);
         client.createUI(
                 createJoinFrame.getExtendedState(),
                 createJoinFrame.getX(),
@@ -312,9 +333,7 @@ public class Main implements IInputputHandler{
             }
             createJoinFrame.setVisible(false);
             createJoinFrame.dispose();
-
+            log.info("disposed of lobby frame");
         }).start();
-
-        log.info("disposed of lobby frame");
     }
 }

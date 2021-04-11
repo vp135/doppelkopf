@@ -8,24 +8,25 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ComHandler {
+public class ComClient {
 
+    private static final long TIMEOUT = 5000;
     private final AutoResetEvent ev = new AutoResetEvent(true);
     private final ConcurrentLinkedDeque<RequestObject> outMessages = new ConcurrentLinkedDeque<>();
 
     private Socket socket;
     private final String hostname;
     private final int port;
-    private String name;
+    private final String name;
     private IInputputHandler client;
 
     public final AtomicBoolean wait = new AtomicBoolean(false);
 
-    public ComHandler(String hostname, int port,IInputputHandler client){
+    public ComClient(String hostname, int port, IInputputHandler client, String name){
         this.hostname = hostname;
         this.port = port;
         this.client = client;
-        outMessageHandling();
+        this.name = name;
     }
 
 
@@ -33,9 +34,9 @@ public class ComHandler {
         new Thread(() -> {
             while (true){
                 try {
-                    ev.waitOne(DokoServer.TIMEOUT);
+                    ev.waitOne(TIMEOUT);
                     if((socket==null || socket.isClosed())&&!wait.get()){
-                        openTCPConnection(hostname,port);
+                        openTCPConnection();
                     }
                     if(socket!=null && socket.isConnected()) {
                         while (outMessages.peek() != null) {
@@ -45,6 +46,7 @@ public class ComHandler {
                         }
                     }
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                     //log.error(e.toString());
                 }
             }
@@ -118,7 +120,7 @@ public class ComHandler {
         }).start();
     }
 
-    public void openTCPConnection(String hostname, int port) {
+    public void openTCPConnection() {
         queueOutMessage(new AddPlayer(name));
         wait.set(true);
         new Thread(() -> {
@@ -137,17 +139,14 @@ public class ComHandler {
                 }
             }
             wait.set(false);
+            ev.set();
         }).start();
 
     }
 
 
-    public void setClient(DokoClient handler) {
+    public void setClient(BaseClient handler) {
         this.client = handler;
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     public void clearQueue() {
@@ -156,5 +155,10 @@ public class ComHandler {
 
     public boolean socketNotNull() {
         return socket!=null;
+    }
+
+    public void start() {
+        openTCPConnection();
+        outMessageHandling();
     }
 }

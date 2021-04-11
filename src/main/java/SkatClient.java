@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SkatClient extends BaseUI implements IInputputHandler{
+public class SkatClient extends BaseClient implements IInputputHandler{
 
 
     private JButton sortKaro;
@@ -25,7 +25,7 @@ public class SkatClient extends BaseUI implements IInputputHandler{
     private int currentCardsOnTable;
     private int aufspieler;
 
-    public SkatClient(ComHandler handler, List<String> players, Configuration c) {
+    public SkatClient(ComClient handler, List<String> players, Configuration c) {
         super(handler, players, c);
     }
 
@@ -37,6 +37,7 @@ public class SkatClient extends BaseUI implements IInputputHandler{
         sortKreuz = new JButton("Kreuz");
         sortNull = new JButton("Null");
         sortGrand = new JButton("Grand");
+        buttonList = new ArrayList<>();
         buttonList.add(sortKaro);
         buttonList.add(sortHerz);
         buttonList.add(sortPik);

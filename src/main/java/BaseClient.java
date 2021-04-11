@@ -1,11 +1,11 @@
 import base.BaseCard;
 import base.Logger;
+import base.Statics;
 import base.doko.Card;
 import base.doko.messages.AbortGame;
 import base.messages.CurrentStich;
 import base.messages.DisplayMessage;
 import base.messages.RequestObject;
-import com.google.gson.JsonArray;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,10 +15,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
-public abstract class BaseUI implements IInputputHandler {
+public abstract class BaseClient implements IInputputHandler {
 
     protected final static Logger log = new Logger(DokoClient.class.getName(),4,true);
 
@@ -66,7 +66,7 @@ public abstract class BaseUI implements IInputputHandler {
     protected List<BaseCard> hand;
 
     protected Configuration c;
-    protected ComHandler handler;
+    protected ComClient handler;
     protected final List<String> players;
     protected int maxHandCards = 13;
 
@@ -75,7 +75,7 @@ public abstract class BaseUI implements IInputputHandler {
 
     protected final Random random = new Random(System.currentTimeMillis());
 
-    public BaseUI(ComHandler handler, List<String> players, Configuration c) {
+    public BaseClient(ComClient handler, List<String> players, Configuration c) {
         this.handler = handler;
         this.players = players;
         this.c = c;
@@ -91,7 +91,6 @@ public abstract class BaseUI implements IInputputHandler {
                 break;
             }
         }
-
     }
 
     //UI creation functions
@@ -159,7 +158,7 @@ public abstract class BaseUI implements IInputputHandler {
      */
     private void createMainFrame(int state, int posX, int posY, Dimension size) {
         log.info("creating UI");
-        mainFrame = new JFrame("Doppelkopf/Skat Version "+DokoServer.VERSION + " " + c.name );
+        mainFrame = new JFrame("Doppelkopf/Skat Version "+ Statics.VERSION + " " + c.name );
         mainPanel =new JPanel(new GridBagLayout());
         mainFrame.setExtendedState(state);
         mainFrame.setLocation(posX, posY);
@@ -424,12 +423,11 @@ public abstract class BaseUI implements IInputputHandler {
     }
 
     protected void createCards() {
-        //TODO: make generic for skat and doko
         cardWidth4Hand = panel.getWidth() / maxHandCards;
         cardHeight4Hand = (int) (cardWidth4Hand / RATIO);
 
 
-        Card.UNIQUE_CARDS.forEach(s -> {
+        BaseCard.UNIQUE_CARDS.forEach(s -> {
             String path = System.getProperty("user.dir") + "\\resources\\" + s + ".PNG";
             BufferedImage image;
             ImageIcon icon;
@@ -560,15 +558,9 @@ public abstract class BaseUI implements IInputputHandler {
     }
 
     protected void handleCards(RequestObject message) {
-        JsonArray array = message.getParams().getAsJsonArray("cards");
+
         updateTable();
         panel.removeAll();
-        hand = new ArrayList<>();
-        array.forEach(card->{
-            base.skat.Card c = new base.skat.Card(card.getAsString().split(" ")[1],
-                    card.getAsString().split(" ")[0]);
-            hand.add(c);
-        });
         createCardButtons(hand);
         setGameSpecificButtons(hand);
         serverMessageLabel.setText("");

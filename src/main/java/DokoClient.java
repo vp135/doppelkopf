@@ -4,6 +4,7 @@ import base.doko.Card;
 import base.doko.SortHand;
 import base.doko.messages.*;
 import base.messages.*;
+import com.google.gson.JsonArray;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -13,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DokoClient extends BaseUI implements  IInputputHandler{
+public class DokoClient extends BaseClient implements  IInputputHandler{
 
     //UI
     private JButton sortNormal;
@@ -45,7 +46,7 @@ public class DokoClient extends BaseUI implements  IInputputHandler{
 
     private final ServerConfig serverConfig = new ServerConfig();
 
-    public DokoClient(ComHandler handler, List<String> players, Configuration c){
+    public DokoClient(ComClient handler, List<String> players, Configuration c){
         super(handler,players,c);
     }
 
@@ -413,6 +414,13 @@ public class DokoClient extends BaseUI implements  IInputputHandler{
     @Override
     protected void handleCards(RequestObject message) {
         selectedGame = GameSelected.NORMAL;
+        JsonArray array = message.getParams().getAsJsonArray("cards");
+        hand = new ArrayList<>();
+        array.forEach(card->{
+            Card c = new Card(card.getAsString().split(" ")[1],
+                    card.getAsString().split(" ")[0]);
+            hand.add(c);
+        });
         super.handleCards(message);
     }
 

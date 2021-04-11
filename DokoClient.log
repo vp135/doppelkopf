@@ -1,0 +1,207 @@
+2021-04-11 14:00:07(22) - info - 31 - DokoClient - creating UI
+2021-04-11 14:00:07(27) - info - 31 - DokoClient - creating play area
+2021-04-11 14:00:07(22) - info - 31 - DokoClient - creating hud
+2021-04-11 14:00:07(0) - info - 31 - DokoClient - setting components
+2021-04-11 14:00:07(15) - info - 31 - DokoClient - components set
+2021-04-11 14:00:07(0) - info - 31 - DokoClient - listeners added
+2021-04-11 14:00:07(0) - info - 31 - DokoClient - starting to redraw
+2021-04-11 14:04:14(4655) - info - 31 - DokoClient - creating UI
+2021-04-11 14:04:14(22) - info - 31 - DokoClient - creating play area
+2021-04-11 14:04:14(16) - info - 31 - DokoClient - creating hud
+2021-04-11 14:04:14(16) - info - 31 - DokoClient - setting components
+2021-04-11 14:04:14(0) - info - 31 - DokoClient - components set
+2021-04-11 14:04:14(0) - info - 31 - DokoClient - listeners added
+2021-04-11 14:04:14(0) - info - 31 - DokoClient - starting to redraw
+2021-04-11 14:04:15(1888) - info - 31 - DokoClient - redraw finished
+2021-04-11 14:04:15(0) - info - 31 - DokoClient - finished UI creation
+2021-04-11 14:04:15(0) - info - 31 - DokoClient - received: AnnounceSpectator
+2021-04-11 14:04:33(17577) - info - 31 - DokoClient - received: UpdateUserPanel
+2021-04-11 14:04:51(17992) - info - 31 - DokoClient - received: Cards
+2021-04-11 14:05:00(8886) - info - 31 - DokoClient - received: SelectGame
+2021-04-11 14:09:22(6) - info - 30 - DokoClient - creating UI
+2021-04-11 14:09:22(47) - info - 30 - DokoClient - creating play area
+2021-04-11 14:09:22(16) - info - 30 - DokoClient - creating hud
+2021-04-11 14:09:22(0) - info - 30 - DokoClient - setting components
+2021-04-11 14:09:22(16) - info - 30 - DokoClient - components set
+2021-04-11 14:09:22(0) - info - 30 - DokoClient - listeners added
+2021-04-11 14:09:22(0) - info - 30 - DokoClient - starting to redraw
+2021-04-11 14:09:25(2926) - info - 30 - DokoClient - redraw finished
+2021-04-11 14:09:25(0) - info - 30 - DokoClient - finished UI creation
+2021-04-11 14:09:39(14731) - info - 30 - DokoClient - received: AnnounceSpectator
+2021-04-11 14:09:39(15) - info - 30 - DokoClient - received: UpdateUserPanel
+2021-04-11 14:09:49(9897) - info - 21 - DokoClient - starting to redraw
+2021-04-11 14:09:49(62) - info - 30 - DokoClient - received: Cards
+2021-04-11 14:09:49(16) - info - 30 - DokoClient - received: SelectGame
+2021-04-11 14:09:52(2722) - info - 21 - DokoClient - redraw finished
+2021-04-11 14:09:52(6) - info - 21 - DokoClient - starting to redraw
+2021-04-11 14:09:55(2764) - info - 21 - DokoClient - redraw finished
+2021-04-11 14:09:55(0) - info - 21 - DokoClient - starting to redraw
+2021-04-11 14:09:58(2639) - info - 21 - DokoClient - redraw finished
+2021-04-11 16:04:18(11) - info - 30 - DokoClient - creating UI
+2021-04-11 16:04:18(21) - info - 30 - DokoClient - creating play area
+2021-04-11 16:04:18(15) - info - 30 - DokoClient - creating hud
+2021-04-11 16:04:18(6) - info - 30 - DokoClient - setting components
+2021-04-11 16:04:18(0) - info - 30 - DokoClient - components set
+2021-04-11 16:04:18(0) - info - 30 - DokoClient - listeners added
+2021-04-11 16:04:18(0) - info - 30 - DokoClient - starting to redraw
+2021-04-11 16:04:19(1739) - info - 30 - DokoClient - redraw finished
+2021-04-11 16:04:19(0) - info - 30 - DokoClient - finished UI creation
+2021-04-11 16:04:21(1706) - info - 30 - DokoClient - received: AnnounceSpectator
+2021-04-11 16:04:21(5) - info - 30 - DokoClient - received: UpdateUserPanel
+2021-04-11 16:04:21(10) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:04:21(71) - info - 30 - DokoClient - received: Cards
+2021-04-11 16:04:21(10) - info - 30 - DokoClient - received: SelectGame
+2021-04-11 16:04:23(1526) - info - 21 - DokoClient - redraw finished
+2021-04-11 16:04:50(11) - info - 30 - DokoClient - creating UI
+2021-04-11 16:04:50(21) - info - 30 - DokoClient - creating play area
+2021-04-11 16:04:50(22) - info - 30 - DokoClient - creating hud
+2021-04-11 16:04:50(0) - info - 30 - DokoClient - setting components
+2021-04-11 16:04:50(0) - info - 30 - DokoClient - components set
+2021-04-11 16:04:50(0) - info - 30 - DokoClient - listeners added
+2021-04-11 16:04:50(0) - info - 30 - DokoClient - starting to redraw
+2021-04-11 16:04:52(1749) - info - 30 - DokoClient - redraw finished
+2021-04-11 16:04:52(0) - info - 30 - DokoClient - finished UI creation
+2021-04-11 16:04:54(1696) - info - 30 - DokoClient - received: AnnounceSpectator
+2021-04-11 16:04:54(0) - info - 30 - DokoClient - received: UpdateUserPanel
+2021-04-11 16:04:54(11) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:04:54(43) - info - 30 - DokoClient - received: Cards
+2021-04-11 16:04:54(10) - info - 30 - DokoClient - received: SelectGame
+2021-04-11 16:04:55(1552) - info - 21 - DokoClient - redraw finished
+2021-04-11 16:14:51(11) - info - 30 - DokoClient - creating UI
+2021-04-11 16:14:51(32) - info - 30 - DokoClient - creating play area
+2021-04-11 16:14:51(11) - info - 30 - DokoClient - creating hud
+2021-04-11 16:14:51(0) - info - 30 - DokoClient - setting components
+2021-04-11 16:14:51(10) - info - 30 - DokoClient - components set
+2021-04-11 16:14:51(0) - info - 30 - DokoClient - listeners added
+2021-04-11 16:14:51(0) - info - 30 - DokoClient - starting to redraw
+2021-04-11 16:14:53(1883) - info - 30 - DokoClient - redraw finished
+2021-04-11 16:14:53(5) - info - 30 - DokoClient - finished UI creation
+2021-04-11 16:14:55(1541) - info - 30 - DokoClient - received: AnnounceSpectator
+2021-04-11 16:14:55(0) - info - 30 - DokoClient - received: UpdateUserPanel
+2021-04-11 16:14:55(17) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:14:55(53) - info - 30 - DokoClient - received: Cards
+2021-04-11 16:14:55(10) - info - 30 - DokoClient - received: SelectGame
+2021-04-11 16:14:57(1686) - info - 21 - DokoClient - redraw finished
+2021-04-11 16:15:42(0) - info - 30 - DokoClient - creating UI
+2021-04-11 16:15:42(32) - info - 30 - DokoClient - creating play area
+2021-04-11 16:15:42(11) - info - 30 - DokoClient - creating hud
+2021-04-11 16:15:42(0) - info - 30 - DokoClient - setting components
+2021-04-11 16:15:42(0) - info - 30 - DokoClient - components set
+2021-04-11 16:15:42(0) - info - 30 - DokoClient - listeners added
+2021-04-11 16:15:42(0) - info - 30 - DokoClient - starting to redraw
+2021-04-11 16:15:44(1877) - info - 30 - DokoClient - redraw finished
+2021-04-11 16:15:44(0) - info - 30 - DokoClient - finished UI creation
+2021-04-11 16:15:46(1557) - info - 30 - DokoClient - received: AnnounceSpectator
+2021-04-11 16:15:46(0) - info - 30 - DokoClient - received: UpdateUserPanel
+2021-04-11 16:15:46(13) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:15:46(52) - info - 30 - DokoClient - received: Cards
+2021-04-11 16:17:47(11) - info - 30 - DokoClient - creating UI
+2021-04-11 16:17:47(21) - info - 30 - DokoClient - creating play area
+2021-04-11 16:17:47(22) - info - 30 - DokoClient - creating hud
+2021-04-11 16:17:47(0) - info - 30 - DokoClient - setting components
+2021-04-11 16:17:47(0) - info - 30 - DokoClient - components set
+2021-04-11 16:17:47(0) - info - 30 - DokoClient - listeners added
+2021-04-11 16:17:47(0) - info - 30 - DokoClient - starting to redraw
+2021-04-11 16:17:49(1888) - info - 30 - DokoClient - redraw finished
+2021-04-11 16:17:49(0) - info - 30 - DokoClient - finished UI creation
+2021-04-11 16:17:50(1568) - info - 30 - DokoClient - received: AnnounceSpectator
+2021-04-11 16:17:50(0) - info - 30 - DokoClient - received: UpdateUserPanel
+2021-04-11 16:17:50(22) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:17:50(47) - info - 30 - DokoClient - received: Cards
+2021-04-11 16:19:46(11) - info - 31 - DokoClient - creating UI
+2021-04-11 16:19:46(31) - info - 31 - DokoClient - creating play area
+2021-04-11 16:19:46(16) - info - 31 - DokoClient - creating hud
+2021-04-11 16:19:46(0) - info - 31 - DokoClient - setting components
+2021-04-11 16:19:46(0) - info - 31 - DokoClient - components set
+2021-04-11 16:19:46(6) - info - 31 - DokoClient - listeners added
+2021-04-11 16:19:46(0) - info - 31 - DokoClient - starting to redraw
+2021-04-11 16:19:48(1984) - info - 31 - DokoClient - redraw finished
+2021-04-11 16:19:48(0) - info - 31 - DokoClient - finished UI creation
+2021-04-11 16:19:49(1434) - info - 31 - DokoClient - received: AnnounceSpectator
+2021-04-11 16:19:49(0) - info - 31 - DokoClient - received: UpdateUserPanel
+2021-04-11 16:19:49(11) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:19:50(48) - info - 31 - DokoClient - received: Cards
+2021-04-11 16:20:20(30914) - info - 31 - DokoClient - received: SelectGame
+2021-04-11 16:20:22(1803) - info - 21 - DokoClient - redraw finished
+2021-04-11 16:20:22(127) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:20:24(1771) - info - 21 - DokoClient - redraw finished
+2021-04-11 16:21:13(49015) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-11 16:21:22(9134) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:21:24(1802) - info - 21 - DokoClient - redraw finished
+2021-04-11 16:49:57(11) - info - 30 - DokoClient - creating UI
+2021-04-11 16:49:57(21) - info - 30 - DokoClient - creating play area
+2021-04-11 16:49:57(11) - info - 30 - DokoClient - creating hud
+2021-04-11 16:49:57(11) - info - 30 - DokoClient - setting components
+2021-04-11 16:49:57(0) - info - 30 - DokoClient - components set
+2021-04-11 16:49:57(0) - info - 30 - DokoClient - listeners added
+2021-04-11 16:49:57(0) - info - 30 - DokoClient - starting to redraw
+2021-04-11 16:49:59(1877) - info - 30 - DokoClient - redraw finished
+2021-04-11 16:49:59(0) - info - 30 - DokoClient - finished UI creation
+2021-04-11 16:50:00(1574) - info - 30 - DokoClient - received: AnnounceSpectator
+2021-04-11 16:50:01(4) - info - 30 - DokoClient - received: UpdateUserPanel
+2021-04-11 16:50:01(33) - info - 21 - DokoClient - starting to redraw
+2021-04-11 16:50:01(42) - info - 30 - DokoClient - received: Cards
+2021-04-11 16:50:01(11) - info - 30 - DokoClient - received: SelectGame
+2021-04-11 16:50:02(1589) - info - 21 - DokoClient - redraw finished
+2021-04-11 16:57:19(3196) - info - 33 - DokoClient - received: PlayersInLobby
+2021-04-11 16:58:02(43212) - info - 33 - DokoClient - received: startGame
+2021-04-11 16:58:10(7957) - info - 33 - DokoClient - received: startGame
+2021-04-11 16:58:19(9259) - info - 33 - DokoClient - received: startGame
+2021-04-11 16:59:47(87992) - info - 33 - DokoClient - received: startGame
+2021-04-11 17:00:01(14199) - info - 33 - DokoClient - received: startGame
+2021-04-11 17:00:15(14048) - info - 33 - DokoClient - received: startGame
+2021-04-11 17:01:03(47767) - info - 33 - DokoClient - received: startGame
+2021-04-11 17:03:19(76419) - info - 33 - DokoClient - received: PlayersInLobby
+2021-04-11 17:07:36(5269) - info - 30 - DokoClient - creating UI
+2021-04-11 17:07:37(470) - info - 30 - DokoClient - creating play area
+2021-04-11 17:07:37(368) - info - 30 - DokoClient - creating hud
+2021-04-11 17:07:38(1104) - info - 30 - DokoClient - setting components
+2021-04-11 17:07:38(11) - info - 30 - DokoClient - components set
+2021-04-11 17:07:41(3203) - info - 30 - DokoClient - listeners added
+2021-04-11 17:07:41(1) - info - 30 - DokoClient - starting to redraw
+2021-04-11 17:09:35(0) - info - 31 - DokoClient - creating UI
+2021-04-11 17:09:35(32) - info - 31 - DokoClient - creating play area
+2021-04-11 17:09:35(22) - info - 31 - DokoClient - creating hud
+2021-04-11 17:09:35(0) - info - 31 - DokoClient - setting components
+2021-04-11 17:09:35(10) - info - 31 - DokoClient - components set
+2021-04-11 17:09:35(0) - info - 31 - DokoClient - listeners added
+2021-04-11 17:09:35(0) - info - 31 - DokoClient - starting to redraw
+2021-04-11 17:09:37(1899) - info - 31 - DokoClient - redraw finished
+2021-04-11 17:09:37(0) - info - 31 - DokoClient - finished UI creation
+2021-04-11 17:09:51(14112) - info - 21 - DokoClient - starting to redraw
+2021-04-11 17:09:53(1829) - info - 21 - DokoClient - redraw finished
+2021-04-11 17:09:53(113) - info - 21 - DokoClient - starting to redraw
+2021-04-11 17:09:55(1834) - info - 21 - DokoClient - redraw finished
+2021-04-11 17:10:58(0) - info - 30 - DokoClient - creating UI
+2021-04-11 17:10:58(42) - info - 30 - DokoClient - creating play area
+2021-04-11 17:10:58(11) - info - 30 - DokoClient - creating hud
+2021-04-11 17:10:58(11) - info - 30 - DokoClient - setting components
+2021-04-11 17:10:58(0) - info - 30 - DokoClient - components set
+2021-04-11 17:10:58(0) - info - 30 - DokoClient - listeners added
+2021-04-11 17:10:58(0) - info - 30 - DokoClient - starting to redraw
+2021-04-11 17:11:00(1941) - info - 30 - DokoClient - redraw finished
+2021-04-11 17:11:00(0) - info - 30 - DokoClient - finished UI creation
+2021-04-11 17:11:07(6784) - info - 21 - DokoClient - starting to redraw
+2021-04-11 17:11:09(1867) - info - 21 - DokoClient - redraw finished
+2021-04-11 17:29:02(11) - info - 31 - DokoClient - creating UI
+2021-04-11 17:29:02(32) - info - 31 - DokoClient - creating play area
+2021-04-11 17:29:02(13) - info - 31 - DokoClient - creating hud
+2021-04-11 17:29:02(8) - info - 31 - DokoClient - setting components
+2021-04-11 17:29:02(0) - info - 31 - DokoClient - components set
+2021-04-11 17:29:02(5) - info - 31 - DokoClient - listeners added
+2021-04-11 17:29:02(0) - info - 31 - DokoClient - starting to redraw
+2021-04-11 17:29:04(1766) - info - 31 - DokoClient - redraw finished
+2021-04-11 17:29:04(0) - info - 31 - DokoClient - finished UI creation
+2021-04-11 17:29:06(1675) - info - 31 - DokoClient - received: AnnounceSpectator
+2021-04-11 17:29:06(0) - info - 31 - DokoClient - received: UpdateUserPanel
+2021-04-11 17:29:06(10) - info - 21 - DokoClient - starting to redraw
+2021-04-11 17:29:06(65) - info - 31 - DokoClient - received: Cards
+2021-04-11 17:29:06(10) - info - 31 - DokoClient - received: SelectGame
+2021-04-11 17:29:07(1515) - info - 21 - DokoClient - redraw finished
+2021-04-11 17:30:59(11) - info - 30 - DokoClient - creating UI
+2021-04-11 17:30:59(21) - info - 30 - DokoClient - creating play area
+2021-04-11 17:30:59(22) - info - 30 - DokoClient - creating hud
+2021-04-11 17:30:59(0) - info - 30 - DokoClient - setting components
+2021-04-11 17:30:59(10) - info - 30 - DokoClient - components set
+2021-04-11 17:30:59(0) - info - 30 - DokoClient - listeners added
+2021-04-11 17:30:59(0) - info - 30 - DokoClient - starting to redraw
