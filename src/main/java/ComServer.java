@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class ComServer {
 
-    protected Logger log = new Logger(this.getClass().getName(),1);
+    protected Logger log = new Logger(this.getClass().getName(),4);
 
 
     private final ConcurrentLinkedDeque<MessageIn> inMessages = new ConcurrentLinkedDeque<>();
@@ -63,11 +63,13 @@ public class ComServer {
                                         inMessages.offer(new MessageIn(connectionSocket,in));
                                         evIn.set();
                                     } else {
+                                        log.info("test1");
                                         //log.info("incoming data was null "+ players.stream().filter(player -> player.getSocket().equals(connectionSocket)).findFirst().get().getName());
                                         connectionSocket.close();
                                     }
                                 } catch (IOException e) {
                                     if (e instanceof SocketException) {
+                                        log.info("test2");
                                         //log.info(e.toString()+ players.stream().filter(player -> player.getSocket().equals(connectionSocket)).findFirst().get().getName());
                                         try{
                                             connectionSocket.close();
@@ -129,8 +131,8 @@ public class ComServer {
                 PrintWriter out = new PrintWriter(new BufferedWriter(
                         new OutputStreamWriter(socketConnection.getOutputStream())), true);
                 String s = requestObject.toJson();
-                //players.stream().filter(player -> player.getSocket() == socketConnection).findFirst().ifPresent(player -> log.info("Send to " + player.getName() + ": " + s));
                 out.println(s);
+                log.info(s);
                 sent = true;
             } catch (IOException ex) {
                 log.error(ex.toString());

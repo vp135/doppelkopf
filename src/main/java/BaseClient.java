@@ -6,6 +6,7 @@ import base.doko.messages.AbortGame;
 import base.messages.CurrentStich;
 import base.messages.DisplayMessage;
 import base.messages.RequestObject;
+import com.google.gson.JsonArray;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -85,6 +86,7 @@ public abstract class BaseClient implements IInputputHandler {
 
     @Override
     public void handleInput(RequestObject input) {
+        log.info("received: " +input.getCommand());
         switch (input.getCommand()) {
             case DisplayMessage.COMMAND: {
                 serverMessageLabel.setText(input.getParams().get("message").getAsString());
@@ -558,6 +560,14 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
     protected void handleCards(RequestObject message) {
+        JsonArray array = message.getParams().getAsJsonArray("cards");
+        hand = new ArrayList<>();
+        array.forEach(card->{
+            Card c = new Card(card.getAsString().split(" ")[1],
+                    card.getAsString().split(" ")[0]);
+            hand.add(c);
+        });
+
 
         updateTable();
         panel.removeAll();

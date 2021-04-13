@@ -3,6 +3,8 @@ import base.messages.*;
 import base.skat.Card;
 import base.skat.SortHand;
 import base.skat.messages.GameSelected;
+import base.skat.messages.Reizen;
+import com.google.gson.JsonArray;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -24,6 +26,8 @@ public class SkatClient extends BaseClient implements IInputputHandler{
     private int spectator;
     private int currentCardsOnTable;
     private int aufspieler;
+    private JButton nextValue;
+    private JButton pass;
 
     public SkatClient(ComClient handler, List<String> players, Configuration c) {
         super(handler, players, c);
@@ -37,6 +41,8 @@ public class SkatClient extends BaseClient implements IInputputHandler{
         sortKreuz = new JButton("Kreuz");
         sortNull = new JButton("Null");
         sortGrand = new JButton("Grand");
+        nextValue = new JButton("18");
+        pass = new JButton("weg!");
         buttonList = new ArrayList<>();
         buttonList.add(sortKaro);
         buttonList.add(sortHerz);
@@ -44,6 +50,8 @@ public class SkatClient extends BaseClient implements IInputputHandler{
         buttonList.add(sortKreuz);
         buttonList.add(sortNull);
         buttonList.add(sortGrand);
+        buttonList.add(nextValue);
+        buttonList.add(pass);
 
         sortKaro.addActionListener(e -> {
             createCardButtons(hand= SortHand.sortKaro(hand));
@@ -74,6 +82,9 @@ public class SkatClient extends BaseClient implements IInputputHandler{
             createCardButtons(hand= SortHand.sortGrand(hand));
             deselectAllSortButtons();
             sortGrand.setBackground(Color.GREEN);
+        });
+        nextValue.addActionListener(e->{
+            handler.queueOutMessage(new Reizen(c.name,Integer.parseInt(nextValue.getText()),true));
         });
     }
 
@@ -114,7 +125,7 @@ public class SkatClient extends BaseClient implements IInputputHandler{
 
     @Override
     public void handleInput(RequestObject message) {
-        log.info("received: " + message.getCommand());
+        super.handleInput(message);
         switch (message.getCommand()){
             case Cards.COMMAND:
                 deselectAllSortButtons();
@@ -143,11 +154,26 @@ public class SkatClient extends BaseClient implements IInputputHandler{
             case AnnounceSpectator.COMMAND:
                 handleAnnounceSpectator(message);
                 break;
+            case Reizen.COMMAND:{
+                handleReizen(message);
+            }
             default:
-                super.handleInput(message);
                 break;
 
         }
+    }
+
+    private void handleReizen(RequestObject message) {
+        int val = message.getParams().get("value").getAsInt();
+        int nextVal = 0;
+        for(int i =0; i<Reizen.VALUES.length;i++){
+            if(Reizen.VALUES[i]==val){
+                nextVal = Reizen.VALUES[i+1];
+                break;
+            }
+        }
+        nextValue.setText(String.valueOf(nextVal));
+        gameMessageLabel.setText(String.valueOf(message.getParams().get("value").getAsInt()));
     }
 
     private void handleAnnounceSpectator(RequestObject message) {
@@ -379,4 +405,10 @@ public class SkatClient extends BaseClient implements IInputputHandler{
                 "</font></html>";
     }
 
+    @Override
+    protected void createUI(int state, int posX, int posY, Dimension size, boolean test) {
+        super.createUI(state, posX, posY, size, test);
+        setGameSpecificButtons(null);
+        controlPanel.setVisible(true);
+    }
 }

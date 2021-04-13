@@ -1,4 +1,5 @@
 import base.AutoResetEvent;
+import base.Logger;
 import base.messages.AddPlayer;
 import base.messages.RequestObject;
 
@@ -21,6 +22,8 @@ public class ComClient {
     private IInputputHandler client;
 
     public final AtomicBoolean wait = new AtomicBoolean(false);
+
+    private final Logger log = new Logger("ComClient",4,true);
 
     public ComClient(String hostname, int port, IInputputHandler client, String name){
         this.hostname = hostname;
@@ -54,7 +57,7 @@ public class ComClient {
     }
 
     public void queueOutMessage(RequestObject message) {
-        //log.info("queue: " + message.getCommand());
+        log.info("queue: " + message.getCommand());
         if (message.getCommand().equals(AddPlayer.COMMAND)) {
             outMessages.forEach(requestObject -> {
                 if (requestObject.getCommand().equals(AddPlayer.COMMAND)) {
@@ -76,16 +79,16 @@ public class ComClient {
                 PrintWriter out = new PrintWriter(new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream())), true);
                 String s = requestObject.toJson();
-                //log.info("Sending to server: " + requestObject.getCommand());
+                log.info("Sending to server: " + requestObject.getCommand());
                 out.println(s);
                 sent = true;
             } catch (IOException ex) {
-                //log.error(ex.toString());
+                log.error(ex.toString());
                 //ev.set();
             }
         }
         else{
-            //log.warn("socket was unexpectedly closed - Trying to reopen connection");
+            log.warn("socket was unexpectedly closed - Trying to reopen connection");
             socket = null;
         }
         return sent;
@@ -100,18 +103,19 @@ public class ComClient {
                     in = new BufferedReader(new InputStreamReader(socket.getInputStream(),
                             StandardCharsets.UTF_8));
                 } catch (Exception ex) {
-                    //log.error(ex.toString());
+                    log.error(ex.toString());
                 }
                 if (in != null) {
                     while (socket != null) {
                         try {
                             if ((ServerReply = in.readLine()) != null) {
                                 if (ServerReply.length() > 0) {
+                                    log.info(ServerReply);
                                     client.handleInput(RequestObject.fromString(ServerReply));
                                 }
                             }
                         } catch (Exception ex) {
-                            //log.error(ex.toString());
+                            log.error(ex.toString());
                             socket = null;
                         }
                     }
@@ -128,14 +132,14 @@ public class ComClient {
                 try {
                     socket = new Socket(hostname, port);
                     Listen();
-                    //log.info("Connected to Server");
+                    log.info("Connected to Server");
                 } catch (IOException e) {
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
-                    //log.warn("Could not connect to Server: " + e);
+                    log.warn("Could not connect to Server: " + e);
                 }
             }
             wait.set(false);

@@ -151,8 +151,6 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
             sortHochzeit.setBackground(Color.GREEN);
             selectedGame = GameSelected.HOCHZEIT;
         });
-
-
     }
 
     @Override
@@ -233,7 +231,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
 
     @Override
     public void handleInput(RequestObject message) {
-        log.info("received: " +message.getCommand());
+        super.handleInput(message);
         switch (message.getCommand()) {
             case Cards.COMMAND: {
                 deselectAllSortButtons();
@@ -289,7 +287,6 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 break;
             }
             default:
-                super.handleInput(message);
                 break;
         }
     }
@@ -414,13 +411,6 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     @Override
     protected void handleCards(RequestObject message) {
         selectedGame = GameSelected.NORMAL;
-        JsonArray array = message.getParams().getAsJsonArray("cards");
-        hand = new ArrayList<>();
-        array.forEach(card->{
-            Card c = new Card(card.getAsString().split(" ")[1],
-                    card.getAsString().split(" ")[0]);
-            hand.add(c);
-        });
         super.handleCards(message);
     }
 
