@@ -1,282 +1,419 @@
-2021-04-14 00:24:17(30) - info - 27 - ComServer - Creating ServerSocket...
-2021-04-14 00:24:17(2) - info - 27 - ComServer - ServerSocket created: 0.0.0.0/0.0.0.0:5000
-2021-04-14 00:24:17(129) - info - 27 - ComServer - Connection established
-2021-04-14 00:24:17(23) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:24:17(19) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:24:17(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:24:17(0) - info - 25 - ComServer - added message: getVersion
-2021-04-14 00:24:17(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:24:17(0) - info - 26 - ComServer - {"command":"getVersion","params":{"player":"Server","version":"3.3.0"}}
-2021-04-14 00:24:17(672) - info - 21 - ComServer - added message: startGame
-2021-04-14 00:24:17(0) - info - 26 - ComServer - {"command":"startGame","params":{"game":"SKAT"}}
-2021-04-14 00:24:21(3509) - info - 21 - ComServer - added message: Cards
-2021-04-14 00:24:21(0) - info - 26 - ComServer - {"command":"Cards","params":{"cards":["Herz Ass","Kreuz Ass","Herz Koenig","Pik Koenig","Karo 7","Pik 10","Kreuz Koenig","Herz Dame","Karo Koenig","Pik 9"]}}
-2021-04-14 00:25:10(48738) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:10(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:10(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":18,"active":false}}
-2021-04-14 00:25:19(9483) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:19(10) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:19(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":20,"active":false}}
-2021-04-14 00:25:20(1078) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:20(10) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:20(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":22,"active":false}}
-2021-04-14 00:25:21(907) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:21(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:21(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":23,"active":false}}
-2021-04-14 00:25:22(885) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:22(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:22(11) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":24,"active":false}}
-2021-04-14 00:25:23(1003) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:23(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:23(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":27,"active":false}}
-2021-04-14 00:25:24(778) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:24(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:24(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":30,"active":false}}
-2021-04-14 00:25:24(491) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:24(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:24(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":33,"active":false}}
-2021-04-14 00:25:25(861) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:25(3) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:25(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":35,"active":false}}
-2021-04-14 00:25:26(650) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:26(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:26(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":36,"active":false}}
-2021-04-14 00:25:27(1269) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:27(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:27(11) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":40,"active":false}}
-2021-04-14 00:25:28(586) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:28(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:28(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":44,"active":false}}
-2021-04-14 00:25:29(771) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:29(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:29(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":45,"active":false}}
-2021-04-14 00:25:29(744) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:29(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:29(5) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":46,"active":false}}
-2021-04-14 00:25:30(848) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:30(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:30(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":48,"active":false}}
-2021-04-14 00:25:31(1045) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:31(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:31(11) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":50,"active":false}}
-2021-04-14 00:25:32(672) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:32(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:32(11) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":54,"active":false}}
-2021-04-14 00:25:33(608) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:33(10) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:33(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":55,"active":false}}
-2021-04-14 00:25:34(960) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:34(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:34(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":59,"active":false}}
-2021-04-14 00:25:34(929) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:34(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:34(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":60,"active":false}}
-2021-04-14 00:25:47(12267) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:47(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:47(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":63,"active":false}}
-2021-04-14 00:25:50(3317) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:50(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:50(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":66,"active":false}}
-2021-04-14 00:25:51(842) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:51(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:51(12) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":70,"active":false}}
-2021-04-14 00:25:52(682) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:52(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:52(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":72,"active":false}}
-2021-04-14 00:25:52(875) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:52(10) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:52(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":77,"active":false}}
-2021-04-14 00:25:53(694) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:53(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:53(11) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":80,"active":false}}
-2021-04-14 00:25:54(533) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:54(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:54(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":81,"active":false}}
-2021-04-14 00:25:55(927) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:55(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:55(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":84,"active":false}}
-2021-04-14 00:25:55(384) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:55(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:55(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":88,"active":false}}
-2021-04-14 00:25:55(214) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:55(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:55(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":90,"active":false}}
-2021-04-14 00:25:56(391) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:56(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:56(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":96,"active":false}}
-2021-04-14 00:25:56(148) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:56(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:56(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":99,"active":false}}
-2021-04-14 00:25:56(369) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:56(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:56(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":100,"active":false}}
-2021-04-14 00:25:56(169) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:56(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:56(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":108,"active":false}}
-2021-04-14 00:25:56(131) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:56(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:56(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":110,"active":false}}
-2021-04-14 00:25:57(201) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:57(15) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:57(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":120,"active":false}}
-2021-04-14 00:25:57(367) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:57(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:57(6) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":121,"active":false}}
-2021-04-14 00:25:57(171) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:57(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:57(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":132,"active":false}}
-2021-04-14 00:25:58(384) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:58(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:58(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":144,"active":false}}
-2021-04-14 00:25:58(170) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:58(12) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:58(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":168,"active":false}}
-2021-04-14 00:25:58(172) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:58(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:58(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":192,"active":false}}
-2021-04-14 00:25:58(318) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:58(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:58(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":216,"active":false}}
-2021-04-14 00:25:59(448) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:59(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:59(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":240,"active":false}}
-2021-04-14 00:25:59(480) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:25:59(10) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:25:59(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:00(566) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:00(11) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:00(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:00(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:00(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:00(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:00(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:00(192) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:00(10) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:00(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:00(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:00(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:00(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:00(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:00(502) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:00(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:00(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:00(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:00(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:00(10) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:00(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:01(182) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:01(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:01(10) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(10) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:01(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:01(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:01(182) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:01(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:01(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:01(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:01(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:01(191) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:01(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:01(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:01(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:01(11) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:01(171) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:01(10) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:01(5) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(5) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:01(6) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:01(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:01(160) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:01(11) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:01(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:01(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:01(7) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:01(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:02(163) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:02(22) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:02(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:02(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:02(10) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:02(128) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:02(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(11) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:02(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:02(160) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:02(6) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:02(5) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:02(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:02(181) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:02(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:02(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(11) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:02(192) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:02(10) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(1) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:02(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:02(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:02(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:03(266) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:03(11) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:03(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:03(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:03(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:03(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:03(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:03(363) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:03(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:03(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:03(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:03(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:03(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:03(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:03(395) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:03(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:03(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:03(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:03(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:03(10) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:03(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:04(343) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:04(3) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:04(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:04(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:04(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:04(6) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:04(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:09(4812) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:09(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:09(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:09(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:09(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:09(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:09(10) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:09(203) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:09(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:09(10) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:09(2) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
-2021-04-14 00:26:09(2) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:09(0) - info - 25 - ComServer - added message: Reizen
-2021-04-14 00:26:09(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":264,"active":false}}
-2021-04-14 00:26:14(5037) - info - 27 - ComServer - Connection established
-2021-04-14 00:26:14(0) - info - 25 - ComServer - messages to handle: 1
-2021-04-14 00:26:14(0) - info - 25 - ComServer - added message: PlayersInLobby
-2021-04-14 00:26:14(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-14 23:39:04(41) - info - 27 - ComServer - Creating ServerSocket...
+2021-04-14 23:39:04(0) - info - 27 - ComServer - ServerSocket created: 0.0.0.0/0.0.0.0:5000
+2021-04-14 23:39:05(127) - info - 27 - ComServer - Connection established
+2021-04-14 23:39:05(31) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:05(16) - info - 25 - ComServer - added message: PlayersInLobby
+2021-04-14 23:39:05(0) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:05(0) - info - 25 - ComServer - added message: getVersion
+2021-04-14 23:39:05(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-14 23:39:05(0) - info - 26 - ComServer - {"command":"getVersion","params":{"player":"Server","version":"3.3.0"}}
+2021-04-14 23:39:07(2406) - info - 27 - ComServer - Connection established
+2021-04-14 23:39:07(22) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:07(0) - info - 25 - ComServer - added message: PlayersInLobby
+2021-04-14 23:39:07(0) - info - 25 - ComServer - added message: PlayersInLobby
+2021-04-14 23:39:07(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas"]}}
+2021-04-14 23:39:07(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas"]}}
+2021-04-14 23:39:07(263) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:07(0) - info - 25 - ComServer - added message: getVersion
+2021-04-14 23:39:07(16) - info - 26 - ComServer - {"command":"getVersion","params":{"player":"Server","version":"3.3.0"}}
+2021-04-14 23:39:14(6705) - info - 27 - ComServer - Connection established
+2021-04-14 23:39:14(16) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:14(0) - info - 25 - ComServer - added message: PlayersInLobby
+2021-04-14 23:39:14(0) - info - 25 - ComServer - added message: PlayersInLobby
+2021-04-14 23:39:14(0) - info - 25 - ComServer - added message: PlayersInLobby
+2021-04-14 23:39:14(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas","Simon"]}}
+2021-04-14 23:39:14(0) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas","Simon"]}}
+2021-04-14 23:39:14(15) - info - 26 - ComServer - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas","Simon"]}}
+2021-04-14 23:39:14(254) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:14(0) - info - 25 - ComServer - added message: getVersion
+2021-04-14 23:39:14(0) - info - 26 - ComServer - {"command":"getVersion","params":{"player":"Server","version":"3.3.0"}}
+2021-04-14 23:39:17(2507) - info - 21 - ComServer - added message: startGame
+2021-04-14 23:39:17(0) - info - 21 - ComServer - added message: startGame
+2021-04-14 23:39:17(15) - info - 21 - ComServer - added message: startGame
+2021-04-14 23:39:17(0) - info - 26 - ComServer - {"command":"startGame","params":{"game":"SKAT"}}
+2021-04-14 23:39:17(0) - info - 26 - ComServer - {"command":"startGame","params":{"game":"SKAT"}}
+2021-04-14 23:39:17(0) - info - 26 - ComServer - {"command":"startGame","params":{"game":"SKAT"}}
+2021-04-14 23:39:20(3509) - info - 21 - ComServer - added message: Cards
+2021-04-14 23:39:20(0) - info - 21 - ComServer - added message: Cards
+2021-04-14 23:39:20(0) - info - 21 - ComServer - added message: Cards
+2021-04-14 23:39:20(0) - info - 26 - ComServer - {"command":"Cards","params":{"cards":["Karo 7","Pik Koenig","Karo 8","Karo Koenig","Karo Dame","Pik 10","Pik Dame","Kreuz Ass","Pik Ass","Karo Bube"]}}
+2021-04-14 23:39:20(0) - info - 21 - ComServer - added message: Reizen
+2021-04-14 23:39:20(0) - info - 26 - ComServer - {"command":"Cards","params":{"cards":["Herz Dame","Pik 9","Herz Koenig","Pik Bube","Kreuz Bube","Herz Bube","Kreuz 7","Kreuz Koenig","Kreuz 9","Herz Ass"]}}
+2021-04-14 23:39:20(0) - info - 26 - ComServer - {"command":"Cards","params":{"cards":["Karo Ass","Herz 7","Kreuz Dame","Pik 8","Karo 9","Pik 7","Herz 9","Kreuz 8","Herz 10","Kreuz 10"]}}
+2021-04-14 23:39:20(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":0,"active":true}}
+2021-04-14 23:39:37(16633) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:37(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:37(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:37(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:37(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:37(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 18"}}
+2021-04-14 23:39:37(16) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 18"}}
+2021-04-14 23:39:37(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 18"}}
+2021-04-14 23:39:37(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":18,"active":false}}
+2021-04-14 23:39:40(3360) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:40(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:40(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:40(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:40(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:40(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:40(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:40(15) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:40(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":18,"active":true}}
+2021-04-14 23:39:42(1959) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:42(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:42(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:42(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:42(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:42(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 20"}}
+2021-04-14 23:39:42(15) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 20"}}
+2021-04-14 23:39:42(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 20"}}
+2021-04-14 23:39:42(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":20,"active":false}}
+2021-04-14 23:39:44(1713) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:44(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:44(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:44(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:44(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:44(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:44(16) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:44(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:44(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":20,"active":true}}
+2021-04-14 23:39:46(1610) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:46(16) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:46(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:46(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:46(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:46(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 22"}}
+2021-04-14 23:39:46(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 22"}}
+2021-04-14 23:39:46(9) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 22"}}
+2021-04-14 23:39:46(4) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":22,"active":false}}
+2021-04-14 23:39:47(1158) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:47(16) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:47(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:47(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:47(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:47(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:47(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:47(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:47(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":22,"active":true}}
+2021-04-14 23:39:48(1419) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:48(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:48(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:48(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:48(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:48(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 23"}}
+2021-04-14 23:39:48(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 23"}}
+2021-04-14 23:39:48(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 23"}}
+2021-04-14 23:39:48(15) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":23,"active":false}}
+2021-04-14 23:39:49(1055) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:49(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:49(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:49(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:49(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:49(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:49(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:49(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:49(16) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":23,"active":true}}
+2021-04-14 23:39:51(1187) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:51(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:51(15) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:51(3) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:51(1) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:51(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 24"}}
+2021-04-14 23:39:51(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 24"}}
+2021-04-14 23:39:51(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 24"}}
+2021-04-14 23:39:51(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":24,"active":false}}
+2021-04-14 23:39:52(1196) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:52(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:52(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:52(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:52(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:52(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:52(16) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:52(9) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:52(2) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":24,"active":true}}
+2021-04-14 23:39:53(1129) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:53(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:53(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:53(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:53(16) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:53(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 27"}}
+2021-04-14 23:39:53(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 27"}}
+2021-04-14 23:39:53(4) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 27"}}
+2021-04-14 23:39:53(4) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":27,"active":false}}
+2021-04-14 23:39:54(1278) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:54(16) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:54(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:54(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:54(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:54(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:54(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:54(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:54(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":27,"active":true}}
+2021-04-14 23:39:55(1033) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:55(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:55(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:55(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:55(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:55(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 30"}}
+2021-04-14 23:39:55(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 30"}}
+2021-04-14 23:39:55(17) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 30"}}
+2021-04-14 23:39:55(4) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":30,"active":false}}
+2021-04-14 23:39:56(1029) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:56(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:56(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:56(6) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:56(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:56(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:56(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:56(4) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:56(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":30,"active":true}}
+2021-04-14 23:39:57(1130) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:57(15) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:57(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:57(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:57(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:57(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 33"}}
+2021-04-14 23:39:57(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 33"}}
+2021-04-14 23:39:57(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 33"}}
+2021-04-14 23:39:57(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":33,"active":false}}
+2021-04-14 23:39:58(987) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:39:58(16) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:58(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:58(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:39:58(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:39:58(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:58(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:58(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:39:58(11) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":33,"active":true}}
+2021-04-14 23:40:00(1107) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:00(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:00(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:00(15) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:00(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:00(3) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 35"}}
+2021-04-14 23:40:00(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 35"}}
+2021-04-14 23:40:00(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 35"}}
+2021-04-14 23:40:00(2) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":35,"active":false}}
+2021-04-14 23:40:01(932) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:01(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:01(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:01(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:01(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:01(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:01(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:01(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:01(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":35,"active":true}}
+2021-04-14 23:40:02(1002) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:02(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:02(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:02(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:02(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:02(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 36"}}
+2021-04-14 23:40:02(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 36"}}
+2021-04-14 23:40:02(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 36"}}
+2021-04-14 23:40:02(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":36,"active":false}}
+2021-04-14 23:40:03(1086) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:03(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:03(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:03(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:03(16) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:03(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:03(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:03(5) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:03(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":36,"active":true}}
+2021-04-14 23:40:04(1079) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:04(3) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:04(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:04(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:04(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:04(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 40"}}
+2021-04-14 23:40:04(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 40"}}
+2021-04-14 23:40:04(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 40"}}
+2021-04-14 23:40:04(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":40,"active":false}}
+2021-04-14 23:40:05(981) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:05(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:05(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:05(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:05(16) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:05(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:05(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:05(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:05(1) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":40,"active":true}}
+2021-04-14 23:40:06(865) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:06(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:06(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:06(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:06(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:06(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 44"}}
+2021-04-14 23:40:06(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 44"}}
+2021-04-14 23:40:06(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 44"}}
+2021-04-14 23:40:06(16) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":44,"active":false}}
+2021-04-14 23:40:06(855) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:06(16) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:06(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:06(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:06(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:06(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:06(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:06(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:06(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":44,"active":true}}
+2021-04-14 23:40:08(1045) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:08(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:08(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:08(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:08(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:08(9) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 45"}}
+2021-04-14 23:40:08(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 45"}}
+2021-04-14 23:40:08(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 45"}}
+2021-04-14 23:40:08(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":45,"active":false}}
+2021-04-14 23:40:09(1303) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:09(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:09(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:09(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:09(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:09(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:09(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:09(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:09(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":45,"active":true}}
+2021-04-14 23:40:10(1265) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:10(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:10(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:10(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:10(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:10(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 46"}}
+2021-04-14 23:40:10(17) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 46"}}
+2021-04-14 23:40:10(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 46"}}
+2021-04-14 23:40:10(6) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":46,"active":false}}
+2021-04-14 23:40:11(964) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:11(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:11(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:11(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:11(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:11(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:11(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:11(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:11(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":46,"active":true}}
+2021-04-14 23:40:12(1036) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:12(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:12(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:12(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:12(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:12(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 48"}}
+2021-04-14 23:40:12(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 48"}}
+2021-04-14 23:40:12(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 48"}}
+2021-04-14 23:40:12(18) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":48,"active":false}}
+2021-04-14 23:40:13(1180) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:13(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:13(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:13(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:13(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:13(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:13(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:13(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:13(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":48,"active":true}}
+2021-04-14 23:40:15(1203) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:15(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:15(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:15(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:15(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:15(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 50"}}
+2021-04-14 23:40:15(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 50"}}
+2021-04-14 23:40:15(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 50"}}
+2021-04-14 23:40:15(16) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":50,"active":false}}
+2021-04-14 23:40:17(2058) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:17(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:17(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:17(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:17(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:17(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:17(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:17(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:17(16) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":50,"active":true}}
+2021-04-14 23:40:18(1704) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:18(16) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:18(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:18(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:18(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:18(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 54"}}
+2021-04-14 23:40:18(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 54"}}
+2021-04-14 23:40:18(8) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 54"}}
+2021-04-14 23:40:18(2) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":54,"active":false}}
+2021-04-14 23:40:20(1191) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:20(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:20(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:20(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:20(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:20(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:20(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:20(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:20(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":54,"active":true}}
+2021-04-14 23:40:21(1455) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:21(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:21(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:21(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:21(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:21(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 55"}}
+2021-04-14 23:40:21(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 55"}}
+2021-04-14 23:40:21(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 55"}}
+2021-04-14 23:40:21(16) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":55,"active":false}}
+2021-04-14 23:40:22(1405) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:22(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:22(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:22(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:22(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:22(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:22(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:22(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:22(12) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":55,"active":true}}
+2021-04-14 23:40:24(1280) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:24(16) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:24(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:24(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:24(3) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:24(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 59"}}
+2021-04-14 23:40:24(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 59"}}
+2021-04-14 23:40:24(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 59"}}
+2021-04-14 23:40:24(1) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":59,"active":false}}
+2021-04-14 23:40:25(1232) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:25(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:25(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:25(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:25(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:25(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:25(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:25(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:25(17) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":59,"active":true}}
+2021-04-14 23:40:26(1085) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:26(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:26(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:26(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:26(16) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:26(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 60"}}
+2021-04-14 23:40:26(3) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 60"}}
+2021-04-14 23:40:26(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 60"}}
+2021-04-14 23:40:26(2) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":60,"active":false}}
+2021-04-14 23:40:27(1081) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:27(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:27(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:27(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:27(16) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:27(1) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:27(3) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:27(2) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker sagt Ja"}}
+2021-04-14 23:40:27(1) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Thomas","value":60,"active":true}}
+2021-04-14 23:40:28(926) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:28(15) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:28(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:28(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:28(0) - info - 25 - ComServer - added message: Reizen
+2021-04-14 23:40:28(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 63"}}
+2021-04-14 23:40:28(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 63"}}
+2021-04-14 23:40:28(10) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Thomas sagt 63"}}
+2021-04-14 23:40:28(0) - info - 26 - ComServer - {"command":"Reizen","params":{"player":"Volker","value":63,"active":false}}
+2021-04-14 23:40:32(3786) - info - 25 - ComServer - messages to handle: 1
+2021-04-14 23:40:32(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:32(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:32(0) - info - 25 - ComServer - added message: DisplayMessage
+2021-04-14 23:40:32(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker: weg"}}
+2021-04-14 23:40:32(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker: weg"}}
+2021-04-14 23:40:32(0) - info - 26 - ComServer - {"command":"DisplayMessage","params":{"message":"Volker: weg"}}

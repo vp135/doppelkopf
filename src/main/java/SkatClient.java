@@ -3,12 +3,15 @@ import base.messages.*;
 import base.skat.Card;
 import base.skat.SortHand;
 import base.skat.messages.GameSelected;
+import base.skat.messages.Passen;
 import base.skat.messages.Reizen;
 import com.google.gson.JsonArray;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,9 +86,14 @@ public class SkatClient extends BaseClient implements IInputputHandler{
             deselectAllSortButtons();
             sortGrand.setBackground(Color.GREEN);
         });
-        nextValue.addActionListener(e->{
-            handler.queueOutMessage(new Reizen(c.name,Integer.parseInt(nextValue.getText()),true));
+        pass.addActionListener(e -> {
+            handler.queueOutMessage(new Passen(c.name));
+            nextValue.setVisible(false);
+            pass.setVisible(false);
         });
+
+        nextValue.setVisible(false);
+        pass.setVisible(false);
     }
 
     @Override
@@ -165,16 +173,55 @@ public class SkatClient extends BaseClient implements IInputputHandler{
 
     private void handleReizen(RequestObject message) {
         int val = message.getParams().get("value").getAsInt();
-        int nextVal = 0;
-        for(int i =0; i<Reizen.VALUES.length;i++){
-            if(Reizen.VALUES[i]==val){
-                nextVal = Reizen.VALUES[i+1];
-                break;
+        boolean active = message.getParams().get("active").getAsBoolean();
+        if(active){
+            int nextVal = 0;
+            if(val==0) {
+                nextVal = 18;
             }
+            else {
+                for (int i = 0; i < Reizen.VALUES.length; i++) {
+                    if (Reizen.VALUES[i] == val) {
+                        nextVal = Reizen.VALUES[i + 1];
+                        break;
+                    }
+                }
+            }
+            //gameMessageLabel.setText(String.valueOf(message.getParams().get("value").getAsInt()));
+            nextValue.setText(String.valueOf(nextVal));
+            for (ActionListener actionListener : nextValue.getActionListeners()) {
+                nextValue.removeActionListener(actionListener);
+            }
+            nextValue.addActionListener(sagen);
+            nextValue.setVisible(true);
+            pass.setVisible(true);
         }
-        nextValue.setText(String.valueOf(nextVal));
-        gameMessageLabel.setText(String.valueOf(message.getParams().get("value").getAsInt()));
+        else{
+            nextValue.setText("Ja");
+
+            for (ActionListener actionListener : nextValue.getActionListeners()) {
+                nextValue.removeActionListener(actionListener);
+            }
+            nextValue.addActionListener(hoeren);
+            pass.setText("weg");
+            nextValue.setVisible(true);
+            pass.setVisible(true);
+        }
     }
+
+    ActionListener sagen = e -> {
+        Reizen reizen = new Reizen(c.name,Integer.parseInt(nextValue.getText()),true);
+        handler.queueOutMessage(reizen);
+        nextValue.setVisible(false);
+        pass.setVisible(false);
+    };
+
+    ActionListener hoeren = e -> {
+        Reizen reizen = new Reizen(c.name,0,false);
+        handler.queueOutMessage(reizen);
+        nextValue.setVisible(false);
+        pass.setVisible(false);
+    };
 
     private void handleAnnounceSpectator(RequestObject message) {
         spectator = message.getParams().get("player").getAsInt();

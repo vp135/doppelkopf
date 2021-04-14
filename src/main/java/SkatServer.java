@@ -4,11 +4,11 @@ import base.Statics;
 import base.messages.*;
 import base.skat.Card;
 import base.skat.messages.GameSelected;
+import base.skat.messages.Passen;
 import base.skat.messages.Reizen;
 
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -16,13 +16,13 @@ public class SkatServer extends BaseServer{
 
 
     private int beginner =0;
+    private int hoeren =0;
+    private int sagen = 0;
+    private int weitersagen =0;
     private int currentPlayer = 0;
     private GameSelected.GAMES selectedGame = GameSelected.GAMES.UNDEFINED;
 
-    private int aufspieler = -1;
-    private int armutplayer = -1;
-    private int hochzeitSpieler = -1;
-    private int spectator=4;
+    private int spectator=3;
 
     private int currentGameValue = 0;
     private Random random;
@@ -47,20 +47,33 @@ public class SkatServer extends BaseServer{
             case Reizen.COMMAND:
                 handleReizen(requestObject);
                 break;
+            case Passen.COMMAND:
+                handlePassen(requestObject);
+                break;
         }
     }
 
-    private void handleReizen(RequestObject message) {
-        if(message.getParams().get("active").getAsBoolean()){
-            currentGameValue = message.getParams().get("value").getAsInt();
-            send2All(new Reizen(players.get(0).getName(),currentGameValue,false));
-        }
-        /*send2All(new DisplayMessage(
-                String.format("%s sagt %s",
-                        message.getParams().get("player").getAsString(),
-                        message.getParams().get("value").getAsInt())));
+    private void handlePassen(RequestObject message) {
+        send2All(new DisplayMessage(message.getParams().get("player").getAsString() + ": weg"));
+    }
 
-         */
+    private void handleReizen(RequestObject message) {
+
+        if(message.getParams().get("active").getAsBoolean()) {
+            currentGameValue = message.getParams().get("value").getAsInt();
+            send2All(new DisplayMessage(
+                    String.format("%s sagt %s",
+                            message.getParams().get("player").getAsString(),
+                            currentGameValue)));
+            queueOut(players.get(hoeren), new Reizen(players.get(hoeren).getName(), currentGameValue, false));
+        }
+        else {
+            send2All(new DisplayMessage(
+                    String.format("%s sagt %s",
+                            message.getParams().get("player").getAsString(),
+                            "Ja")));
+            queueOut(players.get(sagen), new Reizen(players.get(sagen).getName(), currentGameValue, true));
+        }
     }
 
 
@@ -89,9 +102,7 @@ public class SkatServer extends BaseServer{
                 }
             });
 
-
-            Cards cards = new Cards(players.get(0).getHand());
-            send2All(cards);
+            players.forEach(player -> queueOut(player,new Cards(player.getHand())));
 
 
             //TODO: Extract method to reset all game variables for a new game
@@ -100,6 +111,7 @@ public class SkatServer extends BaseServer{
             //schwein = false;
             //gameSelection = new HashMap<>();
             //send2All(new SelectGame());
+            setPlayerRoles();
         }
         catch (Exception ex){
             ex.printStackTrace();
@@ -114,6 +126,27 @@ public class SkatServer extends BaseServer{
 
     private void reizen(Player player, boolean active){
         queueOut(player,new Reizen(player.getName(),currentGameValue,active));
+    }
+
+    private void setPlayerRoles(){
+        hoeren = beginner;
+        sagen = nextNotSpectator(hoeren);
+        weitersagen = nextNotSpectator(sagen);
+        queueOut(players.get(sagen),new Reizen(players.get(sagen).getName(),currentGameValue,true));
+    }
+
+    private int nextNotSpectator(int s) {
+        int i=0;
+        while(i<players.size()){
+            i++;
+            if((i+s)>=players.size()){
+                s -=players.size();
+            }
+            if(!players.get(i+s).isSpectator()){
+                return i+s;
+            }
+        }
+        return -1;
     }
 
 }

@@ -1150,3 +1150,274 @@
 2021-04-14 00:26:09(215) - info - 88 - DokoClient - received: PlayersInLobby
 2021-04-14 00:26:09(0) - info - 88 - DokoClient - received: Reizen
 2021-04-14 00:26:14(5037) - info - 91 - DokoClient - received: PlayersInLobby
+2021-04-14 22:11:51(15) - info - 30 - DokoClient - creating UI
+2021-04-14 22:11:51(47) - info - 30 - DokoClient - creating play area
+2021-04-14 22:11:51(46) - info - 30 - DokoClient - creating hud
+2021-04-14 22:11:51(0) - info - 30 - DokoClient - setting components
+2021-04-14 22:11:51(16) - info - 30 - DokoClient - components set
+2021-04-14 22:11:51(0) - info - 30 - DokoClient - listeners added
+2021-04-14 22:11:51(0) - info - 30 - DokoClient - starting to redraw
+2021-04-14 22:11:54(3294) - info - 30 - DokoClient - redraw finished
+2021-04-14 22:11:54(0) - info - 30 - DokoClient - finished UI creation
+2021-04-14 22:11:54(73) - info - 30 - DokoClient - received: Cards
+2021-04-14 22:11:54(23) - info - 21 - DokoClient - starting to redraw
+2021-04-14 22:11:57(2545) - info - 21 - DokoClient - redraw finished
+2021-04-14 22:20:31(16) - info - 31 - DokoClient - creating UI
+2021-04-14 22:20:31(47) - info - 31 - DokoClient - creating play area
+2021-04-14 22:20:31(53) - info - 31 - DokoClient - creating hud
+2021-04-14 22:20:31(0) - info - 31 - DokoClient - setting components
+2021-04-14 22:20:31(0) - info - 31 - DokoClient - components set
+2021-04-14 22:20:31(16) - info - 31 - DokoClient - listeners added
+2021-04-14 22:20:31(0) - info - 31 - DokoClient - starting to redraw
+2021-04-14 22:20:34(3262) - info - 31 - DokoClient - redraw finished
+2021-04-14 22:20:34(0) - info - 31 - DokoClient - finished UI creation
+2021-04-14 22:20:34(100) - info - 31 - DokoClient - received: Cards
+2021-04-14 22:20:34(17) - info - 21 - DokoClient - starting to redraw
+2021-04-14 22:20:37(2551) - info - 21 - DokoClient - redraw finished
+2021-04-14 22:20:45(8119) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:20:45(16) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:41:36(22) - info - 31 - DokoClient - creating UI
+2021-04-14 22:41:36(62) - info - 31 - DokoClient - creating play area
+2021-04-14 22:41:36(39) - info - 31 - DokoClient - creating hud
+2021-04-14 22:41:36(8) - info - 31 - DokoClient - setting components
+2021-04-14 22:41:36(7) - info - 31 - DokoClient - components set
+2021-04-14 22:41:36(3) - info - 31 - DokoClient - listeners added
+2021-04-14 22:41:36(1) - info - 31 - DokoClient - starting to redraw
+2021-04-14 22:41:39(3219) - info - 31 - DokoClient - redraw finished
+2021-04-14 22:41:39(0) - info - 31 - DokoClient - finished UI creation
+2021-04-14 22:41:39(141) - info - 31 - DokoClient - received: Cards
+2021-04-14 22:41:39(23) - info - 21 - DokoClient - starting to redraw
+2021-04-14 22:41:42(2436) - info - 21 - DokoClient - redraw finished
+2021-04-14 22:42:26(44006) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:42:26(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:43:04(38084) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:43:04(0) - info - 21 - DokoClient - starting to redraw
+2021-04-14 22:43:06(2508) - info - 21 - DokoClient - redraw finished
+2021-04-14 22:50:56(0) - info - 31 - DokoClient - creating UI
+2021-04-14 22:50:56(78) - info - 31 - DokoClient - creating play area
+2021-04-14 22:50:57(46) - info - 31 - DokoClient - creating hud
+2021-04-14 22:50:57(8) - info - 31 - DokoClient - setting components
+2021-04-14 22:50:57(8) - info - 31 - DokoClient - components set
+2021-04-14 22:50:57(3) - info - 31 - DokoClient - listeners added
+2021-04-14 22:50:57(1) - info - 31 - DokoClient - starting to redraw
+2021-04-14 22:51:00(3225) - info - 31 - DokoClient - redraw finished
+2021-04-14 22:51:00(0) - info - 31 - DokoClient - finished UI creation
+2021-04-14 22:51:00(109) - info - 31 - DokoClient - received: Cards
+2021-04-14 22:51:00(31) - info - 21 - DokoClient - starting to redraw
+2021-04-14 22:51:02(2421) - info - 21 - DokoClient - redraw finished
+2021-04-14 22:51:42(39743) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:51:42(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:51:47(4913) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:51:47(16) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:51:55(8369) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:51:55(15) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:52:16(20857) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:52:16(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:09(0) - info - 31 - DokoClient - creating UI
+2021-04-14 22:58:09(56) - info - 31 - DokoClient - creating play area
+2021-04-14 22:58:09(28) - info - 31 - DokoClient - creating hud
+2021-04-14 22:58:10(16) - info - 31 - DokoClient - setting components
+2021-04-14 22:58:10(0) - info - 31 - DokoClient - components set
+2021-04-14 22:58:10(0) - info - 31 - DokoClient - listeners added
+2021-04-14 22:58:10(0) - info - 31 - DokoClient - starting to redraw
+2021-04-14 22:58:13(3315) - info - 31 - DokoClient - redraw finished
+2021-04-14 22:58:13(16) - info - 31 - DokoClient - finished UI creation
+2021-04-14 22:58:13(69) - info - 31 - DokoClient - received: Cards
+2021-04-14 22:58:13(32) - info - 21 - DokoClient - starting to redraw
+2021-04-14 22:58:15(2414) - info - 21 - DokoClient - redraw finished
+2021-04-14 22:58:30(15057) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:30(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:34(3541) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:34(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:41(6789) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:41(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:42(1003) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:42(16) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:42(699) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:42(5) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:43(684) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:43(15) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:44(765) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:44(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:45(669) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:45(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:45(517) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:45(6) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:46(433) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:46(21) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:46(480) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:46(15) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:46(401) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:46(16) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:47(616) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:47(0) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:48(454) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:48(15) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:48(370) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:48(18) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:48(429) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:48(16) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:49(400) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:49(16) - info - 31 - DokoClient - received: Reizen
+2021-04-14 22:58:50(1088) - info - 31 - DokoClient - received: DisplayMessage
+2021-04-14 22:58:50(20) - info - 31 - DokoClient - received: Reizen
+2021-04-14 23:18:55(15) - info - 28 - DokoClient - creating UI
+2021-04-14 23:18:55(47) - info - 28 - DokoClient - creating play area
+2021-04-14 23:18:55(22) - info - 28 - DokoClient - creating hud
+2021-04-14 23:18:55(16) - info - 28 - DokoClient - setting components
+2021-04-14 23:18:55(0) - info - 28 - DokoClient - components set
+2021-04-14 23:18:55(0) - info - 28 - DokoClient - listeners added
+2021-04-14 23:18:55(0) - info - 28 - DokoClient - starting to redraw
+2021-04-14 23:18:58(3123) - info - 28 - DokoClient - redraw finished
+2021-04-14 23:18:58(0) - info - 28 - DokoClient - finished UI creation
+2021-04-14 23:18:58(285) - info - 28 - DokoClient - received: Cards
+2021-04-14 23:18:58(30) - info - 18 - DokoClient - starting to redraw
+2021-04-14 23:19:00(2359) - info - 18 - DokoClient - redraw finished
+2021-04-14 23:19:21(20428) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:19:21(0) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:19:25(4550) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:19:25(15) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:19:28(2390) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:19:28(0) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:19:29(797) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:19:29(4) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:25:39(370449) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:25:39(0) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:25:47(8257) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:25:47(0) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:25:56(8518) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:25:56(17) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:25:57(936) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:25:57(0) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:25:58(865) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:25:58(1) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:25:58(715) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:25:58(15) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:26:20(21788) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:26:20(0) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:26:21(1103) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:26:21(24) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:26:22(694) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:26:22(0) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:26:34(11481) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:26:34(16) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:26:34(974) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:26:35(15) - info - 28 - DokoClient - received: Reizen
+2021-04-14 23:26:36(1000) - info - 28 - DokoClient - received: DisplayMessage
+2021-04-14 23:28:48(6) - info - 31 - DokoClient - creating UI
+2021-04-14 23:28:48(64) - info - 31 - DokoClient - creating play area
+2021-04-14 23:28:48(36) - info - 31 - DokoClient - creating hud
+2021-04-14 23:28:48(0) - info - 31 - DokoClient - setting components
+2021-04-14 23:28:48(0) - info - 31 - DokoClient - components set
+2021-04-14 23:28:48(16) - info - 31 - DokoClient - listeners added
+2021-04-14 23:28:48(0) - info - 31 - DokoClient - starting to redraw
+2021-04-14 23:31:31(162145) - info - 31 - DokoClient - redraw finished
+2021-04-14 23:31:31(0) - info - 31 - DokoClient - finished UI creation
+2021-04-14 23:31:31(15) - info - 31 - DokoClient - received: Cards
+2021-04-14 23:31:31(32) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:31:33(2559) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:31:33(116) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:31:36(2437) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:35:23(26) - info - 30 - DokoClient - creating UI
+2021-04-14 23:35:23(43) - info - 30 - DokoClient - creating play area
+2021-04-14 23:35:23(47) - info - 30 - DokoClient - creating hud
+2021-04-14 23:35:23(0) - info - 30 - DokoClient - setting components
+2021-04-14 23:35:23(15) - info - 30 - DokoClient - components set
+2021-04-14 23:35:23(0) - info - 30 - DokoClient - listeners added
+2021-04-14 23:35:23(0) - info - 30 - DokoClient - starting to redraw
+2021-04-14 23:35:26(3250) - info - 30 - DokoClient - redraw finished
+2021-04-14 23:35:26(0) - info - 30 - DokoClient - finished UI creation
+2021-04-14 23:35:27(115) - info - 30 - DokoClient - received: Cards
+2021-04-14 23:35:27(35) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:35:29(2471) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:35:52(23453) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:35:52(12) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:35:55(2463) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:36:18(23460) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:36:18(0) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:36:21(2515) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:36:34(13077) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:36:36(2437) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:36:41(4143) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:36:45(4064) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:36:47(2106) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:36:49(2282) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:17(16) - info - 30 - DokoClient - creating UI
+2021-04-14 23:39:17(66) - info - 30 - DokoClient - creating play area
+2021-04-14 23:39:17(31) - info - 30 - DokoClient - creating hud
+2021-04-14 23:39:17(9) - info - 30 - DokoClient - setting components
+2021-04-14 23:39:17(0) - info - 30 - DokoClient - components set
+2021-04-14 23:39:17(0) - info - 30 - DokoClient - listeners added
+2021-04-14 23:39:17(16) - info - 30 - DokoClient - starting to redraw
+2021-04-14 23:39:20(3171) - info - 30 - DokoClient - redraw finished
+2021-04-14 23:39:20(0) - info - 30 - DokoClient - finished UI creation
+2021-04-14 23:39:20(185) - info - 30 - DokoClient - received: Cards
+2021-04-14 23:39:20(26) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:39:23(2365) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:39:29(5876) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:39:31(2521) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:39:33(1620) - info - 21 - DokoClient - starting to redraw
+2021-04-14 23:39:35(2621) - info - 21 - DokoClient - redraw finished
+2021-04-14 23:39:37(1620) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:37(0) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:39:40(3360) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:42(1989) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:42(0) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:39:44(1729) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:46(1626) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:46(15) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:39:47(1172) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:48(1419) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:48(15) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:39:49(1055) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:51(1224) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:51(1) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:39:52(1196) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:53(1172) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:53(9) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:39:54(1293) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:55(1033) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:55(23) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:39:56(1033) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:57(1149) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:39:57(0) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:39:58(1003) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:00(1137) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:00(4) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:01(931) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:02(1002) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:02(0) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:03(1102) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:04(1087) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:04(0) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:05(999) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:06(867) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:06(16) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:06(871) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:08(1054) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:08(0) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:09(1303) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:10(1282) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:10(8) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:11(962) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:12(1036) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:12(18) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:13(1180) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:15(1203) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:15(16) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:17(2058) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:18(1736) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:18(12) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:20(1189) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:21(1455) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:21(16) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:22(1405) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:24(1313) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:24(3) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:25(1231) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:26(1121) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:26(5) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:27(1099) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:28(944) - info - 30 - DokoClient - received: DisplayMessage
+2021-04-14 23:40:28(10) - info - 30 - DokoClient - received: Reizen
+2021-04-14 23:40:32(3786) - info - 30 - DokoClient - received: DisplayMessage
