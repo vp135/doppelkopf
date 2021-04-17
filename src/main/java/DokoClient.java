@@ -411,6 +411,13 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     @Override
     protected void handleCards(RequestObject message) {
         selectedGame = GameSelected.NORMAL;
+        JsonArray array = message.getParams().getAsJsonArray("cards");
+        hand = new ArrayList<>();
+        array.forEach(card->{
+            Card c = new Card(card.getAsString().split(" ")[1],
+                    card.getAsString().split(" ")[0]);
+            hand.add(c);
+        });
         super.handleCards(message);
     }
 

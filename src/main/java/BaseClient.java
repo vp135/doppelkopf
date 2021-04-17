@@ -52,7 +52,7 @@ public abstract class BaseClient implements IInputputHandler {
     //Cards
     private BufferedImage img;
     private static final double RATIO = 0.67;
-    private final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
+    protected final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
     private final HashMap<String,BufferedImage> cardImages = new HashMap<>();
     private int cardSize;
     private int cardWidth4Hand;
@@ -75,6 +75,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected boolean isAdmin;
 
     protected final Random random = new Random(System.currentTimeMillis());
+    protected JPanel middlePanel;
 
     public BaseClient(ComClient handler, List<String> players, Configuration c) {
         this.handler = handler;
@@ -219,13 +220,14 @@ public abstract class BaseClient implements IInputputHandler {
         userLabel_4.setOpaque(true);
         userLabel_4.setVerticalAlignment(SwingConstants.BOTTOM);
         userLabel_4.setHorizontalAlignment(SwingConstants.LEFT);
+        middlePanel = new JPanel(new GridLayout(1,3));
 
 
         hud.add(new JLabel());
         hud.add(userLabel_2);
         hud.add(new JLabel());
         hud.add(userLabel_1);
-        hud.add(new JLabel());
+        hud.add(middlePanel);
         hud.add(userLabel_3);
         hud.add(createControlButtonPanel());
         hud.add(userLabel_4);
@@ -520,7 +522,7 @@ public abstract class BaseClient implements IInputputHandler {
         updateTable();
     }
 
-    protected JLabel getCardLabel(Card card){
+    protected JLabel getCardLabel(BaseCard card){
         String path = System.getProperty("user.dir")+"\\resources\\" + card.farbe + card.value + ".PNG";
         BufferedImage image;
         ImageIcon icon = null;
@@ -560,15 +562,6 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
     protected void handleCards(RequestObject message) {
-        JsonArray array = message.getParams().getAsJsonArray("cards");
-        hand = new ArrayList<>();
-        array.forEach(card->{
-            Card c = new Card(card.getAsString().split(" ")[1],
-                    card.getAsString().split(" ")[0]);
-            hand.add(c);
-        });
-
-
         updateTable();
         panel.removeAll();
         createCardButtons(hand);
