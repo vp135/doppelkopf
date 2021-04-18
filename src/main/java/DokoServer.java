@@ -3,6 +3,7 @@ import base.MessageIn;
 import base.Player;
 import base.Statics;
 import base.doko.Card;
+import base.doko.messages.GameEnd;
 import base.doko.Stich;
 import base.doko.messages.*;
 import base.messages.*;
@@ -78,62 +79,7 @@ public class DokoServer extends BaseServer{
                 player -> log.info("Received: " + requestObject.getCommand() + " from " + player.getName()));
         switch (requestObject.getCommand()) {
             case PutCard.COMMAND: {
-                if (stich == null || stich.getCardMap().size() > 3) {
-                    stich = new Stich(players, currentStichNumber, selectedGame);
-                    currentStichNumber++;
-                }
-                stich.addCard(players.get(currentPlayer),new Card(
-                        requestObject.getParams().get("wert").getAsString(),
-                        requestObject.getParams().get("farbe").getAsString()));
-                send2All(requestObject);
-                currentPlayer++;
-                if(currentPlayer==spectator){
-                    currentPlayer++;
-                }
-                if (currentPlayer >= players.size()) {
-                    currentPlayer = 0;
-                }
-                if(currentPlayer==spectator){
-                    currentPlayer++;
-                }
-
-                if (stich.getCardMap().size() > 3) {
-                    try {
-                        int winner = stich.getWinner(schwein);
-
-                        stichList.add(stich);
-                        try{
-                            points.put(winner, points.get(winner) + stich.calculatePoints());
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        currentPlayer = winner;
-                        if(wait4Partner) {
-                            if(currentStichNumber<4) {
-                                if (hochzeitSpieler != winner) {
-                                    players.get(winner).setRe(true, "Ehepartner");
-                                    wait4Partner = false;
-                                }
-                            }
-                            else {
-                                wait4Partner = false;
-                                log.info("kein Ehepartner gefunden");
-                            }
-                        }
-                        send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
-                                .findFirst().get().getName()," hat Stich(e)"));
-                        if (currentStichNumber > 9) {
-                            EndIt();
-                            break;
-                        }
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-                if (currentStichNumber < 11) {
-                    send2All(new Wait4Player(players.stream().filter(p->p.getNumber()==currentPlayer).findFirst().get().getName()));
-                }
+                handlePutCard(requestObject);
                 break;
             }
             case AddPlayer.COMMAND:
@@ -247,9 +193,68 @@ public class DokoServer extends BaseServer{
         }
     }
 
+    private void handlePutCard(RequestObject requestObject) {
+        if (stich == null || stich.getCardMap().size() > 3) {
+            stich = new Stich(players, currentStichNumber, selectedGame);
+            currentStichNumber++;
+        }
+        stich.addCard(players.get(currentPlayer),new Card(
+                requestObject.getParams().get("wert").getAsString(),
+                requestObject.getParams().get("farbe").getAsString()));
+        send2All(requestObject);
+        currentPlayer++;
+        if(currentPlayer==spectator){
+            currentPlayer++;
+        }
+        if (currentPlayer >= players.size()) {
+            currentPlayer = 0;
+        }
+        if(currentPlayer==spectator){
+            currentPlayer++;
+        }
+
+        if (stich.getCardMap().size() > 3) {
+            try {
+                int winner = stich.getWinner(schwein);
+
+                stichList.add(stich);
+                try{
+                    points.put(winner, points.get(winner) + stich.calculatePoints());
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                currentPlayer = winner;
+                if(wait4Partner) {
+                    if(currentStichNumber<4) {
+                        if (hochzeitSpieler != winner) {
+                            players.get(winner).setRe(true, "Ehepartner");
+                            wait4Partner = false;
+                        }
+                    }
+                    else {
+                        wait4Partner = false;
+                        log.info("kein Ehepartner gefunden");
+                    }
+                }
+                send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
+                        .findFirst().get().getName()," hat Stich(e)"));
+                if (currentStichNumber > 9) {
+                    EndIt();
+                    return;
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        if (currentStichNumber < 11) {
+            send2All(new Wait4Player(players.stream().filter(p->p.getNumber()==currentPlayer).findFirst().get().getName()));
+        }
+    }
+
 
     private void EndIt() {
-        EndDialog e = new EndDialog(players,stichList);
+        DokoEndDialog e = new DokoEndDialog(players,stichList);
         send2All(new GameEnd(e.getReString1(),e.getReString2(),e.getKontraString1(),e.getKontraString2(),e.getRemaining()));
         wait4NextRound= true;
         readyMap = new HashMap<>();

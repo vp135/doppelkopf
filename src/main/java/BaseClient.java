@@ -2,12 +2,10 @@ import base.BaseCard;
 import base.Logger;
 import base.Statics;
 import base.doko.Card;
-import base.doko.messages.AbortGame;
+import base.messages.AbortGame;
 import base.messages.CurrentStich;
 import base.messages.DisplayMessage;
 import base.messages.RequestObject;
-import com.google.gson.JsonArray;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +19,7 @@ import java.util.*;
 
 public abstract class BaseClient implements IInputputHandler {
 
-    protected final static Logger log = new Logger(DokoClient.class.getName(),4,true);
+    protected final static Logger log = new Logger(BaseClient.class.getName(),4,true);
 
     protected JFrame mainFrame;
     protected JFrame letzterStich;
@@ -88,11 +86,15 @@ public abstract class BaseClient implements IInputputHandler {
     @Override
     public void handleInput(RequestObject input) {
         log.info("received: " +input.getCommand());
-        switch (input.getCommand()) {
-            case DisplayMessage.COMMAND: {
-                serverMessageLabel.setText(input.getParams().get("message").getAsString());
-                break;
+        try {
+            switch (input.getCommand()) {
+                case DisplayMessage.COMMAND: {
+                    serverMessageLabel.setText(input.getParams().get("message").getAsString());
+                    break;
+                }
             }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 
@@ -416,6 +418,16 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
 
+    protected  void createCardButtons(List<BaseCard> cards, JPanel destPanel){
+        destPanel.removeAll();
+        setComponentSizes(destPanel,new Dimension((int)(cardSize*RATIO*maxHandCards),(int) (cardSize)));
+        cards.forEach(card->{
+            destPanel.add(createCardLabel(card));
+        });
+        destPanel.revalidate();
+        destPanel.repaint();
+    }
+
     protected void createCardButtons(List<BaseCard> cards) {
         panel.removeAll();
         labelMap = new HashMap<>();
@@ -468,6 +480,14 @@ public abstract class BaseClient implements IInputputHandler {
                 log.warn(e.toString());
             }
         });
+    }
+
+    protected JPanel createCardLabel(BaseCard card){
+        JPanel p = new JPanel();
+        JLabel label = new JLabel();
+        label.setIcon(cardIcons.get(card.farbe+card.value));
+        p.add(label);
+        return p;
     }
 
     protected void getCardLabel4Hand(BaseCard card){

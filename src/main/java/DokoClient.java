@@ -1,6 +1,7 @@
 import base.BaseCard;
 import base.Statics;
 import base.doko.Card;
+import base.doko.messages.GameEnd;
 import base.doko.SortHand;
 import base.doko.messages.*;
 import base.messages.*;
@@ -393,7 +394,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
 
     private void handleGameEnd(RequestObject message) {
         updateTable();
-        EndDialog e = new EndDialog(
+        DokoEndDialog e = new DokoEndDialog(
                 message.getParams().get("re1").getAsString(),
                 message.getParams().get("re2").getAsString(),
                 message.getParams().get("kontra1").getAsString(),

@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class EndDialog{
+public class DokoEndDialog {
 
     private JPanel panel;
     private JButton buttonOK;
@@ -20,7 +20,7 @@ public class EndDialog{
     private final String kontraString2;
     private int remaining = 240;
 
-    public EndDialog(List<Player> players, List<Stich> stichList){
+    public DokoEndDialog(List<Player> players, List<Stich> stichList){
         this.players = players;
         this.stichList = stichList;
         calcPoints();
@@ -93,7 +93,7 @@ public class EndDialog{
         return remaining;
     }
 
-    public EndDialog(String re1, String re2, String kontra1, String kontra2, int remaining) {
+    public DokoEndDialog(String re1, String re2, String kontra1, String kontra2, int remaining) {
 
         this.reString1 = re1;
         this.reString2 = re2;

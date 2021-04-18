@@ -63,13 +63,14 @@ public class ComServer {
                                         inMessages.offer(new MessageIn(connectionSocket,in));
                                         evIn.set();
                                     } else {
-                                        log.info("test1");
+                                        log.info("incoming data was null");
                                         //log.info("incoming data was null "+ players.stream().filter(player -> player.getSocket().equals(connectionSocket)).findFirst().get().getName());
                                         connectionSocket.close();
                                     }
                                 } catch (IOException e) {
                                     if (e instanceof SocketException) {
-                                        log.info("test2");
+                                        log.info(e.toString());
+                                        e.printStackTrace();
                                         //log.info(e.toString()+ players.stream().filter(player -> player.getSocket().equals(connectionSocket)).findFirst().get().getName());
                                         try{
                                             connectionSocket.close();

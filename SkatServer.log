@@ -1,42 +1,14 @@
-2021-04-14 23:39:37(20157) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:40(3376) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:42(1974) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:44(1728) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:46(1642) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:47(1171) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:48(1435) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:49(1070) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:51(1203) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:52(1218) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:53(1156) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:54(1302) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:55(1049) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:56(1050) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:57(1140) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:39:58(1002) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:00(1134) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:01(954) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:02(1002) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:03(1086) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:04(1103) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:05(981) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:06(885) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:06(871) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:08(1061) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:09(1312) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:10(1265) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:11(987) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:12(1036) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:13(1198) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:15(1203) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:17(2074) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:18(1720) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:20(1217) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:21(1455) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:22(1421) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:24(1292) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:25(1255) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:26(1102) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:27(1103) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:28(949) - error - 25 - SkatServer - message type unknown. Message not processed
-2021-04-14 23:40:32(3811) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-18 23:34:33(12368) - error - 26 - SkatServer - message type unknown. Message not processed
+2021-04-18 23:34:34(6) - info - 26 - SkatServer - Received: passen from Thomas
+2021-04-18 23:34:35(1109) - error - 26 - SkatServer - message type unknown. Message not processed
+2021-04-18 23:34:35(0) - info - 26 - SkatServer - Received: passen from Simon
+2021-04-18 23:34:36(1045) - error - 26 - SkatServer - message type unknown. Message not processed
+2021-04-18 23:34:36(0) - info - 26 - SkatServer - Received: Reizen from Volker
+2021-04-18 23:34:38(2176) - error - 26 - SkatServer - message type unknown. Message not processed
+2021-04-18 23:34:38(0) - info - 26 - SkatServer - Received: gameSelected from Volker
+2021-04-18 23:34:41(2774) - error - 26 - SkatServer - message type unknown. Message not processed
+2021-04-18 23:34:41(0) - info - 26 - SkatServer - Received: PutCard from Volker
+2021-04-18 23:34:57(16768) - error - 26 - SkatServer - message type unknown. Message not processed
+2021-04-18 23:34:57(0) - info - 26 - SkatServer - Received: PutCard from Thomas
+2021-04-18 23:34:59(1355) - error - 26 - SkatServer - message type unknown. Message not processed
+2021-04-18 23:34:59(0) - info - 26 - SkatServer - Received: PutCard from Simon
