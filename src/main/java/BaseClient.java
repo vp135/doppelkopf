@@ -68,6 +68,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected ComClient handler;
     protected final List<String> players;
     protected int maxHandCards = 13;
+    protected float heightCorrection;
 
     protected boolean test;
     protected boolean isAdmin;
@@ -337,7 +338,7 @@ public abstract class BaseClient implements IInputputHandler {
         BufferedImage img = cardImages.get(card.farbe+card.value);
         int halfHeight = canvasHeight/2;
         int halfWidth = canvasWidth/2;
-        int anchorY = halfHeight;
+        int anchorY = (int) (halfHeight*heightCorrection);
         int anchorX = halfWidth;
         switch (pos){
             case 0:
@@ -511,18 +512,6 @@ public abstract class BaseClient implements IInputputHandler {
         setComponentSizes(panel, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 30 * 8));
         setComponentSizes(controlPanel, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15));
         createCards();
-        if (hand != null) {
-            createCardButtons(hand);
-            clearPlayArea();
-            tableStich.keySet().forEach(i ->
-                    drawCard2Position(tableStich.get(i), i, table.getHeight(), table.getWidth()));
-            if (selectCards) {
-                cards2Send.clear();
-                cardLabels2Send.clear();
-            }
-        }
-
-        log.info("redraw finished");
     }
 
     protected void setComponentSizes(JComponent p, Dimension d){

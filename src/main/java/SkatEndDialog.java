@@ -51,7 +51,8 @@ public class SkatEndDialog {
             players.forEach(player -> {
                 if(player.getNumber()==stichList.get(stichList.size()-1).getWinner()){
                     player.addPoints(skatPoints);
-                    playerBuilder[player.getNumber()].append(skatPoints);
+                    remaining -= skatPoints;
+                    playerBuilder[player.getNumber()].append(skatPoints).append("(Skat)");
                 }
                 else {
                     playerBuilder[player.getNumber()].append("<br>");
@@ -63,7 +64,7 @@ public class SkatEndDialog {
                 if(player.isRe()){
                     remaining-=skatPoints;
                     player.addPoints(skatPoints);
-                    playerBuilder[player.getNumber()].append(skatPoints);
+                    playerBuilder[player.getNumber()].append(skatPoints).append("(Skat)");
                 }
                 else{
                     playerBuilder[player.getNumber()].append("<br>");

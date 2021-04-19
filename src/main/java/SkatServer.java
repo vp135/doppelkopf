@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 
 import java.net.Socket;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SkatServer extends BaseServer{
 
@@ -199,6 +200,14 @@ public class SkatServer extends BaseServer{
         send2All(new DisplayMessage(player +" spielt " +selectedGame.name()
                 + (hand ? " hand":"" )+ (ouvert ? " ouvert":"")));
         runGame(beginner);
+        if(ouvert) {
+            players.forEach(p -> {
+                if (!p.getName().equals(player)) {
+                    queueOut(p,new OuvertCards(player, players.stream().filter(q-> q.getName().equals(player))
+                            .findFirst().get().getHand()));
+                }
+            });
+        }
     }
 
     private void handleSchieben() {

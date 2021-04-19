@@ -194,6 +194,22 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     @Override
     public void setGameSpecifics() {
         maxHandCards = 13;
+        heightCorrection = 1f;
+    }
+
+    @Override
+    protected void redrawEverything() {
+        super.redrawEverything();
+        if (hand != null) {
+            createCardButtons(hand);
+            clearPlayArea();
+            tableStich.keySet().forEach(i ->
+                    drawCard2Position(tableStich.get(i), i, table.getHeight(), table.getWidth()));
+            if (selectCards) {
+                cards2Send.clear();
+                cardLabels2Send.clear();
+            }
+        }
     }
 
     @Override

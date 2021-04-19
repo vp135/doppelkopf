@@ -1,14 +1,144 @@
-2021-04-18 23:34:33(12368) - error - 26 - SkatServer - message type unknown. Message not processed
-2021-04-18 23:34:34(6) - info - 26 - SkatServer - Received: passen from Thomas
-2021-04-18 23:34:35(1109) - error - 26 - SkatServer - message type unknown. Message not processed
-2021-04-18 23:34:35(0) - info - 26 - SkatServer - Received: passen from Simon
-2021-04-18 23:34:36(1045) - error - 26 - SkatServer - message type unknown. Message not processed
-2021-04-18 23:34:36(0) - info - 26 - SkatServer - Received: Reizen from Volker
-2021-04-18 23:34:38(2176) - error - 26 - SkatServer - message type unknown. Message not processed
-2021-04-18 23:34:38(0) - info - 26 - SkatServer - Received: gameSelected from Volker
-2021-04-18 23:34:41(2774) - error - 26 - SkatServer - message type unknown. Message not processed
-2021-04-18 23:34:41(0) - info - 26 - SkatServer - Received: PutCard from Volker
-2021-04-18 23:34:57(16768) - error - 26 - SkatServer - message type unknown. Message not processed
-2021-04-18 23:34:57(0) - info - 26 - SkatServer - Received: PutCard from Thomas
-2021-04-18 23:34:59(1355) - error - 26 - SkatServer - message type unknown. Message not processed
-2021-04-18 23:34:59(0) - info - 26 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:06:44(7241) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:06:44(8) - info - 25 - SkatServer - Received: passen from Thomas
+2021-04-19 22:06:45(1091) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:06:45(2) - info - 25 - SkatServer - Received: passen from Simon
+2021-04-19 22:06:46(1074) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:06:46(2) - info - 25 - SkatServer - Received: passen from Volker
+2021-04-19 22:06:48(1725) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:06:48(2) - info - 25 - SkatServer - Received: schieben from Volker
+2021-04-19 22:06:49(682) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:06:49(2) - info - 25 - SkatServer - Received: schieben from Thomas
+2021-04-19 22:06:50(1171) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:06:50(2) - info - 25 - SkatServer - Received: schieben from Simon
+2021-04-19 22:07:24(34129) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:24(3) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:07:28(3981) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:28(2) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:07:31(3195) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:31(3) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:07:42(10161) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:42(1) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:07:44(2571) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:44(2) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:07:47(2430) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:47(2) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:07:49(2288) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:49(4) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:07:50(1623) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:50(2) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:07:52(1352) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:52(3) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:07:53(1707) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:53(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:07:54(870) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:54(3) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:07:55(566) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:55(3) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:07:56(904) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:56(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:07:57(764) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:57(2) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:07:57(562) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:57(3) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:07:58(1066) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:07:58(2) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:08:06(7293) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:06(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:08:06(821) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:06(2) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:08:07(970) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:07(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:08:08(820) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:08(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:08:09(708) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:09(2) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:08:13(4054) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:13(1) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:08:14(1477) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:14(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:08:15(900) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:15(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:08:17(1505) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:17(2) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:08:17(698) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:17(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:08:18(779) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:18(1) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:08:21(3034) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:21(1) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:08:22(916) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:22(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:08:23(983) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:23(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:08:38(14419) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:38(2) - info - 25 - SkatServer - Received: ReadyForNextRound from Thomas
+2021-04-19 22:08:39(1065) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:39(6) - info - 25 - SkatServer - Received: ReadyForNextRound from Simon
+2021-04-19 22:08:40(1231) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:40(2) - info - 25 - SkatServer - Received: ReadyForNextRound from Volker
+2021-04-19 22:08:58(18507) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:08:58(1) - info - 25 - SkatServer - Received: Reizen from Simon
+2021-04-19 22:09:01(2195) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:01(1) - info - 25 - SkatServer - Received: passen from Thomas
+2021-04-19 22:09:02(932) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:02(2) - info - 25 - SkatServer - Received: passen from Volker
+2021-04-19 22:09:07(5286) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:07(2) - info - 25 - SkatServer - Received: gameSelected from Simon
+2021-04-19 22:09:12(4879) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:12(2) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:13(1118) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:13(1) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:14(1528) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:14(2) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:15(782) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:15(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:16(597) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:16(1) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:17(1018) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:17(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:18(710) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:18(3) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:18(433) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:18(2) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:19(682) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:19(2) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:19(818) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:19(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:20(517) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:20(2) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:21(727) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:21(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:21(784) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:21(2) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:22(656) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:22(2) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:23(1041) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:23(2) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:25(1588) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:25(3) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:25(658) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:25(2) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:26(1010) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:26(3) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:28(1185) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:28(0) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:30(2346) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:30(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:31(884) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:31(2) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:32(829) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:32(2) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:33(1050) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:33(1) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:34(851) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:34(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:34(733) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:34(2) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:35(939) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:35(2) - info - 25 - SkatServer - Received: PutCard from Volker
+2021-04-19 22:09:38(2240) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:38(1) - info - 25 - SkatServer - Received: PutCard from Thomas
+2021-04-19 22:09:38(965) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:38(1) - info - 25 - SkatServer - Received: PutCard from Simon
+2021-04-19 22:09:39(1023) - error - 25 - SkatServer - message type unknown. Message not processed
+2021-04-19 22:09:40(3) - info - 25 - SkatServer - Received: PutCard from Volker
