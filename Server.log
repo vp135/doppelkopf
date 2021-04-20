@@ -1,0 +1,10 @@
+2021-04-21 00:04:34(871) - info - 21 - Server - added message: startGame
+2021-04-21 00:04:34(11) - info - 27 - Server - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 00:04:38(3510) - info - 21 - Server - added message: AnnounceSpectator
+2021-04-21 00:04:38(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 00:04:38(0) - info - 27 - Server - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 00:04:38(0) - info - 27 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 00:04:38(0) - info - 21 - Server - added message: Cards
+2021-04-21 00:04:38(0) - info - 21 - Server - added message: SelectGame
+2021-04-21 00:04:38(0) - info - 27 - Server - {"command":"Cards","params":{"cards":["Kreuz Bube","Karo Bube","Herz Bube","Herz Koenig","Kreuz 10","Pik 10","Pik Dame","Pik Ass","Karo Koenig","Pik 10"]}}
+2021-04-21 00:04:38(11) - info - 27 - Server - {"command":"SelectGame","params":{"0":0}}

@@ -1,0 +1,962 @@
+2021-04-20 21:56:04(33) - info - 30 - Client - creating UI
+2021-04-20 21:56:04(42) - info - 30 - Client - creating play area
+2021-04-20 21:56:04(21) - info - 30 - Client - creating hud
+2021-04-20 21:56:04(0) - info - 30 - Client - setting components
+2021-04-20 21:56:04(11) - info - 30 - Client - components set
+2021-04-20 21:56:04(1) - info - 30 - Client - listeners added
+2021-04-20 21:56:04(0) - info - 30 - Client - starting to redraw
+2021-04-20 21:56:08(4085) - info - 30 - Client - finished UI creation
+2021-04-20 21:56:08(0) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 21:56:08(10) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 21:56:08(97) - info - 30 - Client - received: Cards
+2021-04-20 21:56:08(44) - info - 30 - Client - received: SelectGame
+2021-04-20 21:56:53(37) - info - 31 - Client - creating UI
+2021-04-20 21:56:53(80) - info - 31 - Client - creating play area
+2021-04-20 21:56:53(22) - info - 31 - Client - creating hud
+2021-04-20 21:56:53(11) - info - 31 - Client - setting components
+2021-04-20 21:56:53(10) - info - 31 - Client - components set
+2021-04-20 21:56:53(0) - info - 31 - Client - listeners added
+2021-04-20 21:56:53(5) - info - 31 - Client - starting to redraw
+2021-04-20 21:56:57(4160) - info - 31 - Client - finished UI creation
+2021-04-20 21:56:57(6) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 21:56:57(0) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 21:56:57(97) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 21:56:57(10) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 21:56:57(12) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 21:56:57(2) - info - 31 - Client - received: Cards
+2021-04-20 21:56:57(45) - info - 31 - Client - received: SelectGame
+2021-04-20 21:57:58(60519) - info - 31 - Client - received: DisplayMessage
+2021-04-20 21:57:59(943) - info - 31 - Client - received: DisplayMessage
+2021-04-20 21:58:01(1942) - info - 31 - Client - received: DisplayMessage
+2021-04-20 21:58:01(21) - info - 31 - Client - received: GameType
+2021-04-20 21:58:01(100) - info - 31 - Client - received: wait4Player
+2021-04-20 21:58:02(1553) - info - 31 - Client - received: PutCard
+2021-04-20 21:58:02(17) - info - 31 - Client - received: wait4Player
+2021-04-20 21:58:03(812) - info - 31 - Client - received: PutCard
+2021-04-20 21:58:03(25) - info - 31 - Client - received: wait4Player
+2021-04-20 21:58:04(422) - info - 31 - Client - received: PutCard
+2021-04-20 21:58:04(36) - info - 31 - Client - received: wait4Player
+2021-04-20 21:58:04(584) - info - 31 - Client - received: PutCard
+2021-04-20 21:58:04(35) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:09(124545) - info - 21 - Client - starting to redraw
+2021-04-20 22:00:09(20) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:18(8853) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:18(36) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:18(663) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:18(21) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:19(816) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:19(24) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:20(501) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:20(0) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:27(7150) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:27(21) - info - 21 - Client - starting to redraw
+2021-04-20 22:00:34(6843) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:34(16) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:35(928) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:35(10) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:35(497) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:35(13) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:36(643) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:36(27) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:36(32) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:36(391) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:36(25) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:37(661) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:37(16) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:37(491) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:37(27) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:38(661) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:38(16) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:38(42) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:39(1200) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:39(32) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:40(566) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:40(10) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:41(641) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:41(10) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:41(466) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:41(4) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:41(5) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:42(693) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:42(67) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:42(440) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:42(21) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:43(598) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:43(10) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:43(517) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:43(11) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:43(11) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:44(624) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:44(48) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:45(528) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:45(11) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:45(586) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:45(37) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:46(550) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:46(11) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:46(10) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:47(864) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:47(16) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:48(774) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:48(10) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:48(640) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:48(0) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:49(614) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:49(8) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:49(23) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:51(2428) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:51(26) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:52(646) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:52(10) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:53(811) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:53(10) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:53(705) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:53(10) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:54(37) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:54(806) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:54(47) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:55(678) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:55(16) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:56(870) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:56(5) - info - 31 - Client - received: wait4Player
+2021-04-20 22:00:57(699) - info - 31 - Client - received: PutCard
+2021-04-20 22:00:57(43) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:00:57(52) - info - 31 - Client - received: GameEnd
+2021-04-20 22:01:03(5793) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 22:01:42(39692) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:01:42(79) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:01:42(38) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:01:42(32) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 22:01:42(22) - info - 21 - Client - starting to redraw
+2021-04-20 22:01:42(42) - info - 31 - Client - received: Cards
+2021-04-20 22:01:42(75) - info - 31 - Client - received: SelectGame
+2021-04-20 22:01:47(4107) - info - 21 - Client - starting to redraw
+2021-04-20 22:07:32(26) - info - 31 - Client - creating UI
+2021-04-20 22:07:32(75) - info - 31 - Client - creating play area
+2021-04-20 22:07:32(28) - info - 31 - Client - creating hud
+2021-04-20 22:07:32(9) - info - 31 - Client - setting components
+2021-04-20 22:07:32(5) - info - 31 - Client - components set
+2021-04-20 22:07:32(3) - info - 31 - Client - listeners added
+2021-04-20 22:07:32(1) - info - 31 - Client - starting to redraw
+2021-04-20 22:08:42(21) - info - 30 - Client - creating UI
+2021-04-20 22:08:42(96) - info - 30 - Client - creating play area
+2021-04-20 22:08:42(25) - info - 30 - Client - creating hud
+2021-04-20 22:08:42(5) - info - 30 - Client - setting components
+2021-04-20 22:08:42(4) - info - 30 - Client - components set
+2021-04-20 22:08:42(4) - info - 30 - Client - listeners added
+2021-04-20 22:08:42(2) - info - 30 - Client - starting to redraw
+2021-04-20 22:08:52(9208) - info - 30 - Client - finished UI creation
+2021-04-20 22:08:52(0) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 22:09:05(13761) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:09:06(35) - info - 21 - Client - starting to redraw
+2021-04-20 22:09:06(114) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:09:06(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:09:06(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:09:06(10) - info - 30 - Client - received: Cards
+2021-04-20 22:09:06(11) - info - 30 - Client - received: SelectGame
+2021-04-20 22:09:21(15174) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:09:23(2443) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:09:24(1072) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:09:24(16) - info - 30 - Client - received: GameType
+2021-04-20 22:09:39(14509) - info - 30 - Client - received: wait4Player
+2021-04-20 22:09:39(30) - info - 21 - Client - starting to redraw
+2021-04-20 22:09:49(9606) - info - 30 - Client - received: PutCard
+2021-04-20 22:09:49(10) - info - 30 - Client - received: wait4Player
+2021-04-20 22:09:50(1631) - info - 30 - Client - received: PutCard
+2021-04-20 22:09:50(28) - info - 30 - Client - received: wait4Player
+2021-04-20 22:09:51(603) - info - 30 - Client - received: PutCard
+2021-04-20 22:09:51(18) - info - 30 - Client - received: wait4Player
+2021-04-20 22:09:52(787) - info - 30 - Client - received: PutCard
+2021-04-20 22:09:52(37) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:09:52(59) - info - 30 - Client - received: wait4Player
+2021-04-20 22:09:56(4779) - info - 30 - Client - received: PutCard
+2021-04-20 22:09:56(26) - info - 30 - Client - received: wait4Player
+2021-04-20 22:09:57(603) - info - 30 - Client - received: PutCard
+2021-04-20 22:09:57(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:09:58(708) - info - 30 - Client - received: PutCard
+2021-04-20 22:09:58(22) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:01(3142) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:01(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:01(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:10(9147) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:10(22) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:13(2469) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:13(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:14(1323) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:14(3) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:15(861) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:15(10) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:15(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:18(2678) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:18(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:19(1264) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:19(14) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:19(578) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:19(17) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:20(575) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:20(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:20(20) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:21(1303) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:21(37) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:22(475) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:22(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:22(572) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:22(10) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:23(499) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:23(8) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:23(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:24(726) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:24(58) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:26(2303) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:26(12) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:27(763) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:27(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:27(491) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:27(15) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:27(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:28(753) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:28(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:29(576) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:29(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:29(720) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:29(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:30(501) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:30(4) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:30(23) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:32(1968) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:32(24) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:33(573) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:33(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:33(661) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:33(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:34(619) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:34(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:34(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:35(678) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:35(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:35(769) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:35(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:36(660) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:36(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:37(719) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:37(8) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:37(35) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:37(678) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:37(64) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:38(875) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:38(14) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:40(1223) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:40(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:10:40(821) - info - 30 - Client - received: PutCard
+2021-04-20 22:10:40(16) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:40(43) - info - 30 - Client - received: GameEnd
+2021-04-20 22:10:52(11382) - info - 21 - Client - starting to redraw
+2021-04-20 22:10:53(1624) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 22:10:53(9) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:54(36) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:54(21) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:54(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:10:54(101) - info - 30 - Client - received: Cards
+2021-04-20 22:10:54(22) - info - 30 - Client - received: SelectGame
+2021-04-20 22:11:05(10997) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:11:06(1061) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:11:07(1133) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:11:07(12) - info - 30 - Client - received: GameType
+2021-04-20 22:11:07(40) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:09(2133) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:09(32) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:10(501) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:10(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:10(641) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:10(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:12(1285) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:12(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:12(10) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:12(747) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:12(58) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:13(435) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:13(19) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:13(640) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:13(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:15(1610) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:15(16) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:15(6) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:16(661) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:16(32) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:16(533) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:16(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:17(704) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:17(17) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:18(933) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:18(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:18(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:19(666) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:19(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:19(523) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:19(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:20(805) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:20(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:21(470) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:21(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:21(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:21(640) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:21(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:22(512) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:22(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:22(667) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:22(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:23(512) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:23(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:23(3) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:25(1821) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:25(47) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:25(475) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:25(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:26(699) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:26(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:27(547) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:27(8) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:27(26) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:27(635) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:27(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:28(491) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:28(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:29(794) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:29(6) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:29(720) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:29(16) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:29(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:30(651) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:30(43) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:31(672) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:31(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:31(654) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:31(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:32(641) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:32(22) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:32(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:33(603) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:33(42) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:33(694) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:33(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:34(715) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:34(6) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:35(949) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:35(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:35(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:39(4075) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:39(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:40(769) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:40(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:41(1067) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:41(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:42(875) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:42(6) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:42(15) - info - 30 - Client - received: GameEnd
+2021-04-20 22:11:48(5803) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 22:11:48(17) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:48(10) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:48(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:48(20) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:11:48(12) - info - 30 - Client - received: Cards
+2021-04-20 22:11:48(21) - info - 30 - Client - received: SelectGame
+2021-04-20 22:11:56(8571) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:11:56(5) - info - 30 - Client - received: GameType
+2021-04-20 22:11:56(7) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:58(1786) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:58(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:11:59(778) - info - 30 - Client - received: PutCard
+2021-04-20 22:11:59(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:00(560) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:00(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:00(810) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:00(17) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:00(32) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:01(1122) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:02(67) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:02(507) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:02(22) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:03(727) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:03(13) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:03(465) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:03(15) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:03(6) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:06(2955) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:06(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:07(765) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:07(9) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:08(555) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:08(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:08(702) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:08(13) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:08(10) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:09(565) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:09(12) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:10(799) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:10(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:10(576) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:10(14) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:11(743) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:11(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:11(26) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:14(2641) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:14(32) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:14(565) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:14(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:15(693) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:15(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:16(550) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:16(10) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:16(28) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:17(1383) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:17(24) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:18(543) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:18(7) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:18(767) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:18(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:19(517) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:19(6) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:19(43) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:21(2527) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:22(48) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:22(646) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:22(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:23(593) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:23(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:24(753) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:24(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:24(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:25(1333) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:25(48) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:26(595) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:26(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:26(680) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:26(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:27(688) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:27(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:27(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:30(2832) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:30(32) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:30(646) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:30(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:31(725) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:31(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:32(682) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:32(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:32(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:33(827) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:33(37) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:33(731) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:34(26) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:34(891) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:34(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:35(629) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:35(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:35(17) - info - 30 - Client - received: GameEnd
+2021-04-20 22:12:40(4442) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:40(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:40(6) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:40(4) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:40(11) - info - 30 - Client - received: Cards
+2021-04-20 22:12:40(14) - info - 30 - Client - received: SelectGame
+2021-04-20 22:12:52(12717) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:12:53(1025) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:12:54(986) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:12:55(1056) - info - 30 - Client - received: DisplayMessage
+2021-04-20 22:12:55(6) - info - 30 - Client - received: GameType
+2021-04-20 22:12:55(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:57(1776) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:57(42) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:58(832) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:58(14) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:58(413) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:58(16) - info - 30 - Client - received: wait4Player
+2021-04-20 22:12:59(714) - info - 30 - Client - received: PutCard
+2021-04-20 22:12:59(17) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:12:59(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:02(2555) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:02(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:02(539) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:02(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:03(715) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:03(15) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:03(412) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:03(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:03(10) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:04(657) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:04(37) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:05(517) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:05(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:05(634) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:05(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:06(421) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:06(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:06(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:06(646) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:06(32) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:07(469) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:07(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:08(613) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:08(6) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:08(490) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:08(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:08(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:09(640) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:09(37) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:09(496) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:09(10) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:10(619) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:10(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:10(481) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:10(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:10(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:11(736) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:11(26) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:12(497) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:12(10) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:12(555) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:12(21) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:13(480) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:13(0) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:13(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:13(608) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:13(37) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:14(501) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:14(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:15(667) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:15(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:15(515) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:15(13) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:15(5) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:17(1950) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:17(18) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:18(1030) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:18(0) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:19(665) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:19(7) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:19(576) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:19(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:19(10) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:20(577) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:20(26) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:21(603) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:21(4) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:21(797) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:21(25) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:22(561) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:22(4) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:22(22) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:25(2960) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:25(43) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:26(576) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:26(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:26(767) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:26(11) - info - 30 - Client - received: wait4Player
+2021-04-20 22:13:27(683) - info - 30 - Client - received: PutCard
+2021-04-20 22:13:27(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:27(22) - info - 30 - Client - received: GameEnd
+2021-04-20 22:13:31(4015) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 22:13:31(0) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:31(11) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:31(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:31(5) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:13:31(6) - info - 30 - Client - received: Cards
+2021-04-20 22:13:31(21) - info - 30 - Client - received: SelectGame
+2021-04-20 22:56:49(6) - info - 21 - Client - queue: getVersion
+2021-04-20 22:56:49(5) - info - 21 - Client - queue: AddPlayer
+2021-04-20 22:56:49(27) - info - 28 - Client - Connected to Server
+2021-04-20 22:56:49(32) - info - 29 - Client - Sending to server: AddPlayer
+2021-04-20 22:56:49(5) - info - 29 - Client - Sending to server: getVersion
+2021-04-20 22:56:49(21) - info - 30 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 22:56:49(14) - info - 30 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 22:56:50(1134) - info - 30 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 22:56:50(32) - info - 30 - Client - creating UI
+2021-04-20 22:56:50(43) - info - 30 - Client - creating play area
+2021-04-20 22:56:50(31) - info - 30 - Client - creating hud
+2021-04-20 22:56:50(0) - info - 30 - Client - setting components
+2021-04-20 22:56:50(5) - info - 30 - Client - components set
+2021-04-20 22:56:50(6) - info - 30 - Client - listeners added
+2021-04-20 22:56:50(0) - info - 30 - Client - starting to redraw
+2021-04-20 22:56:50(0) - info - 30 - Client - finished UI creation
+2021-04-20 22:56:54(3509) - info - 30 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 22:56:54(3376) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 22:56:54(5) - info - 30 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 22:56:54(0) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:56:54(27) - info - 21 - Client - starting to redraw
+2021-04-20 22:56:54(133) - info - 30 - Client - {"command":"Cards","params":{"cards":["Herz Dame","Kreuz Koenig","Pik Bube","Herz 10","Kreuz Dame","Kreuz 10","Pik Bube","Karo Bube","Pik Ass","Karo 10"]}}
+2021-04-20 22:56:54(106) - info - 30 - Client - received: Cards
+2021-04-20 22:56:54(61) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(15) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(0) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(0) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(10) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(0) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(5) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(5) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(0) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(0) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:56:54(114) - info - 30 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 22:56:54(20) - info - 30 - Client - received: SelectGame
+2021-04-20 22:57:38(0) - info - 21 - Client - queue: getVersion
+2021-04-20 22:57:38(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 22:57:38(33) - info - 28 - Client - Connected to Server
+2021-04-20 22:57:38(42) - info - 29 - Client - Sending to server: AddPlayer
+2021-04-20 22:57:38(0) - info - 29 - Client - Sending to server: getVersion
+2021-04-20 22:57:38(25) - info - 30 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 22:57:38(8) - info - 30 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 22:57:39(1091) - info - 30 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 22:57:39(21) - info - 30 - Client - creating UI
+2021-04-20 22:57:39(43) - info - 30 - Client - creating play area
+2021-04-20 22:57:39(21) - info - 30 - Client - creating hud
+2021-04-20 22:57:39(11) - info - 30 - Client - setting components
+2021-04-20 22:57:39(0) - info - 30 - Client - components set
+2021-04-20 22:57:39(0) - info - 30 - Client - listeners added
+2021-04-20 22:57:39(0) - info - 30 - Client - starting to redraw
+2021-04-20 22:57:39(0) - info - 30 - Client - finished UI creation
+2021-04-20 22:57:43(3506) - info - 30 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 22:57:43(3361) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 22:57:43(0) - info - 30 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 22:57:43(0) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 22:57:43(32) - info - 21 - Client - starting to redraw
+2021-04-20 22:57:43(143) - info - 30 - Client - {"command":"Cards","params":{"cards":["Herz Dame","Herz Ass","Herz 10","Kreuz Ass","Pik Dame","Kreuz 10","Karo Bube","Pik Ass","Karo Koenig","Karo Ass"]}}
+2021-04-20 22:57:43(111) - info - 30 - Client - received: Cards
+2021-04-20 22:58:00(17430) - info - 21 - Client - starting to redraw
+2021-04-20 22:58:00(70) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:00(0) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:01(234) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:01(609) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:02(897) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:05(3049) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:05(256) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:05(0) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:06(237) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:06(568) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:07(763) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:08(1474) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:09(382) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:11(1707) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:13(2027) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:14(1615) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:16(1521) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:18(2027) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:19(1589) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 22:58:21(1845) - warn - 30 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 23:00:05(11) - info - 21 - Client - queue: getVersion
+2021-04-20 23:00:05(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:00:05(32) - info - 29 - Client - Connected to Server
+2021-04-20 23:00:05(32) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-20 23:00:05(0) - info - 30 - Client - Sending to server: getVersion
+2021-04-20 23:00:06(21) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:00:06(9) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:00:07(1634) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:00:07(21) - info - 31 - Client - creating UI
+2021-04-20 23:00:07(43) - info - 31 - Client - creating play area
+2021-04-20 23:00:07(32) - info - 31 - Client - creating hud
+2021-04-20 23:00:07(10) - info - 31 - Client - setting components
+2021-04-20 23:00:07(2) - info - 31 - Client - components set
+2021-04-20 23:00:07(0) - info - 31 - Client - listeners added
+2021-04-20 23:00:07(0) - info - 31 - Client - starting to redraw
+2021-04-20 23:00:07(0) - info - 31 - Client - finished UI creation
+2021-04-20 23:00:11(3520) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:00:11(3369) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 23:00:11(0) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:00:11(11) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 23:00:11(27) - info - 21 - Client - starting to redraw
+2021-04-20 23:00:11(139) - info - 31 - Client - {"command":"Cards","params":{"cards":["Pik 10","Herz 10","Pik Koenig","Kreuz 10","Herz Bube","Pik Ass","Karo Koenig","Pik Bube","Karo 10","Karo Ass"]}}
+2021-04-20 23:00:11(106) - info - 31 - Client - received: Cards
+2021-04-20 23:00:35(24155) - info - 21 - Client - starting to redraw
+2021-04-20 23:01:32(57261) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 23:01:32(0) - warn - 31 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 23:01:34(1909) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 23:01:41(6563) - warn - 21 - Client - javax.imageio.IIOException: Can't read input file!
+2021-04-20 23:05:47(0) - info - 21 - Client - queue: getVersion
+2021-04-20 23:05:47(11) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:05:47(32) - info - 28 - Client - Connected to Server
+2021-04-20 23:05:47(32) - info - 29 - Client - Sending to server: AddPlayer
+2021-04-20 23:05:47(0) - info - 29 - Client - Sending to server: getVersion
+2021-04-20 23:05:47(30) - info - 30 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:05:47(2) - info - 30 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:05:48(1461) - info - 30 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:05:48(21) - info - 30 - Client - creating UI
+2021-04-20 23:05:48(54) - info - 30 - Client - creating play area
+2021-04-20 23:05:48(21) - info - 30 - Client - creating hud
+2021-04-20 23:05:48(11) - info - 30 - Client - setting components
+2021-04-20 23:05:48(0) - info - 30 - Client - components set
+2021-04-20 23:05:48(0) - info - 30 - Client - listeners added
+2021-04-20 23:05:48(0) - info - 30 - Client - starting to redraw
+2021-04-20 23:05:48(0) - info - 30 - Client - finished UI creation
+2021-04-20 23:05:52(3523) - info - 30 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:05:52(3384) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 23:05:52(0) - info - 30 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:05:52(8) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 23:05:52(21) - info - 21 - Client - starting to redraw
+2021-04-20 23:05:52(130) - info - 30 - Client - {"command":"Cards","params":{"cards":["Pik Bube","Karo Ass","Kreuz Dame","Pik 10","Karo Koenig","Herz Ass","Karo 10","Kreuz 10","Kreuz Koenig","Herz Koenig"]}}
+2021-04-20 23:05:52(107) - info - 30 - Client - received: Cards
+2021-04-20 23:06:26(33952) - info - 21 - Client - starting to redraw
+2021-04-20 23:06:33(41703) - info - 30 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:06:33(7750) - info - 30 - Client - received: SelectGame
+2021-04-20 23:12:34(0) - info - 21 - Client - queue: getVersion
+2021-04-20 23:12:34(11) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:12:34(32) - info - 29 - Client - Connected to Server
+2021-04-20 23:12:34(34) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-20 23:12:34(8) - info - 30 - Client - Sending to server: getVersion
+2021-04-20 23:12:34(21) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:12:34(8) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:12:37(3332) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:12:37(11) - info - 31 - Client - creating UI
+2021-04-20 23:12:37(42) - info - 31 - Client - creating play area
+2021-04-20 23:12:37(38) - info - 31 - Client - creating hud
+2021-04-20 23:12:37(5) - info - 31 - Client - setting components
+2021-04-20 23:12:37(0) - info - 31 - Client - components set
+2021-04-20 23:12:37(11) - info - 31 - Client - listeners added
+2021-04-20 23:12:37(0) - info - 31 - Client - starting to redraw
+2021-04-20 23:12:37(0) - info - 31 - Client - finished UI creation
+2021-04-20 23:12:41(3519) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:12:41(3377) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 23:12:41(7) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:12:41(0) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 23:12:41(25) - info - 21 - Client - starting to redraw
+2021-04-20 23:12:41(143) - info - 31 - Client - {"command":"Cards","params":{"cards":["Pik Bube","Kreuz Dame","Kreuz 10","Karo Dame","Pik Dame","Pik Koenig","Kreuz Ass","Herz Bube","Herz Ass","Karo Koenig"]}}
+2021-04-20 23:12:41(123) - info - 31 - Client - received: Cards
+2021-04-20 23:12:47(5989) - info - 21 - Client - starting to redraw
+2021-04-20 23:12:48(7431) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:12:48(1441) - info - 31 - Client - received: SelectGame
+2021-04-20 23:13:03(14607) - info - 21 - Client - queue: GameSelected
+2021-04-20 23:13:03(0) - info - 30 - Client - Sending to server: GameSelected
+2021-04-20 23:13:03(22) - info - 31 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 3 Spieler"}}
+2021-04-20 23:13:03(14625) - info - 31 - Client - received: DisplayMessage
+2021-04-20 23:13:45(10) - info - 21 - Client - queue: getVersion
+2021-04-20 23:13:45(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:13:45(32) - info - 29 - Client - Connected to Server
+2021-04-20 23:13:45(34) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-20 23:13:45(0) - info - 30 - Client - Sending to server: getVersion
+2021-04-20 23:13:45(30) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:13:45(12) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:13:45(649) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:13:45(21) - info - 31 - Client - creating UI
+2021-04-20 23:13:46(54) - info - 31 - Client - creating play area
+2021-04-20 23:13:46(24) - info - 31 - Client - creating hud
+2021-04-20 23:13:46(8) - info - 31 - Client - setting components
+2021-04-20 23:13:46(5) - info - 31 - Client - components set
+2021-04-20 23:13:46(0) - info - 31 - Client - listeners added
+2021-04-20 23:13:46(0) - info - 31 - Client - starting to redraw
+2021-04-20 23:13:46(0) - info - 31 - Client - finished UI creation
+2021-04-20 23:13:49(3510) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:13:49(3376) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 23:13:49(5) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:13:49(0) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 23:13:49(17) - info - 21 - Client - starting to redraw
+2021-04-20 23:13:49(134) - info - 31 - Client - {"command":"Cards","params":{"cards":["Karo Bube","Herz Dame","Pik Koenig","Pik Bube","Kreuz Ass","Pik Koenig","Karo Koenig","Karo Dame","Kreuz Dame","Karo Dame"]}}
+2021-04-20 23:13:49(117) - info - 31 - Client - received: Cards
+2021-04-20 23:13:50(1228) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:13:50(1228) - info - 31 - Client - received: SelectGame
+2021-04-20 23:13:53(2623) - info - 21 - Client - starting to redraw
+2021-04-20 23:13:54(1232) - info - 21 - Client - starting to redraw
+2021-04-20 23:13:58(4037) - info - 21 - Client - starting to redraw
+2021-04-20 23:14:04(5776) - info - 21 - Client - starting to redraw
+2021-04-20 23:14:05(1414) - info - 21 - Client - starting to redraw
+2021-04-20 23:14:12(6752) - info - 21 - Client - starting to redraw
+2021-04-20 23:32:20(10) - info - 21 - Client - queue: getVersion
+2021-04-20 23:32:20(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:32:20(37) - info - 28 - Client - Connected to Server
+2021-04-20 23:32:20(32) - info - 29 - Client - Sending to server: AddPlayer
+2021-04-20 23:32:20(6) - info - 29 - Client - Sending to server: getVersion
+2021-04-20 23:32:20(21) - info - 30 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:32:20(9) - info - 30 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:32:21(589) - info - 30 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:32:23(2406) - info - 30 - Client - creating UI
+2021-04-20 23:32:23(26) - info - 30 - Client - creating play area
+2021-04-20 23:32:23(32) - info - 30 - Client - creating hud
+2021-04-20 23:32:23(0) - info - 30 - Client - setting components
+2021-04-20 23:32:23(11) - info - 30 - Client - components set
+2021-04-20 23:32:23(0) - info - 30 - Client - listeners added
+2021-04-20 23:32:23(0) - info - 30 - Client - starting to redraw
+2021-04-20 23:32:26(2389) - info - 30 - Client - finished UI creation
+2021-04-20 23:32:26(4892) - info - 30 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:32:26(9) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 23:32:26(2) - info - 30 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:32:26(2) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 23:32:26(90) - info - 30 - Client - {"command":"Cards","params":{"cards":["Pik Dame","Herz Dame","Herz Koenig","Kreuz Dame","Herz Bube","Karo Bube","Pik Bube","Herz Bube","Karo Dame","Kreuz Dame"]}}
+2021-04-20 23:32:26(90) - info - 30 - Client - received: Cards
+2021-04-20 23:32:26(67) - info - 30 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:32:26(65) - info - 30 - Client - received: SelectGame
+2021-04-20 23:32:28(2437) - info - 21 - Client - starting to redraw
+2021-04-20 23:32:30(1889) - info - 21 - Client - starting to redraw
+2021-04-20 23:32:35(4554) - info - 21 - Client - starting to redraw
+2021-04-20 23:35:12(10) - info - 21 - Client - queue: getVersion
+2021-04-20 23:35:12(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:35:12(37) - info - 28 - Client - Connected to Server
+2021-04-20 23:35:12(38) - info - 29 - Client - Sending to server: AddPlayer
+2021-04-20 23:35:12(0) - info - 29 - Client - Sending to server: getVersion
+2021-04-20 23:35:12(27) - info - 30 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:35:12(7) - info - 30 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:35:13(1070) - info - 30 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:35:15(1952) - info - 30 - Client - creating UI
+2021-04-20 23:35:15(22) - info - 30 - Client - creating play area
+2021-04-20 23:35:15(21) - info - 30 - Client - creating hud
+2021-04-20 23:35:15(0) - info - 30 - Client - setting components
+2021-04-20 23:35:15(0) - info - 30 - Client - components set
+2021-04-20 23:35:15(0) - info - 30 - Client - listeners added
+2021-04-20 23:35:15(11) - info - 30 - Client - starting to redraw
+2021-04-20 23:35:18(2453) - info - 30 - Client - finished UI creation
+2021-04-20 23:35:18(4475) - info - 30 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:35:18(0) - info - 30 - Client - received: AnnounceSpectator
+2021-04-20 23:35:18(0) - info - 30 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:35:18(0) - info - 30 - Client - received: UpdateUserPanel
+2021-04-20 23:35:18(75) - info - 30 - Client - {"command":"Cards","params":{"cards":["Pik Ass","Kreuz Dame","Herz 10","Karo 10","Herz Koenig","Pik Dame","Kreuz Koenig","Herz Bube","Karo Ass","Karo Ass"]}}
+2021-04-20 23:35:18(75) - info - 30 - Client - received: Cards
+2021-04-20 23:35:18(50) - info - 30 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:35:18(53) - info - 30 - Client - received: SelectGame
+2021-04-20 23:36:28(11) - info - 21 - Client - queue: getVersion
+2021-04-20 23:36:28(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:36:28(31) - info - 29 - Client - Connected to Server
+2021-04-20 23:36:28(33) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-20 23:36:28(10) - info - 30 - Client - Sending to server: getVersion
+2021-04-20 23:36:28(15) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:36:28(14) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:36:29(977) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:36:31(2006) - info - 31 - Client - creating UI
+2021-04-20 23:36:31(24) - info - 31 - Client - creating play area
+2021-04-20 23:36:31(29) - info - 31 - Client - creating hud
+2021-04-20 23:36:31(5) - info - 31 - Client - setting components
+2021-04-20 23:36:31(0) - info - 31 - Client - components set
+2021-04-20 23:36:31(6) - info - 31 - Client - listeners added
+2021-04-20 23:36:31(0) - info - 31 - Client - starting to redraw
+2021-04-20 23:36:34(2453) - info - 31 - Client - finished UI creation
+2021-04-20 23:36:34(4553) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:36:34(12) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 23:36:34(0) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:36:34(0) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 23:36:34(100) - info - 31 - Client - {"command":"Cards","params":{"cards":["Herz Ass","Kreuz Bube","Kreuz Bube","Pik Bube","Karo Koenig","Herz 10","Herz Koenig","Kreuz Dame","Herz Koenig","Herz 10"]}}
+2021-04-20 23:36:34(100) - info - 31 - Client - received: Cards
+2021-04-20 23:36:34(59) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:36:34(59) - info - 31 - Client - received: SelectGame
+2021-04-20 23:37:35(4) - info - 21 - Client - queue: getVersion
+2021-04-20 23:37:35(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:37:35(31) - info - 29 - Client - Connected to Server
+2021-04-20 23:37:35(43) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-20 23:37:35(10) - info - 30 - Client - Sending to server: getVersion
+2021-04-20 23:37:35(12) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:37:35(18) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:37:36(803) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:37:38(1814) - info - 31 - Client - creating UI
+2021-04-20 23:37:38(31) - info - 31 - Client - creating play area
+2021-04-20 23:37:38(22) - info - 31 - Client - creating hud
+2021-04-20 23:37:38(5) - info - 31 - Client - setting components
+2021-04-20 23:37:38(0) - info - 31 - Client - components set
+2021-04-20 23:37:38(0) - info - 31 - Client - listeners added
+2021-04-20 23:37:38(0) - info - 31 - Client - starting to redraw
+2021-04-20 23:37:40(2000) - info - 31 - Client - finished UI creation
+2021-04-20 23:37:40(3893) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:37:40(0) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 23:37:40(0) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:37:40(11) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 23:37:40(86) - info - 31 - Client - {"command":"Cards","params":{"cards":["Herz 10","Kreuz Dame","Pik Ass","Herz Bube","Kreuz Ass","Karo 10","Herz Ass","Herz 10","Karo Koenig","Herz Dame"]}}
+2021-04-20 23:37:40(75) - info - 31 - Client - received: Cards
+2021-04-20 23:37:40(27) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:37:40(27) - info - 31 - Client - received: SelectGame
+2021-04-20 23:37:50(10288) - info - 21 - Client - starting to redraw
+2021-04-20 23:37:52(1358) - info - 21 - Client - starting to redraw
+2021-04-20 23:37:58(6015) - info - 21 - Client - starting to redraw
+2021-04-20 23:56:57(6) - info - 21 - Client - queue: getVersion
+2021-04-20 23:56:57(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:56:57(32) - info - 29 - Client - Connected to Server
+2021-04-20 23:56:57(37) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-20 23:56:57(6) - info - 30 - Client - Sending to server: getVersion
+2021-04-20 23:56:57(22) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:56:57(6) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:56:58(1209) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:56:58(21) - info - 31 - Client - creating UI
+2021-04-20 23:56:58(43) - info - 31 - Client - creating play area
+2021-04-20 23:56:58(48) - info - 31 - Client - creating hud
+2021-04-20 23:56:58(5) - info - 31 - Client - setting components
+2021-04-20 23:56:58(0) - info - 31 - Client - components set
+2021-04-20 23:56:58(6) - info - 31 - Client - listeners added
+2021-04-20 23:56:58(0) - info - 31 - Client - starting to redraw
+2021-04-20 23:57:00(2309) - info - 31 - Client - finished UI creation
+2021-04-20 23:57:02(3520) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:57:02(1067) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 23:57:02(0) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:57:02(10) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 23:57:02(44) - info - 21 - Client - starting to redraw
+2021-04-20 23:57:02(139) - info - 31 - Client - {"command":"Cards","params":{"cards":["Karo Koenig","Karo Dame","Herz Bube","Karo Bube","Pik Ass","Pik Koenig","Pik Ass","Kreuz 10","Karo 10","Karo Dame"]}}
+2021-04-20 23:57:02(90) - info - 31 - Client - received: Cards
+2021-04-20 23:57:02(15) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:57:02(16) - info - 31 - Client - received: SelectGame
+2021-04-20 23:59:11(11) - info - 21 - Client - queue: getVersion
+2021-04-20 23:59:11(0) - info - 21 - Client - queue: AddPlayer
+2021-04-20 23:59:11(21) - info - 29 - Client - Connected to Server
+2021-04-20 23:59:11(43) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-20 23:59:11(0) - info - 30 - Client - Sending to server: getVersion
+2021-04-20 23:59:11(21) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 23:59:11(12) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 23:59:12(1056) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 23:59:12(16) - info - 31 - Client - creating UI
+2021-04-20 23:59:12(51) - info - 31 - Client - creating play area
+2021-04-20 23:59:13(40) - info - 31 - Client - creating hud
+2021-04-20 23:59:13(5) - info - 31 - Client - setting components
+2021-04-20 23:59:13(5) - info - 31 - Client - components set
+2021-04-20 23:59:13(0) - info - 31 - Client - listeners added
+2021-04-20 23:59:13(0) - info - 31 - Client - starting to redraw
+2021-04-20 23:59:15(2129) - info - 31 - Client - finished UI creation
+2021-04-20 23:59:16(3508) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 23:59:16(1242) - info - 31 - Client - received: AnnounceSpectator
+2021-04-20 23:59:16(0) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 23:59:16(0) - info - 31 - Client - received: UpdateUserPanel
+2021-04-20 23:59:16(34) - info - 21 - Client - starting to redraw
+2021-04-20 23:59:16(112) - info - 31 - Client - {"command":"Cards","params":{"cards":["Kreuz Koenig","Herz Dame","Karo Dame","Pik Koenig","Karo 10","Pik 10","Pik 10","Herz Ass","Karo Koenig","Pik Dame"]}}
+2021-04-20 23:59:16(78) - info - 31 - Client - received: Cards
+2021-04-20 23:59:16(16) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 23:59:16(16) - info - 31 - Client - received: SelectGame
+2021-04-21 00:00:42(11) - info - 21 - Client - queue: getVersion
+2021-04-21 00:00:42(0) - info - 21 - Client - queue: AddPlayer
+2021-04-21 00:00:42(21) - info - 29 - Client - Connected to Server
+2021-04-21 00:00:42(35) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-21 00:00:42(0) - info - 30 - Client - Sending to server: getVersion
+2021-04-21 00:00:42(24) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-21 00:00:42(16) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-21 00:00:46(4086) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 00:00:46(21) - info - 31 - Client - creating UI
+2021-04-21 00:00:46(48) - info - 31 - Client - creating play area
+2021-04-21 00:00:46(38) - info - 31 - Client - creating hud
+2021-04-21 00:00:46(5) - info - 31 - Client - setting components
+2021-04-21 00:00:46(5) - info - 31 - Client - components set
+2021-04-21 00:00:46(5) - info - 31 - Client - listeners added
+2021-04-21 00:00:46(0) - info - 31 - Client - starting to redraw
+2021-04-21 00:00:48(2315) - info - 31 - Client - finished UI creation
+2021-04-21 00:00:49(3509) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 00:00:49(1051) - info - 31 - Client - received: AnnounceSpectator
+2021-04-21 00:00:49(0) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 00:00:49(10) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 00:00:49(22) - info - 21 - Client - starting to redraw
+2021-04-21 00:00:50(107) - info - 31 - Client - {"command":"Cards","params":{"cards":["Herz Bube","Pik Ass","Pik Bube","Karo Ass","Herz 10","Kreuz Bube","Kreuz Bube","Pik Dame","Herz Dame","Pik Dame"]}}
+2021-04-21 00:00:50(75) - info - 31 - Client - received: Cards
+2021-04-21 00:00:50(21) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 00:00:50(21) - info - 31 - Client - received: SelectGame
+2021-04-21 00:04:33(5) - info - 21 - Client - queue: getVersion
+2021-04-21 00:04:33(5) - info - 21 - Client - queue: AddPlayer
+2021-04-21 00:04:33(65) - info - 29 - Client - Connected to Server
+2021-04-21 00:04:33(18) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-21 00:04:33(3) - info - 30 - Client - Sending to server: getVersion
+2021-04-21 00:04:33(41) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-21 00:04:34(882) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 00:04:34(26) - info - 31 - Client - creating UI
+2021-04-21 00:04:34(106) - info - 31 - Client - creating play area
+2021-04-21 00:04:34(43) - info - 31 - Client - creating hud
+2021-04-21 00:04:35(6) - info - 31 - Client - setting components
+2021-04-21 00:04:35(5) - info - 31 - Client - components set
+2021-04-21 00:04:35(0) - info - 31 - Client - listeners added
+2021-04-21 00:04:35(0) - info - 31 - Client - starting to redraw
+2021-04-21 00:04:37(2225) - info - 31 - Client - finished UI creation
+2021-04-21 00:04:38(3510) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 00:04:38(1088) - info - 31 - Client - received: AnnounceSpectator
+2021-04-21 00:04:38(0) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 00:04:38(11) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 00:04:38(23) - info - 21 - Client - starting to redraw
+2021-04-21 00:04:38(100) - info - 31 - Client - {"command":"Cards","params":{"cards":["Kreuz Bube","Karo Bube","Herz Bube","Herz Koenig","Kreuz 10","Pik 10","Pik Dame","Pik Ass","Karo Koenig","Pik 10"]}}
+2021-04-21 00:04:38(72) - info - 31 - Client - received: Cards
+2021-04-21 00:04:38(17) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 00:04:38(11) - info - 31 - Client - received: SelectGame
+2021-04-21 00:07:01(142639) - info - 21 - Client - starting to redraw
+2021-04-21 00:07:06(5323) - info - 21 - Client - starting to redraw
+2021-04-21 00:07:10(4171) - info - 21 - Client - starting to redraw

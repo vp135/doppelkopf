@@ -23,7 +23,7 @@ public class ComClient {
 
     public final AtomicBoolean wait = new AtomicBoolean(false);
 
-    private final Logger log = new Logger("ComClient",4,true);
+    private final Logger log = new Logger("Client",4,true);
 
     public ComClient(String hostname, int port, IInputputHandler client, String name){
         this.hostname = hostname;

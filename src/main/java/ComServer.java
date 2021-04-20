@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class ComServer {
 
-    protected Logger log = new Logger(this.getClass().getName(),4);
+    protected Logger log = new Logger("Server",4);
 
 
     private final ConcurrentLinkedDeque<MessageIn> inMessages = new ConcurrentLinkedDeque<>();

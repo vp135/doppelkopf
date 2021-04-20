@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DokoClient extends BaseClient implements  IInputputHandler{
@@ -633,5 +634,28 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 s +
                 "</font></html>";
     }
+
+    @Override
+    protected void uiTest() {
+        hand = new ArrayList<>();
+        List<Card> list = Card.createCardList();
+        while(hand.size()<10){
+            hand.add(Card.randomCard(list,random));
+        }
+        createCardButtons(hand);
+        setGameSpecificButtons(hand);
+
+        userLabel_1.setText("Spieler 1");
+        userLabel_2.setText("Spieler 2");
+        userLabel_3.setText("Spieler 3");
+        userLabel_4.setText("Spieler 4");
+        serverMessageLabel.setText("Dieses Feld wird vom Server verwendet");
+        gameMessageLabel.setText("Dieses Feld wird vom Client verwendet");
+        tableStich = new HashMap<>();
+        for(int i = 0;i<4;i++){
+            tableStich.put(i,Card.randomCard(list,random));
+        }
+    }
+
     //
 }

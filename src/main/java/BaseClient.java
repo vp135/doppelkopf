@@ -1,11 +1,11 @@
 import base.BaseCard;
 import base.Logger;
 import base.Statics;
-import base.doko.Card;
 import base.messages.AbortGame;
 import base.messages.CurrentStich;
 import base.messages.DisplayMessage;
 import base.messages.RequestObject;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ import java.util.*;
 
 public abstract class BaseClient implements IInputputHandler {
 
-    protected final static Logger log = new Logger(BaseClient.class.getName(),4,true);
+    protected final static Logger log = new Logger("Client",4,true);
 
     protected JFrame mainFrame;
     protected JFrame letzterStich;
@@ -48,6 +48,10 @@ public abstract class BaseClient implements IInputputHandler {
 
 
     //Cards
+
+    private HashMap<String,BufferedImage> rawImages = new HashMap<>();
+    private HashMap<String,ImageIcon> rawIcons = new HashMap<>();
+
     private BufferedImage img;
     private static final double RATIO = 0.67;
     protected final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
@@ -102,6 +106,7 @@ public abstract class BaseClient implements IInputputHandler {
     //UI creation functions
 
     protected void createUI(int state, int posX, int posY, Dimension size, boolean test){
+        //createRawCardMaps();
         createGameSpecificButtons();
         createMainFrame(state, posX, posY, size);
         createPlayArea();
@@ -124,24 +129,7 @@ public abstract class BaseClient implements IInputputHandler {
             });
         }
         else{
-            hand = new ArrayList<>();
-            List<Card> list = Card.createCardList();
-            while(hand.size()<10){
-                hand.add(Card.randomCard(list,random));
-            }
-            createCardButtons(hand);
-            setGameSpecificButtons(hand);
-
-            userLabel_1.setText("Spieler 1");
-            userLabel_2.setText("Spieler 2");
-            userLabel_3.setText("Spieler 3");
-            userLabel_4.setText("Spieler 4");
-            serverMessageLabel.setText("Dieses Feld wird vom Server verwendet");
-            gameMessageLabel.setText("Dieses Feld wird vom Client verwendet");
-            tableStich = new HashMap<>();
-            for(int i = 0;i<4;i++){
-                tableStich.put(i,Card.randomCard(list,random));
-            }
+            uiTest();
         }
         log.info("listeners added");
         redrawEverything();
@@ -153,6 +141,10 @@ public abstract class BaseClient implements IInputputHandler {
                 redrawEverything();
             }
         });
+    }
+
+    protected void uiTest() {
+
     }
 
     /**
@@ -421,7 +413,7 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected  void createCardButtons(List<BaseCard> cards, JPanel destPanel){
         destPanel.removeAll();
-        setComponentSizes(destPanel,new Dimension((int)(cardSize*RATIO*maxHandCards),(int) (cardSize)));
+        setComponentSizes(destPanel,new Dimension((int)(cardSize*RATIO*maxHandCards), cardSize));
         cards.forEach(card->{
             destPanel.add(createCardLabel(card));
         });
@@ -439,20 +431,13 @@ public abstract class BaseClient implements IInputputHandler {
         panel.repaint();
     }
 
+
     protected void createCards() {
         cardWidth4Hand = panel.getWidth() / maxHandCards;
         cardHeight4Hand = (int) (cardWidth4Hand / RATIO);
-
-
         BaseCard.UNIQUE_CARDS.forEach(s -> {
-            String path = System.getProperty("user.dir") + "\\resources\\" + s + ".PNG";
-            BufferedImage image;
-            ImageIcon icon;
             try {
-                icon = new ImageIcon(ImageIO.read(new File(path)));
-                image = ImageIO.read(new File(path));
-
-                double factor = Math.min(cardHeight4Hand, cardSize) * RATIO / (double) image.getWidth();
+                double factor = Math.min(cardHeight4Hand, cardSize) * RATIO / (double) rawImages.get(s).getWidth();
                 BufferedImage cardImage = new BufferedImage(
                         (int) (Math.min(cardHeight4Hand, cardSize) * RATIO),
                         Math.min(cardHeight4Hand, cardSize),
@@ -461,12 +446,12 @@ public abstract class BaseClient implements IInputputHandler {
                 at.scale(factor, factor);
                 AffineTransformOp scaleOp =
                         new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-                cardImage = scaleOp.filter(image, cardImage);
-                icon.setImage(cardImage);
-                cardIcons.put(s, icon);
+                cardImage = scaleOp.filter(rawImages.get(s), cardImage);
+                rawIcons.get(s).setImage(cardImage);
+                cardIcons.put(s, rawIcons.get(s));
 
                 if (Math.min(cardHeight4Hand, cardSize) == cardHeight4Hand) {
-                    factor = cardSize * RATIO / (double) image.getWidth();
+                    factor = cardSize * RATIO / (double) rawImages.get(s).getWidth();
                     cardImage = new BufferedImage(
                             (int) (cardSize * RATIO),
                             cardSize,
@@ -474,7 +459,7 @@ public abstract class BaseClient implements IInputputHandler {
                     AffineTransform at2 = new AffineTransform();
                     at2.scale(factor, factor);
                     scaleOp = new AffineTransformOp(at2, AffineTransformOp.TYPE_BILINEAR);
-                    cardImage = scaleOp.filter(image, cardImage);
+                    cardImage = scaleOp.filter(rawImages.get(s), cardImage);
                 }
                 cardImages.put(s, cardImage);
             } catch (Exception e) {
@@ -532,17 +517,12 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
     protected JLabel getCardLabel(BaseCard card){
-        String path = System.getProperty("user.dir")+"\\resources\\" + card.farbe + card.value + ".PNG";
-        BufferedImage image;
-        ImageIcon icon = null;
         int size = 10;
         if (hand!=null && hand.size()>10){
             size = hand.size();
         }
         try {
-            icon = new ImageIcon(ImageIO.read(new File(path)));
-            image = ImageIO.read(new File(path));
-            int imageWidth = image.getWidth();
+            int imageWidth = rawImages.get(card.toTrimedString()).getWidth();
             double faktor = ((mainFrame.getSize().getWidth()/size)-6)/(double)imageWidth;
             BufferedImage after = new BufferedImage((int)mainFrame.getSize().getWidth()/size,
                     (int)(mainFrame.getSize().getHeight()-(panel.getSize().getHeight()))/3, BufferedImage.TYPE_INT_ARGB);
@@ -551,12 +531,12 @@ public abstract class BaseClient implements IInputputHandler {
             at.scale(faktor, faktor);
             AffineTransformOp scaleOp =
                     new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-            after = scaleOp.filter(image, after);
-            icon.setImage(after);
+            after = scaleOp.filter(rawImages.get(card.toTrimedString()), after);
+            rawIcons.get(card.toTrimedString()).setImage(after);
         } catch (Exception e) {
             log.error(e.toString());
         }
-        JLabel label = new JLabel(icon);
+        JLabel label = new JLabel(rawIcons.get(card.toTrimedString()));
         label.setSize(new Dimension((int)mainFrame.getSize().getWidth()/size,110));
         return label;
     }
@@ -588,6 +568,11 @@ public abstract class BaseClient implements IInputputHandler {
         } else {
             gameMessageLabel.setText(message.getParams().get("player").getAsString() + " ist am Zug");
         }
+    }
+
+    public void setRawCards(HashMap<String, ImageIcon> rawIcons, HashMap<String, BufferedImage> rawImages) {
+        this.rawIcons = rawIcons;
+        this.rawImages = rawImages;
     }
 
 

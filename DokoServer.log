@@ -1,0 +1,384 @@
+2021-04-20 22:09:20(37281) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:20(11) - info - 25 - DokoServer - Received: GameSelected from Thomas
+2021-04-20 22:09:21(1253) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:21(0) - info - 25 - DokoServer - Received: GameSelected from Volker
+2021-04-20 22:09:23(2437) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:23(0) - info - 25 - DokoServer - Received: GameSelected from Simon
+2021-04-20 22:09:24(1057) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:24(0) - info - 25 - DokoServer - Received: GameSelected from Jens
+2021-04-20 22:09:48(24156) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:48(10) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:09:50(1637) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:50(6) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:09:51(629) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:51(5) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:09:52(800) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:52(5) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:09:56(4865) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:56(10) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:09:57(630) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:57(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:09:58(714) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:09:58(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:01(3168) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:01(5) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:10(9158) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:10(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:10:13(2486) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:13(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:10:14(1344) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:14(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:15(859) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:15(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:18(2699) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:18(3) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:19(1282) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:19(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:10:19(587) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:19(5) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:10:20(576) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:20(11) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:21(1333) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:21(5) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:10:22(512) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:22(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:10:22(587) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:22(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:23(496) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:23(12) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:24(735) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:24(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:10:26(2358) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:26(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:10:27(778) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:27(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:27(512) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:27(11) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:28(771) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:28(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:10:29(594) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:29(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:10:29(725) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:29(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:30(513) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:30(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:32(1994) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:32(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:33(597) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:33(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:33(662) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:33(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:10:34(634) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:34(6) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:10:35(704) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:35(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:35(768) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:35(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:36(662) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:36(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:10:37(725) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:37(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:10:37(725) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:37(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:10:38(939) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:38(11) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:10:40(1226) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:40(5) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:10:40(834) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:40(2) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:10:42(1575) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:42(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Jens
+2021-04-20 22:10:43(811) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:43(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Thomas
+2021-04-20 22:10:44(986) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:44(9) - info - 25 - DokoServer - Received: ReadyForNextRound from Volker
+2021-04-20 22:10:45(1368) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:10:45(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Simon
+2021-04-20 22:11:03(18144) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:03(0) - info - 25 - DokoServer - Received: GameSelected from Thomas
+2021-04-20 22:11:05(1366) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:05(0) - info - 25 - DokoServer - Received: GameSelected from Volker
+2021-04-20 22:11:06(1056) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:06(0) - info - 25 - DokoServer - Received: GameSelected from Simon
+2021-04-20 22:11:07(1130) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:07(0) - info - 25 - DokoServer - Received: GameSelected from Jens
+2021-04-20 22:11:09(2176) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:09(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:10(544) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:10(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:10(667) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:10(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:12(1296) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:12(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:12(768) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:12(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:13(496) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:13(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:13(661) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:13(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:15(1617) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:15(10) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:16(672) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:16(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:16(566) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:16(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:17(714) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:17(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:18(950) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:18(8) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:19(679) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:19(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:19(550) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:19(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:20(821) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:20(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:21(481) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:21(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:21(650) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:21(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:22(533) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:22(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:22(683) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:22(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:23(512) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:23(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:25(1840) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:25(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:25(528) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:25(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:26(709) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:26(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:27(539) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:27(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:27(673) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:27(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:28(516) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:28(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:29(795) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:29(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:29(726) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:29(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:30(686) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:30(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:31(704) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:31(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:31(640) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:31(11) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:32(650) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:32(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:33(641) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:33(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:33(736) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:33(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:34(717) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:34(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:35(957) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:35(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:39(4107) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:39(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:11:40(784) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:40(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:11:41(1083) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:41(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:42(879) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:42(6) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:44(2614) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:44(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Jens
+2021-04-20 22:11:45(986) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:45(6) - info - 25 - DokoServer - Received: ReadyForNextRound from Thomas
+2021-04-20 22:11:47(1113) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:47(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Volker
+2021-04-20 22:11:48(1100) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:48(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Simon
+2021-04-20 22:11:52(4443) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:52(0) - info - 25 - DokoServer - Received: GameSelected from Thomas
+2021-04-20 22:11:54(1802) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:54(0) - info - 25 - DokoServer - Received: GameSelected from Jens
+2021-04-20 22:11:55(1206) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:55(0) - info - 25 - DokoServer - Received: GameSelected from Simon
+2021-04-20 22:11:56(1210) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:56(0) - info - 25 - DokoServer - Received: GameSelected from Volker
+2021-04-20 22:11:58(1798) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:58(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:11:59(789) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:59(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:11:59(576) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:11:59(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:00(822) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:00(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:01(1173) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:01(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:02(577) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:02(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:03(746) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:03(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:03(491) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:03(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:06(2965) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:06(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:07(779) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:07(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:08(565) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:08(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:08(693) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:08(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:09(587) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:09(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:10(810) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:10(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:10(587) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:10(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:11(762) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:11(6) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:14(2667) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:14(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:14(597) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:14(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:15(704) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:15(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:16(555) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:16(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:17(1419) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:17(10) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:18(565) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:18(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:18(769) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:18(5) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:19(522) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:19(6) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:21(2581) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:21(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:22(683) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:22(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:23(619) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:23(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:24(757) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:24(5) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:25(1361) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:25(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:26(645) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:26(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:26(688) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:26(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:27(693) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:27(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:30(2859) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:30(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:30(688) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:30(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:31(720) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:31(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:32(688) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:32(5) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:33(843) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:33(11) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:33(768) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:33(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:34(912) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:34(5) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:35(630) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:35(6) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:12:37(1775) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:37(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Simon
+2021-04-20 22:12:38(844) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:38(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Jens
+2021-04-20 22:12:39(937) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:39(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Thomas
+2021-04-20 22:12:40(898) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:40(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Volker
+2021-04-20 22:12:52(12767) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:52(0) - info - 25 - DokoServer - Received: GameSelected from Volker
+2021-04-20 22:12:53(1029) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:53(0) - info - 25 - DokoServer - Received: GameSelected from Thomas
+2021-04-20 22:12:54(987) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:54(0) - info - 25 - DokoServer - Received: GameSelected from Jens
+2021-04-20 22:12:55(1050) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:55(0) - info - 25 - DokoServer - Received: GameSelected from Simon
+2021-04-20 22:12:57(1803) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:57(1) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:12:58(873) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:58(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:12:58(433) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:58(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:12:59(720) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:12:59(5) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:02(2583) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:02(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:02(548) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:02(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:03(731) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:03(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:03(421) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:03(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:04(667) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:04(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:05(555) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:05(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:05(650) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:05(5) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:06(432) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:06(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:06(651) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:06(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:07(502) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:07(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:08(623) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:08(6) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:08(501) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:08(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:09(656) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:09(6) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:09(527) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:09(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:10(624) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:10(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:10(486) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:10(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:11(741) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:11(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:12(523) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:12(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:12(576) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:12(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:13(491) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:13(5) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:13(613) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:13(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:14(545) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:14(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:15(672) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:15(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:15(522) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:15(3) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:17(1960) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:17(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:18(1046) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:18(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:19(666) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:19(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:19(586) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:19(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:20(598) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:20(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:21(624) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:21(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:21(800) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:21(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:22(587) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:22(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:25(2991) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:25(0) - info - 25 - DokoServer - Received: PutCard from Jens
+2021-04-20 22:13:26(625) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:26(0) - info - 25 - DokoServer - Received: PutCard from Thomas
+2021-04-20 22:13:26(768) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:26(0) - info - 25 - DokoServer - Received: PutCard from Volker
+2021-04-20 22:13:27(698) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:27(0) - info - 25 - DokoServer - Received: PutCard from Simon
+2021-04-20 22:13:28(1184) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:28(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Simon
+2021-04-20 22:13:29(689) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:29(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Jens
+2021-04-20 22:13:30(1322) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:30(11) - info - 25 - DokoServer - Received: ReadyForNextRound from Thomas
+2021-04-20 22:13:31(835) - error - 25 - DokoServer - message type unknown. Message not processed
+2021-04-20 22:13:31(0) - info - 25 - DokoServer - Received: ReadyForNextRound from Volker

@@ -10,7 +10,6 @@ import com.google.gson.JsonArray;
 
 import java.net.Socket;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SkatServer extends BaseServer{
 

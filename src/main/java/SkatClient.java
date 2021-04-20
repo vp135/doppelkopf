@@ -4,7 +4,6 @@ import base.skat.Card;
 import base.skat.SortHand;
 import base.skat.messages.*;
 import com.google.gson.JsonArray;
-import jdk.tools.jlink.internal.TaskHelper;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
@@ -627,22 +626,22 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         for (int j = 0; j < tmpList.size(); j++) {
             if (message.getParams().has(String.valueOf(tmpList.get(j)))) {
                 if (j == 0) {
-                    cardPos4 = getCardLabel(new base.doko.Card(
+                    cardPos4 = getCardLabel(new Card(
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
                     );
                 } else if (j == 1) {
-                    cardPos1 = getCardLabel(new base.doko.Card(
+                    cardPos1 = getCardLabel(new Card(
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
                     );
                 } else if (j == 2) {
-                    cardPos2 = getCardLabel(new base.doko.Card(
+                    cardPos2 = getCardLabel(new Card(
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
                     );
                 } else if (j == 3) {
-                    cardPos3 = getCardLabel(new base.doko.Card(
+                    cardPos3 = getCardLabel(new Card(
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
                     );

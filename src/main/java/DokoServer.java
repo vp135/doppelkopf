@@ -297,7 +297,7 @@ public class DokoServer extends BaseServer{
             if(players.size()>4) {
                 players.get(spectator).setSpectator(true);
             }
-            send2All(new AnnounceSpectator(spectator,aufspieler));
+            send2All(new AnnounceSpectator(spectator,beginner));
         }
         shuffleCards();
     }
@@ -469,7 +469,7 @@ public class DokoServer extends BaseServer{
     @Override
     protected void startGame() {
         super.startGame();
-        send2All(new AnnounceSpectator(spectator,aufspieler));
+        send2All(new AnnounceSpectator(spectator,beginner));
         shuffleCards();
     }
 

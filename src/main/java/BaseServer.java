@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BaseServer implements IServerMessageHandler{
 
-    protected Logger log = new Logger(this.getClass().getName(),4);
+    protected Logger log = new Logger("Server",4);
     protected Statics.game gameType;
     protected ComServer comServer;
     protected final List<Player> players = new ArrayList<>();

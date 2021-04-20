@@ -1,3 +1,4 @@
+import base.BaseCard;
 import base.Logger;
 import base.Statics;
 import base.messages.StartGame;
@@ -5,10 +6,14 @@ import base.messages.GetVersion;
 import base.messages.PlayersInLobby;
 import base.messages.RequestObject;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,13 +31,9 @@ public class Main implements IInputputHandler{
     private JButton start;
     private JButton join;
     private JFrame createJoinFrame;
-    private int port;
-    private String hostname;
-
     private Configuration c;
 
     private ComClient comClient;
-    private boolean isAdmin;
     private JComboBox<Statics.game> gameList;
 
     public static void main(String[] args) {
@@ -66,6 +67,7 @@ public class Main implements IInputputHandler{
     public Main(){
         modifyUIManager();
         createOrJoin();
+        createRawCardMaps();
     }
 
     public void createOrJoin() {
@@ -169,7 +171,6 @@ public class Main implements IInputputHandler{
 
         join.addActionListener(e -> {
             name = playername.getText();
-            this.port = Integer.parseInt(port.getText());
             new Thread(() -> {
                 name = playername.getText().trim();
                 if (!name.equals("")) {
@@ -213,7 +214,6 @@ public class Main implements IInputputHandler{
 
         });
         start.addActionListener(e -> {
-            isAdmin = true;
             startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem()));
         });
         createJoinFrame.pack();
@@ -309,6 +309,14 @@ public class Main implements IInputputHandler{
     }
 
     private void handleStart(RequestObject message) {
+        while(!ready){
+            try {
+                System.out.println("not ready yet");
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         BaseClient client = null;
         switch (Statics.game.valueOf(message.getParams().get("game").getAsString())){
             case DOKO:
@@ -318,6 +326,7 @@ public class Main implements IInputputHandler{
                 client = new SkatClient(comClient,players,c);
                 break;
         }
+        client.setRawCards(rawIcons,rawImages);
         comClient.setClient(client);
         client.createUI(
                 createJoinFrame.getExtendedState(),
@@ -334,6 +343,27 @@ public class Main implements IInputputHandler{
             createJoinFrame.setVisible(false);
             createJoinFrame.dispose();
             log.info("disposed of lobby frame");
+        }).start();
+    }
+
+
+    HashMap<String, BufferedImage> rawImages = new HashMap<>();
+    HashMap<String,ImageIcon> rawIcons = new HashMap<>();
+    boolean ready;
+
+    public void createRawCardMaps(){
+        new Thread(() ->{
+            BaseCard.UNIQUE_CARDS.forEach(s -> {
+                String path = System.getProperty("user.dir") + "\\resources\\" + s + ".PNG";
+                try {
+                    rawImages.put(s, ImageIO.read(new File(path)));
+                    rawIcons.put(s, new ImageIcon(ImageIO.read(new File(path))));
+                }catch (Exception ex){
+                    log.error(ex.toString());
+                }
+            });
+            ready = true;
+            System.out.println("ready");
         }).start();
     }
 }

@@ -31,6 +31,8 @@ public class DokoEndDialog {
         players.forEach(player -> player.setPoints(0));
 
         stichList.forEach(stich -> {
+            stich.setPlayers(players);
+            stich.check4ExtraPoints();
             players.get(stich.getWinner()).addPoints(stich.getPoints());
             remaining -= stich.getPoints();
             if(players.get(stich.getWinner()).isRe()) {

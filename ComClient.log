@@ -1,0 +1,687 @@
+2021-04-20 21:56:01(8) - info - 21 - ComClient - queue: getVersion
+2021-04-20 21:56:01(2) - info - 21 - ComClient - queue: AddPlayer
+2021-04-20 21:56:01(31) - info - 28 - ComClient - Connected to Server
+2021-04-20 21:56:01(32) - info - 29 - ComClient - Sending to server: AddPlayer
+2021-04-20 21:56:01(3) - info - 29 - ComClient - Sending to server: getVersion
+2021-04-20 21:56:01(14) - info - 30 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 21:56:01(2) - info - 30 - ComClient - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 21:56:04(2258) - info - 30 - ComClient - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 21:56:08(4213) - info - 30 - ComClient - {"command":"AnnounceSpectator","params":{"player":4,"starter":-1}}
+2021-04-20 21:56:08(0) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 21:56:08(107) - info - 30 - ComClient - {"command":"Cards","params":{"cards":["Karo Bube","Herz 10","Pik 10","Herz 10","Kreuz Bube","Kreuz Dame","Kreuz Koenig","Kreuz Koenig","Herz Ass","Kreuz 10"]}}
+2021-04-20 21:56:08(44) - info - 30 - ComClient - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 21:56:36(11) - info - 21 - ComClient - queue: getVersion
+2021-04-20 21:56:36(0) - info - 21 - ComClient - queue: AddPlayer
+2021-04-20 21:56:36(36) - info - 29 - ComClient - Connected to Server
+2021-04-20 21:56:36(32) - info - 30 - ComClient - Sending to server: AddPlayer
+2021-04-20 21:56:36(6) - info - 30 - ComClient - Sending to server: getVersion
+2021-04-20 21:56:37(16) - info - 31 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 21:56:37(12) - info - 31 - ComClient - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 21:56:40(3503) - info - 31 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Simon"]}}
+2021-04-20 21:56:45(5462) - info - 31 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Simon","Thomas"]}}
+2021-04-20 21:56:51(5205) - info - 31 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Simon","Thomas","Jens"]}}
+2021-04-20 21:56:53(1952) - info - 31 - ComClient - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 21:56:57(4357) - info - 31 - ComClient - {"command":"AnnounceSpectator","params":{"player":4,"starter":-1}}
+2021-04-20 21:56:57(6) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 21:56:57(96) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-20 21:56:57(5) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-20 21:56:57(16) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-20 21:56:57(4) - info - 31 - ComClient - {"command":"Cards","params":{"cards":["Pik Ass","Karo 10","Pik Dame","Pik Koenig","Karo Bube","Herz Bube","Herz Dame","Pik 10","Karo Ass","Pik Dame"]}}
+2021-04-20 21:56:57(39) - info - 31 - ComClient - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 21:57:58(60517) - info - 21 - ComClient - queue: GameSelected
+2021-04-20 21:57:58(0) - info - 30 - ComClient - Sending to server: GameSelected
+2021-04-20 21:57:58(8) - info - 31 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-20 21:57:59(943) - info - 31 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-20 21:58:01(1942) - info - 31 - ComClient - {"command":"DisplayMessage","params":{"message":"normales Spiel"}}
+2021-04-20 21:58:01(18) - info - 31 - ComClient - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-20 21:58:01(94) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 21:58:02(1546) - info - 21 - ComClient - queue: PutCard
+2021-04-20 21:58:02(0) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 21:58:02(15) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 21:58:02(13) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 21:58:03(804) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 21:58:03(32) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 21:58:04(427) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 21:58:04(36) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 21:58:04(583) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"10"}}
+2021-04-20 21:58:04(36) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:00:09(124565) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:18(8853) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:00:18(36) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:18(663) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:00:18(21) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:19(816) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:00:19(16) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:20(486) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:20(0) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:20(21) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:00:20(2) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-20 22:00:27(7124) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:34(6874) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:34(6) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:34(10) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:00:34(11) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:35(928) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:00:35(15) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:35(487) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:00:35(21) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:36(645) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:00:36(21) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-20 22:00:36(38) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:36(378) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:36(0) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:36(12) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:00:36(15) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:37(666) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:00:37(17) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:37(491) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:00:37(32) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:38(661) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:00:38(16) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:00:38(42) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:39(1200) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:00:39(27) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:40(571) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:00:40(10) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:41(641) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:00:41(5) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:41(458) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:41(0) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:41(11) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:00:41(6) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:00:41(5) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:42(693) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:00:42(59) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:42(448) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:00:42(11) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:43(597) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:00:43(21) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:43(507) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:43(0) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:43(10) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:00:43(6) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:00:43(11) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:44(629) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:00:44(48) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:45(522) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:00:45(14) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:45(589) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:00:45(12) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:46(564) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:46(0) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:46(11) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:00:46(11) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:00:46(5) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:47(869) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:00:47(11) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:48(768) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:00:48(11) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:48(645) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:00:48(5) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:49(598) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:49(5) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:49(11) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:00:49(5) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:00:49(21) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:51(2433) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:00:51(21) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:52(651) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:00:52(4) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:53(807) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:53(0) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:53(10) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:00:53(10) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:53(699) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:00:53(11) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:00:54(37) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:00:54(805) - info - 31 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:00:54(53) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:00:55(673) - info - 31 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:00:55(16) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:00:56(864) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:00:56(0) - info - 30 - ComClient - Sending to server: PutCard
+2021-04-20 22:00:56(10) - info - 31 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:00:56(6) - info - 31 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:00:57(699) - info - 31 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:00:57(43) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:00:57(47) - info - 31 - ComClient - {"command":"GameEnd","params":{"re1":"\u003chtml\u003eRe(157)\u003cbr\u003e\u003chr\u003eSimon(97)\u003cbr\u003eThomas(60)\u003cbr\u003e\u003c/html\u003e","re2":"\u003chtml\u003e20(Simon)\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e19(Simon)\u003cbr\u003e19(Simon)\u003cbr\u003e21(Fuchs gefangen(1))(Simon)\u003cbr\u003e18(Simon)\u003cbr\u003e35(Thomas)\u003cbr\u003e25(Thomas)\u003cbr\u003e\u003cbr\u003e\u003c/html\u003e","kontra1":"\u003chtml\u003eKontra(83)\u003cbr\u003e\u003chr\u003eVolker(48)\u003cbr\u003eJens(35)\u003cbr\u003e\u003c/html\u003e","kontra2":"\u003chtml\u003e\u003cbr\u003e28(Volker)\u003cbr\u003e20(Volker)\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e35(Jens)\u003cbr\u003e\u003c/html\u003e","remain":0}}
+2021-04-20 22:01:03(5787) - info - 31 - ComClient - queue: ReadyForNextRound
+2021-04-20 22:01:03(11) - info - 30 - ComClient - Sending to server: ReadyForNextRound
+2021-04-20 22:01:03(0) - info - 31 - ComClient - {"command":"AnnounceSpectator","params":{"player":4,"starter":-1}}
+2021-04-20 22:01:42(39692) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 22:01:42(75) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-20 22:01:42(42) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-20 22:01:42(32) - info - 31 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-20 22:01:42(63) - info - 31 - ComClient - {"command":"Cards","params":{"cards":["Herz Ass","Kreuz Bube","Karo 10","Kreuz Koenig","Pik Bube","Herz 10","Kreuz Dame","Karo Dame","Kreuz 10","Herz Dame"]}}
+2021-04-20 22:01:42(76) - info - 31 - ComClient - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 22:07:17(11) - info - 21 - ComClient - queue: getVersion
+2021-04-20 22:07:17(5) - info - 21 - ComClient - queue: AddPlayer
+2021-04-20 22:07:17(32) - info - 29 - ComClient - Connected to Server
+2021-04-20 22:07:17(38) - info - 30 - ComClient - Sending to server: AddPlayer
+2021-04-20 22:07:17(0) - info - 30 - ComClient - Sending to server: getVersion
+2021-04-20 22:07:17(21) - info - 31 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 22:07:17(11) - info - 31 - ComClient - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 22:07:19(1839) - info - 31 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Jens"]}}
+2021-04-20 22:07:25(6337) - info - 31 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Jens","Thomas"]}}
+2021-04-20 22:07:31(5200) - info - 31 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Jens","Thomas","Simon"]}}
+2021-04-20 22:07:32(960) - info - 31 - ComClient - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 22:08:31(0) - info - 21 - ComClient - queue: getVersion
+2021-04-20 22:08:31(13) - info - 21 - ComClient - queue: AddPlayer
+2021-04-20 22:08:31(30) - info - 28 - ComClient - Connected to Server
+2021-04-20 22:08:31(35) - info - 29 - ComClient - Sending to server: AddPlayer
+2021-04-20 22:08:31(8) - info - 29 - ComClient - Sending to server: getVersion
+2021-04-20 22:08:31(15) - info - 30 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-20 22:08:31(10) - info - 30 - ComClient - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-20 22:08:33(1233) - info - 30 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Simon"]}}
+2021-04-20 22:08:37(4533) - info - 30 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Simon","Jens"]}}
+2021-04-20 22:08:41(3686) - info - 30 - ComClient - {"command":"PlayersInLobby","params":{"players":["Volker","Simon","Jens","Thomas"]}}
+2021-04-20 22:08:42(1349) - info - 30 - ComClient - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-20 22:08:52(9419) - info - 30 - ComClient - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-20 22:09:05(13761) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 22:09:06(149) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-20 22:09:06(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-20 22:09:06(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-20 22:09:06(5) - info - 30 - ComClient - {"command":"Cards","params":{"cards":["Kreuz Bube","Herz Bube","Karo Koenig","Pik Koenig","Karo Ass","Herz Koenig","Karo 10","Herz Koenig","Kreuz Ass","Kreuz Dame"]}}
+2021-04-20 22:09:06(16) - info - 30 - ComClient - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 22:09:21(15164) - info - 21 - ComClient - queue: GameSelected
+2021-04-20 22:09:21(0) - info - 29 - ComClient - Sending to server: GameSelected
+2021-04-20 22:09:21(10) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-20 22:09:23(2432) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-20 22:09:24(1078) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"keine Vorbehalte"}}
+2021-04-20 22:09:24(16) - info - 30 - ComClient - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-20 22:09:39(14514) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:09:48(9610) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:09:48(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:09:48(21) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:09:49(15) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:09:50(1631) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:09:50(28) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:09:51(597) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:09:51(24) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:09:52(787) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:09:52(32) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:09:52(59) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:09:56(4773) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:09:56(32) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:09:57(608) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:09:57(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:09:58(708) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:09:58(17) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:01(3131) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:01(5) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:01(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:10:01(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:10:01(6) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:10:10(9152) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:10:10(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:10:13(2480) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:10:13(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:10:14(1323) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:10:14(3) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:15(849) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:15(1) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:15(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:10:15(0) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-20 22:10:15(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:18(2656) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:18(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:18(14) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:10:18(18) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:10:19(1269) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:10:19(14) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:10:19(578) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:10:19(17) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:10:20(565) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:10:20(21) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:10:20(20) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:10:21(1303) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:10:21(32) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:10:22(480) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:10:22(15) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:10:22(572) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:10:22(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:23(480) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:23(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:23(18) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:10:23(4) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:10:23(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:10:24(726) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:10:24(58) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:10:26(2299) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:10:26(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:10:27(768) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:10:27(15) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:27(486) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:27(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:27(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:10:27(15) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:10:27(6) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:10:28(758) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:10:28(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:10:29(565) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:10:29(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:10:29(720) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:10:29(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:30(480) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:30(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:30(21) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:10:30(4) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:10:30(18) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:10:32(1973) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:10:32(24) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:33(562) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:33(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:33(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:10:33(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:10:33(661) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:10:33(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:10:34(619) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:10:34(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:10:34(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:10:35(678) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:10:35(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:35(757) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:35(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:35(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:10:35(1) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:10:36(660) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:10:36(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:10:37(719) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:10:37(8) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:10:37(30) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:10:37(672) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:10:37(69) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:10:38(870) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:10:38(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:10:38(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:10:38(14) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:10:40(1223) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:10:40(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:10:40(826) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:10:40(16) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:10:40(37) - info - 30 - ComClient - {"command":"GameEnd","params":{"re1":"\u003chtml\u003eRe(161)\u003cbr\u003e\u003chr\u003eVolker(18)\u003cbr\u003eSimon(143)\u003cbr\u003e\u003c/html\u003e","re2":"\u003chtml\u003e27(Simon)\u003cbr\u003e28(Simon)\u003cbr\u003e18(Volker)\u003cbr\u003e27(Simon)\u003cbr\u003e27(Simon)\u003cbr\u003e34(Fuchs gefangen(1))(Simon)\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003c/html\u003e","kontra1":"\u003chtml\u003eKontra(79)\u003cbr\u003e\u003chr\u003eJens(28)\u003cbr\u003eThomas(51)\u003cbr\u003e\u003c/html\u003e","kontra2":"\u003chtml\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e10(Thomas)\u003cbr\u003e27(Thomas)\u003cbr\u003e14(Thomas)\u003cbr\u003e28(Jens)\u003cbr\u003e\u003c/html\u003e","remain":0}}
+2021-04-20 22:10:44(3310) - info - 30 - ComClient - queue: ReadyForNextRound
+2021-04-20 22:10:44(0) - info - 29 - ComClient - Sending to server: ReadyForNextRound
+2021-04-20 22:10:53(9702) - info - 30 - ComClient - {"command":"AnnounceSpectator","params":{"player":4,"starter":1}}
+2021-04-20 22:10:53(9) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 22:10:54(36) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-20 22:10:54(16) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-20 22:10:54(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-20 22:10:54(101) - info - 30 - ComClient - {"command":"Cards","params":{"cards":["Karo Bube","Karo 10","Pik Koenig","Karo Dame","Pik Ass","Kreuz 10","Karo Ass","Kreuz Koenig","Karo Bube","Herz Ass"]}}
+2021-04-20 22:10:54(27) - info - 30 - ComClient - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 22:11:05(10987) - info - 21 - ComClient - queue: GameSelected
+2021-04-20 22:11:05(0) - info - 29 - ComClient - Sending to server: GameSelected
+2021-04-20 22:11:05(10) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-20 22:11:06(1046) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-20 22:11:07(1141) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"normales Spiel"}}
+2021-04-20 22:11:07(16) - info - 30 - ComClient - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-20 22:11:07(43) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:09(2106) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:11:09(54) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:10(506) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:11:10(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:10(641) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:11:10(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:12(1274) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:12(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:12(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:11:12(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:11:12(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:12(739) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:11:12(61) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:13(440) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:11:13(14) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:13(645) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:11:13(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:15(1600) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:15(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:15(10) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:11:15(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:11:15(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:16(667) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:11:16(26) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:16(539) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:11:16(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:17(709) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:11:17(17) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:18(917) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:18(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:18(16) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:11:18(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:11:18(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:19(672) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:11:19(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:19(528) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:11:19(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:20(805) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:11:20(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:21(464) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:21(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:21(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:11:21(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:11:21(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:21(646) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:11:21(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:22(506) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:11:22(14) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:22(675) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:11:22(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:23(501) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:23(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:23(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:11:23(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:11:23(3) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:25(1821) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:11:25(42) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:25(469) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:25(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:25(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:11:25(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:26(698) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:11:26(6) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:27(547) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:11:27(8) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:11:27(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:27(640) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:11:27(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:28(480) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:28(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:28(9) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:11:28(7) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:29(784) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:11:29(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:29(720) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:11:29(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:11:29(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:30(651) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:11:30(43) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:31(651) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:31(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:31(10) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:11:31(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:31(640) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:11:31(14) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:32(641) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:11:32(17) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:11:32(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:33(608) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:11:33(42) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:33(683) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:33(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:33(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:11:33(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:34(720) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:11:34(6) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:35(943) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:11:35(6) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:11:35(26) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:11:39(4070) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:11:39(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:11:40(773) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:11:40(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:41(1056) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:41(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:41(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:11:41(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:42(879) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:11:42(6) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:11:42(15) - info - 30 - ComClient - {"command":"GameEnd","params":{"re1":"\u003chtml\u003eRe(158)\u003cbr\u003e\u003chr\u003eJens(49)\u003cbr\u003eThomas(109)\u003cbr\u003e\u003c/html\u003e","re2":"\u003chtml\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e33(Thomas)\u003cbr\u003e35(Thomas)\u003cbr\u003e13(Thomas)\u003cbr\u003e28(Thomas)\u003cbr\u003e21(Jens)\u003cbr\u003e28(Jens)\u003cbr\u003e\u003c/html\u003e","kontra1":"\u003chtml\u003eKontra(82)\u003cbr\u003e\u003chr\u003eVolker(0)\u003cbr\u003eSimon(82)\u003cbr\u003e\u003c/html\u003e","kontra2":"\u003chtml\u003e27(Simon)\u003cbr\u003e18(Simon)\u003cbr\u003e12(Simon)\u003cbr\u003e25(Simon)\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003c/html\u003e","remain":0}}
+2021-04-20 22:11:47(4693) - info - 30 - ComClient - queue: ReadyForNextRound
+2021-04-20 22:11:47(0) - info - 29 - ComClient - Sending to server: ReadyForNextRound
+2021-04-20 22:11:48(1110) - info - 30 - ComClient - {"command":"AnnounceSpectator","params":{"player":4,"starter":2}}
+2021-04-20 22:11:48(15) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 22:11:48(7) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-20 22:11:48(10) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-20 22:11:48(24) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-20 22:11:48(14) - info - 30 - ComClient - {"command":"Cards","params":{"cards":["Karo Dame","Kreuz Koenig","Pik Koenig","Karo 10","Karo Koenig","Kreuz Ass","Karo Ass","Karo 10","Karo Ass","Karo Bube"]}}
+2021-04-20 22:11:48(21) - info - 30 - ComClient - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 22:11:56(8555) - info - 21 - ComClient - queue: GameSelected
+2021-04-20 22:11:56(5) - info - 29 - ComClient - Sending to server: GameSelected
+2021-04-20 22:11:56(6) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"Volker spielt Damensolo."}}
+2021-04-20 22:11:56(10) - info - 30 - ComClient - {"command":"GameType","params":{"GameType":"Damensolo"}}
+2021-04-20 22:11:56(7) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:11:58(1775) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:11:58(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:11:58(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:11:58(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:11:59(767) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:11:59(27) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:00(560) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:12:00(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:00(810) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:12:00(22) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:12:00(32) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:01(1122) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:12:02(62) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:02(512) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:12:02(22) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:03(726) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:12:03(14) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:03(454) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:03(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:03(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:12:03(10) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-20 22:12:03(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:06(2945) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:06(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:06(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:12:06(15) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:07(765) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:12:07(9) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:08(555) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:12:08(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:08(701) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:12:08(8) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-20 22:12:08(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:09(555) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:09(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:09(10) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:12:09(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:10(800) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:12:10(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:10(576) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:12:10(14) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:11(743) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:12:11(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:12:11(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:14(2646) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:12:14(32) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:14(554) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:14(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:14(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:12:14(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:15(693) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:12:15(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:16(555) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:12:16(0) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:12:16(37) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:17(1384) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:12:17(13) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:18(544) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:18(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:18(10) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:12:18(7) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:18(762) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:12:18(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:19(522) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:12:19(6) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:12:19(37) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:21(2533) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:12:22(48) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:22(646) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:12:22(15) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:23(582) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:23(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:23(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:12:23(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:24(758) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:12:24(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:12:24(15) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:25(1339) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:12:25(48) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:26(587) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:26(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:26(8) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:12:26(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:26(680) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:12:26(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:27(688) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:12:27(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:12:27(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:30(2827) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:12:30(37) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:30(646) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:12:30(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:31(714) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:31(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:31(0) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:12:31(16) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:32(682) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:12:32(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:12:32(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:33(827) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:12:33(37) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:33(731) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:12:34(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:34(902) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:34(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:34(5) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:12:34(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:35(628) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:12:35(6) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:12:35(11) - info - 30 - ComClient - {"command":"GameEnd","params":{"re1":"\u003chtml\u003eRe(55)\u003cbr\u003e\u003chr\u003eVolker(55)\u003cbr\u003e\u003c/html\u003e","re2":"\u003chtml\u003e\u003cbr\u003e25(Volker)\u003cbr\u003e30(Volker)\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003c/html\u003e","kontra1":"\u003chtml\u003eKontra(185)\u003cbr\u003e\u003chr\u003eSimon(12)\u003cbr\u003eJens(67)\u003cbr\u003eThomas(106)\u003cbr\u003e\u003c/html\u003e","kontra2":"\u003chtml\u003e12(Simon)\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e36(Thomas)\u003cbr\u003e29(Thomas)\u003cbr\u003e25(Jens)\u003cbr\u003e41(Doppelkopf)(Thomas)\u003cbr\u003e18(Jens)\u003cbr\u003e14(Jens)\u003cbr\u003e10(Jens)\u003cbr\u003e\u003c/html\u003e","remain":0}}
+2021-04-20 22:12:40(4434) - info - 30 - ComClient - queue: ReadyForNextRound
+2021-04-20 22:12:40(0) - info - 29 - ComClient - Sending to server: ReadyForNextRound
+2021-04-20 22:12:40(14) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 22:12:40(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-20 22:12:40(6) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-20 22:12:40(4) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-20 22:12:40(11) - info - 30 - ComClient - {"command":"Cards","params":{"cards":["Kreuz Ass","Karo 10","Herz Bube","Kreuz 10","Karo 10","Karo Koenig","Pik 10","Kreuz 10","Kreuz Bube","Pik Dame"]}}
+2021-04-20 22:12:40(12) - info - 30 - ComClient - {"command":"SelectGame","params":{"0":0}}
+2021-04-20 22:12:52(12709) - info - 21 - ComClient - queue: GameSelected
+2021-04-20 22:12:52(0) - info - 29 - ComClient - Sending to server: GameSelected
+2021-04-20 22:12:52(10) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 3 Spieler"}}
+2021-04-20 22:12:53(1025) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-20 22:12:54(986) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-20 22:12:55(1056) - info - 30 - ComClient - {"command":"DisplayMessage","params":{"message":"normales Spiel"}}
+2021-04-20 22:12:55(6) - info - 30 - ComClient - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-20 22:12:55(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:12:57(1782) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:12:57(37) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:12:58(837) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:12:58(14) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:12:58(402) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:12:58(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:12:58(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:12:58(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:12:59(719) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:12:59(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:12:59(17) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:02(2559) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Dame"}}
+2021-04-20 22:13:02(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:02(539) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Koenig"}}
+2021-04-20 22:13:02(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:03(715) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:13:03(15) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:03(401) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:03(5) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:03(6) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:13:03(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:13:03(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:04(656) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:13:04(38) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:05(522) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Ass"}}
+2021-04-20 22:13:05(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:05(634) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:13:05(6) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:06(416) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:06(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:06(10) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:13:06(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:13:06(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:06(646) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:13:06(32) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:07(466) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:13:07(8) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:08(619) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:13:08(6) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:08(480) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:08(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:08(10) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:13:08(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:13:08(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:09(640) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Bube"}}
+2021-04-20 22:13:09(32) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:09(501) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:13:09(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:10(624) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:13:10(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:10(470) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:10(5) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:10(6) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"10"}}
+2021-04-20 22:13:10(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:13:10(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:11(730) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:13:11(22) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:12(507) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Bube"}}
+2021-04-20 22:13:12(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:12(555) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:13:12(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:13(459) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:13(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:13(21) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Koenig"}}
+2021-04-20 22:13:13(0) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":" hat Stich(e)"}}
+2021-04-20 22:13:13(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:13(608) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Karo","wert":"Ass"}}
+2021-04-20 22:13:13(33) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:14(505) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Bube"}}
+2021-04-20 22:13:14(6) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:15(667) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:13:15(5) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:15(506) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:15(6) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:15(3) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-20 22:13:15(8) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:13:15(10) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:17(1949) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Karo","wert":"Dame"}}
+2021-04-20 22:13:17(19) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:18(1020) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:18(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:18(10) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:13:18(0) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:19(665) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-20 22:13:19(7) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:19(576) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Bube"}}
+2021-04-20 22:13:19(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:13:19(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:20(582) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Dame"}}
+2021-04-20 22:13:20(21) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:21(597) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:21(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:21(11) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"10"}}
+2021-04-20 22:13:21(4) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:21(796) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Ass"}}
+2021-04-20 22:13:21(26) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:22(561) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:13:22(4) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-20 22:13:22(22) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-20 22:13:25(2960) - info - 30 - ComClient - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-20 22:13:25(43) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-20 22:13:26(576) - info - 30 - ComClient - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"10"}}
+2021-04-20 22:13:26(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-20 22:13:26(757) - info - 21 - ComClient - queue: PutCard
+2021-04-20 22:13:26(0) - info - 29 - ComClient - Sending to server: PutCard
+2021-04-20 22:13:26(10) - info - 30 - ComClient - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"10"}}
+2021-04-20 22:13:26(11) - info - 30 - ComClient - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-20 22:13:27(683) - info - 30 - ComClient - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Koenig"}}
+2021-04-20 22:13:27(11) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":" hat Stich(e)"}}
+2021-04-20 22:13:27(22) - info - 30 - ComClient - {"command":"GameEnd","params":{"re1":"\u003chtml\u003eRe(27)\u003cbr\u003e\u003chr\u003eJens(27)\u003cbr\u003e\u003c/html\u003e","re2":"\u003chtml\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e27(Jens)\u003cbr\u003e\u003cbr\u003e\u003c/html\u003e","kontra1":"\u003chtml\u003eKontra(213)\u003cbr\u003e\u003chr\u003eVolker(0)\u003cbr\u003eSimon(140)\u003cbr\u003eThomas(73)\u003cbr\u003e\u003c/html\u003e","kontra2":"\u003chtml\u003e27(Simon)\u003cbr\u003e20(Simon)\u003cbr\u003e20(Simon)\u003cbr\u003e27(Simon)\u003cbr\u003e34(Fuchs gefangen(1))(Simon)\u003cbr\u003e12(Simon)\u003cbr\u003e27(Thomas)\u003cbr\u003e19(Thomas)\u003cbr\u003e\u003cbr\u003e27(Thomas)\u003cbr\u003e\u003c/html\u003e","remain":0}}
+2021-04-20 22:13:31(3999) - info - 30 - ComClient - queue: ReadyForNextRound
+2021-04-20 22:13:31(0) - info - 29 - ComClient - Sending to server: ReadyForNextRound
+2021-04-20 22:13:31(11) - info - 30 - ComClient - {"command":"AnnounceSpectator","params":{"player":4,"starter":3}}
+2021-04-20 22:13:31(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-20 22:13:31(6) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-20 22:13:31(10) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-20 22:13:31(5) - info - 30 - ComClient - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-20 22:13:31(6) - info - 30 - ComClient - {"command":"Cards","params":{"cards":["Pik Bube","Herz Bube","Kreuz Dame","Kreuz Bube","Kreuz Bube","Kreuz 10","Karo Koenig","Pik Dame","Kreuz Ass","Pik Dame"]}}
+2021-04-20 22:13:31(21) - info - 30 - ComClient - {"command":"SelectGame","params":{"0":0}}
