@@ -1,11 +1,11 @@
 import base.Player;
-import base.Stich;
+import base.doko.Stich;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class EndDialog{
+public class DokoEndDialog {
 
     private JPanel panel;
     private JButton buttonOK;
@@ -18,8 +18,9 @@ public class EndDialog{
     private final String kontraString1;
     private final String reString2;
     private final String kontraString2;
+    private int remaining = 240;
 
-    public EndDialog(List<Player> players, List<Stich> stichList){
+    public DokoEndDialog(List<Player> players, List<Stich> stichList){
         this.players = players;
         this.stichList = stichList;
         calcPoints();
@@ -28,8 +29,12 @@ public class EndDialog{
         builderRe.append("<html>");
         builderKontra.append("<html>");
         players.forEach(player -> player.setPoints(0));
+
         stichList.forEach(stich -> {
+            stich.setPlayers(players);
+            stich.check4ExtraPoints();
             players.get(stich.getWinner()).addPoints(stich.getPoints());
+            remaining -= stich.getPoints();
             if(players.get(stich.getWinner()).isRe()) {
                 builderRe.append(stich.getPoints());
                 builderRe.append(stich.getExtraPoints());
@@ -86,12 +91,17 @@ public class EndDialog{
         return kontraString2;
     }
 
-    public EndDialog(String re1, String re2, String kontra1, String kontra2) {
+    public int getRemaining() {
+        return remaining;
+    }
+
+    public DokoEndDialog(String re1, String re2, String kontra1, String kontra2, int remaining) {
 
         this.reString1 = re1;
         this.reString2 = re2;
         this.kontraString1 = kontra1;
         this.kontraString2 = kontra2;
+        this.remaining = remaining;
         createPanel();
     }
 
@@ -119,22 +129,32 @@ public class EndDialog{
         panelCenter.add(new JLabel(reString2));
         panelCenter.add(new JLabel(kontraString2));
 
+        JPanel bottomPanel;
+        if(remaining>0) {
+            bottomPanel= new JPanel(new GridLayout(2,1));
+            bottomPanel.add(new JLabel(String.format("Rest: %s", remaining)));
+        }
+        else{
+            bottomPanel = new JPanel(new GridLayout(1,1));
+        }
+        buttonOK = new JButton("OK");
+        bottomPanel.add(buttonOK);
+
         panel.add(panelTop,BorderLayout.NORTH);
         panel.add(panelCenter, BorderLayout.CENTER);
-        buttonOK = new JButton("OK");
-        panel.add(buttonOK, BorderLayout.SOUTH);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    public void showDialog(Main main){
+    public void showDialog(JFrame frame){
         if(panel!=null) {
-            JDialog d = new JDialog(main.mainFrame);
+            JDialog d = new JDialog(frame);
             //d.setSize(300,300);
             buttonOK.addActionListener(e -> d.dispose());
             d.setModal(true);
             d.setTitle("Ergebnis");
             d.getContentPane().add(panel);
             d.pack();
-            d.setLocationRelativeTo(main.mainFrame);
+            d.setLocationRelativeTo(frame);
             d.setVisible(true);
         }
     }

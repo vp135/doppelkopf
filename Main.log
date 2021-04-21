@@ -1,0 +1,8 @@
+2021-04-21 21:42:15(4061) - info - 21 - Main - not listening
+2021-04-21 21:42:15(205) - info - 32 - Main - received: PlayersInLobby
+2021-04-21 21:42:15(5) - info - 32 - Main - received: getVersion
+2021-04-21 21:42:17(1777) - info - 32 - Main - received: PlayersInLobby
+2021-04-21 21:42:21(3872) - info - 32 - Main - received: PlayersInLobby
+2021-04-21 21:42:25(3916) - info - 32 - Main - received: PlayersInLobby
+2021-04-21 21:42:26(980) - info - 32 - Main - received: startGame
+2021-04-21 21:42:34(7941) - info - 37 - Main - disposed of lobby frame

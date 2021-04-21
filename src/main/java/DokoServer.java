@@ -1,26 +1,28 @@
-import base.*;
+import base.BaseCard;
+import base.MessageIn;
+import base.Player;
+import base.Statics;
+import base.doko.Card;
+import base.doko.messages.GameEnd;
+import base.doko.Stich;
+import base.doko.messages.*;
+import base.messages.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.awt.*;
-import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.Random;
 import java.util.stream.Collectors;
 
-public class DokoServer {
+public class DokoServer extends BaseServer{
 
-    public final static String VERSION = "3.2.1";
-    public static final long TIMEOUT = 1000;
-    private final Logger log = new Logger(this.getClass().getName(),1);
     Random random = new Random(System.currentTimeMillis());
 
-    private final AutoResetEvent ev = new AutoResetEvent(true);
+
 
     private int currentStichNumber =0;
     private boolean wait4Gesund = false;
@@ -28,7 +30,7 @@ public class DokoServer {
     private boolean schwein = false;
     private Stich stich;
     private List<Stich> stichList;
-    private List<Card> armutCards;
+    private List<BaseCard> armutCards;
     private HashMap<Integer,Boolean> readyMap;
     private HashMap<Integer,Integer> points;
     private HashMap<Integer,String> gameSelection = new HashMap<>();
@@ -42,75 +44,19 @@ public class DokoServer {
     private int hochzeitSpieler = -1;
     private int spectator=4;
 
-    public boolean listening = false;
 
-    public final List<Player> players = new ArrayList<>();
+
     private List<Player> players2Ask = new ArrayList<>();
     private boolean wait4Partner;
 
-    ConcurrentLinkedDeque<MessageIn> inMessages = new ConcurrentLinkedDeque<>();
-    ConcurrentLinkedDeque<MessageOut> outMessages = new ConcurrentLinkedDeque<>();
 
-
-    public DokoServer(int port, Configuration c){
-        log.setLoglevel(c.logLevel);
-        inMessageHandling();
-        outMessageHandling();
-        startTCPServer(port);
+    public DokoServer(BaseServer server){
+        super(server.c, server.comServer);
+        server.comServer.setServer(this);
+        this.players.addAll(server.players);
+        gameType = Statics.game.DOKO;
     }
 
-
-
-    private void startTCPServer(int port) {
-        new Thread(() -> {
-            ServerSocket socket = null;
-            log.info("Creating ServerSocket...");
-            try {
-                socket = new ServerSocket(port);
-                log.info("ServerSocket created: " +socket.getInetAddress() +":"+socket.getLocalPort());
-            } catch (IOException e) {
-                log.info("Socket creation failed:\n"+ e);
-            }
-            while (true) {
-                Socket connectionSocket;
-                try {
-                    assert socket != null;
-                    listening = true;
-                    connectionSocket = socket.accept();
-                    log.info("Connection established");
-                    if (connectionSocket != null) {
-                        new Thread(() -> {
-                            while (!connectionSocket.isClosed()) {
-                                BufferedReader br;
-                                try {
-                                    br = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-                                    String in = br.readLine();
-                                    if (in != null) {
-                                        inMessages.offer(new MessageIn(connectionSocket,in));
-                                        ev.set();
-                                    } else {
-                                        log.info("incoming data was null "+ players.stream().filter(player -> player.getSocket().equals(connectionSocket)).findFirst().get().getName());
-                                        connectionSocket.close();
-                                    }
-                                } catch (IOException e) {
-                                    if (e instanceof SocketException) {
-                                        log.info(e.toString()+ players.stream().filter(player -> player.getSocket().equals(connectionSocket)).findFirst().get().getName());
-                                        try{
-                                            connectionSocket.close();
-                                        }catch (IOException ex){
-                                            log.error(ex.toString());
-                                        }
-                                    }
-                                }
-                            }
-                        }).start();
-                    }
-                } catch (IOException e) {
-                    log.error(e.toString());
-                }
-            }
-        }).start();
-    }
 
     private void runGame(int player){
         points = new HashMap<>();
@@ -124,125 +70,31 @@ public class DokoServer {
         send2All(new Wait4Player(players.stream().filter(p -> p.getNumber()==player).findAny().get().getName()));
     }
 
-    private void inMessageHandling(){
-        new Thread(() -> {
-            while(true){
-                try {
-                    ev.waitOne(TIMEOUT);
-                    while(inMessages.peek()!=null) {
-                        log.info("messages to handle: " + inMessages.size());
-                        handleInput(Objects.requireNonNull(inMessages.peek()));
-                        inMessages.poll();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void handleInput(MessageIn message) {
-        RequestObject requestObject;
+    @Override
+    public void handleInput(MessageIn message) {
+        super.handleInput(message);
+        RequestObject requestObject = RequestObject.fromString(message.getInput());
         Socket socketConnection = message.getSocket();
-        String in = message.getInput();
-        requestObject = RequestObject.fromString(in);
         players.stream().filter(player -> player.getSocket()==socketConnection).findFirst().ifPresent(
                 player -> log.info("Received: " + requestObject.getCommand() + " from " + player.getName()));
         switch (requestObject.getCommand()) {
             case PutCard.COMMAND: {
-                if (stich == null || stich.getCardMap().size() > 3) {
-                    stich = new Stich(players, currentStichNumber, selectedGame);
-                    currentStichNumber++;
-                }
-                stich.addCard(players.get(currentPlayer),new Card(
-                        requestObject.getParams().get("wert").getAsString(),
-                        requestObject.getParams().get("farbe").getAsString()));
-                send2All(requestObject);
-                currentPlayer++;
-                if(currentPlayer==spectator){
-                    currentPlayer++;
-                }
-                if (currentPlayer >= players.size()) {
-                    currentPlayer = 0;
-                }
-                if(currentPlayer==spectator){
-                    currentPlayer++;
-                }
-
-                if (stich.getCardMap().size() > 3) {
-                    try {
-                        int winner = stich.getWinner(schwein);
-
-                        stichList.add(stich);
-                        try{
-                            points.put(winner, points.get(winner) + stich.calculatePoints());
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        currentPlayer = winner;
-                        if(wait4Partner) {
-                            if(currentStichNumber<4) {
-                                if (hochzeitSpieler != winner) {
-                                    players.get(winner).setRe(true, "Ehepartner");
-                                    wait4Partner = false;
-                                }
-                            }
-                            else {
-                                wait4Partner = false;
-                                log.info("kein Ehepartner gefunden");
-                            }
-                        }
-                        send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
-                                .findFirst().get().getName()," hat Stich(e)"));
-                        if (currentStichNumber > 9) {
-                            EndDialog e = new EndDialog(players,stichList);
-                            send2All(new GameEnd(e.getReString1(),e.getReString2(),e.getKontraString1(),e.getKontraString2()));
-                            wait4NextRound= true;
-                            readyMap = new HashMap<>();
-                            for (int i=0;i<players.size();i++){
-                                readyMap.put(i,false);
-                            }
-                            break;
-                        }
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-                if (currentStichNumber < 11) {
-                    send2All(new Wait4Player(players.stream().filter(p->p.getNumber()==currentPlayer).findFirst().get().getName()));
-                }
+                handlePutCard(requestObject);
                 break;
             }
-            case AddPlayer.COMMAND:{
-                String name = requestObject.getParams().get("player").getAsString();
-                if(players.stream().noneMatch(player -> player.getName().equals(name))) {
-                    players.add(new Player(requestObject.getParams().get("player").getAsString(),
-                            players.size(), socketConnection, false));
-
-                    List<String> list = new ArrayList<>();
-                    players.forEach(p -> list.add(p.getName()));
-                    send2All(new PlayersInLobby(list));
-                    if (players.size() > 4) {
-                        players.get(spectator).setSpectator(true);
-                    }
-                }
-                else{
-                    players.stream().filter(player -> player.getName().equals(name)).findFirst().ifPresent(player -> {
-                        player.setSocket(socketConnection);
-                        List<String> list = new ArrayList<>();
-                        players.forEach(p -> list.add(p.getName()));
-                        queueOut(player, new PlayersInLobby(list));
-                    });
+            case AddPlayer.COMMAND:
+                if (players.size() > 4) {
+                    players.get(spectator).setSpectator(true);
                 }
                 break;
-            }
-            case StartGame.COMMAND:{
+            /*case StartGame.COMMAND:{
                 send2All(new StartGame());
                 send2All(new AnnounceSpectator(spectator,aufspieler));
                 shuffleCards();
                 break;
             }
+
+             */
             case ReadyForNextRound.COMMAND:{
                 if(wait4NextRound){
                     readyMap.put(requestObject.getParams().get("player").getAsInt(),true);
@@ -284,14 +136,6 @@ public class DokoServer {
                     send2All(new DisplayMessage(Strings.getString(Strings.ARMUT_RETURN,
                             players.get(armutplayer).getName(),
                             getTrumpfCardCount(requestObject.getParams()))));
-                    /*
-                    send2All(new DisplayMessage(
-                            players.get(armutplayer).getName()
-                                    +" bekommt "
-                                    + getTrumpfCardCount(requestObject.getParams())
-                                    + " Trumpf zurück"));
-
-                     */
                     queueOut(players.get(armutplayer),
                             requestObject);
                     players.get(armutplayer).setRe(true, "ist reich");
@@ -322,9 +166,9 @@ public class DokoServer {
                 break;
             }
             case CurrentStich.LAST:{
-                if(stichList.size()>1) {
+                if(stichList.size()>0) {
                     try {
-                        CurrentStich cs = new CurrentStich(stichList.get(currentStichNumber - 1).getCardMap(), CurrentStich.LAST);
+                        CurrentStich cs = new CurrentStich(stichList.get(stichList.size()-1).getCardMap(), CurrentStich.LAST);
                         queueOut(players.get(requestObject.getParams().get("player").getAsInt()), cs);
                     }
                     catch (Exception ex){
@@ -334,12 +178,7 @@ public class DokoServer {
                 break;
             }
             case AbortGame.COMMAND:{
-                send2All(new GameEnd(points,stichList,players));
-                wait4NextRound= true;
-                readyMap = new HashMap<>();
-                for (int i=0;i<players.size();i++){
-                    readyMap.put(i,false);
-                }
+                EndIt();
                 break;
             }
             case ShowStich.COMMAND:{
@@ -351,17 +190,78 @@ public class DokoServer {
                 }
                 break;
             }
-            case GetVersion.COMMAND:{
-                queueOut(socketConnection,
-                        new GetVersion("Server",VERSION),true);
-                break;
-            }
-            default:{
-                log.warn(String.format("no handler for message type: %s", requestObject.getCommand()));
-            }
         }
     }
 
+    private void handlePutCard(RequestObject requestObject) {
+        if (stich == null || stich.getCardMap().size() > 3) {
+            stich = new Stich(players, currentStichNumber, selectedGame);
+            currentStichNumber++;
+        }
+        stich.addCard(players.get(currentPlayer),new Card(
+                requestObject.getParams().get("wert").getAsString(),
+                requestObject.getParams().get("farbe").getAsString()));
+        send2All(requestObject);
+        currentPlayer++;
+        if(currentPlayer==spectator){
+            currentPlayer++;
+        }
+        if (currentPlayer >= players.size()) {
+            currentPlayer = 0;
+        }
+        if(currentPlayer==spectator){
+            currentPlayer++;
+        }
+
+        if (stich.getCardMap().size() > 3) {
+            try {
+                int winner = stich.getWinner(schwein);
+
+                stichList.add(stich);
+                try{
+                    points.put(winner, points.get(winner) + stich.calculatePoints());
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                currentPlayer = winner;
+                if(wait4Partner) {
+                    if(currentStichNumber<4) {
+                        if (hochzeitSpieler != winner) {
+                            players.get(winner).setRe(true, "Ehepartner");
+                            wait4Partner = false;
+                        }
+                    }
+                    else {
+                        wait4Partner = false;
+                        log.info("kein Ehepartner gefunden");
+                    }
+                }
+                send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
+                        .findFirst().get().getName()," hat Stich(e)"));
+                if (currentStichNumber > 9) {
+                    EndIt();
+                    return;
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+        if (currentStichNumber < 11) {
+            send2All(new Wait4Player(players.stream().filter(p->p.getNumber()==currentPlayer).findFirst().get().getName()));
+        }
+    }
+
+
+    private void EndIt() {
+        DokoEndDialog e = new DokoEndDialog(players,stichList);
+        send2All(new GameEnd(e.getReString1(),e.getReString2(),e.getKontraString1(),e.getKontraString2(),e.getRemaining()));
+        wait4NextRound= true;
+        readyMap = new HashMap<>();
+        for (int i=0;i<players.size();i++){
+            readyMap.put(i,false);
+        }
+    }
 
 
     private int getTrumpfCardCount(JsonObject object) {
@@ -397,17 +297,11 @@ public class DokoServer {
             if(players.size()>4) {
                 players.get(spectator).setSpectator(true);
             }
-            send2All(new AnnounceSpectator(spectator,aufspieler));
+            send2All(new AnnounceSpectator(spectator,beginner));
         }
         shuffleCards();
     }
 
-    public void send2All(RequestObject message) {
-        for(Player player: players){
-            queueOut(player.getSocket(),message,false);
-        }
-        ev.set();
-    }
 
     private void createListOfPotentialPartners(){
         players2Ask = new ArrayList<>();
@@ -536,60 +430,7 @@ public class DokoServer {
             wait4Partner = true;
             runGame(beginner);
         }
-
     }
-
-    public boolean sendReply(MessageOut message) {
-        Socket socketConnection = message.getSocket();
-        RequestObject requestObject = message.getOutput();
-        boolean sent = false;
-        if (!socketConnection.isClosed()) {
-            try {
-                PrintWriter out = new PrintWriter(new BufferedWriter(
-                        new OutputStreamWriter(socketConnection.getOutputStream())), true);
-                String s = requestObject.toJson();
-                players.stream().filter(player -> player.getSocket() == socketConnection).findFirst().ifPresent(
-                        player -> log.info("Send to " + player.getName() + ": " + s)
-                );
-                out.println(s);
-                sent = true;
-            } catch (IOException ex) {
-                log.error(ex.toString());
-            }
-        }
-        return sent;
-    }
-
-    public void queueOut(Player player, RequestObject message) {
-        queueOut(player.getSocket(),message,true);
-    }
-
-    public void queueOut(Socket socket, RequestObject message, boolean resetEvent){
-        outMessages.offer(new MessageOut(socket,message));
-        log.info("added message: " + message.getCommand());
-        if(resetEvent) {
-            ev.set();
-        }
-    }
-
-
-    public void outMessageHandling(){
-        new Thread(() -> {
-            while (true){
-                try {
-                    ev.waitOne(TIMEOUT);
-                    while(outMessages.peek()!=null){
-                        if(sendReply(outMessages.peek())) {
-                            outMessages.poll();
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
 
 
     private void shuffleCards() {
@@ -625,6 +466,12 @@ public class DokoServer {
         send2All(new SelectGame());
     }
 
+    @Override
+    protected void startGame() {
+        super.startGame();
+        send2All(new AnnounceSpectator(spectator,beginner));
+        shuffleCards();
+    }
 
     @Override
     public String toString() {
@@ -633,31 +480,6 @@ public class DokoServer {
                 currentPlayer + "<br>";
     }
 
-
-    public void startGame() {
-        send2All(new StartGame());
-        try {
-            Thread.sleep(3500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        send2All(new AnnounceSpectator(spectator,aufspieler));
-        shuffleCards();
-    }
-
-
-    public void startGame(int starter) {
-        send2All(new StartGame());
-        beginner = starter-1;
-
-        try {
-            Thread.sleep(3500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        nextGame();
-        //shuffleCards();
-    }
 
     public Stich getStich(int stichNumber) {
         return stichList.get(stichNumber);
