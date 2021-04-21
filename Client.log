@@ -960,3 +960,505 @@
 2021-04-21 00:07:01(142639) - info - 21 - Client - starting to redraw
 2021-04-21 00:07:06(5323) - info - 21 - Client - starting to redraw
 2021-04-21 00:07:10(4171) - info - 21 - Client - starting to redraw
+2021-04-21 21:22:01(6) - info - 21 - Client - queue: getVersion
+2021-04-21 21:22:01(5) - info - 21 - Client - queue: AddPlayer
+2021-04-21 21:22:01(21) - info - 29 - Client - Connected to Server
+2021-04-21 21:22:01(47) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-21 21:22:01(2) - info - 30 - Client - Sending to server: getVersion
+2021-04-21 21:22:01(15) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-21 21:22:01(6) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-21 21:22:16(14437) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas"]}}
+2021-04-21 21:22:17(987) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas","Simon"]}}
+2021-04-21 21:22:18(880) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas","Simon","Jens"]}}
+2021-04-21 21:22:24(6139) - info - 31 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:22:24(37) - info - 31 - Client - creating UI
+2021-04-21 21:22:24(80) - info - 31 - Client - creating play area
+2021-04-21 21:22:24(21) - info - 31 - Client - creating hud
+2021-04-21 21:22:24(11) - info - 31 - Client - setting components
+2021-04-21 21:22:24(0) - info - 31 - Client - components set
+2021-04-21 21:22:24(5) - info - 31 - Client - listeners added
+2021-04-21 21:22:24(0) - info - 31 - Client - starting to redraw
+2021-04-21 21:22:26(2144) - info - 31 - Client - finished UI creation
+2021-04-21 21:22:27(3510) - info - 31 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:22:27(1200) - info - 31 - Client - received: AnnounceSpectator
+2021-04-21 21:22:27(10) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:22:27(11) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 21:22:27(47) - info - 21 - Client - starting to redraw
+2021-04-21 21:22:27(165) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:22:27(107) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 21:22:27(11) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-21 21:22:27(11) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 21:22:27(7) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:22:27(7) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 21:22:27(10) - info - 31 - Client - {"command":"Cards","params":{"cards":["Karo Ass","Kreuz Bube","Kreuz Ass","Herz 10","Pik Dame","Pik Koenig","Herz Bube","Pik Bube","Pik Ass","Kreuz Dame"]}}
+2021-04-21 21:22:27(10) - info - 31 - Client - received: Cards
+2021-04-21 21:22:27(18) - info - 31 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:22:27(20) - info - 31 - Client - received: SelectGame
+2021-04-21 21:22:30(2230) - info - 21 - Client - starting to redraw
+2021-04-21 21:22:40(12099) - info - 21 - Client - queue: GameSelected
+2021-04-21 21:22:40(0) - info - 30 - Client - Sending to server: GameSelected
+2021-04-21 21:22:40(16) - info - 31 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-21 21:22:40(9883) - info - 31 - Client - received: DisplayMessage
+2021-04-21 21:22:41(1062) - info - 31 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-21 21:22:41(1062) - info - 31 - Client - received: DisplayMessage
+2021-04-21 21:22:42(1087) - info - 31 - Client - {"command":"DisplayMessage","params":{"message":"normales Spiel"}}
+2021-04-21 21:22:42(1098) - info - 31 - Client - received: DisplayMessage
+2021-04-21 21:22:42(27) - info - 31 - Client - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-21 21:22:42(16) - info - 31 - Client - received: GameType
+2021-04-21 21:22:42(134) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:22:42(134) - info - 31 - Client - received: wait4Player
+2021-04-21 21:22:45(3221) - info - 21 - Client - queue: PutCard
+2021-04-21 21:22:45(11) - info - 30 - Client - Sending to server: PutCard
+2021-04-21 21:22:45(10) - info - 31 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:22:45(3242) - info - 31 - Client - received: PutCard
+2021-04-21 21:22:45(13) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:22:45(18) - info - 31 - Client - received: wait4Player
+2021-04-21 21:22:46(862) - info - 31 - Client - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Dame"}}
+2021-04-21 21:22:46(868) - info - 31 - Client - received: PutCard
+2021-04-21 21:22:46(32) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:22:46(26) - info - 31 - Client - received: wait4Player
+2021-04-21 21:22:47(651) - info - 31 - Client - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Koenig"}}
+2021-04-21 21:22:47(646) - info - 31 - Client - received: PutCard
+2021-04-21 21:22:47(15) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:22:47(21) - info - 31 - Client - received: wait4Player
+2021-04-21 21:22:47(797) - info - 31 - Client - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"10"}}
+2021-04-21 21:22:47(792) - info - 31 - Client - received: PutCard
+2021-04-21 21:22:48(30) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:22:48(29) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 21:22:48(60) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:22:48(60) - info - 31 - Client - received: wait4Player
+2021-04-21 21:22:54(6015) - info - 21 - Client - queue: PutCard
+2021-04-21 21:22:54(0) - info - 30 - Client - Sending to server: PutCard
+2021-04-21 21:22:54(11) - info - 31 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-21 21:22:54(6026) - info - 31 - Client - received: PutCard
+2021-04-21 21:22:54(10) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:22:54(10) - info - 31 - Client - received: wait4Player
+2021-04-21 21:22:55(1584) - info - 31 - Client - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Dame"}}
+2021-04-21 21:22:55(1584) - info - 31 - Client - received: PutCard
+2021-04-21 21:22:55(16) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:22:55(22) - info - 31 - Client - received: wait4Player
+2021-04-21 21:22:56(518) - info - 31 - Client - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"10"}}
+2021-04-21 21:22:56(512) - info - 31 - Client - received: PutCard
+2021-04-21 21:22:56(13) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:22:56(13) - info - 31 - Client - received: wait4Player
+2021-04-21 21:23:05(9299) - info - 31 - Client - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:23:05(9310) - info - 31 - Client - received: PutCard
+2021-04-21 21:23:05(27) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:23:05(21) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 21:23:05(27) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:23:05(27) - info - 31 - Client - received: wait4Player
+2021-04-21 21:23:06(1322) - info - 21 - Client - queue: PutCard
+2021-04-21 21:23:06(0) - info - 30 - Client - Sending to server: PutCard
+2021-04-21 21:23:06(11) - info - 31 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Dame"}}
+2021-04-21 21:23:06(1328) - info - 31 - Client - received: PutCard
+2021-04-21 21:23:06(11) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:23:06(22) - info - 31 - Client - received: wait4Player
+2021-04-21 21:23:32(25797) - info - 31 - Client - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"Dame"}}
+2021-04-21 21:23:32(25786) - info - 31 - Client - received: PutCard
+2021-04-21 21:23:32(6) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:23:32(22) - info - 31 - Client - received: wait4Player
+2021-04-21 21:23:33(995) - info - 31 - Client - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:23:33(979) - info - 31 - Client - received: PutCard
+2021-04-21 21:23:33(19) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:23:33(19) - info - 31 - Client - received: wait4Player
+2021-04-21 21:23:34(725) - info - 31 - Client - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Ass"}}
+2021-04-21 21:23:34(725) - info - 31 - Client - received: PutCard
+2021-04-21 21:23:34(26) - info - 31 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:23:34(26) - info - 31 - Client - received: UpdateUserPanel
+2021-04-21 21:23:34(16) - info - 31 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:23:34(21) - info - 31 - Client - received: wait4Player
+2021-04-21 21:23:59(25046) - info - 21 - Client - queue: LastStich
+2021-04-21 21:23:59(12) - info - 30 - Client - Sending to server: LastStich
+2021-04-21 21:23:59(4) - info - 31 - Client - {"command":"LastStich","params":{"1":"Herz Dame","0":"Pik Dame","3":"Herz Ass","2":"Herz Koenig"}}
+2021-04-21 21:23:59(25057) - info - 31 - Client - received: LastStich
+2021-04-21 21:24:02(2586) - info - 21 - Client - queue: LastStich
+2021-04-21 21:24:02(1) - info - 30 - Client - Sending to server: LastStich
+2021-04-21 21:24:02(0) - info - 31 - Client - {"command":"LastStich","params":{"1":"Herz Dame","0":"Pik Dame","3":"Herz Ass","2":"Herz Koenig"}}
+2021-04-21 21:24:02(2598) - info - 31 - Client - received: LastStich
+2021-04-21 21:24:03(897) - info - 21 - Client - queue: LastStich
+2021-04-21 21:24:03(0) - info - 30 - Client - Sending to server: LastStich
+2021-04-21 21:24:03(10) - info - 31 - Client - {"command":"LastStich","params":{"1":"Herz Dame","0":"Pik Dame","3":"Herz Ass","2":"Herz Koenig"}}
+2021-04-21 21:24:03(896) - info - 31 - Client - received: LastStich
+2021-04-21 21:24:03(162) - info - 21 - Client - queue: LastStich
+2021-04-21 21:24:03(0) - info - 30 - Client - Sending to server: LastStich
+2021-04-21 21:24:03(14) - info - 31 - Client - {"command":"LastStich","params":{"1":"Herz Dame","0":"Pik Dame","3":"Herz Ass","2":"Herz Koenig"}}
+2021-04-21 21:24:03(176) - info - 31 - Client - received: LastStich
+2021-04-21 21:24:27(24731) - info - 21 - Client - queue: LastStich
+2021-04-21 21:24:27(0) - info - 30 - Client - Sending to server: LastStich
+2021-04-21 21:24:28(11) - info - 31 - Client - {"command":"LastStich","params":{"1":"Herz Dame","0":"Pik Dame","3":"Herz Ass","2":"Herz Koenig"}}
+2021-04-21 21:24:28(24742) - info - 31 - Client - received: LastStich
+2021-04-21 21:24:31(3179) - info - 21 - Client - queue: LastStich
+2021-04-21 21:24:31(0) - info - 30 - Client - Sending to server: LastStich
+2021-04-21 21:24:31(12) - info - 31 - Client - {"command":"LastStich","params":{"1":"Herz Dame","0":"Pik Dame","3":"Herz Ass","2":"Herz Koenig"}}
+2021-04-21 21:24:31(3191) - info - 31 - Client - received: LastStich
+2021-04-21 21:24:36(5332) - info - 21 - Client - queue: LastStich
+2021-04-21 21:24:36(0) - info - 30 - Client - Sending to server: LastStich
+2021-04-21 21:24:36(11) - info - 31 - Client - {"command":"LastStich","params":{"1":"Herz Dame","0":"Pik Dame","3":"Herz Ass","2":"Herz Koenig"}}
+2021-04-21 21:24:36(5343) - info - 31 - Client - received: LastStich
+2021-04-21 21:24:40(3808) - info - 21 - Client - queue: LastStich
+2021-04-21 21:24:40(0) - info - 30 - Client - Sending to server: LastStich
+2021-04-21 21:24:40(6) - info - 31 - Client - {"command":"LastStich","params":{"1":"Herz Dame","0":"Pik Dame","3":"Herz Ass","2":"Herz Koenig"}}
+2021-04-21 21:24:40(3819) - info - 31 - Client - received: LastStich
+2021-04-21 21:33:38(0) - info - 21 - Client - queue: getVersion
+2021-04-21 21:33:38(0) - info - 21 - Client - queue: AddPlayer
+2021-04-21 21:33:38(21) - info - 30 - Client - Connected to Server
+2021-04-21 21:33:38(16) - info - 31 - Client - Sending to server: AddPlayer
+2021-04-21 21:33:38(5) - info - 31 - Client - Sending to server: getVersion
+2021-04-21 21:33:38(11) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-21 21:33:38(0) - info - 32 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-21 21:33:39(1013) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Jens"]}}
+2021-04-21 21:33:49(9846) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Jens","Simon"]}}
+2021-04-21 21:33:50(907) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Jens","Simon","Thomas"]}}
+2021-04-21 21:33:52(1450) - info - 32 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:33:52(11) - info - 32 - Client - creating UI
+2021-04-21 21:33:52(53) - info - 32 - Client - creating play area
+2021-04-21 21:33:52(15) - info - 32 - Client - creating hud
+2021-04-21 21:33:52(12) - info - 32 - Client - setting components
+2021-04-21 21:33:52(0) - info - 32 - Client - components set
+2021-04-21 21:33:52(5) - info - 32 - Client - listeners added
+2021-04-21 21:33:52(0) - info - 32 - Client - starting to redraw
+2021-04-21 21:33:54(1995) - info - 32 - Client - finished UI creation
+2021-04-21 21:33:55(3513) - info - 32 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:33:55(1390) - info - 32 - Client - received: AnnounceSpectator
+2021-04-21 21:33:55(8) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:33:55(8) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:33:55(36) - info - 21 - Client - starting to redraw
+2021-04-21 21:33:55(95) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:33:55(64) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:33:55(11) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-21 21:33:55(12) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:33:55(11) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:33:55(5) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:33:55(5) - info - 32 - Client - {"command":"Cards","params":{"cards":["Pik Koenig","Herz Koenig","Herz Ass","Pik Ass","Kreuz Koenig","Pik 10","Pik Bube","Kreuz 10","Karo Bube","Karo Koenig"]}}
+2021-04-21 21:33:55(5) - info - 32 - Client - received: Cards
+2021-04-21 21:33:55(16) - info - 32 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:33:55(21) - info - 32 - Client - received: SelectGame
+2021-04-21 21:33:57(1430) - info - 21 - Client - starting to redraw
+2021-04-21 21:34:04(8737) - info - 21 - Client - queue: GameSelected
+2021-04-21 21:34:04(0) - info - 31 - Client - Sending to server: GameSelected
+2021-04-21 21:34:04(10) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 3 Spieler"}}
+2021-04-21 21:34:04(7312) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:34:05(1067) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-21 21:34:05(1078) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:34:07(1770) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-21 21:34:07(1759) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:34:09(2209) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"normales Spiel"}}
+2021-04-21 21:34:09(2209) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:34:09(0) - info - 32 - Client - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-21 21:34:09(10) - info - 32 - Client - received: GameType
+2021-04-21 21:34:09(87) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:34:09(77) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:14(4809) - info - 21 - Client - queue: PutCard
+2021-04-21 21:34:14(0) - info - 31 - Client - Sending to server: PutCard
+2021-04-21 21:34:14(10) - info - 32 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Pik","wert":"Bube"}}
+2021-04-21 21:34:14(4819) - info - 32 - Client - received: PutCard
+2021-04-21 21:34:14(12) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:34:14(12) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:15(1231) - info - 32 - Client - {"command":"PutCard","params":{"player":1,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:34:15(1231) - info - 32 - Client - received: PutCard
+2021-04-21 21:34:15(17) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:34:15(20) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:18(2516) - info - 32 - Client - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Ass"}}
+2021-04-21 21:34:18(2512) - info - 32 - Client - received: PutCard
+2021-04-21 21:34:18(22) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:34:18(22) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:19(1131) - info - 32 - Client - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:34:19(1131) - info - 32 - Client - received: PutCard
+2021-04-21 21:34:19(15) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-21 21:34:19(21) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:34:19(27) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:34:19(26) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:26(7499) - info - 32 - Client - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Dame"}}
+2021-04-21 21:34:26(7494) - info - 32 - Client - received: PutCard
+2021-04-21 21:34:26(0) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:34:26(11) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:28(1205) - info - 32 - Client - {"command":"PutCard","params":{"player":2,"farbe":"Kreuz","wert":"Ass"}}
+2021-04-21 21:34:28(1194) - info - 32 - Client - received: PutCard
+2021-04-21 21:34:28(8) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:34:28(11) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:28(931) - info - 32 - Client - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"Koenig"}}
+2021-04-21 21:34:28(928) - info - 32 - Client - received: PutCard
+2021-04-21 21:34:28(0) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:34:29(10) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:30(1174) - info - 21 - Client - queue: PutCard
+2021-04-21 21:34:30(0) - info - 31 - Client - Sending to server: PutCard
+2021-04-21 21:34:30(10) - info - 32 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Bube"}}
+2021-04-21 21:34:30(1174) - info - 32 - Client - received: PutCard
+2021-04-21 21:34:30(0) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-21 21:34:30(0) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:34:30(11) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:34:30(16) - info - 32 - Client - received: wait4Player
+2021-04-21 21:34:55(24950) - info - 21 - Client - queue: LastStich
+2021-04-21 21:34:55(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:34:55(11) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:34:55(24968) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:02(7081) - info - 21 - Client - starting to redraw
+2021-04-21 21:35:13(17921) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:13(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:13(0) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:13(10828) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:14(1599) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:14(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:14(11) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:14(1610) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:15(812) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:15(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:15(9) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:15(821) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:15(203) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:15(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:15(11) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:15(214) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:15(177) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:15(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:15(4) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:15(181) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:16(630) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:16(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:16(0) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:16(630) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:16(213) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:16(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:16(0) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:16(213) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:17(565) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:17(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:17(0) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:17(576) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:17(203) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:17(10) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:17(0) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:17(202) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:17(203) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:17(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:17(11) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:17(214) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:17(213) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:17(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:17(0) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:17(213) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:18(203) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:18(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:18(0) - info - 32 - Client - {"command":"LastStich","params":{"3":"Kreuz Koenig","0":"Karo Bube","1":"Pik Dame","2":"Kreuz Ass"}}
+2021-04-21 21:35:18(203) - info - 32 - Client - received: LastStich
+2021-04-21 21:35:23(5632) - info - 32 - Client - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Dame"}}
+2021-04-21 21:35:23(5632) - info - 32 - Client - received: PutCard
+2021-04-21 21:35:23(21) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:35:23(21) - info - 32 - Client - received: wait4Player
+2021-04-21 21:35:24(545) - info - 32 - Client - {"command":"PutCard","params":{"player":2,"farbe":"Karo","wert":"Bube"}}
+2021-04-21 21:35:24(545) - info - 32 - Client - received: PutCard
+2021-04-21 21:35:24(0) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:35:24(10) - info - 32 - Client - received: wait4Player
+2021-04-21 21:35:25(714) - info - 32 - Client - {"command":"PutCard","params":{"player":3,"farbe":"Kreuz","wert":"10"}}
+2021-04-21 21:35:25(704) - info - 32 - Client - received: PutCard
+2021-04-21 21:35:25(5) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:35:25(5) - info - 32 - Client - received: wait4Player
+2021-04-21 21:35:25(550) - info - 21 - Client - queue: PutCard
+2021-04-21 21:35:25(0) - info - 31 - Client - Sending to server: PutCard
+2021-04-21 21:35:25(10) - info - 32 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Karo","wert":"Koenig"}}
+2021-04-21 21:35:25(565) - info - 32 - Client - received: PutCard
+2021-04-21 21:35:25(5) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Jens","text":" hat Stich(e)"}}
+2021-04-21 21:35:25(6) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:35:25(11) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:35:25(10) - info - 32 - Client - received: wait4Player
+2021-04-21 21:35:26(660) - info - 21 - Client - queue: LastStich
+2021-04-21 21:35:26(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:35:26(7) - info - 32 - Client - {"command":"LastStich","params":{"2":"Karo Bube","0":"Karo Koenig","3":"Kreuz 10","1":"Pik Dame"}}
+2021-04-21 21:35:26(662) - info - 32 - Client - received: LastStich
+2021-04-21 21:37:30(0) - info - 21 - Client - queue: getVersion
+2021-04-21 21:37:30(0) - info - 21 - Client - queue: AddPlayer
+2021-04-21 21:37:30(21) - info - 30 - Client - Connected to Server
+2021-04-21 21:37:30(22) - info - 31 - Client - Sending to server: AddPlayer
+2021-04-21 21:37:30(0) - info - 31 - Client - Sending to server: getVersion
+2021-04-21 21:37:30(10) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-21 21:37:30(13) - info - 32 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-21 21:37:31(824) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas"]}}
+2021-04-21 21:37:38(7286) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Thomas","Jens"]}}
+2021-04-21 21:37:39(880) - info - 32 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:37:39(252) - info - 32 - Client - creating UI
+2021-04-21 21:37:39(26) - info - 32 - Client - creating play area
+2021-04-21 21:37:40(11) - info - 32 - Client - creating hud
+2021-04-21 21:37:40(5) - info - 32 - Client - setting components
+2021-04-21 21:37:40(7) - info - 32 - Client - components set
+2021-04-21 21:37:40(0) - info - 32 - Client - listeners added
+2021-04-21 21:37:40(0) - info - 32 - Client - starting to redraw
+2021-04-21 21:37:41(1801) - info - 32 - Client - finished UI creation
+2021-04-21 21:37:43(3520) - info - 32 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:37:43(1403) - info - 32 - Client - received: AnnounceSpectator
+2021-04-21 21:37:43(0) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:37:43(0) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:37:43(32) - info - 21 - Client - starting to redraw
+2021-04-21 21:37:43(112) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:37:43(85) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:37:43(27) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:37:43(22) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:37:43(16) - info - 32 - Client - {"command":"Cards","params":{"cards":["Kreuz 10","Karo Bube","Kreuz Bube","Herz Dame","Kreuz Bube","Pik Koenig","Herz Koenig","Herz Dame","Pik Koenig","Karo Dame"]}}
+2021-04-21 21:37:43(21) - info - 32 - Client - received: Cards
+2021-04-21 21:37:43(138) - info - 32 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:37:43(133) - info - 32 - Client - received: SelectGame
+2021-04-21 21:37:44(1425) - info - 21 - Client - starting to redraw
+2021-04-21 21:39:07(10) - info - 21 - Client - queue: getVersion
+2021-04-21 21:39:07(0) - info - 21 - Client - queue: AddPlayer
+2021-04-21 21:39:07(27) - info - 30 - Client - Connected to Server
+2021-04-21 21:39:07(37) - info - 31 - Client - Sending to server: AddPlayer
+2021-04-21 21:39:07(5) - info - 31 - Client - Sending to server: getVersion
+2021-04-21 21:39:07(17) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-21 21:39:07(5) - info - 32 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-21 21:39:09(1674) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Jens"]}}
+2021-04-21 21:39:16(7755) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Jens","Thomas"]}}
+2021-04-21 21:39:19(2097) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Jens","Thomas","Simon"]}}
+2021-04-21 21:39:33(14496) - info - 32 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:39:33(305) - info - 32 - Client - creating UI
+2021-04-21 21:39:33(26) - info - 32 - Client - creating play area
+2021-04-21 21:39:33(21) - info - 32 - Client - creating hud
+2021-04-21 21:39:33(7) - info - 32 - Client - setting components
+2021-04-21 21:39:33(0) - info - 32 - Client - components set
+2021-04-21 21:39:33(0) - info - 32 - Client - listeners added
+2021-04-21 21:39:33(0) - info - 32 - Client - starting to redraw
+2021-04-21 21:39:35(2058) - info - 32 - Client - finished UI creation
+2021-04-21 21:39:37(3520) - info - 32 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:39:37(1077) - info - 32 - Client - received: AnnounceSpectator
+2021-04-21 21:39:37(11) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:39:37(21) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:39:37(54) - info - 21 - Client - starting to redraw
+2021-04-21 21:39:37(133) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:39:37(69) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:39:37(16) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:39:37(16) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:39:37(5) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-21 21:39:37(5) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:39:37(8) - info - 32 - Client - {"command":"Cards","params":{"cards":["Herz 10","Karo Dame","Karo Koenig","Herz 10","Herz Ass","Kreuz Koenig","Karo 10","Kreuz Koenig","Herz Koenig","Karo Ass"]}}
+2021-04-21 21:39:37(10) - info - 32 - Client - received: Cards
+2021-04-21 21:39:37(269) - info - 32 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:39:37(267) - info - 32 - Client - received: SelectGame
+2021-04-21 21:39:39(1755) - info - 21 - Client - starting to redraw
+2021-04-21 21:39:45(7793) - info - 21 - Client - queue: GameSelected
+2021-04-21 21:39:45(0) - info - 31 - Client - Sending to server: GameSelected
+2021-04-21 21:39:45(21) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 3 Spieler"}}
+2021-04-21 21:39:45(6059) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:39:46(1537) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-21 21:39:46(1541) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:39:48(1557) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-21 21:39:48(1553) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:39:50(1909) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"normales Spiel"}}
+2021-04-21 21:39:50(1909) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:39:50(16) - info - 32 - Client - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-21 21:39:50(21) - info - 32 - Client - received: GameType
+2021-04-21 21:39:50(138) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:39:50(133) - info - 32 - Client - received: wait4Player
+2021-04-21 21:39:51(1046) - info - 21 - Client - queue: PutCard
+2021-04-21 21:39:51(0) - info - 31 - Client - Sending to server: PutCard
+2021-04-21 21:39:51(16) - info - 32 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:39:51(1062) - info - 32 - Client - received: PutCard
+2021-04-21 21:39:51(16) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:39:51(16) - info - 32 - Client - received: wait4Player
+2021-04-21 21:39:52(656) - info - 32 - Client - {"command":"PutCard","params":{"player":1,"farbe":"Pik","wert":"Dame"}}
+2021-04-21 21:39:52(656) - info - 32 - Client - received: PutCard
+2021-04-21 21:39:52(12) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:39:52(22) - info - 32 - Client - received: wait4Player
+2021-04-21 21:39:52(554) - info - 32 - Client - {"command":"PutCard","params":{"player":2,"farbe":"Pik","wert":"Ass"}}
+2021-04-21 21:39:52(554) - info - 32 - Client - received: PutCard
+2021-04-21 21:39:52(27) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:39:52(27) - info - 32 - Client - received: wait4Player
+2021-04-21 21:39:53(731) - info - 32 - Client - {"command":"PutCard","params":{"player":3,"farbe":"Pik","wert":"10"}}
+2021-04-21 21:39:53(731) - info - 32 - Client - received: PutCard
+2021-04-21 21:39:53(26) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:39:53(32) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:39:53(54) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:39:53(48) - info - 32 - Client - received: wait4Player
+2021-04-21 21:39:54(1082) - info - 21 - Client - queue: LastStich
+2021-04-21 21:39:54(11) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:39:54(8) - info - 32 - Client - {"command":"LastStich","params":{"0":"Herz 10","2":"Pik Ass","3":"Pik 10","1":"Pik Dame"}}
+2021-04-21 21:39:54(1101) - info - 32 - Client - received: LastStich
+2021-04-21 21:40:05(10723) - info - 21 - Client - starting to redraw
+2021-04-21 21:42:15(9) - info - 21 - Client - queue: getVersion
+2021-04-21 21:42:15(2) - info - 21 - Client - queue: AddPlayer
+2021-04-21 21:42:15(23) - info - 30 - Client - Connected to Server
+2021-04-21 21:42:15(27) - info - 31 - Client - Sending to server: AddPlayer
+2021-04-21 21:42:15(5) - info - 31 - Client - Sending to server: getVersion
+2021-04-21 21:42:15(16) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-21 21:42:15(10) - info - 32 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-21 21:42:17(1766) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Simon"]}}
+2021-04-21 21:42:21(3883) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Simon","Jens"]}}
+2021-04-21 21:42:25(3916) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker","Simon","Jens","Thomas"]}}
+2021-04-21 21:42:26(980) - info - 32 - Client - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:42:26(257) - info - 32 - Client - creating UI
+2021-04-21 21:42:26(31) - info - 32 - Client - creating play area
+2021-04-21 21:42:26(16) - info - 32 - Client - creating hud
+2021-04-21 21:42:26(5) - info - 32 - Client - setting components
+2021-04-21 21:42:26(0) - info - 32 - Client - components set
+2021-04-21 21:42:26(6) - info - 32 - Client - listeners added
+2021-04-21 21:42:26(2) - info - 32 - Client - starting to redraw
+2021-04-21 21:42:28(2110) - info - 32 - Client - finished UI creation
+2021-04-21 21:42:29(3520) - info - 32 - Client - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:42:29(1066) - info - 32 - Client - received: AnnounceSpectator
+2021-04-21 21:42:29(11) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:42:29(11) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:42:29(59) - info - 21 - Client - starting to redraw
+2021-04-21 21:42:30(139) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-21 21:42:30(80) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:42:30(10) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:42:30(10) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:42:30(11) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:42:30(11) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:42:30(5) - info - 32 - Client - {"command":"Cards","params":{"cards":["Pik Koenig","Herz 10","Herz 10","Karo Bube","Pik 10","Kreuz Koenig","Pik Bube","Herz Bube","Pik Ass","Herz Ass"]}}
+2021-04-21 21:42:30(11) - info - 32 - Client - received: Cards
+2021-04-21 21:42:30(219) - info - 32 - Client - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:42:30(213) - info - 32 - Client - received: SelectGame
+2021-04-21 21:42:31(1654) - info - 21 - Client - starting to redraw
+2021-04-21 21:42:42(12331) - info - 21 - Client - queue: GameSelected
+2021-04-21 21:42:42(0) - info - 31 - Client - Sending to server: GameSelected
+2021-04-21 21:42:42(21) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 3 Spieler"}}
+2021-04-21 21:42:42(10698) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:42:43(1003) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-21 21:42:43(1008) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:42:44(1174) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-21 21:42:44(1169) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:42:45(1045) - info - 32 - Client - {"command":"DisplayMessage","params":{"message":"keine Vorbehalte"}}
+2021-04-21 21:42:45(1045) - info - 32 - Client - received: DisplayMessage
+2021-04-21 21:42:45(15) - info - 32 - Client - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-21 21:42:45(15) - info - 32 - Client - received: GameType
+2021-04-21 21:42:46(123) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:46(123) - info - 32 - Client - received: wait4Player
+2021-04-21 21:42:49(3275) - info - 21 - Client - queue: PutCard
+2021-04-21 21:42:49(0) - info - 31 - Client - Sending to server: PutCard
+2021-04-21 21:42:49(11) - info - 32 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:42:49(3297) - info - 32 - Client - received: PutCard
+2021-04-21 21:42:49(16) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:42:49(5) - info - 32 - Client - received: wait4Player
+2021-04-21 21:42:50(997) - info - 32 - Client - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-21 21:42:50(997) - info - 32 - Client - received: PutCard
+2021-04-21 21:42:50(64) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:42:50(69) - info - 32 - Client - received: wait4Player
+2021-04-21 21:42:50(480) - info - 32 - Client - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:50(475) - info - 32 - Client - received: PutCard
+2021-04-21 21:42:50(27) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:42:50(27) - info - 32 - Client - received: wait4Player
+2021-04-21 21:42:51(606) - info - 32 - Client - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:51(609) - info - 32 - Client - received: PutCard
+2021-04-21 21:42:51(34) - info - 32 - Client - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:42:51(31) - info - 32 - Client - received: UpdateUserPanel
+2021-04-21 21:42:51(27) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:51(43) - info - 32 - Client - received: wait4Player
+2021-04-21 21:42:53(1653) - info - 21 - Client - queue: LastStich
+2021-04-21 21:42:53(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:42:53(11) - info - 32 - Client - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
+2021-04-21 21:42:53(1648) - info - 32 - Client - received: LastStich
+2021-04-21 21:43:09(16715) - info - 21 - Client - queue: LastStich
+2021-04-21 21:43:09(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:43:09(10) - info - 32 - Client - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
+2021-04-21 21:43:09(16736) - info - 32 - Client - received: LastStich
+2021-04-21 21:43:20(10443) - info - 21 - Client - queue: LastStich
+2021-04-21 21:43:20(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:43:20(11) - info - 32 - Client - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
+2021-04-21 21:43:20(10443) - info - 32 - Client - received: LastStich
+2021-04-21 21:43:21(1099) - info - 21 - Client - queue: PutCard
+2021-04-21 21:43:21(0) - info - 31 - Client - Sending to server: PutCard
+2021-04-21 21:43:21(10) - info - 32 - Client - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:43:21(1109) - info - 32 - Client - received: PutCard
+2021-04-21 21:43:21(112) - info - 32 - Client - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:43:21(112) - info - 32 - Client - received: wait4Player
+2021-04-21 21:43:24(2406) - info - 21 - Client - queue: LastStich
+2021-04-21 21:43:24(0) - info - 31 - Client - Sending to server: LastStich
+2021-04-21 21:43:24(13) - info - 32 - Client - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
+2021-04-21 21:43:24(2420) - info - 32 - Client - received: LastStich

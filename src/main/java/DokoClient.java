@@ -10,8 +10,7 @@ import com.google.gson.JsonArray;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -330,6 +329,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
             clearPlayArea();
             if(letzterStich!=null) {
                 letzterStich.dispose();
+                letzterStich=null;
             }
             updateTable();
             currentCardsOnTable = 0;
@@ -484,6 +484,13 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         }
 
         letzterStich = new JFrame("letzter Stich");
+        letzterStich.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                letzterStich=null;
+            }
+        });
         JPanel jPanel = new JPanel(new GridLayout(3,3));
         jPanel.add(new JLabel());
         jPanel.add(cardPos2);
@@ -497,6 +504,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         letzterStich.add(jPanel);
         letzterStich.pack();
         letzterStich.setVisible(true);
+
     }
 
     private void handleUserPanelUpdate(RequestObject object) {

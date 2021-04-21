@@ -1,10 +1,235 @@
-2021-04-21 00:04:34(871) - info - 21 - Server - added message: startGame
-2021-04-21 00:04:34(11) - info - 27 - Server - {"command":"startGame","params":{"game":"DOKO"}}
-2021-04-21 00:04:38(3510) - info - 21 - Server - added message: AnnounceSpectator
-2021-04-21 00:04:38(0) - info - 21 - Server - added message: UpdateUserPanel
-2021-04-21 00:04:38(0) - info - 27 - Server - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
-2021-04-21 00:04:38(0) - info - 27 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
-2021-04-21 00:04:38(0) - info - 21 - Server - added message: Cards
-2021-04-21 00:04:38(0) - info - 21 - Server - added message: SelectGame
-2021-04-21 00:04:38(0) - info - 27 - Server - {"command":"Cards","params":{"cards":["Kreuz Bube","Karo Bube","Herz Bube","Herz Koenig","Kreuz 10","Pik 10","Pik Dame","Pik Ass","Karo Koenig","Pik 10"]}}
-2021-04-21 00:04:38(11) - info - 27 - Server - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:42:26(719) - info - 21 - Server - added message: startGame
+2021-04-21 21:42:26(0) - info - 21 - Server - added message: startGame
+2021-04-21 21:42:26(0) - info - 21 - Server - added message: startGame
+2021-04-21 21:42:26(6) - info - 21 - Server - added message: startGame
+2021-04-21 21:42:26(0) - info - 28 - Server - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:42:26(0) - info - 28 - Server - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:42:26(0) - info - 28 - Server - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:42:26(0) - info - 28 - Server - {"command":"startGame","params":{"game":"DOKO"}}
+2021-04-21 21:42:29(3520) - info - 21 - Server - added message: AnnounceSpectator
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: AnnounceSpectator
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: AnnounceSpectator
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: AnnounceSpectator
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(11) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(11) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:29(5) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: Cards
+2021-04-21 21:42:29(5) - info - 21 - Server - added message: Cards
+2021-04-21 21:42:29(5) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: Cards
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: Cards
+2021-04-21 21:42:29(6) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Simon","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: SelectGame
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: SelectGame
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: SelectGame
+2021-04-21 21:42:29(0) - info - 21 - Server - added message: SelectGame
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:42:29(5) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:42:29(5) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Jens","text":""}}
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:42:29(6) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:42:29(5) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Thomas","text":""}}
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"Cards","params":{"cards":["Pik Koenig","Herz 10","Herz 10","Karo Bube","Pik 10","Kreuz Koenig","Pik Bube","Herz Bube","Pik Ass","Herz Ass"]}}
+2021-04-21 21:42:29(6) - info - 28 - Server - {"command":"Cards","params":{"cards":["Karo Koenig","Karo 10","Karo Dame","Kreuz Dame","Pik Ass","Kreuz Bube","Herz Dame","Pik Koenig","Pik 10","Kreuz Koenig"]}}
+2021-04-21 21:42:29(5) - info - 28 - Server - {"command":"Cards","params":{"cards":["Herz Koenig","Kreuz 10","Karo Dame","Kreuz Ass","Karo Bube","Herz Dame","Karo Ass","Pik Dame","Pik Dame","Karo Koenig"]}}
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"Cards","params":{"cards":["Karo Ass","Kreuz Ass","Herz Ass","Pik Bube","Herz Koenig","Herz Bube","Kreuz Bube","Kreuz Dame","Karo 10","Kreuz 10"]}}
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:42:29(5) - info - 28 - Server - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:42:29(0) - info - 28 - Server - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:42:29(5) - info - 28 - Server - {"command":"SelectGame","params":{"0":0}}
+2021-04-21 21:42:42(12646) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:42(16252) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:42(12) - info - 27 - Server - Received: GameSelected from Volker
+2021-04-21 21:42:42(12) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:42(9) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"Warte auf 3 Spieler"}}
+2021-04-21 21:42:43(992) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:43(1001) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:43(0) - info - 27 - Server - Received: GameSelected from Simon
+2021-04-21 21:42:43(0) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:43(11) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:43(0) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-21 21:42:43(5) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"Warte auf 2 Spieler"}}
+2021-04-21 21:42:44(1158) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:44(1174) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:44(0) - info - 27 - Server - Received: GameSelected from Jens
+2021-04-21 21:42:44(0) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:44(11) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:44(0) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:44(0) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-21 21:42:44(0) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-21 21:42:44(5) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"Warte auf 1 Spieler"}}
+2021-04-21 21:42:45(1019) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:45(1035) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:45(0) - info - 27 - Server - Received: GameSelected from Thomas
+2021-04-21 21:42:45(10) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: DisplayMessage
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: GameType
+2021-04-21 21:42:45(11) - info - 27 - Server - added message: GameType
+2021-04-21 21:42:45(11) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"keine Vorbehalte"}}
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: GameType
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: GameType
+2021-04-21 21:42:45(0) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"keine Vorbehalte"}}
+2021-04-21 21:42:45(5) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:45(5) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"keine Vorbehalte"}}
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:45(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:45(0) - info - 28 - Server - {"command":"DisplayMessage","params":{"message":"keine Vorbehalte"}}
+2021-04-21 21:42:45(5) - info - 28 - Server - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-21 21:42:45(0) - info - 28 - Server - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-21 21:42:45(6) - info - 28 - Server - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-21 21:42:45(6) - info - 28 - Server - {"command":"GameType","params":{"GameType":"normales Spiel"}}
+2021-04-21 21:42:45(2) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:45(3) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:45(2) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:45(2) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:49(3377) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:49(3434) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:49(0) - info - 27 - Server - Received: PutCard from Volker
+2021-04-21 21:42:49(11) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:49(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:49(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:49(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:49(0) - info - 28 - Server - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:42:49(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:49(11) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:49(0) - info - 28 - Server - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:42:49(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:49(0) - info - 28 - Server - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:42:49(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:49(0) - info - 28 - Server - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:42:49(5) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:42:49(0) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:42:49(5) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:42:49(0) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:42:50(982) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:50(1014) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:50(10) - info - 27 - Server - Received: PutCard from Simon
+2021-04-21 21:42:50(10) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:50(0) - info - 28 - Server - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:50(11) - info - 28 - Server - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-21 21:42:50(11) - info - 28 - Server - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-21 21:42:50(4) - info - 28 - Server - {"command":"PutCard","params":{"player":1,"farbe":"Kreuz","wert":"Dame"}}
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:50(38) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:42:50(5) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:42:50(4) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:42:50(13) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Jens"}}
+2021-04-21 21:42:50(447) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:50(533) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:50(8) - info - 27 - Server - Received: PutCard from Jens
+2021-04-21 21:42:50(8) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:50(3) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:50(0) - info - 28 - Server - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:50(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:50(0) - info - 28 - Server - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:50(11) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:50(0) - info - 28 - Server - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:50(10) - info - 28 - Server - {"command":"PutCard","params":{"player":2,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:50(6) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:42:50(5) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:42:50(5) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:42:50(6) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Thomas"}}
+2021-04-21 21:42:51(576) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:51(622) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:51(0) - info - 27 - Server - Received: PutCard from Thomas
+2021-04-21 21:42:51(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:51(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:51(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:51(11) - info - 27 - Server - added message: PutCard
+2021-04-21 21:42:51(3) - info - 28 - Server - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:51(3) - info - 28 - Server - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:51(2) - info - 28 - Server - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:51(3) - info - 28 - Server - {"command":"PutCard","params":{"player":3,"farbe":"Herz","wert":"Koenig"}}
+2021-04-21 21:42:51(4) - info - 27 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:51(6) - info - 27 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:51(11) - info - 27 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:51(0) - info - 27 - Server - added message: UpdateUserPanel
+2021-04-21 21:42:51(5) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:51(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:42:51(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:51(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:51(11) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:42:51(0) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:42:51(5) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:42:51(1) - info - 28 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":" hat Stich(e)"}}
+2021-04-21 21:42:51(10) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:51(26) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:51(6) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:51(4) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Volker"}}
+2021-04-21 21:42:53(1617) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:42:53(1739) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:42:53(0) - info - 27 - Server - Received: LastStich from Volker
+2021-04-21 21:42:53(11) - info - 27 - Server - added message: LastStich
+2021-04-21 21:42:53(0) - info - 28 - Server - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
+2021-04-21 21:43:09(16725) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:43:09(16725) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:43:09(0) - info - 27 - Server - Received: LastStich from Volker
+2021-04-21 21:43:09(0) - info - 27 - Server - added message: LastStich
+2021-04-21 21:43:09(0) - info - 28 - Server - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
+2021-04-21 21:43:20(10443) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:43:20(10443) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:43:20(11) - info - 27 - Server - Received: LastStich from Volker
+2021-04-21 21:43:20(11) - info - 27 - Server - added message: LastStich
+2021-04-21 21:43:20(0) - info - 28 - Server - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
+2021-04-21 21:43:21(1099) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:43:21(1109) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:43:21(0) - info - 27 - Server - Received: PutCard from Volker
+2021-04-21 21:43:21(10) - info - 27 - Server - added message: PutCard
+2021-04-21 21:43:21(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:43:21(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:43:21(0) - info - 27 - Server - added message: PutCard
+2021-04-21 21:43:21(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:43:21(0) - info - 28 - Server - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:43:21(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:43:21(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:43:21(0) - info - 28 - Server - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:43:21(0) - info - 27 - Server - added message: wait4Player
+2021-04-21 21:43:21(12) - info - 28 - Server - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:43:21(0) - info - 28 - Server - {"command":"PutCard","params":{"player":0,"farbe":"Herz","wert":"10"}}
+2021-04-21 21:43:21(4) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:43:21(0) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:43:21(6) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:43:21(1) - info - 28 - Server - {"command":"wait4Player","params":{"player":"Simon"}}
+2021-04-21 21:43:24(2495) - info - 27 - Server - messages to handle: 1
+2021-04-21 21:43:24(2518) - error - 27 - Server - message type unknown. Message not processed
+2021-04-21 21:43:24(0) - info - 27 - Server - Received: LastStich from Volker
+2021-04-21 21:43:24(11) - info - 27 - Server - added message: LastStich
+2021-04-21 21:43:24(2) - info - 28 - Server - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
