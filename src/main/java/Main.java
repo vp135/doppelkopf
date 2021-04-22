@@ -157,7 +157,7 @@ public class Main implements IInputputHandler{
                         log.error(interruptedException.toString());
                     }
                 }
-                comClient = new ComClient(hostname.getName(),Integer.parseInt(port.getText()), this,name);
+                comClient = new ComClient(hostname.getText(),Integer.parseInt(port.getText()), this,name);
                 comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
                 comClient.start();
                 inputs.add(gameList);
@@ -174,7 +174,7 @@ public class Main implements IInputputHandler{
             new Thread(() -> {
                 name = playername.getText().trim();
                 if (!name.equals("")) {
-                    comClient = new ComClient(hostname.getName(),Integer.parseInt(port.getText()), this,name);
+                    comClient = new ComClient(hostname.getText(),Integer.parseInt(port.getText()), this,name);
                     comClient.start();
                     log.info("verbinde");
                     int dots = 0;

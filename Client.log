@@ -1462,3 +1462,26 @@
 2021-04-21 21:43:24(0) - info - 31 - Client - Sending to server: LastStich
 2021-04-21 21:43:24(13) - info - 32 - Client - {"command":"LastStich","params":{"0":"Herz 10","3":"Herz Koenig","1":"Kreuz Dame","2":"Herz Koenig"}}
 2021-04-21 21:43:24(2420) - info - 32 - Client - received: LastStich
+2021-04-22 22:35:42(0) - info - 21 - Client - queue: getVersion
+2021-04-22 22:35:42(0) - info - 21 - Client - queue: AddPlayer
+2021-04-22 22:35:42(22) - info - 30 - Client - Connected to Server
+2021-04-22 22:35:42(21) - info - 31 - Client - Sending to server: AddPlayer
+2021-04-22 22:35:42(3) - info - 31 - Client - Sending to server: getVersion
+2021-04-22 22:35:42(18) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-22 22:35:42(4) - info - 32 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-22 22:47:41(9) - info - 21 - Client - queue: getVersion
+2021-04-22 22:47:41(0) - info - 21 - Client - queue: AddPlayer
+2021-04-22 22:47:41(43) - info - 29 - Client - Connected to Server
+2021-04-22 22:47:41(32) - info - 30 - Client - Sending to server: AddPlayer
+2021-04-22 22:47:53(11600) - info - 30 - Client - Sending to server: getVersion
+2021-04-22 22:47:53(59) - info - 31 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-22 22:47:53(16) - info - 31 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-22 22:50:15(11) - info - 21 - Client - queue: getVersion
+2021-04-22 22:50:15(0) - info - 21 - Client - queue: AddPlayer
+2021-04-22 22:50:15(29) - info - 30 - Client - Connected to Server
+2021-04-22 22:50:15(41) - info - 31 - Client - Sending to server: AddPlayer
+2021-04-22 22:50:15(4) - info - 31 - Client - Sending to server: getVersion
+2021-04-22 22:50:15(32) - info - 32 - Client - {"command":"PlayersInLobby","params":{"players":["Volker"]}}
+2021-04-22 22:50:15(0) - info - 32 - Client - {"command":"getVersion","params":{"player":"Server","version":"4.0.0"}}
+2021-04-22 22:52:20(0) - info - 21 - Client - queue: getVersion
+2021-04-22 22:52:20(11) - info - 21 - Client - queue: AddPlayer
