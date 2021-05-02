@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\de.volker.doppelkopf_client-3.2.1.jar;%APP_HOME%\lib\dokobase-3.2.1.jar;%APP_HOME%\lib\gson-2.8.6.jar;%APP_HOME%\lib\log4j-1.2.17.jar
+set CLASSPATH=%APP_HOME%\lib\de.volker.doppelkopf_client-4.0.0.jar;%APP_HOME%\lib\dokobase-3.2.1.jar;%APP_HOME%\lib\gson-2.8.6.jar;%APP_HOME%\lib\log4j-1.2.17.jar
 
 @rem Execute de.volker.doppelkopf_client
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %DE_VOLKER_DOPPELKOPF_CLIENT_OPTS%  -classpath "%CLASSPATH%" Main %CMD_LINE_ARGS%

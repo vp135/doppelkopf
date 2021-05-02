@@ -9,10 +9,8 @@ import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
 
 public class SkatClient extends BaseClient implements IInputputHandler {
 
@@ -48,6 +46,8 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     private JButton button_ouvert;
     private JPanel buttonsPanel;
     private List<BaseCard> ouvertCards;
+    private Map<BaseCard,JLabel> ouvertLabelMap;
+    private Map<JLabel,BaseCard> ouvertCardMap;
     private JPanel ouvertPanel;
 
 
@@ -65,7 +65,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         sortNull = new JButton("Null");
         sortGrand = new JButton("Grand");
         nextValue = new JButton("18");
-        pass = new JButton("weg!");
+        pass = new JButton("weg");
         buttonList = new ArrayList<>();
         buttonList.add(sortKaro);
         buttonList.add(sortHerz);
@@ -479,7 +479,6 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                     }
                 }
             }
-            //gameMessageLabel.setText(String.valueOf(message.getParams().get("value").getAsInt()));
             nextValue.setText(String.valueOf(nextVal));
             for (ActionListener actionListener : nextValue.getActionListeners()) {
                 nextValue.removeActionListener(actionListener);
@@ -634,12 +633,12 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
                     );
                 } else if (j == 2) {
-                    cardPos2 = getCardLabel(new Card(
+                    cardPos3 = getCardLabel(new Card(
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
                     );
                 } else if (j == 3) {
-                    cardPos3 = getCardLabel(new Card(
+                    cardPos2 = getCardLabel(new Card(
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
                             message.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
                     );
@@ -701,15 +700,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                 message.getParams().get("wert").getAsString(),
                 message.getParams().get("farbe").getAsString());
 
-        if(ouvert && ouvertCards!=null){
-            Optional<BaseCard> optCard = ouvertCards.stream()
-                    .filter(c->c.farbe.equals(card.farbe)&&c.value.equals(card.value)).findFirst();
-            optCard.ifPresent(baseCard -> {
-                ouvertCards.remove(baseCard);
-                layeredPane.remove(ouvertPanel);
-                createOuvertPanel(ouvertCards);
-            });
-        }
+        removeOuvertCard(card);
 
         for (int j : tmpList) {
             if (player == j) {
@@ -720,6 +711,23 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         }
         currentCardsOnTable++;
         updateTable();
+    }
+
+    private void removeOuvertCard(Card card) {
+        if(ouvert && ouvertCards!=null){
+            Optional<BaseCard> optCard = ouvertCards.stream()
+                    .filter(c->c.farbe.equals(card.farbe)&&c.value.equals(card.value)).findFirst();
+            optCard.ifPresent(baseCard -> {
+                //ouvertCards.remove(baseCard);
+                //layeredPane.remove(ouvertPanel);
+                ouvertLabelMap.get(baseCard).setVisible(false);
+                //ouvertPanel.remove(ouvertLabelMap.get(baseCard));
+                ouvertPanel.revalidate();
+                ouvertPanel.repaint();
+
+                //createOuvertPanel(ouvertCards);
+            });
+        }
     }
 
     @Override
@@ -767,19 +775,31 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     protected void createUI(int state, int posX, int posY, Dimension size, boolean test) {
         super.createUI(state, posX, posY, size, test);
         setGameSpecificButtons(null);
+        ouvertPanel = new JPanel(new GridLayout(1,10));
+        userLabel_2.setOpaque(true);
+        userLabel_2.setVisible(false);
+        layeredPane.add(ouvertPanel,3);
         controlPanel.setVisible(true);
     }
 
 
     private void createOuvertPanel(List<BaseCard> cards){
-        ouvertPanel = new JPanel(new GridLayout(1,10));
-        userLabel_2.setOpaque(true);
-        userLabel_2.setVisible(false);
-        createCardButtons(cards,ouvertPanel);
-        layeredPane.add(ouvertPanel,3);
+        ouvertPanel.removeAll();
+        ouvertLabelMap = new HashMap<>();
+        ouvertCardMap = new HashMap<>();
+        cards = SortHand.sort(cards, selectedGame);
+        setComponentSizes(ouvertPanel, new Dimension(mainFrame.getWidth(),userLabel_2.getHeight()));
+        cards.forEach(this::getCardLabel4Ouvert);
         layeredPane.revalidate();
         layeredPane.repaint();
-        setComponentSizes(ouvertPanel, new Dimension(mainFrame.getSize()));
+    }
+
+    private void getCardLabel4Ouvert(BaseCard card){
+        JLabel label = new JLabel();
+        label.setIcon(cardIcons.get(card.farbe+card.value));
+        ouvertLabelMap.put(card,label);
+        ouvertCardMap.put(label,card);
+        ouvertPanel.add(label);
     }
 
 

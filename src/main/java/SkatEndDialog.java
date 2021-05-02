@@ -80,6 +80,7 @@ public class SkatEndDialog {
             reString1 = "";
             kontraString1 ="";
         }else{
+            rePoints += skatPoints;
             StringBuilder builder1 = new StringBuilder();
             StringBuilder builder2 = new StringBuilder();
             builder1.append("<html>Re(").append(rePoints).append(")<br><hr>");

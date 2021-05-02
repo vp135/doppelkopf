@@ -6,14 +6,12 @@ import base.messages.CurrentStich;
 import base.messages.DisplayMessage;
 import base.messages.RequestObject;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.List;
 import java.util.*;
 
@@ -53,10 +51,10 @@ public abstract class BaseClient implements IInputputHandler {
     private HashMap<String,ImageIcon> rawIcons = new HashMap<>();
 
     private BufferedImage img;
-    private static final double RATIO = 0.67;
+    public static final double RATIO = 0.67;
     protected final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
     private final HashMap<String,BufferedImage> cardImages = new HashMap<>();
-    private int cardSize;
+    protected int cardSize;
     private int cardWidth4Hand;
     private int cardHeight4Hand;
 
@@ -378,17 +376,9 @@ public abstract class BaseClient implements IInputputHandler {
         adminFrame.pack();
         adminFrame.setVisible(true);
 
-        /*button_showStich.addActionListener(e -> {
-            Stich stich = dokoServer.getStich(Integer.parseInt(stichNumber.getText()));
-            stich.check4ExtraPoints();
-            log.info(stich.getExtraPoints());
-        });
-         */
-
         button_abortGame.addActionListener(e -> handler.queueOutMessage(new AbortGame()));
 
         JButton button_selectGame = new JButton("Spiel auswählen");
-        //button_selectGame.addActionListener(e -> dokoServer.send2All(new SelectGame()));
 
         adminMainPanel.add(button_selectGame);
 
@@ -410,16 +400,6 @@ public abstract class BaseClient implements IInputputHandler {
         buttonList.forEach(button-> button.setBackground(Color.BLACK));
     }
 
-
-    protected  void createCardButtons(List<BaseCard> cards, JPanel destPanel){
-        destPanel.removeAll();
-        setComponentSizes(destPanel,new Dimension((int)(cardSize*RATIO*maxHandCards), cardSize));
-        cards.forEach(card->{
-            destPanel.add(createCardLabel(card));
-        });
-        destPanel.revalidate();
-        destPanel.repaint();
-    }
 
     protected void createCardButtons(List<BaseCard> cards) {
         panel.removeAll();
@@ -518,24 +498,6 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected JLabel getCardLabel(BaseCard card){
         int size = 10;
-        if (hand!=null && hand.size()>10){
-            size = hand.size();
-        }
-        try {
-            int imageWidth = rawImages.get(card.toTrimedString()).getWidth();
-            double faktor = ((mainFrame.getSize().getWidth()/size)-6)/(double)imageWidth;
-            BufferedImage after = new BufferedImage((int)mainFrame.getSize().getWidth()/size,
-                    (int)(mainFrame.getSize().getHeight()-(panel.getSize().getHeight()))/3, BufferedImage.TYPE_INT_ARGB);
-            AffineTransform at = new AffineTransform();
-            //at.scale(0.1, 0.1);
-            at.scale(faktor, faktor);
-            AffineTransformOp scaleOp =
-                    new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-            after = scaleOp.filter(rawImages.get(card.toTrimedString()), after);
-            rawIcons.get(card.toTrimedString()).setImage(after);
-        } catch (Exception e) {
-            log.error(e.toString());
-        }
         JLabel label = new JLabel(rawIcons.get(card.toTrimedString()));
         label.setSize(new Dimension((int)mainFrame.getSize().getWidth()/size,110));
         return label;
@@ -555,6 +517,7 @@ public abstract class BaseClient implements IInputputHandler {
         panel.removeAll();
         createCardButtons(hand);
         setGameSpecificButtons(hand);
+        tableStich = new HashMap<>();
         serverMessageLabel.setText("");
         gameMessageLabel.setText("");
         bottomPanel.revalidate();

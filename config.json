@@ -1,6 +1,6 @@
 {
   "name": "Volker",
-  "server": "127.0.0.3",
+  "server": "127.0.0.1",
   "logLevel": 4,
   "port": 5000,
   "angle24": 0,

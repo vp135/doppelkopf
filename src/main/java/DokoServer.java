@@ -168,7 +168,7 @@ public class DokoServer extends BaseServer{
             case CurrentStich.LAST:{
                 if(stichList.size()>0) {
                     try {
-                        CurrentStich cs = new CurrentStich(stichList.get(stichList.size()-1).getCardMap(), CurrentStich.LAST);
+                        CurrentStich cs = new CurrentStich(stichList.get(stichList.size()-1).getBaseCardMap(), CurrentStich.LAST);
                         queueOut(players.get(requestObject.getParams().get("player").getAsInt()), cs);
                     }
                     catch (Exception ex){
@@ -184,7 +184,7 @@ public class DokoServer extends BaseServer{
             case ShowStich.COMMAND:{
                 try {
                     send2All(new CurrentStich(stichList.get(requestObject.getParams()
-                            .get("stichNumber").getAsInt()).getCardMap(),CurrentStich.SPECIFIC));
+                            .get("stichNumber").getAsInt()).getBaseCardMap(),CurrentStich.SPECIFIC));
                 }catch (Exception ex){
                     ex.printStackTrace();
                 }
