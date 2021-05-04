@@ -6,12 +6,14 @@ import base.messages.CurrentStich;
 import base.messages.DisplayMessage;
 import base.messages.RequestObject;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.List;
 import java.util.*;
 
@@ -477,6 +479,8 @@ public abstract class BaseClient implements IInputputHandler {
         setComponentSizes(panel, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 30 * 8));
         setComponentSizes(controlPanel, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15));
         createCards();
+        //createCardBase();
+        log.info("finished redrawing");
     }
 
     protected void setComponentSizes(JComponent p, Dimension d){
@@ -537,8 +541,6 @@ public abstract class BaseClient implements IInputputHandler {
         this.rawIcons = rawIcons;
         this.rawImages = rawImages;
     }
-
-
     //
 
 }

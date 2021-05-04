@@ -6,6 +6,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 public class Configuration {
 
@@ -19,6 +20,10 @@ public class Configuration {
     public int distanceFromCenter = 50;
     public int distanceVariation = 10;
     public boolean redrawCards = false;
+
+    public SkatConfig skat = new SkatConfig();
+    public DokoConfig doko = new DokoConfig();
+
 
     public Configuration() {
 

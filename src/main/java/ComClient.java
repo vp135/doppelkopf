@@ -110,7 +110,7 @@ public class ComClient {
                         try {
                             if ((ServerReply = in.readLine()) != null) {
                                 if (ServerReply.length() > 0) {
-                                    log.info(ServerReply);
+                                    //log.info(ServerReply);
                                     client.handleInput(RequestObject.fromString(ServerReply));
                                 }
                             }

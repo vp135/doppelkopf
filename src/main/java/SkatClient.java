@@ -241,10 +241,41 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                 case OuvertCards.COMMAND:
                     handleOuvertCards(message);
                     break;
+                case GrandHand.COMMAND:
+                    handleGrandHand(message);
+                    break;
             }
         }catch (Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    private void handleGrandHand(RequestObject message) {
+        gameMessageLabel.setText("Willst du einen Grand hand spielen?");
+        middlePanel.removeAll();
+        JButton gh = new JButton("Grand hand");
+        JButton ramsch = new JButton("Ramsch");
+
+        gh.addActionListener(e ->{
+            handler.queueOutMessage(new GrandHand(c.name,true));
+            middlePanel.removeAll();
+            middlePanel.revalidate();
+            middlePanel.repaint();
+            gameMessageLabel.setText("");
+        });
+        ramsch.addActionListener(e ->{
+            handler.queueOutMessage(new GrandHand(c.name,false));
+            middlePanel.removeAll();
+            middlePanel.revalidate();
+            middlePanel.repaint();
+            gameMessageLabel.setText("");
+        });
+
+        middlePanel.add(gh);
+        middlePanel.add(new JLabel());
+        middlePanel.add(ramsch);
+        middlePanel.revalidate();
+        middlePanel.repaint();
     }
 
     private void handleOuvertCards(RequestObject message) {
@@ -322,7 +353,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         });
 
         button_schieben.addActionListener(e -> {
-            handler.queueOutMessage(new Schieben());
+            handler.queueOutMessage(new Schieben(c.name));
             middlePanel.removeAll();
             middlePanel.revalidate();
             middlePanel.repaint();

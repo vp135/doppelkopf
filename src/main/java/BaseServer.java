@@ -15,6 +15,7 @@ public class BaseServer implements IServerMessageHandler{
     protected ComServer comServer;
     protected final List<Player> players = new ArrayList<>();
     protected Configuration c;
+    protected int gamesPlayed = 0 ;
 
     public BaseServer(Configuration c, ComServer comServer) {
         this.c = c;
@@ -25,11 +26,17 @@ public class BaseServer implements IServerMessageHandler{
 
     protected void startGame() {
         send2All(new StartGame(gameType.name()));
+        /*
         try {
             Thread.sleep(3500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+         */
+    }
+
+    protected void endIt(){
+        gamesPlayed++;
     }
 
     protected void queueOut(Player player, RequestObject message) {

@@ -22,6 +22,7 @@ dependencies {
 }
 
 mainClassName="Main"
+//mainClassName="RescalingTest"
 
 task fatJar(type: Jar) {
     manifest {

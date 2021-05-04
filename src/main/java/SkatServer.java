@@ -35,6 +35,8 @@ public class SkatServer extends BaseServer{
     private HashMap<Integer,Boolean> readyMap = new HashMap<>();
     private HashMap<Integer,Integer> points = new HashMap<>();
     private boolean wait4NextRound;
+    private int gamesTilRamsch;
+    private int gamesTilNormal;
 
     public SkatServer(BaseServer server) {
         super(server.c, server.comServer);
@@ -68,7 +70,7 @@ public class SkatServer extends BaseServer{
                     handleSkat(requestObject);
                     break;
                 case Schieben.COMMAND:
-                    handleSchieben();
+                    handleSchieben(requestObject);
                     break;
                 case GameSelected.COMMAND:
                     handleGameSelected(requestObject);
@@ -79,9 +81,28 @@ public class SkatServer extends BaseServer{
                 case CurrentStich.LAST:
                     handleLastStich(requestObject);
                     break;
+                case GrandHand.COMMAND:
+                    handleGrandHand(requestObject);
+                    break;
             }
         }catch (Exception ex){
             ex.printStackTrace();
+        }
+    }
+
+    private void handleGrandHand(RequestObject message) {
+        Player player =  players.stream().filter(p->p.getName().equals(message.getParams().get("player").getAsString())).findFirst().get();
+        if(message.getParams().get("grandHand").getAsBoolean()){
+            selectedGame = GameSelected.GAMES.Grand;
+            send2All(new GameSelected(player.getName(),selectedGame,true,false));
+            hand = true;
+            player.setRe(true);
+            runGame(beginner);
+            beginner--;
+        }
+        else{
+            send2All(new DisplayMessage(String.format("%s spielt keinen Grand hand",player.getName())));
+            askNextGrandHandPlayer();
         }
     }
 
@@ -141,7 +162,7 @@ public class SkatServer extends BaseServer{
                 send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
                         .findFirst().get().getName()," hat Stich(e)"));
                 if (currentStichNumber > 9) {
-                    EndIt();
+                    endIt();
                     return;
                 }
             }catch (Exception ex){
@@ -153,15 +174,32 @@ public class SkatServer extends BaseServer{
         }
     }
 
-    private void EndIt() {
-        SkatEndDialog e = new SkatEndDialog(selectedGame, players,stichList,getSkatPoints());
-        send2All(new GameEnd(e.getReString1(),e.getKontraString1(),
-                e.getPlayer1String(),e.getPlayer2String(),e.getPlayer3String(),
+    @Override
+    public void endIt() {
+        super.endIt();
+        SkatEndDialog e = new SkatEndDialog(selectedGame, players, stichList, getSkatPoints());
+        send2All(new GameEnd(e.getReString1(), e.getKontraString1(),
+                e.getPlayer1String(), e.getPlayer2String(), e.getPlayer3String(),
                 e.getRemaining()));
-        wait4NextRound= true;
+        wait4NextRound = true;
         readyMap = new HashMap<>();
-        for (int i=0;i<players.size();i++){
-            readyMap.put(i,false);
+        for (int i = 0; i < players.size(); i++) {
+            readyMap.put(i, false);
+        }
+        if (c.skat.pflichtRamsch) {
+            if (gamesTilRamsch == 0) {
+                if(selectedGame== GameSelected.GAMES.Ramsch) {
+                    gamesTilNormal--;
+                    if (gamesTilNormal < 1) {
+                        gamesTilRamsch = c.skat.wiederholRamsch;
+                    }
+                }
+            } else {
+                gamesTilRamsch--;
+                if (gamesTilRamsch < 1) {
+                    gamesTilNormal = players.size();
+                }
+            }
         }
     }
 
@@ -224,8 +262,8 @@ public class SkatServer extends BaseServer{
         }
     }
 
-    private void handleSchieben() {
-        send2All(new DisplayMessage("Der Skat wurde geschoben"));
+    private void handleSchieben(RequestObject message) {
+        send2All(new DisplayMessage(String.format("%s schiebt",message.getParams().get("player").getAsString())));
         askNextRamschPlayer();
     }
 
@@ -251,16 +289,31 @@ public class SkatServer extends BaseServer{
     private void askNextRamschPlayer() {
         if(nextRamschPlayer==hoeren){
             nextRamschPlayer= sagen;
-            send2All(new DisplayMessage(players.get(nextRamschPlayer).getName() +" bekommt den Skat"));
+            //send2All(new DisplayMessage(players.get(nextRamschPlayer).getName() +" bekommt den Skat"));
             queueOut(players.get(nextRamschPlayer),new RamschSkat());
         }
         else if(nextRamschPlayer == sagen){
             nextRamschPlayer= weitersagen;
-            send2All(new DisplayMessage(players.get(nextRamschPlayer).getName() +" bekommt den Skat"));
+            //send2All(new DisplayMessage(players.get(nextRamschPlayer).getName() +" bekommt den Skat"));
             queueOut(players.get(nextRamschPlayer),new RamschSkat());
         }
         else{
             runGame(beginner);
+        }
+    }
+
+    private void askNextGrandHandPlayer() {
+        if(nextRamschPlayer==hoeren){
+            nextRamschPlayer= sagen;
+            queueOut(players.get(nextRamschPlayer),new GrandHand(players.get(nextRamschPlayer).getName(),false));
+        }
+        else if(nextRamschPlayer == sagen){
+            nextRamschPlayer= weitersagen;
+            queueOut(players.get(nextRamschPlayer),new GrandHand(players.get(nextRamschPlayer).getName(),false));
+        }
+        else{
+            selectedGame = GameSelected.GAMES.Ramsch;
+            ramsch();
         }
     }
 
@@ -414,7 +467,14 @@ public class SkatServer extends BaseServer{
             selectedGame = GameSelected.GAMES.Ramsch;
             points = new HashMap<>();
             setPlayerRoles();
-            queueOut(players.get(sagen),new Reizen(players.get(sagen).getName(),currentGameValue,true));
+
+            if(gamesTilNormal<1){
+                queueOut(players.get(sagen),new Reizen(players.get(sagen).getName(),currentGameValue,true));
+            }
+            else if(gamesTilRamsch<1){
+                nextRamschPlayer = hoeren;
+                queueOut(players.get(hoeren),new GrandHand(players.get(hoeren).getName(),false));
+            }
 
         }
         catch (Exception ex){
@@ -426,6 +486,15 @@ public class SkatServer extends BaseServer{
     protected void startGame() {
         super.startGame();
         send2All(new AnnounceSpectator(spectator,beginner));
+        if(c.skat.pflichtRamsch){
+            gamesTilRamsch = c.skat.beginnRamsch *players.size();
+            if(gamesTilRamsch==0){
+                gamesTilNormal = players.size();
+            }
+            else{
+                gamesTilNormal = 0;
+            }
+        }
         shuffleCards();
     }
 

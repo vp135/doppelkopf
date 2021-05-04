@@ -8,5 +8,22 @@
   "angleVariation": 0,
   "distanceFromCenter": 70,
   "distanceVariation": 0,
-  "redrawCards": true
+  "redrawCards": true,
+  "skat": {
+    "pflichtRamsch": true,
+    "beginnRamsch": 1,
+    "wiederholRamsch": 1
+  },
+  "doko": {
+    "sonderpunkte": {
+      "fuchsGefangen": true,
+      "doppelkopf": true,
+      "herzstich": true,
+      "karlchen": true
+    },
+    "regeln": {
+      "zweiteHerz10": true,
+      "schwein": true
+    }
+  }
 }
