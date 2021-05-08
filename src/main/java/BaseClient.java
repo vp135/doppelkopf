@@ -6,14 +6,12 @@ import base.messages.CurrentStich;
 import base.messages.DisplayMessage;
 import base.messages.RequestObject;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.List;
 import java.util.*;
 
@@ -61,7 +59,8 @@ public abstract class BaseClient implements IInputputHandler {
     private int cardHeight4Hand;
 
 
-    protected MouseAdapter cardClickAdapter;
+    protected MouseAdapter handCardClickAdapter;
+    protected MouseAdapter exchangeCardClickAdapter;
     protected HashMap<Integer, BaseCard> tableStich = new HashMap<>();
     protected boolean wait4Player = false;
     protected boolean selectCards = false;
@@ -464,7 +463,7 @@ public abstract class BaseClient implements IInputputHandler {
         label.setIcon(cardIcons.get(card.farbe+card.value));
         labelMap.put(card,label);
         cardMap.put(label,card);
-        label.addMouseListener(cardClickAdapter);
+        label.addMouseListener(handCardClickAdapter);
         p.add(label);
         panel.add(p);
     }
@@ -540,6 +539,11 @@ public abstract class BaseClient implements IInputputHandler {
     public void setRawCards(HashMap<String, ImageIcon> rawIcons, HashMap<String, BufferedImage> rawImages) {
         this.rawIcons = rawIcons;
         this.rawImages = rawImages;
+    }
+
+    protected void moveCard2Hand(BaseCard card) {
+        hand.add(card);
+        getCardLabel4Hand(card);
     }
     //
 

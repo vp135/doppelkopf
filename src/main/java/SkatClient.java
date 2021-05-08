@@ -154,7 +154,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
 
     @Override
     protected void setCardClickAdapter() {
-        cardClickAdapter = new MouseInputAdapter() {
+        handCardClickAdapter = new MouseInputAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JLabel label = (JLabel) e.getSource();
@@ -304,7 +304,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         cLabel1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                moveSkatCard2Hand(skat1);
+                moveCard2Hand(skat1);
                 skat1 = null;
                 cLabel1.setVisible(false);
                 setAnsageButtonState();
@@ -314,7 +314,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         cLabel2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                moveSkatCard2Hand(skat2);
+                moveCard2Hand(skat2);
                 skat2 = null;
                 cLabel2.setVisible(false);
                 setAnsageButtonState();
@@ -490,10 +490,6 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         }
     }
 
-    private void moveSkatCard2Hand(BaseCard card) {
-        hand.add(card);
-        getCardLabel4Hand(card);
-    }
 
     private void handleReizen(RequestObject message) {
         int val = message.getParams().get("value").getAsInt();
