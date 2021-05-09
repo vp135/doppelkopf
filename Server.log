@@ -1,10 +1,12 @@
-2021-05-04 23:07:10(922) - info - 21 - Server - added message: startGame
-2021-05-04 23:07:10(16) - info - 21 - Server - added message: AnnounceSpectator
-2021-05-04 23:07:10(0) - info - 27 - Server - {"command":"startGame","params":{"game":"DOKO"}}
-2021-05-04 23:07:10(0) - info - 21 - Server - added message: UpdateUserPanel
-2021-05-04 23:07:10(0) - info - 27 - Server - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
-2021-05-04 23:07:10(0) - info - 27 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
-2021-05-04 23:07:10(0) - info - 21 - Server - added message: Cards
-2021-05-04 23:07:10(0) - info - 21 - Server - added message: SelectGame
-2021-05-04 23:07:10(0) - info - 27 - Server - {"command":"Cards","params":{"cards":["Herz Koenig","Karo 10","Kreuz Koenig","Kreuz Koenig","Pik Dame","Kreuz Bube","Kreuz Dame","Kreuz Ass","Pik Koenig","Karo Dame"]}}
-2021-05-04 23:07:10(14) - info - 27 - Server - {"command":"SelectGame","params":{"0":0}}
+2021-05-10 00:25:44(887) - info - 21 - Server - added message: startGame
+2021-05-10 00:25:44(3) - info - 27 - Server - {"command":"startGame","params":{"game":"DOKO"}}
+2021-05-10 00:25:44(8) - info - 21 - Server - added message: Admin
+2021-05-10 00:25:44(2) - info - 21 - Server - added message: AnnounceSpectator
+2021-05-10 00:25:44(1) - info - 27 - Server - {"command":"Admin","params":{"isAdmin":true}}
+2021-05-10 00:25:44(2) - info - 21 - Server - added message: UpdateUserPanel
+2021-05-10 00:25:44(1) - info - 27 - Server - {"command":"AnnounceSpectator","params":{"player":4,"starter":0}}
+2021-05-10 00:25:44(3) - info - 27 - Server - {"command":"UpdateUserPanel","params":{"player":"Volker","text":""}}
+2021-05-10 00:25:44(1) - info - 21 - Server - added message: Cards
+2021-05-10 00:25:44(2) - info - 21 - Server - added message: SelectGame
+2021-05-10 00:25:44(2) - info - 27 - Server - {"command":"Cards","params":{"cards":["Herz Ass","Pik 10","Pik Dame","Herz Dame","Kreuz Koenig","Kreuz Dame","Kreuz Bube","Karo Ass","Herz Bube","Pik 10"]}}
+2021-05-10 00:25:44(2) - info - 27 - Server - {"command":"SelectGame","params":{"0":0}}

@@ -177,10 +177,6 @@ public class DokoServer extends BaseServer{
                 }
                 break;
             }
-            case AbortGame.COMMAND:{
-                EndIt();
-                break;
-            }
             case ShowStich.COMMAND:{
                 try {
                     send2All(new CurrentStich(stichList.get(requestObject.getParams()
@@ -240,7 +236,7 @@ public class DokoServer extends BaseServer{
                 send2All(new UpdateUserPanel(players.stream().filter(p->p.getNumber()==winner)
                         .findFirst().get().getName()," hat Stich(e)"));
                 if (currentStichNumber > 9) {
-                    EndIt();
+                    endIt();
                     return;
                 }
             }catch (Exception ex){
@@ -252,8 +248,9 @@ public class DokoServer extends BaseServer{
         }
     }
 
-
-    private void EndIt() {
+    @Override
+    public void endIt() {
+        super.endIt();
         DokoEndDialog e = new DokoEndDialog(players,stichList);
         send2All(new GameEnd(e.getReString1(),e.getReString2(),e.getKontraString1(),e.getKontraString2(),e.getRemaining()));
         wait4NextRound= true;

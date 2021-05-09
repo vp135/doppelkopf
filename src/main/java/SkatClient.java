@@ -30,11 +30,6 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     private JButton nextValue;
     private JButton pass;
 
-    private BaseCard skat1;
-    private BaseCard skat2;
-    private boolean exchange;
-    private JLabel cLabel1;
-    private JLabel cLabel2;
     private JButton button_skat;
     private JButton button_ok;
     private JButton button_karo;
@@ -159,7 +154,10 @@ public class SkatClient extends BaseClient implements IInputputHandler {
             public void mouseClicked(MouseEvent e) {
                 JLabel label = (JLabel) e.getSource();
                 BaseCard card = cardMap.get(label);
-                if (exchange) {
+                if (selectCards) {
+                    moveCard2Exchange(card);
+                    setAnsageButtonState();
+                    /*
                     if (skat1 == null) {
                         skat1 = card;
                         cLabel1.setIcon(cardIcons.get(card.farbe + card.value));
@@ -175,6 +173,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                         createCardButtons(hand);
                         setAnsageButtonState();
                     }
+                    */
                 } else if (wait4Player) {
                     wait4Player = false;
                     hand.remove(card);
@@ -187,10 +186,34 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                 }
             }
         };
+        exchangeCardClickAdapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JLabel label = (JLabel) e.getSource();
+                BaseCard card = null;
+                for(int i = 0; i<exchangeCards.length;i++){
+                    if(cLabels[i]!=null && cLabels[i]==label){
+                        card = exchangeCards[i];
+                        break;
+                    }
+                }
+                moveCard2Hand(card);
+                button_ok.setEnabled(hand.size()==10);
+                for(int i = 0;i<exchangeCards.length;i++){
+                    if(exchangeCards[i]==card){
+                        exchangeCards[i] = null;
+                        cLabels[i].setVisible(false);
+                        break;
+                    }
+                }
+                middlePanel.revalidate();
+                middlePanel.repaint();
+            }
+        };
     }
 
     private void setAnsageButtonState() {
-        button_ok.setEnabled((skat1 != null && skat2 != null));
+        button_ok.setEnabled(hand.size()==10);
     }
 
     @Override
@@ -296,34 +319,23 @@ public class SkatClient extends BaseClient implements IInputputHandler {
 
     private void handleSkat(RequestObject message) {
         middlePanel.removeAll();
+        selectCards = true;
         JsonArray array = message.getParams().getAsJsonArray("cards");
-        skat1 = new Card(array.get(0).getAsString().split(" ")[1], array.get(0).getAsString().split(" ")[0]);
-        skat2 = new Card(array.get(1).getAsString().split(" ")[1], array.get(1).getAsString().split(" ")[0]);
+        exchangeCards = new Card[array.size()];
+        for (int i = 0; i< exchangeCards.length;i++){
+            exchangeCards[i]= new Card(array.get(i).getAsString().split(" ")[1], array.get(i).getAsString().split(" ")[0]);
+        }
 
-        cLabel1 = new JLabel(cardIcons.get(skat1.farbe + skat1.value));
-        cLabel1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                moveCard2Hand(skat1);
-                skat1 = null;
-                cLabel1.setVisible(false);
-                setAnsageButtonState();
-            }
-        });
-        cLabel2 = new JLabel(cardIcons.get(skat2.farbe + skat2.value));
-        cLabel2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                moveCard2Hand(skat2);
-                skat2 = null;
-                cLabel2.setVisible(false);
-                setAnsageButtonState();
-            }
-        });
         middlePanel.add(buttonsPanel);
+
+        cLabels = new JLabel[exchangeCards.length];
+        for (int i = 0;i<exchangeCards.length;i++){
+            cLabels[i] = new JLabel(cardIcons.get(exchangeCards[i].toTrimedString()));
+            cLabels[i].addMouseListener(exchangeCardClickAdapter);
+            middlePanel.add(cLabels[i]);
+        }
+
         button_ok.setVisible(true);
-        middlePanel.add(cLabel1);
-        middlePanel.add(cLabel2);
 
         middlePanel.revalidate();
         middlePanel.repaint();
@@ -338,16 +350,16 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         JButton button_schieben = new JButton("Schieben");
 
         button_ok.addActionListener(e -> {
-            handler.queueOutMessage(new Skat(c.name, Arrays.asList(skat1, skat2)));
+            handler.queueOutMessage(new Skat(c.name, Arrays.asList(exchangeCards)));
             middlePanel.removeAll();
             middlePanel.repaint();
-            exchange = false;
+            selectCards = false;
         });
 
 
         button_skat.addActionListener(e -> {
             middlePanel.remove(button_schieben);
-            exchange = true;
+            selectCards = true;
             button_ok.setVisible(true);
             handler.queueOutMessage(new GetSkat(c.name));
         });
@@ -440,11 +452,11 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         button_ok.addActionListener(e -> {
             handler.queueOutMessage(new GameSelected(c.name, selectedGame, handSpiel, ouvert));
             if (!handSpiel) {
-                handler.queueOutMessage(new Skat(c.name, Arrays.asList(skat1, skat2)));
+                handler.queueOutMessage(new Skat(c.name, Arrays.asList(exchangeCards)));
             }
             middlePanel.removeAll();
             middlePanel.repaint();
-            exchange = false;
+            selectCards = false;
         });
 
         buttonsPanel.add(button_ok);
@@ -452,7 +464,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         button_skat = new JButton("Skat aufnehmen");
         button_skat.addActionListener(e -> {
             handler.queueOutMessage(new GetSkat(c.name));
-            exchange = true;
+            selectCards = true;
             handSpiel = false;
             setOuvertButtonState();
         });

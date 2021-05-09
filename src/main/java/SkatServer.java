@@ -455,7 +455,9 @@ public class SkatServer extends BaseServer{
                 }
             });
             skat = new ArrayList<>();
-            skat.addAll(cardList);
+            for(int i=0;i<2;i++) {
+                skat.add(cardList.get(i));
+            }
             players.forEach(player -> queueOut(player,new Cards(player.getHand())));
 
 

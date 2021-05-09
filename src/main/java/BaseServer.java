@@ -3,10 +3,13 @@ import base.MessageIn;
 import base.Player;
 import base.Statics;
 import base.messages.*;
+import base.messages.admin.AbortGame;
+import base.messages.admin.SetAdmin;
 
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BaseServer implements IServerMessageHandler{
 
@@ -16,6 +19,7 @@ public class BaseServer implements IServerMessageHandler{
     protected final List<Player> players = new ArrayList<>();
     protected Configuration c;
     protected int gamesPlayed = 0 ;
+    protected String adminName;
 
     public BaseServer(Configuration c, ComServer comServer) {
         this.c = c;
@@ -26,17 +30,12 @@ public class BaseServer implements IServerMessageHandler{
 
     protected void startGame() {
         send2All(new StartGame(gameType.name()));
-        /*
-        try {
-            Thread.sleep(3500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-         */
+        players.stream().filter(player -> player.getName().equals(adminName))
+                .collect(Collectors.toList()).forEach(player -> queueOut(player,new SetAdmin(true)));
     }
 
     protected void endIt(){
-        gamesPlayed++;
+
     }
 
     protected void queueOut(Player player, RequestObject message) {
@@ -73,6 +72,10 @@ public class BaseServer implements IServerMessageHandler{
                     });
                 }
                 break;
+            case AbortGame.COMMAND:{
+                endIt();
+                break;
+            }
             case GetVersion.COMMAND:
                 comServer.queueOut(socket,
                         new GetVersion("Server", Statics.VERSION),true);
@@ -84,4 +87,7 @@ public class BaseServer implements IServerMessageHandler{
         }
     }
 
+    public void setAdmin(String name) {
+        this.adminName = name;
+    }
 }

@@ -12,10 +12,8 @@ import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 
 public class Main implements IInputputHandler{
@@ -40,27 +38,36 @@ public class Main implements IInputputHandler{
         m = new Main();
     }
 
+
     private static void modifyUIManager() {
-        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
         UIManager.put("Label.background",Color.BLACK);
         UIManager.put("Label.foreground",Color.WHITE);
-        UIManager.put("Button.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("Button.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
         UIManager.put("Button.background", Color.BLACK);
         UIManager.put("Button.foreground", Color.WHITE);
-        UIManager.put("TextField.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("TextField.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
         UIManager.put("TextField.background",new Color(70,70,70));
         UIManager.put("TextField.foreground",Color.WHITE);
         UIManager.put("Panel.background",Color.BLACK);
-        UIManager.put("List.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
-        UIManager.put("List.background",Color.BLACK);
-        UIManager.put("List.foreground",Color.WHITE);
-        UIManager.put("TextArea.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("TextArea.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
         UIManager.put("TextArea.background",Color.BLACK);
         UIManager.put("TextArea.foreground",Color.WHITE);
-        UIManager.put("CheckBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("CheckBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
         UIManager.put("CheckBox.background",Color.BLACK);
         UIManager.put("CheckBox.foreground",Color.WHITE);
+        UIManager.put("ComboBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("ComboBox.background",Color.BLACK);
+        UIManager.put("ComboBox.foreground",Color.WHITE);
         UIManager.put("OptionPane.messageForeground",Color.WHITE);
+        //This shit does not work for some fucking reason
+        UIManager.put("List.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("List.background",Color.BLACK);
+        UIManager.put("List.foreground",Color.WHITE);
+        UIManager.put("List.selectionBackground",Color.GREEN);
+        UIManager.put("List.selectionForeground",Color.BLUE);
+        //
+
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
     }
 
@@ -101,7 +108,6 @@ public class Main implements IInputputHandler{
 
 
         panel.add(inputs);
-        panel.add(playerList);
         inputs.add(new JLabel("Spielername"));
         JTextField playername = new JTextField();
         inputs.add(playername);
@@ -117,6 +123,12 @@ public class Main implements IInputputHandler{
         start.setEnabled(false);
         gameList = new JComboBox<>();
         gameList.setModel(new DefaultComboBoxModel<>(Statics.game.values()));
+
+        //This part is only here because the UIManager does not want to accept my settings for JList
+        playerList.setBackground(Color.BLACK);
+        playerList.setForeground(Color.WHITE);
+        playerList.setFont(playerList.getFont().deriveFont(20f));
+
 
         rightPanel.add(playerList);
         rightPanel.add(userOptions);
@@ -213,9 +225,7 @@ public class Main implements IInputputHandler{
             }).start();
 
         });
-        start.addActionListener(e -> {
-            startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem()));
-        });
+        start.addActionListener(e -> startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem())));
         createJoinFrame.pack();
         createJoinFrame.add(panel);
         createJoinFrame.setVisible(true);
@@ -232,6 +242,7 @@ public class Main implements IInputputHandler{
                 server = new SkatServer(server);
                 break;
         }
+        server.setAdmin(c.name);
         server.startGame();
     }
 
@@ -336,7 +347,7 @@ public class Main implements IInputputHandler{
                 false);
         new Thread(() -> {
             try {
-                Thread.sleep(2500);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

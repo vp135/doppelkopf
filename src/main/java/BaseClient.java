@@ -1,10 +1,12 @@
 import base.BaseCard;
 import base.Logger;
 import base.Statics;
-import base.messages.AbortGame;
-import base.messages.CurrentStich;
-import base.messages.DisplayMessage;
-import base.messages.RequestObject;
+import base.doko.Card;
+import base.doko.messages.SendCards;
+import base.messages.*;
+import base.messages.admin.AbortGame;
+import base.messages.admin.SetAdmin;
+import base.skat.messages.RamschSkat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,7 +57,6 @@ public abstract class BaseClient implements IInputputHandler {
     protected final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
     private final HashMap<String,BufferedImage> cardImages = new HashMap<>();
     protected int cardSize;
-    private int cardWidth4Hand;
     private int cardHeight4Hand;
 
 
@@ -66,6 +67,10 @@ public abstract class BaseClient implements IInputputHandler {
     protected boolean selectCards = false;
     protected ArrayList<BaseCard> cards2Send = new ArrayList<>();
     protected List<BaseCard> hand;
+
+    protected BaseCard[] exchangeCards;
+    protected JLabel[] cLabels;
+
 
     protected Configuration c;
     protected ComClient handler;
@@ -78,6 +83,8 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected final Random random = new Random(System.currentTimeMillis());
     protected JPanel middlePanel;
+    protected JPanel personalButtons;
+    protected JButton button_adminPanel;
 
     public BaseClient(ComClient handler, List<String> players, Configuration c) {
         this.handler = handler;
@@ -92,20 +99,26 @@ public abstract class BaseClient implements IInputputHandler {
         log.info("received: " +input.getCommand());
         try {
             switch (input.getCommand()) {
-                case DisplayMessage.COMMAND: {
+                case DisplayMessage.COMMAND:
                     serverMessageLabel.setText(input.getParams().get("message").getAsString());
                     break;
-                }
+                case SetAdmin.COMMAND:
+                    isAdmin = input.getParams().get("isAdmin").getAsBoolean();
+                    setAdminButton();
+                    break;
             }
         }catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
+    private void setAdminButton() {
+        button_adminPanel.setVisible(isAdmin);
+    }
+
     //UI creation functions
 
     protected void createUI(int state, int posX, int posY, Dimension size, boolean test){
-        //createRawCardMaps();
         createGameSpecificButtons();
         createMainFrame(state, posX, posY, size);
         createPlayArea();
@@ -193,8 +206,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected void createHUD() {
         log.info("creating hud");
         hud = new JPanel(new GridLayout(3,3));
-        //setComponentSizes(hud, new Dimension(layeredPane.getWidth()-15, mainFrame.getHeight() / 15 * 10));
-        hud.setBackground(new Color(0,0,0,0));
+       hud.setBackground(new Color(0,0,0,0));
 
 
 
@@ -268,26 +280,25 @@ public abstract class BaseClient implements IInputputHandler {
      * Creates UI to interact with the game. Actions will not affect other players or the game
      * @return JPanel with buttons
      */
-    protected JPanel createControlButtonPanel(){
+    protected JPanel createControlButtonPanel() {
         JPanel tableButtons = new JPanel(new GridLayout(1, 3));
-        JPanel buttons = new JPanel(new GridLayout(3, 1));
+        personalButtons = new JPanel(new GridLayout(3, 1));
         JButton button_lastStich = new JButton("letzter Stich");
         button_lastStich.addActionListener(e -> handler.queueOutMessage(new CurrentStich(new HashMap<>(), players.indexOf(c.name), true)));
         JButton button_clearTable = new JButton("Tisch leeren");
         button_clearTable.addActionListener(e -> clearPlayArea());
-        buttons.add(button_lastStich);
-        buttons.add(button_clearTable);
-        if (isAdmin) {
-            JButton button_adminPanel = new JButton("Admin");
-            buttons.add(button_adminPanel);
-            button_adminPanel.addActionListener(e -> {
-                if(adminFrame !=null){
-                    adminFrame.dispose();
-                }
-                createAdminUI();
-            });
-        }
-        tableButtons.add(buttons);
+        personalButtons.add(button_lastStich);
+        personalButtons.add(button_clearTable);
+        button_adminPanel = new JButton("Admin");
+        button_adminPanel.setVisible(false);
+        personalButtons.add(button_adminPanel);
+        button_adminPanel.addActionListener(e -> {
+            if (adminFrame != null) {
+                adminFrame.dispose();
+            }
+            createAdminUI();
+        });
+        tableButtons.add(personalButtons);
         tableButtons.add(new JLabel());
         tableButtons.add(new JLabel());
         return tableButtons;
@@ -364,27 +375,30 @@ public abstract class BaseClient implements IInputputHandler {
         adminFrame = new JFrame("Admin Panel");
         JPanel adminMainPanel = new JPanel(new GridLayout(10,1));
         JButton button_abortGame = new JButton("Spiel abbrechen");
-        JTextField stichNumber = new JTextField();
-        JButton button_showStich = new JButton("Stich anzeigen");
-        JButton button_reset = new JButton("alle Clients aktualisieren");
+        JButton button1_test = new JButton("armut austausch");
+        JButton button2_test = new JButton("skat austausch");
 
         adminMainPanel.add(button_abortGame);
         adminMainPanel.add(new JLabel(""));
-        adminMainPanel.add(stichNumber);
-        adminMainPanel.add(button_showStich);
-        adminMainPanel.add(button_reset);
+        adminMainPanel.add(button1_test);
+        adminMainPanel.add(button2_test);
         adminFrame.add(adminMainPanel);
         adminFrame.pack();
         adminFrame.setVisible(true);
 
         button_abortGame.addActionListener(e -> handler.queueOutMessage(new AbortGame()));
 
-        JButton button_selectGame = new JButton("Spiel auswählen");
+        button1_test.addActionListener(e ->{
+            List<BaseCard> cards = new ArrayList<>();
+            cards.add(new Card(Statics.BUBE,Statics.PIK));
+            cards.add(new Card(Statics.BUBE,Statics.KARO));
+            cards.add(new Card(Statics.BUBE,Statics.HERZ));
+            handleInput(new SendCards(cards,SendCards.RICH));
+        });
 
-        adminMainPanel.add(button_selectGame);
-
-        JButton button_close = new JButton("close");
-        button_close.addActionListener(e -> adminFrame.dispose());
+        button2_test.addActionListener(e ->{
+            handleInput(new RamschSkat());
+        });
     }
 
 
@@ -414,7 +428,7 @@ public abstract class BaseClient implements IInputputHandler {
 
 
     protected void createCards() {
-        cardWidth4Hand = panel.getWidth() / maxHandCards;
+        int cardWidth4Hand = panel.getWidth() / maxHandCards;
         cardHeight4Hand = (int) (cardWidth4Hand / RATIO);
         BaseCard.UNIQUE_CARDS.forEach(s -> {
             try {
@@ -449,13 +463,6 @@ public abstract class BaseClient implements IInputputHandler {
         });
     }
 
-    protected JPanel createCardLabel(BaseCard card){
-        JPanel p = new JPanel();
-        JLabel label = new JLabel();
-        label.setIcon(cardIcons.get(card.farbe+card.value));
-        p.add(label);
-        return p;
-    }
 
     protected void getCardLabel4Hand(BaseCard card){
         JPanel p = new JPanel();
@@ -524,7 +531,7 @@ public abstract class BaseClient implements IInputputHandler {
         serverMessageLabel.setText("");
         gameMessageLabel.setText("");
         bottomPanel.revalidate();
-        bottomPanel.repaint();;
+        bottomPanel.repaint();
     }
 
     protected void handleWait4Player(RequestObject message) {
@@ -544,6 +551,26 @@ public abstract class BaseClient implements IInputputHandler {
     protected void moveCard2Hand(BaseCard card) {
         hand.add(card);
         getCardLabel4Hand(card);
+    }
+
+    protected void moveCard2Exchange(BaseCard card) {
+        if(hand.size()>10) {
+            for (int i = 0; i < exchangeCards.length; i++) {
+                try {
+                    if (exchangeCards[i] == null) {
+                        exchangeCards[i] = card;
+                        cLabels[i].setIcon(cardIcons.get(card.farbe + card.value));
+                        cLabels[i].setVisible(true);
+                        middlePanel.add(cLabels[i]);
+                        break;
+                    }
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+            hand.remove(card);
+            createCardButtons(hand);
+        }
     }
     //
 

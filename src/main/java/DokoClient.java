@@ -45,8 +45,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     //Configuration
 
     //private final ServerConfig serverConfig = new ServerConfig();
-    private BaseCard[] exchangeCards;
-    private JLabel[] cLabels;
+
 
     public DokoClient(ComClient handler, List<String> players, Configuration c){
         super(handler,players,c);
@@ -241,8 +240,15 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
             @Override
             public void mouseClicked(MouseEvent e) {
                 JLabel label = (JLabel) e.getSource();
-                BaseCard card = cardMap.get(label);
+                BaseCard card = null;
+                for(int i = 0; i<exchangeCards.length;i++){
+                    if(cLabels[i]!=null && cLabels[i]==label){
+                        card = exchangeCards[i];
+                        break;
+                    }
+                }
                 moveCard2Hand(card);
+                sendCardsButton.setEnabled(hand.size()==10);
                 for(int i = 0;i<exchangeCards.length;i++){
                     if(exchangeCards[i]==card){
                         exchangeCards[i] = null;
@@ -407,6 +413,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
             middlePanel.add(cLabels[i]);
         }
         setSendCardButton(SendCards.POOR,"Karten zurückgeben");
+        middlePanel.setVisible(true);
         middlePanel.revalidate();
         middlePanel.repaint();
 
@@ -607,7 +614,9 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
             handler.queueOutMessage(new SendCards(cards2Send, receiver));
             selectCards = false;
             controlPanel.setVisible(false);
+            middlePanel.removeAll();
             middlePanel.setVisible(false);
+            clearPlayArea();
         });
         controlPanel.add(sendCardsButton);
         controlPanel.setVisible(true);
@@ -683,22 +692,4 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         createCardButtons(hand);
 
     }
-
-    //TODO: override base method and change skat accordingly
-    private void moveCard2Exchange(BaseCard card) {
-        for (int i= 0 ;i<exchangeCards.length;i++){
-            if(exchangeCards[i]==null){
-                exchangeCards[i] = card;
-                cLabels[i].setIcon(cardIcons.get(card.farbe + card.value));
-                cLabels[i].setVisible(true);
-                middlePanel.add(cLabels[i]);
-                break;
-            }
-        }
-        hand.remove(card);
-        hand.remove(card);
-        createCardButtons(hand);
-    }
-
-    //
 }
