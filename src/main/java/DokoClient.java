@@ -193,7 +193,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
 
     @Override
     public void setGameSpecifics() {
-        maxHandCards = 13;
+        maxHandCards = 12;
         heightCorrection = 1f;
     }
 
@@ -271,8 +271,6 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
             case Cards.COMMAND: {
                 deselectAllSortButtons();
                 handleCards(message);
-
-
                 break;
             }
             case PutCard.COMMAND: {

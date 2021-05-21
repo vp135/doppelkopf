@@ -157,23 +157,6 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                 if (selectCards) {
                     moveCard2Exchange(card);
                     setAnsageButtonState();
-                    /*
-                    if (skat1 == null) {
-                        skat1 = card;
-                        cLabel1.setIcon(cardIcons.get(card.farbe + card.value));
-                        cLabel1.setVisible(true);
-                        hand.remove(card);
-                        createCardButtons(hand);
-                        setAnsageButtonState();
-                    } else if (skat2 == null) {
-                        skat2 = card;
-                        cLabel2.setIcon(cardIcons.get(card.farbe + card.value));
-                        cLabel2.setVisible(true);
-                        hand.remove(card);
-                        createCardButtons(hand);
-                        setAnsageButtonState();
-                    }
-                    */
                 } else if (wait4Player) {
                     wait4Player = false;
                     hand.remove(card);
@@ -213,7 +196,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     }
 
     private void setAnsageButtonState() {
-        button_ok.setEnabled(hand.size()==10);
+        button_ok.setEnabled(hand.size()==10 && selectedGame!= GameSelected.GAMES.Ramsch);
     }
 
     @Override
@@ -450,10 +433,10 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         buttonsPanel.add(button_ouvert);
 
         button_ok.addActionListener(e -> {
-            handler.queueOutMessage(new GameSelected(c.name, selectedGame, handSpiel, ouvert));
             if (!handSpiel) {
                 handler.queueOutMessage(new Skat(c.name, Arrays.asList(exchangeCards)));
             }
+            handler.queueOutMessage(new GameSelected(c.name, selectedGame, handSpiel, ouvert));
             middlePanel.removeAll();
             middlePanel.repaint();
             selectCards = false;
@@ -619,6 +602,8 @@ public class SkatClient extends BaseClient implements IInputputHandler {
 
     private void handleGameEnd(RequestObject message) {
         updateTable();
+        ouvertCards = new ArrayList<>();
+        createOuvertPanel(ouvertCards);
         SkatEndDialog e = new SkatEndDialog(
                 selectedGame,
                 message.getParams().get("re1").getAsString(),
@@ -757,14 +742,9 @@ public class SkatClient extends BaseClient implements IInputputHandler {
             Optional<BaseCard> optCard = ouvertCards.stream()
                     .filter(c->c.farbe.equals(card.farbe)&&c.value.equals(card.value)).findFirst();
             optCard.ifPresent(baseCard -> {
-                //ouvertCards.remove(baseCard);
-                //layeredPane.remove(ouvertPanel);
                 ouvertLabelMap.get(baseCard).setVisible(false);
-                //ouvertPanel.remove(ouvertLabelMap.get(baseCard));
                 ouvertPanel.revalidate();
                 ouvertPanel.repaint();
-
-                //createOuvertPanel(ouvertCards);
             });
         }
     }
@@ -780,7 +760,6 @@ public class SkatClient extends BaseClient implements IInputputHandler {
             hand.add(c);
         });
         super.handleCards(message);
-        //createOuvertPanel(hand);
     }
 
     private String createUserLabelString(String msg, String player, boolean append2Name) {

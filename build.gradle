@@ -22,7 +22,7 @@ dependencies {
 }
 
 mainClassName="Main"
-//mainClassName="RescalingTest"
+//mainClassName="MessageTest"
 
 task fatJar(type: Jar) {
     manifest {

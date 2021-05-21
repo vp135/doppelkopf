@@ -159,21 +159,26 @@ public class Main implements IInputputHandler{
             name = playername.getText();
             if (!playername.getText().trim().equals("") && !port.getText().trim().equals("")) {
                 server = new BaseServer(c, new ComServer(Integer.parseInt(port.getText())));
-                create.setEnabled(false);
-                join.setEnabled(false);
-                while(!server.comServer.listening) {
+                int i = 0;
+                int nmbRetries = 15;
+                while(!server.comServer.listening && i<nmbRetries) {
                     log.info("not listening");
                     try {
-                        Thread.sleep(100);
+                        i++;
+                        Thread.sleep(200);
                     } catch (InterruptedException interruptedException) {
                         log.error(interruptedException.toString());
                     }
                 }
-                comClient = new ComClient(hostname.getText(),Integer.parseInt(port.getText()), this,name);
-                comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
-                comClient.start();
-                inputs.add(gameList);
-                inputs.add(start);
+                if(server.comServer.listening) {
+                    create.setEnabled(false);
+                    join.setEnabled(false);
+                    comClient = new ComClient(hostname.getText(), Integer.parseInt(port.getText()), this, name);
+                    comClient.queueOutMessage(new GetVersion(name, Statics.VERSION));
+                    comClient.start();
+                    inputs.add(gameList);
+                    inputs.add(start);
+                }
             }
             overrideConfig(angle24Field, angle13Field,
                     angleVariationField, distanceField,

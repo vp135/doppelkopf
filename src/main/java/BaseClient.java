@@ -65,7 +65,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected HashMap<Integer, BaseCard> tableStich = new HashMap<>();
     protected boolean wait4Player = false;
     protected boolean selectCards = false;
-    protected ArrayList<BaseCard> cards2Send = new ArrayList<>();
+    protected List<BaseCard> cards2Send = new ArrayList<>();
     protected List<BaseCard> hand;
 
     protected BaseCard[] exchangeCards;
@@ -554,6 +554,7 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
     protected void moveCard2Exchange(BaseCard card) {
+        //TODO: this should not work when sending armut cards
         if(hand.size()>10) {
             for (int i = 0; i < exchangeCards.length; i++) {
                 try {

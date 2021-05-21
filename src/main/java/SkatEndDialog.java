@@ -31,7 +31,6 @@ public class SkatEndDialog {
         StringBuilder[] playerBuilder = new StringBuilder[players.size()];
         for(int i = 0; i<players.size(); i++){
             playerBuilder[i] = new StringBuilder();
-            playerBuilder[i].append("<html>").append(players.get(i).getName()).append("<br><hr>");
         }
 
         stichList.forEach(stich -> {
@@ -101,15 +100,16 @@ public class SkatEndDialog {
         }
         int i = 0;
         for(Player p:players){
-            if(!p.isSpectator()){
-                if(i==0){
-                    player1String = playerBuilder[p.getNumber()].toString();
-                }
-                else if(i==1){
-                    player2String = playerBuilder[p.getNumber()].toString();
-                }
-                else if(i==2){
-                    player3String = playerBuilder[p.getNumber()].toString();
+            if(!p.isSpectator()) {
+                if (i == 0) {
+                    player1String = "<html>" + players.get(i).getName() + "(" + players.get(i).getPoints() + ")<br><hr>"
+                            + playerBuilder[p.getNumber()].toString();
+                } else if (i == 1) {
+                    player2String = "<html>" + players.get(i).getName() + "(" + players.get(i).getPoints() + ")<br><hr>"
+                            + playerBuilder[p.getNumber()].toString();
+                } else if (i == 2) {
+                    player3String = "<html>" + players.get(i).getName() + "(" + players.get(i).getPoints() + ")<br><hr>"
+                            + playerBuilder[p.getNumber()].toString();
                 }
             }
             i++;
