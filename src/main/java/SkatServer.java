@@ -433,8 +433,8 @@ public class SkatServer extends BaseServer{
         }
     }
 
-
-    private void shuffleCards() {
+    @Override
+    public void shuffleCards() {
         for (Player player1 : players) {
             send2All(new UpdateUserPanel(player1.getName(), ""));
         }

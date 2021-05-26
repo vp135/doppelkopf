@@ -140,10 +140,6 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                     drawCard2Position(tableStich.get(i), i, table.getHeight(), table.getWidth());
                 }
             });
-            if (selectCards) {
-                cards2Send.clear();
-                cardLabels2Send.clear();
-            }
         }
     }
 
@@ -162,7 +158,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                     hand.remove(card);
                     label.setVisible(false);
                     handler.queueOutMessage(new PutCard(players.indexOf(c.name), card.farbe, card.value));
-                    serverMessageLabel.setText("");
+                    //serverMessageLabel.setText("");
                     if (c.redrawCards) {
                         createCardButtons(hand);
                     }
@@ -617,6 +613,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         selectCards = false;
         wait4Player = false;
         hand = new ArrayList<>();
+        serverMessages = new ArrayList<>();
         handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.name)));
     }
 

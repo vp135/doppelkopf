@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -205,10 +206,6 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
             clearPlayArea();
             tableStich.keySet().forEach(i ->
                     drawCard2Position(tableStich.get(i), i, table.getHeight(), table.getWidth()));
-            if (selectCards) {
-                cards2Send.clear();
-                cardLabels2Send.clear();
-            }
         }
     }
 
@@ -221,14 +218,19 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 BaseCard card = cardMap.get(label);
                 if (selectCards) {
                     moveCard2Exchange(card);
-                    sendCardsButton.setEnabled(hand.size() == 10);
+                    if(hand.size()==10){
+                        setSendCardButton(SendCards.POOR, "Karten zurückgeben");
+                    }
+                    else{
+                        controlPanel.removeAll();
+                    }
                 } else {
                     if (wait4Player || test) {
                         wait4Player = false;
                         hand.remove(card);
                         label.setVisible(false);
                         handler.queueOutMessage(new PutCard(players.indexOf(c.name), card.farbe, card.value));
-                        serverMessageLabel.setText("");
+                        //serverMessageLabel.setText("");
                         if (c.redrawCards) {
                             createCardButtons(hand);
                         }
@@ -248,7 +250,12 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                     }
                 }
                 moveCard2Hand(card);
-                sendCardsButton.setEnabled(hand.size()==10);
+                if(hand.size()==10){
+                    setSendCardButton(SendCards.POOR, "Karten zurückgeben");
+                }
+                else{
+                    controlPanel.removeAll();
+                }
                 for(int i = 0;i<exchangeCards.length;i++){
                     if(exchangeCards[i]==card){
                         exchangeCards[i] = null;
@@ -396,25 +403,55 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     }
 
     private void handleSendCards(RequestObject message) {
+        boolean isRich = (message.getParams().get("receiver").getAsString().equals(SendCards.RICH));
         middlePanel.removeAll();
-        selectCards = true;
+        selectCards = isRich;
         JsonArray array = message.getParams().getAsJsonArray("cards");
         exchangeCards = new Card[array.size()];
         for (int i = 0; i< exchangeCards.length;i++){
             exchangeCards[i]= new Card(array.get(i).getAsString().split(" ")[1], array.get(i).getAsString().split(" ")[0]);
         }
 
+
+
         cLabels = new JLabel[exchangeCards.length];
         for (int i = 0;i<exchangeCards.length;i++){
             cLabels[i] = new JLabel(cardIcons.get(exchangeCards[i].toTrimedString()));
-            cLabels[i].addMouseListener(exchangeCardClickAdapter);
+            if(isRich) {
+                cLabels[i].addMouseListener(exchangeCardClickAdapter);
+            }
             middlePanel.add(cLabels[i]);
         }
-        setSendCardButton(SendCards.POOR,"Karten zurückgeben");
+
+        if(isRich){
+            setSendCardButton(SendCards.POOR, "Karten zurückgeben");
+        }
+        else {
+            setAcceptArmutReturn();
+        }
+
         middlePanel.setVisible(true);
         middlePanel.revalidate();
         middlePanel.repaint();
 
+    }
+
+    private void setAcceptArmutReturn() {
+        controlPanel.removeAll();
+        JButton button = new JButton("Karten aufnehmen");
+        button.addActionListener(e -> {
+            for (BaseCard exchangeCard : exchangeCards) {
+                moveCard2Hand(exchangeCard);
+            }
+            handler.queueOutMessage(new CardsReturned());
+            middlePanel.removeAll();
+            middlePanel.setVisible(false);
+            controlPanel.removeAll();
+            controlPanel.setVisible(false);
+            clearPlayArea();
+        });
+        controlPanel.add(button);
+        controlPanel.setVisible(true);
     }
 
     private void handleGameType(RequestObject message) {
@@ -451,6 +488,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         selectCards = false;
         wait4Player = false;
         hand = new ArrayList<>();
+        serverMessages = new ArrayList<>();
         handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.name)));
     }
 
@@ -600,16 +638,15 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
 
     private void selectCards4Armut() {
         controlPanel.removeAll();
-        cards2Send = new ArrayList<>();
-        cardLabels2Send = new ArrayList<>();
         autoSelectArmutCards();
         setSendCardButton(SendCards.RICH, "Armut anbieten");
     }
 
     private void setSendCardButton(String receiver, String buttonText) {
+        controlPanel.removeAll();
         sendCardsButton = new JButton(buttonText);
         sendCardsButton.addActionListener(e -> {
-            handler.queueOutMessage(new SendCards(cards2Send, receiver));
+            handler.queueOutMessage(new SendCards(Arrays.asList(exchangeCards), receiver));
             selectCards = false;
             controlPanel.setVisible(false);
             middlePanel.removeAll();
@@ -618,6 +655,8 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         });
         controlPanel.add(sendCardsButton);
         controlPanel.setVisible(true);
+        controlPanel.revalidate();
+        controlPanel.repaint();
     }
 
     private void autoSelectArmutCards() {
@@ -627,9 +666,8 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
          cLabels = new JLabel[cards.size()];
          for(int i =0; i < cards.size();i++){
              cLabels[i] = new JLabel();
-             cards2Send.add(cards.get(i));
          }
-         cards.forEach(this::moveCard2Exchange);
+         cards.forEach(c-> moveCard2Exchange(c,true));
          middlePanel.setVisible(true);
     }
 

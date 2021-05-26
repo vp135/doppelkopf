@@ -38,6 +38,10 @@ public class BaseServer implements IServerMessageHandler{
 
     }
 
+    protected void shuffleCards(){
+
+    }
+
     protected void queueOut(Player player, RequestObject message) {
         comServer.queueOut(player.getSocket(),message,true);
     }
@@ -80,9 +84,16 @@ public class BaseServer implements IServerMessageHandler{
                 comServer.queueOut(socket,
                         new GetVersion("Server", Statics.VERSION),true);
                 break;
+            case AdminRequest.COMMAND:
+                handleAdminRequest(requestObject);
+                break;
+        }
+    }
 
-            default:
-                log.error("message type unknown. Message not processed");
+    private void handleAdminRequest(RequestObject requestObject) {
+        switch (requestObject.getParams().get("request").getAsString()){
+            case "shuffle":
+                shuffleCards();
                 break;
         }
     }

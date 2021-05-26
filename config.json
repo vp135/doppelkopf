@@ -8,7 +8,7 @@
   "angleVariation": 0,
   "distanceFromCenter": 70,
   "distanceVariation": 0,
-  "redrawCards": true,
+  "redrawCards": false,
   "skat": {
     "pflichtRamsch": true,
     "beginnRamsch": 1,
