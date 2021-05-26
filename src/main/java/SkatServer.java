@@ -177,7 +177,7 @@ public class SkatServer extends BaseServer{
     @Override
     public void endIt() {
         super.endIt();
-        SkatEndDialog e = new SkatEndDialog(selectedGame, players, stichList, getSkatPoints());
+        SkatEndDialog e = new SkatEndDialog(selectedGame, players, stichList, skat);
         send2All(new GameEnd(e.getReString1(), e.getKontraString1(),
                 e.getPlayer1String(), e.getPlayer2String(), e.getPlayer3String(),
                 e.getRemaining()));
@@ -211,36 +211,6 @@ public class SkatServer extends BaseServer{
         currentPlayer = player;
         currentStichNumber =0;
         send2All(new Wait4Player(players.stream().filter(p -> p.getNumber()==player).findAny().get().getName()));
-    }
-
-
-    private int getSkatPoints() {
-        int result = 0;
-        for(BaseCard c : skat) {
-            switch (c.value) {
-                case Statics.ZEHN: {
-                    result += 10;
-                    break;
-                }
-                case Statics.BUBE: {
-                    result += 2;
-                    break;
-                }
-                case Statics.DAME: {
-                    result += 3;
-                    break;
-                }
-                case Statics.KOENIG: {
-                    result += 4;
-                    break;
-                }
-                case Statics.ASS: {
-                    result += 11;
-                    break;
-                }
-            }
-        }
-        return result;
     }
 
     private void handleGameSelected(RequestObject message) {
@@ -416,7 +386,7 @@ public class SkatServer extends BaseServer{
                 }
             } else {
                 send2All(new DisplayMessage(
-                        String.format("%s sagt %s",
+                        String.format("%s: %s",
                                 message.getParams().get("player").getAsString(),
                                 "Ja")));
                 if (p == hoeren) {
@@ -433,8 +403,8 @@ public class SkatServer extends BaseServer{
         }
     }
 
-
-    private void shuffleCards() {
+    @Override
+    public void shuffleCards() {
         for (Player player1 : players) {
             send2All(new UpdateUserPanel(player1.getName(), ""));
         }

@@ -1,4 +1,6 @@
+import base.BaseCard;
 import base.Player;
+import base.Statics;
 import base.skat.Stich;
 import base.skat.messages.GameSelected;
 
@@ -23,10 +25,11 @@ public class SkatEndDialog {
     private int remaining = 120;
     private final GameSelected.GAMES game;
 
-    public SkatEndDialog(GameSelected.GAMES game, List<Player> players, List<Stich> stichList, int skatPoints){
+    public SkatEndDialog(GameSelected.GAMES game, List<Player> players, List<Stich> stichList, List<BaseCard> skat){
         this.game = game;
         this.players = players;
         this.stichList = stichList;
+        int skatPoints = getSkatPoints(skat);
         calcPoints();
         StringBuilder[] playerBuilder = new StringBuilder[players.size()];
         for(int i = 0; i<players.size(); i++){
@@ -51,7 +54,9 @@ public class SkatEndDialog {
                 if(player.getNumber()==stichList.get(stichList.size()-1).getWinner()){
                     player.addPoints(skatPoints);
                     remaining -= skatPoints;
-                    playerBuilder[player.getNumber()].append(skatPoints).append("(Skat)");
+                    playerBuilder[player.getNumber()].append(skatPoints).append("(");
+                    playerBuilder[player.getNumber()].append(skat.get(0).toString()).append("|");
+                    playerBuilder[player.getNumber()].append(skat.get(1).toString()).append(")");
                 }
                 else {
                     playerBuilder[player.getNumber()].append("<br>");
@@ -63,7 +68,9 @@ public class SkatEndDialog {
                 if(player.isRe()){
                     remaining-=skatPoints;
                     player.addPoints(skatPoints);
-                    playerBuilder[player.getNumber()].append(skatPoints).append("(Skat)");
+                    playerBuilder[player.getNumber()].append(skatPoints).append("(");
+                    playerBuilder[player.getNumber()].append(skat.get(0).toString()).append("|");
+                    playerBuilder[player.getNumber()].append(skat.get(1).toString()).append(")");
                 }
                 else{
                     playerBuilder[player.getNumber()].append("<br>");
@@ -208,5 +215,34 @@ public class SkatEndDialog {
             d.setLocationRelativeTo(frame);
             d.setVisible(true);
         }
+    }
+
+    private static int getSkatPoints(List<BaseCard> skat){
+        int result = 0;
+        for(BaseCard c : skat) {
+            switch (c.value) {
+                case Statics.ZEHN: {
+                    result += 10;
+                    break;
+                }
+                case Statics.BUBE: {
+                    result += 2;
+                    break;
+                }
+                case Statics.DAME: {
+                    result += 3;
+                    break;
+                }
+                case Statics.KOENIG: {
+                    result += 4;
+                    break;
+                }
+                case Statics.ASS: {
+                    result += 11;
+                    break;
+                }
+            }
+        }
+        return result;
     }
 }

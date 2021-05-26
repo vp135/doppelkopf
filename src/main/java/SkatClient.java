@@ -44,6 +44,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     private Map<BaseCard,JLabel> ouvertLabelMap;
     private Map<JLabel,BaseCard> ouvertCardMap;
     private JPanel ouvertPanel;
+    private boolean selectGame;
 
 
     public SkatClient(ComClient handler, List<String> players, Configuration c) {
@@ -140,10 +141,6 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                     drawCard2Position(tableStich.get(i), i, table.getHeight(), table.getWidth());
                 }
             });
-            if (selectCards) {
-                cards2Send.clear();
-                cardLabels2Send.clear();
-            }
         }
     }
 
@@ -162,7 +159,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                     hand.remove(card);
                     label.setVisible(false);
                     handler.queueOutMessage(new PutCard(players.indexOf(c.name), card.farbe, card.value));
-                    serverMessageLabel.setText("");
+                    //serverMessageLabel.setText("");
                     if (c.redrawCards) {
                         createCardButtons(hand);
                     }
@@ -196,7 +193,14 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     }
 
     private void setAnsageButtonState() {
-        button_ok.setEnabled(hand.size()==10 && selectedGame!= GameSelected.GAMES.Ramsch);
+        if(hand.size()==10){
+            if(selectedGame==GameSelected.GAMES.Ramsch){
+                button_ok.setEnabled(!selectGame);
+            }
+            else{
+                button_ok.setEnabled(true);
+            }
+        }
     }
 
     @Override
@@ -364,6 +368,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
 
     private void handleSelectGame() {
         handSpiel = true;
+        selectGame = true;
         middlePanel.removeAll();
         buttonsPanel = new JPanel(new GridLayout(5, 2));
         button_karo = new JButton("Karo");
@@ -440,6 +445,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
             middlePanel.removeAll();
             middlePanel.repaint();
             selectCards = false;
+            selectGame = false;
         });
 
         buttonsPanel.add(button_ok);
@@ -617,6 +623,8 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         selectCards = false;
         wait4Player = false;
         hand = new ArrayList<>();
+        serverMessages = new ArrayList<>();
+        displayAllServerMessages();
         handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.name)));
     }
 

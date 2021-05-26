@@ -31,20 +31,24 @@ public abstract class BaseClient implements IInputputHandler {
     protected JPanel controlPanel;
     protected JPanel hud;
     protected JPanel bottomPanel;
-    protected JLabel serverMessageLabel;
+    //protected JLabel serverMessageLabel;
+    protected JScrollPane textAreaScrollPane;
+    protected JTextArea serverMessageLabel;
     protected JLabel gameMessageLabel;
     protected JLabel userLabel_1;
     protected JLabel userLabel_2;
     protected JLabel userLabel_3;
     protected JLabel userLabel_4;
     protected JLabel tableLable;
-    protected List<JLabel> cardLabels2Send = new ArrayList<>();
+    //protected List<JLabel> cardLabels2Send = new ArrayList<>();
     protected Map<BaseCard,JLabel> labelMap;
     protected Map<JLabel,BaseCard> cardMap;
     protected ArrayList<JButton> buttonList;
     protected Graphics playArea;
 
     protected JButton sendCardsButton;
+
+    protected List<String> serverMessages;
 
 
     //Cards
@@ -65,7 +69,6 @@ public abstract class BaseClient implements IInputputHandler {
     protected HashMap<Integer, BaseCard> tableStich = new HashMap<>();
     protected boolean wait4Player = false;
     protected boolean selectCards = false;
-    protected List<BaseCard> cards2Send = new ArrayList<>();
     protected List<BaseCard> hand;
 
     protected BaseCard[] exchangeCards;
@@ -90,8 +93,10 @@ public abstract class BaseClient implements IInputputHandler {
         this.handler = handler;
         this.players = players;
         this.c = c;
+        serverMessages = new ArrayList<>();
         setGameSpecifics();
         setCardClickAdapter();
+
     }
 
     @Override
@@ -100,7 +105,8 @@ public abstract class BaseClient implements IInputputHandler {
         try {
             switch (input.getCommand()) {
                 case DisplayMessage.COMMAND:
-                    serverMessageLabel.setText(input.getParams().get("message").getAsString());
+                    serverMessages.add(input.getParams().get("message").getAsString());
+                    displayAllServerMessages();
                     break;
                 case SetAdmin.COMMAND:
                     isAdmin = input.getParams().get("isAdmin").getAsBoolean();
@@ -110,6 +116,14 @@ public abstract class BaseClient implements IInputputHandler {
         }catch (Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    protected void displayAllServerMessages(){
+        StringBuilder builder = new StringBuilder();
+        for (int i = serverMessages.size()-1;i>-1;i--){
+            builder.append(serverMessages.get(i)).append("\n");
+        }
+        serverMessageLabel.setText(builder.toString());
     }
 
     private void setAdminButton() {
@@ -177,7 +191,9 @@ public abstract class BaseClient implements IInputputHandler {
         mainFrame.setVisible(true);
         mainFrame.setSize(size);
 
-        serverMessageLabel = new JLabel("");
+        //serverMessageLabel = new JLabel("");
+
+        serverMessageLabel = new JTextArea("");
         gameMessageLabel = new JLabel("");
         layeredPane = new JLayeredPane();
         setComponentSizes(layeredPane,new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
@@ -310,7 +326,9 @@ public abstract class BaseClient implements IInputputHandler {
      */
     protected JPanel createMessageLabelPanel(){
         JPanel panel = new JPanel(new GridLayout(2, 1));
-        panel.add(serverMessageLabel);
+        serverMessageLabel.setLineWrap(true);
+        textAreaScrollPane = new JScrollPane(serverMessageLabel);
+        panel.add(textAreaScrollPane);
         panel.add(gameMessageLabel);
         return panel;
     }
@@ -377,11 +395,13 @@ public abstract class BaseClient implements IInputputHandler {
         JButton button_abortGame = new JButton("Spiel abbrechen");
         JButton button1_test = new JButton("armut austausch");
         JButton button2_test = new JButton("skat austausch");
+        JButton button3_test = new JButton("shuffle");
 
         adminMainPanel.add(button_abortGame);
         adminMainPanel.add(new JLabel(""));
         adminMainPanel.add(button1_test);
         adminMainPanel.add(button2_test);
+        adminMainPanel.add(button3_test);
         adminFrame.add(adminMainPanel);
         adminFrame.pack();
         adminFrame.setVisible(true);
@@ -398,6 +418,10 @@ public abstract class BaseClient implements IInputputHandler {
 
         button2_test.addActionListener(e ->{
             handleInput(new RamschSkat());
+        });
+
+        button3_test.addActionListener(e -> {
+            handler.queueOutMessage(new AdminRequest("shuffle"));
         });
     }
 
@@ -528,7 +552,7 @@ public abstract class BaseClient implements IInputputHandler {
         createCardButtons(hand);
         setGameSpecificButtons(hand);
         tableStich = new HashMap<>();
-        serverMessageLabel.setText("");
+        //serverMessageLabel.setText("");
         gameMessageLabel.setText("");
         bottomPanel.revalidate();
         bottomPanel.repaint();
@@ -553,9 +577,12 @@ public abstract class BaseClient implements IInputputHandler {
         getCardLabel4Hand(card);
     }
 
-    protected void moveCard2Exchange(BaseCard card) {
-        //TODO: this should not work when sending armut cards
-        if(hand.size()>10) {
+    protected  void moveCard2Exchange(BaseCard card){
+        moveCard2Exchange(card,false);
+    }
+
+    protected void moveCard2Exchange(BaseCard card, boolean force) {
+        if(hand.size()>10 || force) {
             for (int i = 0; i < exchangeCards.length; i++) {
                 try {
                     if (exchangeCards[i] == null) {

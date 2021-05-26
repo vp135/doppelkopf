@@ -140,7 +140,6 @@ public class DokoServer extends BaseServer{
                             requestObject);
                     players.get(armutplayer).setRe(true, "ist reich");
                     players2Ask = new ArrayList<>();
-                    runGame(beginner);
                 }
                 break;
             }
@@ -186,6 +185,9 @@ public class DokoServer extends BaseServer{
                 }
                 break;
             }
+            case CardsReturned.COMMAND:
+                runGame(beginner);
+                break;
         }
     }
 
@@ -429,8 +431,8 @@ public class DokoServer extends BaseServer{
         }
     }
 
-
-    private void shuffleCards() {
+    @Override
+    protected void shuffleCards() {
         for (Player player1 : players) {
             send2All(new UpdateUserPanel(player1.getName(), ""));
         }
