@@ -182,7 +182,7 @@ public abstract class BaseClient implements IInputputHandler {
      */
     private void createMainFrame(int state, int posX, int posY, Dimension size) {
         log.info("creating UI");
-        mainFrame = new JFrame("Doppelkopf/Skat Version "+ Statics.VERSION + " " + c.name );
+        mainFrame = new JFrame("Doppelkopf/Skat Version "+ Statics.VERSION + " " + c.connection.name );
         mainPanel =new JPanel(new GridBagLayout());
         mainFrame.setExtendedState(state);
         mainFrame.setLocation(posX, posY);
@@ -194,6 +194,7 @@ public abstract class BaseClient implements IInputputHandler {
         //serverMessageLabel = new JLabel("");
 
         serverMessageLabel = new JTextArea("");
+        serverMessageLabel.setBorder(null);
         gameMessageLabel = new JLabel("");
         layeredPane = new JLayeredPane();
         setComponentSizes(layeredPane,new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
@@ -300,7 +301,7 @@ public abstract class BaseClient implements IInputputHandler {
         JPanel tableButtons = new JPanel(new GridLayout(1, 3));
         personalButtons = new JPanel(new GridLayout(3, 1));
         JButton button_lastStich = new JButton("letzter Stich");
-        button_lastStich.addActionListener(e -> handler.queueOutMessage(new CurrentStich(new HashMap<>(), players.indexOf(c.name), true)));
+        button_lastStich.addActionListener(e -> handler.queueOutMessage(new CurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
         JButton button_clearTable = new JButton("Tisch leeren");
         button_clearTable.addActionListener(e -> clearPlayArea());
         personalButtons.add(button_lastStich);
@@ -328,6 +329,9 @@ public abstract class BaseClient implements IInputputHandler {
         JPanel panel = new JPanel(new GridLayout(2, 1));
         serverMessageLabel.setLineWrap(true);
         textAreaScrollPane = new JScrollPane(serverMessageLabel);
+        textAreaScrollPane.setBorder(null);
+        textAreaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        textAreaScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,Integer.MAX_VALUE));
         panel.add(textAreaScrollPane);
         panel.add(gameMessageLabel);
         return panel;
@@ -352,9 +356,9 @@ public abstract class BaseClient implements IInputputHandler {
      */
     protected void drawCard2Position(BaseCard card, int pos, int canvasHeight, int canvasWidth){
         AffineTransform at;
-        int distFromCenter = cardSize*c.distanceFromCenter/100;
-        int theta = c.angleVariation - random.nextInt(c.angleVariation*2 + 1);
-        int distVar = distFromCenter +  c.distanceVariation - random.nextInt(c.distanceVariation*2 + 1);
+        int distFromCenter = cardSize*c.ui.distanceFromCenter/100;
+        int theta = c.ui.angleVariation - random.nextInt(c.ui.angleVariation*2 + 1);
+        int distVar = distFromCenter +  c.ui.distanceVariation - random.nextInt(c.ui.distanceVariation*2 + 1);
         BufferedImage img = cardImages.get(card.farbe+card.value);
         int halfHeight = canvasHeight/2;
         int halfWidth = canvasWidth/2;
@@ -363,19 +367,19 @@ public abstract class BaseClient implements IInputputHandler {
         switch (pos){
             case 0:
                 anchorY= halfHeight + distVar;
-                theta += c.angle13;
+                theta += c.ui.angle13;
                 break;
             case 1:
                 anchorX = halfWidth - distVar;
-                theta += c.angle24;
+                theta += c.ui.angle24;
                 break;
             case 2:
                 anchorY = halfHeight - distVar;
-                theta += c.angle13;
+                theta += c.ui.angle13;
                 break;
             case 3:
                 anchorX = halfWidth + distVar;
-                theta += c.angle24;
+                theta += c.ui.angle24;
                 break;
         }
         at = AffineTransform.getRotateInstance(Math.toRadians(theta),anchorX,anchorY);
@@ -559,7 +563,7 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
     protected void handleWait4Player(RequestObject message) {
-        if (message.getParams().get("player").getAsString().equals(c.name)) {
+        if (message.getParams().get("player").getAsString().equals(c.connection.name)) {
             gameMessageLabel.setText("Du bist am Zug");
             wait4Player = true;
         } else {

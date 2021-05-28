@@ -161,7 +161,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         controlPanel.removeAll();
         JButton vorbehalt = new JButton("OK");
         vorbehalt.addActionListener(e ->{
-            handler.queueOutMessage(new GameSelected(players.indexOf(c.name),selectedGame));
+            handler.queueOutMessage(new GameSelected(players.indexOf(c.connection.name),selectedGame));
             controlPanel.setVisible(false);
             controlPanel.removeAll();
         });
@@ -229,9 +229,9 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                         wait4Player = false;
                         hand.remove(card);
                         label.setVisible(false);
-                        handler.queueOutMessage(new PutCard(players.indexOf(c.name), card.farbe, card.value));
+                        handler.queueOutMessage(new PutCard(players.indexOf(c.connection.name), card.farbe, card.value));
                         //serverMessageLabel.setText("");
-                        if (c.redrawCards) {
+                        if (c.ui.redrawCards) {
                             createCardButtons(hand);
                         }
                     }
@@ -300,7 +300,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 break;
             }
             case SelectGame.COMMAND: {
-                controlPanel.setVisible(players.indexOf(c.name) != spectator);
+                controlPanel.setVisible(players.indexOf(c.connection.name) != spectator);
                 break;
             }
             case GameType.COMMAND: {
@@ -336,7 +336,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     // handle messages
 
     private void handlePutCard(RequestObject object){
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList= new ArrayList<>();
         int i = ownNumber;
 
@@ -380,7 +380,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     private void handleAnnounceSpectator(RequestObject message) {
         spectator = message.getParams().get("player").getAsInt();
         aufspieler = message.getParams().get("starter").getAsInt();
-        if(players.size()>4 && players.get(spectator).equals(c.name)) {
+        if(players.size()>4 && players.get(spectator).equals(c.connection.name)) {
             handler.queueOutMessage(new DisplayMessage("Du bist jetzt Zuschauer"));
             hand.clear();
             clearPlayArea();
@@ -396,9 +396,9 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     private void handleGetArmut() {
         if (JOptionPane.showConfirmDialog(mainFrame, "Armut mitnehmen?",
                 "Armut mitnehmen", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            handler.queueOutMessage(new GetArmut(players.indexOf(c.name), true));
+            handler.queueOutMessage(new GetArmut(players.indexOf(c.connection.name), true));
         } else {
-            handler.queueOutMessage(new GetArmut(players.indexOf(c.name), false));
+            handler.queueOutMessage(new GetArmut(players.indexOf(c.connection.name), false));
         }
     }
 
@@ -489,7 +489,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         wait4Player = false;
         hand = new ArrayList<>();
         serverMessages = new ArrayList<>();
-        handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.name)));
+        handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.connection.name)));
     }
 
     @Override
@@ -510,7 +510,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         JLabel cardPos2 = new JLabel();
         JLabel cardPos3 = new JLabel();
         JLabel cardPos4 = new JLabel();
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList= new ArrayList<>();
         int i = ownNumber;
         while (tmpList.size()<4){
@@ -575,7 +575,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
 
     private void handleUserPanelUpdate(RequestObject object) {
 
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList= new ArrayList<>();
         int i = ownNumber;
         while (tmpList.size()<4){
@@ -612,7 +612,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 break;
             }
             case 0:{
-                if(object.getParams().get("player").getAsString().equals(c.name)){
+                if(object.getParams().get("player").getAsString().equals(c.connection.name)){
                     userLabel_4.setText(createUserLabelString(
                             object.getParams().get("text").getAsString(),
                             "Du",

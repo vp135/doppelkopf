@@ -103,7 +103,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
             sortGrand.setBackground(Color.GREEN);
         });
         pass.addActionListener(e -> {
-            handler.queueOutMessage(new Passen(c.name));
+            handler.queueOutMessage(new Passen(c.connection.name));
             nextValue.setVisible(false);
             pass.setVisible(false);
         });
@@ -158,9 +158,9 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                     wait4Player = false;
                     hand.remove(card);
                     label.setVisible(false);
-                    handler.queueOutMessage(new PutCard(players.indexOf(c.name), card.farbe, card.value));
+                    handler.queueOutMessage(new PutCard(players.indexOf(c.connection.name), card.farbe, card.value));
                     //serverMessageLabel.setText("");
-                    if (c.redrawCards) {
+                    if (c.ui.redrawCards) {
                         createCardButtons(hand);
                     }
                 }
@@ -267,14 +267,14 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         JButton ramsch = new JButton("Ramsch");
 
         gh.addActionListener(e ->{
-            handler.queueOutMessage(new GrandHand(c.name,true));
+            handler.queueOutMessage(new GrandHand(c.connection.name,true));
             middlePanel.removeAll();
             middlePanel.revalidate();
             middlePanel.repaint();
             gameMessageLabel.setText("");
         });
         ramsch.addActionListener(e ->{
-            handler.queueOutMessage(new GrandHand(c.name,false));
+            handler.queueOutMessage(new GrandHand(c.connection.name,false));
             middlePanel.removeAll();
             middlePanel.revalidate();
             middlePanel.repaint();
@@ -337,7 +337,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         JButton button_schieben = new JButton("Schieben");
 
         button_ok.addActionListener(e -> {
-            handler.queueOutMessage(new Skat(c.name, Arrays.asList(exchangeCards)));
+            handler.queueOutMessage(new Skat(c.connection.name, Arrays.asList(exchangeCards)));
             middlePanel.removeAll();
             middlePanel.repaint();
             selectCards = false;
@@ -348,11 +348,11 @@ public class SkatClient extends BaseClient implements IInputputHandler {
             middlePanel.remove(button_schieben);
             selectCards = true;
             button_ok.setVisible(true);
-            handler.queueOutMessage(new GetSkat(c.name));
+            handler.queueOutMessage(new GetSkat(c.connection.name));
         });
 
         button_schieben.addActionListener(e -> {
-            handler.queueOutMessage(new Schieben(c.name));
+            handler.queueOutMessage(new Schieben(c.connection.name));
             middlePanel.removeAll();
             middlePanel.revalidate();
             middlePanel.repaint();
@@ -439,9 +439,9 @@ public class SkatClient extends BaseClient implements IInputputHandler {
 
         button_ok.addActionListener(e -> {
             if (!handSpiel) {
-                handler.queueOutMessage(new Skat(c.name, Arrays.asList(exchangeCards)));
+                handler.queueOutMessage(new Skat(c.connection.name, Arrays.asList(exchangeCards)));
             }
-            handler.queueOutMessage(new GameSelected(c.name, selectedGame, handSpiel, ouvert));
+            handler.queueOutMessage(new GameSelected(c.connection.name, selectedGame, handSpiel, ouvert));
             middlePanel.removeAll();
             middlePanel.repaint();
             selectCards = false;
@@ -452,7 +452,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
 
         button_skat = new JButton("Skat aufnehmen");
         button_skat.addActionListener(e -> {
-            handler.queueOutMessage(new GetSkat(c.name));
+            handler.queueOutMessage(new GetSkat(c.connection.name));
             selectCards = true;
             handSpiel = false;
             setOuvertButtonState();
@@ -526,14 +526,14 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     }
 
     ActionListener sagen = e -> {
-        Reizen reizen = new Reizen(c.name, Integer.parseInt(nextValue.getText()), true);
+        Reizen reizen = new Reizen(c.connection.name, Integer.parseInt(nextValue.getText()), true);
         handler.queueOutMessage(reizen);
         nextValue.setVisible(false);
         pass.setVisible(false);
     };
 
     ActionListener hoeren = e -> {
-        Reizen reizen = new Reizen(c.name, 0, false);
+        Reizen reizen = new Reizen(c.connection.name, 0, false);
         handler.queueOutMessage(reizen);
         nextValue.setVisible(false);
         pass.setVisible(false);
@@ -542,7 +542,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     private void handleAnnounceSpectator(RequestObject message) {
         spectator = message.getParams().get("player").getAsInt();
         aufspieler = message.getParams().get("starter").getAsInt();
-        if (players.size() > 3 && players.get(spectator).equals(c.name)) {
+        if (players.size() > 3 && players.get(spectator).equals(c.connection.name)) {
             handler.queueOutMessage(new DisplayMessage("Du bist jetzt Zuschauer"));
             hand.clear();
             clearPlayArea();
@@ -551,7 +551,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     }
 
     private void handleUserPanelUpdate(RequestObject message) {
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList = new ArrayList<>();
         int i = ownNumber;
         while (tmpList.size() < 4) {
@@ -588,7 +588,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                 break;
             }
             case 0: {
-                if (message.getParams().get("player").getAsString().equals(c.name)) {
+                if (message.getParams().get("player").getAsString().equals(c.connection.name)) {
                     userLabel_4.setText(createUserLabelString(
                             message.getParams().get("text").getAsString(),
                             "Du",
@@ -625,7 +625,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         hand = new ArrayList<>();
         serverMessages = new ArrayList<>();
         displayAllServerMessages();
-        handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.name)));
+        handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.connection.name)));
     }
 
 
@@ -639,7 +639,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         JLabel cardPos2 = new JLabel();
         JLabel cardPos3 = new JLabel();
         JLabel cardPos4 = new JLabel();
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList = new ArrayList<>();
         int i = ownNumber;
         while (tmpList.size() < 3) {
@@ -702,7 +702,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     }
 
     private void handlePutCard(RequestObject message) {
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList = new ArrayList<>();
         int i = ownNumber;
 

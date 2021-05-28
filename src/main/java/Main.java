@@ -39,29 +39,29 @@ public class Main implements IInputputHandler{
     }
 
 
-    private static void modifyUIManager() {
-        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+    private void modifyUIManager() {
+        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("Label.background",Color.BLACK);
         UIManager.put("Label.foreground",Color.WHITE);
-        UIManager.put("Button.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("Button.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("Button.background", Color.BLACK);
         UIManager.put("Button.foreground", Color.WHITE);
-        UIManager.put("TextField.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("TextField.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("TextField.background",new Color(70,70,70));
         UIManager.put("TextField.foreground",Color.WHITE);
         UIManager.put("Panel.background",Color.BLACK);
-        UIManager.put("TextArea.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("TextArea.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("TextArea.background",Color.BLACK);
         UIManager.put("TextArea.foreground",Color.WHITE);
-        UIManager.put("CheckBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("CheckBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("CheckBox.background",Color.BLACK);
         UIManager.put("CheckBox.foreground",Color.WHITE);
-        UIManager.put("ComboBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("ComboBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("ComboBox.background",Color.BLACK);
         UIManager.put("ComboBox.foreground",Color.WHITE);
         UIManager.put("OptionPane.messageForeground",Color.WHITE);
         //This shit does not work for some fucking reason
-        UIManager.put("List.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("List.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("List.background",Color.BLACK);
         UIManager.put("List.foreground",Color.WHITE);
         UIManager.put("List.selectionBackground",Color.GREEN);
@@ -72,7 +72,6 @@ public class Main implements IInputputHandler{
     }
 
     public Main(){
-        modifyUIManager();
         createOrJoin();
         createRawCardMaps();
     }
@@ -80,6 +79,7 @@ public class Main implements IInputputHandler{
     public void createOrJoin() {
         c = Configuration.fromFile();
         log.setLoglevel(c.logLevel);
+        modifyUIManager();
         createJoinFrame = new JFrame();
         JPanel panel = new JPanel(new GridLayout(1, 2));
         JPanel inputs = new JPanel(new GridLayout(5, 2));
@@ -127,7 +127,7 @@ public class Main implements IInputputHandler{
         //This part is only here because the UIManager does not want to accept my settings for JList
         playerList.setBackground(Color.BLACK);
         playerList.setForeground(Color.WHITE);
-        playerList.setFont(playerList.getFont().deriveFont(20f));
+        playerList.setFont(playerList.getFont().deriveFont((float)c.ui.textsize));
 
 
         rightPanel.add(playerList);
@@ -143,15 +143,15 @@ public class Main implements IInputputHandler{
         });
 
         if (c != null) {
-            playername.setText(c.name);
-            hostname.setText(c.server);
-            port.setText(String.valueOf(c.port));
-            angle24Field.setText(String.valueOf(c.angle24));
-            angle13Field.setText(String.valueOf(c.angle13));
-            angleVariationField.setText(String.valueOf(c.angleVariation));
-            distanceField.setText(String.valueOf(c.distanceFromCenter));
-            distanceVariationField.setText(String.valueOf(c.distanceVariation));
-            repositionCards.setSelected(c.redrawCards);
+            playername.setText(c.connection.name);
+            hostname.setText(c.connection.server);
+            port.setText(String.valueOf(c.connection.port));
+            angle24Field.setText(String.valueOf(c.ui.angle24));
+            angle13Field.setText(String.valueOf(c.ui.angle13));
+            angleVariationField.setText(String.valueOf(c.ui.angleVariation));
+            distanceField.setText(String.valueOf(c.ui.distanceFromCenter));
+            distanceVariationField.setText(String.valueOf(c.ui.distanceVariation));
+            repositionCards.setSelected(c.ui.redrawCards);
 
         }
 
@@ -247,7 +247,7 @@ public class Main implements IInputputHandler{
                 server = new SkatServer(server);
                 break;
         }
-        server.setAdmin(c.name);
+        server.setAdmin(c.connection.name);
         server.startGame();
     }
 
@@ -265,15 +265,15 @@ public class Main implements IInputputHandler{
                                 JTextField angleVariationField, JTextField distanceField,
                                 JTextField distanceVariationField, JCheckBox repositionCards,
                                 JTextField hostname, JTextField port, boolean save) {
-        c.name = name;
-        c.server = hostname.getText();
-        c.port = Integer.parseInt(port.getText());
-        c.angle24 = Integer.parseInt(angle24Field.getText());
-        c.angle13 = Integer.parseInt(angle13Field.getText());
-        c.angleVariation = Integer.parseInt(angleVariationField.getText());
-        c.distanceFromCenter = Integer.parseInt(distanceField.getText());
-        c.distanceVariation = Integer.parseInt(distanceVariationField.getText());
-        c.redrawCards = repositionCards.isSelected();
+        c.connection.name = name;
+        c.connection.server = hostname.getText();
+        c.connection.port = Integer.parseInt(port.getText());
+        c.ui.angle24 = Integer.parseInt(angle24Field.getText());
+        c.ui.angle13 = Integer.parseInt(angle13Field.getText());
+        c.ui.angleVariation = Integer.parseInt(angleVariationField.getText());
+        c.ui.distanceFromCenter = Integer.parseInt(distanceField.getText());
+        c.ui.distanceVariation = Integer.parseInt(distanceVariationField.getText());
+        c.ui.redrawCards = repositionCards.isSelected();
         if(save) {
             c.saveConfig();
         }

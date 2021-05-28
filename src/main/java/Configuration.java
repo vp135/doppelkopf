@@ -10,19 +10,14 @@ import java.util.HashMap;
 
 public class Configuration {
 
-    public String name;
-    public String server;
-    public int logLevel=1;
-    public int port;
-    public int angle24=90;
-    public int angle13=0;
-    public int angleVariation =15;
-    public int distanceFromCenter = 50;
-    public int distanceVariation = 10;
-    public boolean redrawCards = false;
 
+
+
+    public ConConfig connection = new ConConfig();
+    public UIConfig ui = new UIConfig();
     public SkatConfig skat = new SkatConfig();
     public DokoConfig doko = new DokoConfig();
+    public int logLevel=1;
 
 
     public Configuration() {
@@ -30,9 +25,7 @@ public class Configuration {
     }
 
     public Configuration(String name, String server, int port) {
-        this.name = name;
-        this.server = server;
-        this.port = port;
+        connection = new ConConfig(name,server,port);
     }
 
     public static Configuration fromFile() {

@@ -1,14 +1,18 @@
 {
-  "name": "Volker",
-  "server": "127.0.0.1",
-  "logLevel": 4,
-  "port": 5000,
-  "angle24": 0,
-  "angle13": 0,
-  "angleVariation": 0,
-  "distanceFromCenter": 70,
-  "distanceVariation": 0,
-  "redrawCards": false,
+  "connection": {
+    "name": "Volker",
+    "server": "127.0.0.1",
+    "port": 5000
+  },
+  "ui": {
+    "angle24": 0,
+    "angle13": 0,
+    "angleVariation": 0,
+    "distanceFromCenter": 70,
+    "distanceVariation": 0,
+    "textsize": 18,
+    "redrawCards": true
+  },
   "skat": {
     "pflichtRamsch": true,
     "beginnRamsch": 1,
@@ -25,5 +29,6 @@
       "zweiteHerz10": true,
       "schwein": true
     }
-  }
+  },
+  "logLevel": 4
 }
