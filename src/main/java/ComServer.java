@@ -150,7 +150,7 @@ public class ComServer {
         }
     }
 
-    public void setServer(BaseServer server) {
+    public void setServer(IServerMessageHandler server) {
         this.server = server;
     }
 

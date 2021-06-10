@@ -12,10 +12,8 @@ import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 
 public class Main implements IInputputHandler{
@@ -40,32 +38,40 @@ public class Main implements IInputputHandler{
         m = new Main();
     }
 
-    private static void modifyUIManager() {
-        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+
+    private void modifyUIManager() {
+        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("Label.background",Color.BLACK);
         UIManager.put("Label.foreground",Color.WHITE);
-        UIManager.put("Button.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("Button.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("Button.background", Color.BLACK);
         UIManager.put("Button.foreground", Color.WHITE);
-        UIManager.put("TextField.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("TextField.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("TextField.background",new Color(70,70,70));
         UIManager.put("TextField.foreground",Color.WHITE);
         UIManager.put("Panel.background",Color.BLACK);
-        UIManager.put("List.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
-        UIManager.put("List.background",Color.BLACK);
-        UIManager.put("List.foreground",Color.WHITE);
-        UIManager.put("TextArea.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("TextArea.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("TextArea.background",Color.BLACK);
         UIManager.put("TextArea.foreground",Color.WHITE);
-        UIManager.put("CheckBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, 15)));
+        UIManager.put("CheckBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
         UIManager.put("CheckBox.background",Color.BLACK);
         UIManager.put("CheckBox.foreground",Color.WHITE);
+        UIManager.put("ComboBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("ComboBox.background",Color.BLACK);
+        UIManager.put("ComboBox.foreground",Color.WHITE);
         UIManager.put("OptionPane.messageForeground",Color.WHITE);
+        //This shit does not work for some fucking reason
+        UIManager.put("List.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("List.background",Color.BLACK);
+        UIManager.put("List.foreground",Color.WHITE);
+        UIManager.put("List.selectionBackground",Color.GREEN);
+        UIManager.put("List.selectionForeground",Color.BLUE);
+        //
+
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
     }
 
     public Main(){
-        modifyUIManager();
         createOrJoin();
         createRawCardMaps();
     }
@@ -73,6 +79,7 @@ public class Main implements IInputputHandler{
     public void createOrJoin() {
         c = Configuration.fromFile();
         log.setLoglevel(c.logLevel);
+        modifyUIManager();
         createJoinFrame = new JFrame();
         JPanel panel = new JPanel(new GridLayout(1, 2));
         JPanel inputs = new JPanel(new GridLayout(5, 2));
@@ -101,7 +108,6 @@ public class Main implements IInputputHandler{
 
 
         panel.add(inputs);
-        panel.add(playerList);
         inputs.add(new JLabel("Spielername"));
         JTextField playername = new JTextField();
         inputs.add(playername);
@@ -118,6 +124,12 @@ public class Main implements IInputputHandler{
         gameList = new JComboBox<>();
         gameList.setModel(new DefaultComboBoxModel<>(Statics.game.values()));
 
+        //This part is only here because the UIManager does not want to accept my settings for JList
+        playerList.setBackground(Color.BLACK);
+        playerList.setForeground(Color.WHITE);
+        playerList.setFont(playerList.getFont().deriveFont((float)c.ui.textsize));
+
+
         rightPanel.add(playerList);
         rightPanel.add(userOptions);
         panel.add(rightPanel);
@@ -131,15 +143,15 @@ public class Main implements IInputputHandler{
         });
 
         if (c != null) {
-            playername.setText(c.name);
-            hostname.setText(c.server);
-            port.setText(String.valueOf(c.port));
-            angle24Field.setText(String.valueOf(c.angle24));
-            angle13Field.setText(String.valueOf(c.angle13));
-            angleVariationField.setText(String.valueOf(c.angleVariation));
-            distanceField.setText(String.valueOf(c.distanceFromCenter));
-            distanceVariationField.setText(String.valueOf(c.distanceVariation));
-            repositionCards.setSelected(c.redrawCards);
+            playername.setText(c.connection.name);
+            hostname.setText(c.connection.server);
+            port.setText(String.valueOf(c.connection.port));
+            angle24Field.setText(String.valueOf(c.ui.angle24));
+            angle13Field.setText(String.valueOf(c.ui.angle13));
+            angleVariationField.setText(String.valueOf(c.ui.angleVariation));
+            distanceField.setText(String.valueOf(c.ui.distanceFromCenter));
+            distanceVariationField.setText(String.valueOf(c.ui.distanceVariation));
+            repositionCards.setSelected(c.ui.redrawCards);
 
         }
 
@@ -147,21 +159,26 @@ public class Main implements IInputputHandler{
             name = playername.getText();
             if (!playername.getText().trim().equals("") && !port.getText().trim().equals("")) {
                 server = new BaseServer(c, new ComServer(Integer.parseInt(port.getText())));
-                create.setEnabled(false);
-                join.setEnabled(false);
-                while(!server.comServer.listening) {
+                int i = 0;
+                int nmbRetries = 15;
+                while(!server.comServer.listening && i<nmbRetries) {
                     log.info("not listening");
                     try {
-                        Thread.sleep(100);
+                        i++;
+                        Thread.sleep(200);
                     } catch (InterruptedException interruptedException) {
                         log.error(interruptedException.toString());
                     }
                 }
-                comClient = new ComClient(hostname.getText(),Integer.parseInt(port.getText()), this,name);
-                comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
-                comClient.start();
-                inputs.add(gameList);
-                inputs.add(start);
+                if(server.comServer.listening) {
+                    create.setEnabled(false);
+                    join.setEnabled(false);
+                    comClient = new ComClient(hostname.getText(), Integer.parseInt(port.getText()), this, name);
+                    comClient.queueOutMessage(new GetVersion(name, Statics.VERSION));
+                    comClient.start();
+                    inputs.add(gameList);
+                    inputs.add(start);
+                }
             }
             overrideConfig(angle24Field, angle13Field,
                     angleVariationField, distanceField,
@@ -213,9 +230,7 @@ public class Main implements IInputputHandler{
             }).start();
 
         });
-        start.addActionListener(e -> {
-            startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem()));
-        });
+        start.addActionListener(e -> startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem())));
         createJoinFrame.pack();
         createJoinFrame.add(panel);
         createJoinFrame.setVisible(true);
@@ -232,6 +247,7 @@ public class Main implements IInputputHandler{
                 server = new SkatServer(server);
                 break;
         }
+        server.setAdmin(c.connection.name);
         server.startGame();
     }
 
@@ -249,15 +265,15 @@ public class Main implements IInputputHandler{
                                 JTextField angleVariationField, JTextField distanceField,
                                 JTextField distanceVariationField, JCheckBox repositionCards,
                                 JTextField hostname, JTextField port, boolean save) {
-        c.name = name;
-        c.server = hostname.getText();
-        c.port = Integer.parseInt(port.getText());
-        c.angle24 = Integer.parseInt(angle24Field.getText());
-        c.angle13 = Integer.parseInt(angle13Field.getText());
-        c.angleVariation = Integer.parseInt(angleVariationField.getText());
-        c.distanceFromCenter = Integer.parseInt(distanceField.getText());
-        c.distanceVariation = Integer.parseInt(distanceVariationField.getText());
-        c.redrawCards = repositionCards.isSelected();
+        c.connection.name = name;
+        c.connection.server = hostname.getText();
+        c.connection.port = Integer.parseInt(port.getText());
+        c.ui.angle24 = Integer.parseInt(angle24Field.getText());
+        c.ui.angle13 = Integer.parseInt(angle13Field.getText());
+        c.ui.angleVariation = Integer.parseInt(angleVariationField.getText());
+        c.ui.distanceFromCenter = Integer.parseInt(distanceField.getText());
+        c.ui.distanceVariation = Integer.parseInt(distanceVariationField.getText());
+        c.ui.redrawCards = repositionCards.isSelected();
         if(save) {
             c.saveConfig();
         }
@@ -336,7 +352,7 @@ public class Main implements IInputputHandler{
                 false);
         new Thread(() -> {
             try {
-                Thread.sleep(2500);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

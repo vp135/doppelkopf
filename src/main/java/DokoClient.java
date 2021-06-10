@@ -8,12 +8,13 @@ import base.messages.*;
 import com.google.gson.JsonArray;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DokoClient extends BaseClient implements  IInputputHandler{
 
@@ -38,14 +39,14 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     private String selectedGame = GameSelected.NORMAL;
     private int spectator;
     private int aufspieler;
-    private int armutCardCount;
     private int currentCardsOnTable = 0;
 
 
 
     //Configuration
 
-    private final ServerConfig serverConfig = new ServerConfig();
+    //private final ServerConfig serverConfig = new ServerConfig();
+
 
     public DokoClient(ComClient handler, List<String> players, Configuration c){
         super(handler,players,c);
@@ -160,7 +161,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         controlPanel.removeAll();
         JButton vorbehalt = new JButton("OK");
         vorbehalt.addActionListener(e ->{
-            handler.queueOutMessage(new GameSelected(players.indexOf(c.name),selectedGame));
+            handler.queueOutMessage(new GameSelected(players.indexOf(c.connection.name),selectedGame));
             controlPanel.setVisible(false);
             controlPanel.removeAll();
         });
@@ -193,7 +194,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
 
     @Override
     public void setGameSpecifics() {
-        maxHandCards = 13;
+        maxHandCards = 12;
         heightCorrection = 1f;
     }
 
@@ -205,46 +206,70 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
             clearPlayArea();
             tableStich.keySet().forEach(i ->
                     drawCard2Position(tableStich.get(i), i, table.getHeight(), table.getWidth()));
-            if (selectCards) {
-                cards2Send.clear();
-                cardLabels2Send.clear();
-            }
         }
     }
 
     @Override
     protected void setCardClickAdapter() {
-        cardClickAdapter = new MouseAdapter() {
+        handCardClickAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JLabel label = (JLabel)e.getSource();
+                JLabel label = (JLabel) e.getSource();
                 BaseCard card = cardMap.get(label);
                 if (selectCards) {
-                    if (!cardLabels2Send.contains(label)) {
-                        cards2Send.add(card);
-                        cardLabels2Send.add(label);
-                        label.setBorder(new LineBorder(Color.RED,2));
-                    } else {
-                        cards2Send.remove(card);
-                        cardLabels2Send.remove(label);
-                        label.setBorder(new LineBorder(Color.BLACK, 2));
+                    moveCard2Exchange(card);
+                    if(hand.size()==10){
+                        setSendCardButton(SendCards.POOR, "Karten zurückgeben");
                     }
-                    sendCardsButton.setEnabled(cardLabels2Send.size() == armutCardCount);
+                    else{
+                        controlPanel.removeAll();
+                    }
                 } else {
                     if (wait4Player || test) {
                         wait4Player = false;
                         hand.remove(card);
                         label.setVisible(false);
-                        handler.queueOutMessage(new PutCard(players.indexOf(c.name), card.farbe, card.value));
-                        serverMessageLabel.setText("");
-                        if(c.redrawCards) {
+                        handler.queueOutMessage(new PutCard(players.indexOf(c.connection.name), card.farbe, card.value));
+                        //serverMessageLabel.setText("");
+                        if (c.ui.redrawCards) {
                             createCardButtons(hand);
                         }
                     }
                 }
             }
         };
+        exchangeCardClickAdapter = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JLabel label = (JLabel) e.getSource();
+                BaseCard card = null;
+                for(int i = 0; i<exchangeCards.length;i++){
+                    if(cLabels[i]!=null && cLabels[i]==label){
+                        card = exchangeCards[i];
+                        break;
+                    }
+                }
+                moveCard2Hand(card);
+                if(hand.size()==10){
+                    setSendCardButton(SendCards.POOR, "Karten zurückgeben");
+                }
+                else{
+                    controlPanel.removeAll();
+                }
+                for(int i = 0;i<exchangeCards.length;i++){
+                    if(exchangeCards[i]==card){
+                        exchangeCards[i] = null;
+                        cLabels[i].setVisible(false);
+                        break;
+                    }
+                }
+                middlePanel.revalidate();
+                middlePanel.repaint();
+            }
+        };
     }
+
+
 
     @Override
     public void handleInput(RequestObject message) {
@@ -275,7 +300,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 break;
             }
             case SelectGame.COMMAND: {
-                controlPanel.setVisible(players.indexOf(c.name) != spectator);
+                controlPanel.setVisible(players.indexOf(c.connection.name) != spectator);
                 break;
             }
             case GameType.COMMAND: {
@@ -283,7 +308,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 break;
             }
             case SelectCards4Armut.COMMAND: {
-                selectCards4Armut(SendCards.RICH);
+                selectCards4Armut();
                 break;
             }
             case SendCards.COMMAND: {
@@ -311,7 +336,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     // handle messages
 
     private void handlePutCard(RequestObject object){
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList= new ArrayList<>();
         int i = ownNumber;
 
@@ -355,7 +380,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     private void handleAnnounceSpectator(RequestObject message) {
         spectator = message.getParams().get("player").getAsInt();
         aufspieler = message.getParams().get("starter").getAsInt();
-        if(players.size()>4 && players.get(spectator).equals(c.name)) {
+        if(players.size()>4 && players.get(spectator).equals(c.connection.name)) {
             handler.queueOutMessage(new DisplayMessage("Du bist jetzt Zuschauer"));
             hand.clear();
             clearPlayArea();
@@ -371,22 +396,62 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     private void handleGetArmut() {
         if (JOptionPane.showConfirmDialog(mainFrame, "Armut mitnehmen?",
                 "Armut mitnehmen", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            handler.queueOutMessage(new GetArmut(players.indexOf(c.name), true));
+            handler.queueOutMessage(new GetArmut(players.indexOf(c.connection.name), true));
         } else {
-            handler.queueOutMessage(new GetArmut(players.indexOf(c.name), false));
+            handler.queueOutMessage(new GetArmut(players.indexOf(c.connection.name), false));
         }
     }
 
     private void handleSendCards(RequestObject message) {
-        List<Card> list = new ArrayList<>();
-        message.getParams().get("cards").getAsJsonArray().forEach(card -> list.add(
-                new Card(card.getAsString().split(" ")[1],
-                        card.getAsString().split(" ")[0])));
-        hand.addAll(list);
-        createCardButtons(hand=SortHand.sortNormal(hand, schweinExists));
-        if (message.getParams().get("receiver").getAsString().equals(SendCards.RICH)) {
-            selectCards4Armut(SendCards.POOR, list.size());
+        boolean isRich = (message.getParams().get("receiver").getAsString().equals(SendCards.RICH));
+        middlePanel.removeAll();
+        selectCards = isRich;
+        JsonArray array = message.getParams().getAsJsonArray("cards");
+        exchangeCards = new Card[array.size()];
+        for (int i = 0; i< exchangeCards.length;i++){
+            exchangeCards[i]= new Card(array.get(i).getAsString().split(" ")[1], array.get(i).getAsString().split(" ")[0]);
         }
+
+
+
+        cLabels = new JLabel[exchangeCards.length];
+        for (int i = 0;i<exchangeCards.length;i++){
+            cLabels[i] = new JLabel(cardIcons.get(exchangeCards[i].toTrimedString()));
+            if(isRich) {
+                cLabels[i].addMouseListener(exchangeCardClickAdapter);
+            }
+            middlePanel.add(cLabels[i]);
+        }
+
+        if(isRich){
+            setSendCardButton(SendCards.POOR, "Karten zurückgeben");
+        }
+        else {
+            setAcceptArmutReturn();
+        }
+
+        middlePanel.setVisible(true);
+        middlePanel.revalidate();
+        middlePanel.repaint();
+
+    }
+
+    private void setAcceptArmutReturn() {
+        controlPanel.removeAll();
+        JButton button = new JButton("Karten aufnehmen");
+        button.addActionListener(e -> {
+            for (BaseCard exchangeCard : exchangeCards) {
+                moveCard2Hand(exchangeCard);
+            }
+            handler.queueOutMessage(new CardsReturned());
+            middlePanel.removeAll();
+            middlePanel.setVisible(false);
+            controlPanel.removeAll();
+            controlPanel.setVisible(false);
+            clearPlayArea();
+        });
+        controlPanel.add(button);
+        controlPanel.setVisible(true);
     }
 
     private void handleGameType(RequestObject message) {
@@ -423,7 +488,8 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         selectCards = false;
         wait4Player = false;
         hand = new ArrayList<>();
-        handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.name)));
+        serverMessages = new ArrayList<>();
+        handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.connection.name)));
     }
 
     @Override
@@ -444,7 +510,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         JLabel cardPos2 = new JLabel();
         JLabel cardPos3 = new JLabel();
         JLabel cardPos4 = new JLabel();
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList= new ArrayList<>();
         int i = ownNumber;
         while (tmpList.size()<4){
@@ -509,7 +575,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
 
     private void handleUserPanelUpdate(RequestObject object) {
 
-        int ownNumber = players.indexOf(c.name);
+        int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList= new ArrayList<>();
         int i = ownNumber;
         while (tmpList.size()<4){
@@ -546,7 +612,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 break;
             }
             case 0:{
-                if(object.getParams().get("player").getAsString().equals(c.name)){
+                if(object.getParams().get("player").getAsString().equals(c.connection.name)){
                     userLabel_4.setText(createUserLabelString(
                             object.getParams().get("text").getAsString(),
                             "Du",
@@ -570,50 +636,39 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
     // helper functions, game specific functions
 
 
-    private void selectCards4Armut(String receiver){
-        selectCards4Armut(receiver,-1);
+    private void selectCards4Armut() {
+        controlPanel.removeAll();
+        autoSelectArmutCards();
+        setSendCardButton(SendCards.RICH, "Armut anbieten");
     }
 
-    private void selectCards4Armut(String receiver, int count) {
-
+    private void setSendCardButton(String receiver, String buttonText) {
         controlPanel.removeAll();
-        selectCards = true;
-        cards2Send = new ArrayList<>();
-        cardLabels2Send = new ArrayList<>();
-        String buttonText="";
-        if (receiver.equals(SendCards.RICH)){
-            armutCardCount = (int) hand.stream().filter(card -> card.trumpf).count();
-            buttonText = "Armut anbieten";
-            autoSelectArmutCards();
-        }
-        else if(receiver.equals(SendCards.POOR)){
-            armutCardCount = count;
-            buttonText = count + " Karten zurueckgeben";
-        }
         sendCardsButton = new JButton(buttonText);
-        if(count>-1 && serverConfig.checkNumberOfArmutCards){
-            sendCardsButton.setEnabled(false);
-        }
         sendCardsButton.addActionListener(e -> {
-            handler.queueOutMessage(new SendCards(cards2Send,receiver));
-            hand.removeAll(cards2Send);
-            createCardButtons(hand=SortHand.sort(hand,selectedGame,schweinExists));
-            cardLabels2Send = new ArrayList<>();
+            handler.queueOutMessage(new SendCards(Arrays.asList(exchangeCards), receiver));
             selectCards = false;
             controlPanel.setVisible(false);
+            middlePanel.removeAll();
+            middlePanel.setVisible(false);
+            clearPlayArea();
         });
         controlPanel.add(sendCardsButton);
         controlPanel.setVisible(true);
+        controlPanel.revalidate();
+        controlPanel.repaint();
     }
 
     private void autoSelectArmutCards() {
-        labelMap.keySet().forEach(card -> {
-            if(card.trumpf) {
-                cards2Send.add(card);
-                cardLabels2Send.add(labelMap.get(card));
-                labelMap.get(card).setBorder(new LineBorder(Color.RED, 2));
-            }
-        });
+         middlePanel.removeAll();
+         List<BaseCard> cards = hand.stream().filter(card->card.trumpf).collect(Collectors.toList());
+         exchangeCards = new BaseCard[cards.size()];
+         cLabels = new JLabel[cards.size()];
+         for(int i =0; i < cards.size();i++){
+             cLabels[i] = new JLabel();
+         }
+         cards.forEach(c-> moveCard2Exchange(c,true));
+         middlePanel.setVisible(true);
     }
 
     private String createUserLabelString(String msg, String player, boolean append2Name) {
@@ -665,5 +720,12 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         }
     }
 
-    //
+
+    @Override
+    protected void moveCard2Hand(BaseCard card) {
+        hand.add(card);
+        hand = SortHand.sort(hand,selectedGame,true);
+        createCardButtons(hand);
+
+    }
 }
