@@ -438,10 +438,10 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         buttonsPanel.add(button_ouvert);
 
         button_ok.addActionListener(e -> {
+            handler.queueOutMessage(new GameSelected(c.connection.name, selectedGame, handSpiel, ouvert));
             if (!handSpiel) {
                 handler.queueOutMessage(new Skat(c.connection.name, Arrays.asList(exchangeCards)));
             }
-            handler.queueOutMessage(new GameSelected(c.connection.name, selectedGame, handSpiel, ouvert));
             middlePanel.removeAll();
             middlePanel.repaint();
             selectCards = false;

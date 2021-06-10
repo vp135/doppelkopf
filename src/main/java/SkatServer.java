@@ -234,6 +234,7 @@ public class SkatServer extends BaseServer{
 
     private void handleSchieben(RequestObject message) {
         send2All(new DisplayMessage(String.format("%s schiebt",message.getParams().get("player").getAsString())));
+        log.info("asking nextRamsch because Schieben");
         askNextRamschPlayer();
     }
 
@@ -248,8 +249,8 @@ public class SkatServer extends BaseServer{
             skat.add(c);
             player.getHand().removeIf(q-> q.value.equals(c.value) && q.farbe.equals(c.farbe));
         });
-        if(selectedGame==GameSelected.GAMES.Ramsch){
-
+        if(selectedGame==GameSelected.GAMES.Ramsch && currentGameValue==0){
+            log.info("asking nextRamsch because selected game");
             askNextRamschPlayer();
         }
     }
