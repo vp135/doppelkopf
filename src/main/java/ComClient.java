@@ -1,4 +1,5 @@
 import base.AutoResetEvent;
+import base.IInputputHandler;
 import base.Logger;
 import base.messages.AddPlayer;
 import base.messages.RequestObject;
@@ -18,12 +19,12 @@ public class ComClient {
     private Socket socket;
     private final String hostname;
     private final int port;
-    private final String name;
+    private String name;
     private IInputputHandler client;
 
     public final AtomicBoolean wait = new AtomicBoolean(false);
 
-    private final Logger log = new Logger("Client",4,true);
+    private final Logger log = new Logger(name,4,true);
 
     public ComClient(String hostname, int port, IInputputHandler client, String name){
         this.hostname = hostname;

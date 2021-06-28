@@ -1,6 +1,4 @@
-import base.BaseCard;
-import base.Logger;
-import base.Statics;
+import base.*;
 import base.messages.StartGame;
 import base.messages.GetVersion;
 import base.messages.PlayersInLobby;
@@ -370,16 +368,17 @@ public class Main implements IInputputHandler{
     public void createRawCardMaps(){
         new Thread(() ->{
             BaseCard.UNIQUE_CARDS.forEach(s -> {
-                String path = System.getProperty("user.dir") + "\\resources\\" + s + ".PNG";
+                String path = new File(System.getProperty("user.dir") + File.separator+ "resources"+File.separator + s + ".png").getAbsolutePath();
                 try {
                     rawImages.put(s, ImageIO.read(new File(path)));
                     rawIcons.put(s, new ImageIcon(ImageIO.read(new File(path))));
                 }catch (Exception ex){
+                    System.out.println(ex.toString());
                     log.error(ex.toString());
                 }
             });
             ready = true;
-            System.out.println("ready");
+            log.info( "Cards created");
         }).start();
     }
 }

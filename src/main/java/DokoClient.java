@@ -1,5 +1,4 @@
-import base.BaseCard;
-import base.Statics;
+import base.*;
 import base.doko.Card;
 import base.doko.messages.GameEnd;
 import base.doko.SortHand;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DokoClient extends BaseClient implements  IInputputHandler{
+public class DokoClient extends BaseClient implements IInputputHandler {
 
     //UI
     private JButton sortNormal;
@@ -43,9 +42,9 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
 
 
 
-    //Configuration
+    //base.Configuration
 
-    //private final ServerConfig serverConfig = new ServerConfig();
+    //private final base.ServerConfig serverConfig = new base.ServerConfig();
 
 
     public DokoClient(ComClient handler, List<String> players, Configuration c){
@@ -189,7 +188,7 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
         controlPanel.add(vorbehalt);
         Dimension d = new Dimension(mainFrame.getSize().width,mainFrame.getSize().height/(30));
         setComponentSizes(controlPanel,d);
-        controlPanel.setVisible(true);
+        //controlPanel.setVisible(true);
     }
 
     @Override
@@ -328,53 +327,78 @@ public class DokoClient extends BaseClient implements  IInputputHandler{
                 handleAnnounceSpectator(message);
                 break;
             }
+            case PlayersInLobby.COMMAND:{
+                handlePlayersInLobby(message);
+                break;
+            }
             default:
                 break;
         }
     }
 
     // handle messages
+    private void handlePlayersInLobby(RequestObject message) {
+
+        players.clear();
+        DefaultListModel<String> model = new DefaultListModel<>();
+        message.getParams().get("players").getAsJsonArray().forEach(player -> {
+            model.addElement(player.getAsString());
+            players.add(player.getAsString());
+        });
+    }
 
     private void handlePutCard(RequestObject object){
-        int ownNumber = players.indexOf(c.connection.name);
-        List<Integer> tmpList= new ArrayList<>();
-        int i = ownNumber;
+        try {
+            int ownNumber = players.indexOf(c.connection.name);
+            List<Integer> tmpList = new ArrayList<>();
+            int i = ownNumber;
+            log.info("own:" +i);
 
-        while (tmpList.size()<4){
-            if(i!=spectator){
-                tmpList.add(i);
+            while (tmpList.size() < 4) {
+                if (i != spectator) {
+                    tmpList.add(i);
+                    log.info("added:" +i);
+                }
+                else {
+                    log.info("not added:" +i);
+                }
+                i++;
+                if (i > players.size() - 1) {
+                    i = 0;
+                }
             }
-            i++;
-            if(i>players.size()-1){
-                i = 0;
-            }
-        }
 
-        if(currentCardsOnTable>3){
-            clearPlayArea();
-            if(letzterStich!=null) {
-                letzterStich.dispose();
-                letzterStich=null;
+            if (currentCardsOnTable > 3) {
+                clearPlayArea();
+                if (letzterStich != null) {
+                    letzterStich.dispose();
+                    letzterStich = null;
+                }
+                updateTable();
+                currentCardsOnTable = 0;
+                tableStich.clear();
             }
+
+            int player = object.getParams().get("player").getAsInt();
+            log.info("player:" + i);
+            Card card = new Card(
+                    object.getParams().get("wert").getAsString(),
+                    object.getParams().get("farbe").getAsString());
+
+            for (int j : tmpList) {
+                if (player == j) {
+                    log.info(tmpList.indexOf(j) + ":" + card.toString());
+                    drawCard2Position(card, tmpList.indexOf(j), table.getHeight(), table.getWidth());
+                    tableStich.put(tmpList.indexOf(j), card);
+                    break;
+                }
+            }
+            currentCardsOnTable++;
             updateTable();
-            currentCardsOnTable = 0;
-            tableStich.clear();
         }
-
-        int player = object.getParams().get("player").getAsInt();
-        Card card = new Card(
-                object.getParams().get("wert").getAsString(),
-                object.getParams().get("farbe").getAsString());
-
-        for(int j :tmpList){
-            if(player==j){
-                drawCard2Position(card, tmpList.indexOf(j), table.getHeight(), table.getWidth());
-                tableStich.put(tmpList.indexOf(j),card);
-                break;
-            }
+        catch (Exception ex){
+            log.error(ex.toString());
         }
-        currentCardsOnTable++;
-        updateTable();
     }
 
     private void handleAnnounceSpectator(RequestObject message) {

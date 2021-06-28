@@ -1,4 +1,7 @@
 import base.BaseCard;
+import base.Configuration;
+import base.IInputputHandler;
+import base.SkatEndDialog;
 import base.messages.*;
 import base.skat.Card;
 import base.skat.SortHand;
