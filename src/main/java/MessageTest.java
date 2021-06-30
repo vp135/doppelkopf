@@ -1,7 +1,4 @@
-import base.BaseCard;
-import base.MessageIn;
-import base.Player;
-import base.Statics;
+import base.*;
 import base.doko.Card;
 import base.doko.messages.GameEnd;
 import base.doko.messages.SelectCards4Armut;

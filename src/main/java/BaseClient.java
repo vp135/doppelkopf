@@ -1,6 +1,4 @@
-import base.BaseCard;
-import base.Logger;
-import base.Statics;
+import base.*;
 import base.doko.Card;
 import base.doko.messages.SendCards;
 import base.messages.*;
@@ -19,7 +17,7 @@ import java.util.*;
 
 public abstract class BaseClient implements IInputputHandler {
 
-    protected final static Logger log = new Logger("Client",4,true);
+    protected Logger log;
 
     protected JFrame mainFrame;
     protected JFrame letzterStich;
@@ -31,7 +29,6 @@ public abstract class BaseClient implements IInputputHandler {
     protected JPanel controlPanel;
     protected JPanel hud;
     protected JPanel bottomPanel;
-    //protected JLabel serverMessageLabel;
     protected JScrollPane textAreaScrollPane;
     protected JTextArea serverMessageLabel;
     protected JLabel gameMessageLabel;
@@ -40,7 +37,6 @@ public abstract class BaseClient implements IInputputHandler {
     protected JLabel userLabel_3;
     protected JLabel userLabel_4;
     protected JLabel tableLable;
-    //protected List<JLabel> cardLabels2Send = new ArrayList<>();
     protected Map<BaseCard,JLabel> labelMap;
     protected Map<JLabel,BaseCard> cardMap;
     protected ArrayList<JButton> buttonList;
@@ -93,6 +89,7 @@ public abstract class BaseClient implements IInputputHandler {
         this.handler = handler;
         this.players = players;
         this.c = c;
+        log = new Logger(c.connection.name, 4,true);
         serverMessages = new ArrayList<>();
         setGameSpecifics();
         setCardClickAdapter();
