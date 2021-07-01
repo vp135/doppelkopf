@@ -323,6 +323,7 @@ public class Main implements IInputputHandler{
     }
 
     private void handleStart(RequestObject message) {
+        //TODO: Check if Frame already exists --> Do not load a new Frame if the old one is still there
         while(!ready){
             try {
                 System.out.println("not ready yet");
