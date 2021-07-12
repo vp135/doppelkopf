@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static base.doko.messages.GameSelected.GAMES.*;
+
 public class DokoClient extends BaseClient implements IInputputHandler {
 
     //UI
@@ -35,10 +37,13 @@ public class DokoClient extends BaseClient implements IInputputHandler {
     //Spielvariablen
 
     private boolean schweinExists = false;
-    private String selectedGame = GameSelected.NORMAL;
+    private GameSelected.GAMES selectedGame = NORMAL;
     private int spectator;
     private int aufspieler;
     private int currentCardsOnTable = 0;
+
+
+    private DokoEndDialog endDialog;
 
 
 
@@ -84,73 +89,73 @@ public class DokoClient extends BaseClient implements IInputputHandler {
             createCardButtons(hand= SortHand.sortNormal(hand, schweinExists));
             deselectAllSortButtons();
             sortNormal.setBackground(Color.GREEN);
-            selectedGame = GameSelected.NORMAL;
+            selectedGame = NORMAL;
         });
         sortDamen.addActionListener(e->{
             createCardButtons(hand=SortHand.sortDamenSolo(hand));
             deselectAllSortButtons();
             sortDamen.setBackground(Color.GREEN);
-            selectedGame = GameSelected.DAMEN;
+            selectedGame = GameSelected.GAMES.DAMEN;
         });
         sortBuben.addActionListener(e->{
             createCardButtons(hand=SortHand.sortBubenSolo(hand));
             deselectAllSortButtons();
             sortBuben.setBackground(Color.GREEN);
-            selectedGame = GameSelected.BUBEN;
+            selectedGame = GameSelected.GAMES.BUBEN;
         });
         sortBubenDamen.addActionListener(e->{
             createCardButtons(hand=SortHand.sortBubenDamenSolo(hand));
             deselectAllSortButtons();
             sortBubenDamen.setBackground(Color.GREEN);
-            selectedGame = GameSelected.BUBENDAMEN;
+            selectedGame = GameSelected.GAMES.BUBENDAMEN;
         });
         sortFleischlos.addActionListener(e->{
             createCardButtons(hand=SortHand.sortFleischlos(hand));
             deselectAllSortButtons();
             sortFleischlos.setBackground(Color.GREEN);
-            selectedGame = GameSelected.FLEISCHLOS;
+            selectedGame = GameSelected.GAMES.FLEISCHLOS;
         });
         sortKreuz.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortKreuz(hand));
             deselectAllSortButtons();
             sortKreuz.setBackground(Color.GREEN);
-            selectedGame = GameSelected.KREUZ;
+            selectedGame = GameSelected.GAMES.KREUZ;
         });
         sortPik.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortPik(hand));
             deselectAllSortButtons();
             sortPik.setBackground(Color.GREEN);
-            selectedGame = GameSelected.PIK;
+            selectedGame = GameSelected.GAMES.PIK;
         });
         sortHerz.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortHerz(hand));
             deselectAllSortButtons();
             sortHerz.setBackground(Color.GREEN);
-            selectedGame = GameSelected.HERZ;
+            selectedGame = GameSelected.GAMES.HERZ;
         });
         sortKaro.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortKaro(hand, schweinExists));
             deselectAllSortButtons();
             sortKaro.setBackground(Color.GREEN);
-            selectedGame = GameSelected.KARO;
+            selectedGame = KARO;
         });
         sortArmut.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortArmut(hand, schweinExists));
             deselectAllSortButtons();
             sortArmut.setBackground(Color.GREEN);
-            selectedGame = GameSelected.ARMUT;
+            selectedGame = ARMUT;
         });
         sortKoenige.addActionListener(e->{
             createCardButtons(hand=SortHand.sortKaro(hand, schweinExists));
             deselectAllSortButtons();
             sortKoenige.setBackground(Color.GREEN);
-            selectedGame = GameSelected.KOENIGE;
+            selectedGame = GameSelected.GAMES.KOENIGE;
         });
         sortHochzeit.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortNormal(hand,schweinExists));
             deselectAllSortButtons();
             sortHochzeit.setBackground(Color.GREEN);
-            selectedGame = GameSelected.HOCHZEIT;
+            selectedGame = GameSelected.GAMES.HOCHZEIT;
         });
     }
 
@@ -318,7 +323,6 @@ public class DokoClient extends BaseClient implements IInputputHandler {
                 handleGetArmut();
                 break;
             }
-
             case UpdateUserPanel.COMMAND: {
                 handleUserPanelUpdate(message);
                 break;
@@ -330,6 +334,9 @@ public class DokoClient extends BaseClient implements IInputputHandler {
             case PlayersInLobby.COMMAND:{
                 handlePlayersInLobby(message);
                 break;
+            }
+            case Acknowledge.COMMAND:{
+                endDialog.ackowledge();
             }
             default:
                 break;
@@ -479,13 +486,13 @@ public class DokoClient extends BaseClient implements IInputputHandler {
     }
 
     private void handleGameType(RequestObject message) {
-        selectedGame = message.getParams().get(GameType.COMMAND).getAsString();
+        selectedGame = GameSelected.GAMES.getName(message.getParams().get(GameType.COMMAND).getAsInt());
         if (hand != null && hand.size() > 0) {
             hand = SortHand.sort(hand,selectedGame,schweinExists);
             createCardButtons(hand);
-            if (selectedGame.equals(GameSelected.NORMAL)
-                    || selectedGame.equals(GameSelected.KARO)
-                    || selectedGame.equals(GameSelected.ARMUT)) {
+            if (selectedGame==NORMAL
+                    || selectedGame==KARO
+                    || selectedGame==ARMUT) {
                 if (hand.stream().filter(p -> p.farbe.equals(Statics.KARO)
                         && p.value.equals(Statics.ASS)).count() > 1) {
                     handler.queueOutMessage(new SchweinExists());
@@ -500,13 +507,13 @@ public class DokoClient extends BaseClient implements IInputputHandler {
 
     private void handleGameEnd(RequestObject message) {
         updateTable();
-        DokoEndDialog e = new DokoEndDialog(
+        endDialog = new DokoEndDialog(
                 message.getParams().get("re1").getAsString(),
                 message.getParams().get("re2").getAsString(),
                 message.getParams().get("kontra1").getAsString(),
                 message.getParams().get("kontra2").getAsString(),
                 message.getParams().get("remain").getAsInt());
-        e.showDialog(this.mainFrame);
+        endDialog.showDialog(this.mainFrame);
         clearPlayArea();
         schweinExists = false;
         selectCards = false;
@@ -518,7 +525,7 @@ public class DokoClient extends BaseClient implements IInputputHandler {
 
     @Override
     protected void handleCards(RequestObject message) {
-        selectedGame = GameSelected.NORMAL;
+        selectedGame = NORMAL;
         JsonArray array = message.getParams().getAsJsonArray("cards");
         hand = new ArrayList<>();
         array.forEach(card->{

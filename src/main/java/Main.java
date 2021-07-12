@@ -6,6 +6,8 @@ import base.messages.RequestObject;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -24,10 +26,12 @@ public class Main implements IInputputHandler{
     private List<String> players = new ArrayList<>();
     private final JList<String> playerList = new JList<>();
     private BaseServer server;
+    private BaseClient client = null;
     private JButton start;
     private JButton join;
     private JFrame createJoinFrame;
     private Configuration c;
+
 
     private ComClient comClient;
     private JComboBox<Statics.game> gameList;
@@ -157,6 +161,11 @@ public class Main implements IInputputHandler{
             name = playername.getText();
             if (!playername.getText().trim().equals("") && !port.getText().trim().equals("")) {
                 server = new BaseServer(c, new ComServer(Integer.parseInt(port.getText())));
+                playerList.addListSelectionListener(p -> {
+                    if(server!=null){
+                        server.setStartPlayer(playerList.getSelectedIndex());
+                    }
+                });
                 int i = 0;
                 int nmbRetries = 15;
                 while(!server.comServer.listening && i<nmbRetries) {
@@ -322,42 +331,45 @@ public class Main implements IInputputHandler{
         join.setText("verbunden");
     }
 
+
     private void handleStart(RequestObject message) {
-        while(!ready){
-            try {
-                System.out.println("not ready yet");
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if(client==null || client.mainFrame==null) {
+            while (!ready) {
+                try {
+                    System.out.println("not ready yet");
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        BaseClient client = null;
-        switch (Statics.game.valueOf(message.getParams().get("game").getAsString())){
-            case DOKO:
-                client = new DokoClient(comClient,players,c);
-                break;
-            case SKAT:
-                client = new SkatClient(comClient,players,c);
-                break;
-        }
-        client.setRawCards(rawIcons,rawImages);
-        comClient.setClient(client);
-        client.createUI(
-                createJoinFrame.getExtendedState(),
-                createJoinFrame.getX(),
-                createJoinFrame.getY(),
-                createJoinFrame.getSize(),
-                false);
-        new Thread(() -> {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+            switch (Statics.game.valueOf(message.getParams().get("game").getAsString())) {
+                case DOKO:
+                    client = new DokoClient(comClient, players, c);
+                    break;
+                case SKAT:
+                    client = new SkatClient(comClient, players, c);
+                    break;
             }
-            createJoinFrame.setVisible(false);
-            createJoinFrame.dispose();
-            log.info("disposed of lobby frame");
-        }).start();
+            client.setRawCards(rawIcons, rawImages);
+            comClient.setClient(client);
+            client.createUI(
+                    createJoinFrame.getExtendedState(),
+                    createJoinFrame.getX(),
+                    createJoinFrame.getY(),
+                    createJoinFrame.getSize(),
+                    false);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                createJoinFrame.setVisible(false);
+                createJoinFrame.dispose();
+                log.info("disposed of lobby frame");
+            }).start();
+        }
     }
 
 
