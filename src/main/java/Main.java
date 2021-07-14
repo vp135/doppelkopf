@@ -341,6 +341,7 @@ public class Main implements IInputputHandler{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
             }
 
             switch (Statics.game.valueOf(message.getParams().get("game").getAsString())) {
