@@ -1,6 +1,6 @@
 {
   "connection": {
-    "name": "Volker",
+    "name": "Server",
     "server": "127.0.0.1",
     "port": 5000
   },
@@ -16,7 +16,8 @@
   "skat": {
     "pflichtRamsch": true,
     "beginnRamsch": 1,
-    "wiederholRamsch": 1
+    "wiederholRamsch": 1,
+    "autoAbortNull": true
   },
   "doko": {
     "sonderpunkte": {

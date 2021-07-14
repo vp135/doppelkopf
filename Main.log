@@ -1,8 +1,7 @@
-2021-06-21 20:28:10(2373) - info - 23 - Main - Cards created
-2021-06-21 20:28:11(657) - info - 21 - Main - not listening
-2021-06-21 20:28:11(274) - info - 30 - Main - received: PlayersInLobby
-2021-06-21 20:28:11(5) - info - 30 - Main - received: PlayersInLobby
-2021-06-21 20:28:12(80) - info - 30 - Main - received: PlayersInLobby
-2021-06-21 20:28:12(103) - info - 30 - Main - received: PlayersInLobby
-2021-06-21 20:28:15(3830) - info - 30 - Main - received: startGame
-2021-06-21 20:28:18(2212) - info - 40 - Main - disposed of lobby frame
+2021-07-10 10:40:54(2293) - info - 23 - Main - Cards created
+2021-07-10 10:41:02(8342) - info - 21 - Main - not listening
+2021-07-10 10:41:03(247) - info - 31 - Main - received: PlayersInLobby
+2021-07-10 10:41:19(16529) - info - 31 - Main - received: PlayersInLobby
+2021-07-10 10:41:20(1169) - info - 31 - Main - received: PlayersInLobby
+2021-07-10 10:41:28(8187) - info - 31 - Main - received: startGame
+2021-07-10 10:42:15(46483) - info - 38 - Main - disposed of lobby frame

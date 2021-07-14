@@ -19,7 +19,7 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected Logger log;
 
-    protected JFrame mainFrame;
+    protected JFrame mainFrame= null;
     protected JFrame letzterStich;
     protected JFrame adminFrame;
     protected JLayeredPane layeredPane;
@@ -108,6 +108,9 @@ public abstract class BaseClient implements IInputputHandler {
                 case SetAdmin.COMMAND:
                     isAdmin = input.getParams().get("isAdmin").getAsBoolean();
                     setAdminButton();
+                    break;
+                case EndClients.COMMAND:
+                    System.exit(0);
                     break;
             }
         }catch (Exception ex){
@@ -394,36 +397,25 @@ public abstract class BaseClient implements IInputputHandler {
         adminFrame = new JFrame("Admin Panel");
         JPanel adminMainPanel = new JPanel(new GridLayout(10,1));
         JButton button_abortGame = new JButton("Spiel abbrechen");
-        JButton button1_test = new JButton("armut austausch");
-        JButton button2_test = new JButton("skat austausch");
-        JButton button3_test = new JButton("shuffle");
+        JButton button_shuffle = new JButton("shuffle");
+        JButton button_ackEnddialogs = new JButton("Dialoge quittieren");
+        JButton button_endClients = new JButton("Clients beenden");
 
         adminMainPanel.add(button_abortGame);
-        adminMainPanel.add(new JLabel(""));
-        adminMainPanel.add(button1_test);
-        adminMainPanel.add(button2_test);
-        adminMainPanel.add(button3_test);
+        adminMainPanel.add(button_shuffle);
+        adminMainPanel.add(button_ackEnddialogs);
+        adminMainPanel.add(button_endClients);
         adminFrame.add(adminMainPanel);
         adminFrame.pack();
         adminFrame.setVisible(true);
 
         button_abortGame.addActionListener(e -> handler.queueOutMessage(new AbortGame()));
 
-        button1_test.addActionListener(e ->{
-            List<BaseCard> cards = new ArrayList<>();
-            cards.add(new Card(Statics.BUBE,Statics.PIK));
-            cards.add(new Card(Statics.BUBE,Statics.KARO));
-            cards.add(new Card(Statics.BUBE,Statics.HERZ));
-            handleInput(new SendCards(cards,SendCards.RICH));
-        });
+        button_shuffle.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
 
-        button2_test.addActionListener(e ->{
-            handleInput(new RamschSkat());
-        });
+        button_ackEnddialogs.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
 
-        button3_test.addActionListener(e -> {
-            handler.queueOutMessage(new AdminRequest("shuffle"));
-        });
+        button_endClients.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
     }
 
 
