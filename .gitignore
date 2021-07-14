@@ -1,0 +1,14 @@
+/Client.log
+/ComClient.log
+/ComServer.log
+/config.json
+/DokoServer.log
+/Main.log
+/Players.log
+/Server.log
+/Stich.log
+/build/
+/.gradle/
+/.idea/
+/gradle/
+/build/
