@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static base.doko.messages.GameSelected.GAMES.*;
 
-public class DokoClient extends BaseClient implements IInputputHandler {
+public class DokoClient extends BaseClient implements IInputputHandler, IDialogInterface {
 
     //UI
     private JButton sortNormal;
@@ -507,19 +507,27 @@ public class DokoClient extends BaseClient implements IInputputHandler {
 
     private void handleGameEnd(RequestObject message) {
         updateTable();
-        endDialog = new DokoEndDialog(
+        endDialog = new DokoEndDialog(this,
                 message.getParams().get("re1").getAsString(),
                 message.getParams().get("re2").getAsString(),
                 message.getParams().get("kontra1").getAsString(),
                 message.getParams().get("kontra2").getAsString(),
                 message.getParams().get("remain").getAsInt());
         endDialog.showDialog(this.mainFrame);
+
+    }
+
+    @Override
+    public void quitEnd(){
         clearPlayArea();
+        currentCardsOnTable = 0;
+        tableStich.clear();
         schweinExists = false;
         selectCards = false;
         wait4Player = false;
         hand = new ArrayList<>();
         serverMessages = new ArrayList<>();
+        displayAllServerMessages();
         handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.connection.name)));
     }
 

@@ -1,7 +1,4 @@
-import base.BaseCard;
-import base.Configuration;
-import base.IInputputHandler;
-import base.SkatEndDialog;
+import base.*;
 import base.messages.*;
 import base.skat.Card;
 import base.skat.SortHand;
@@ -15,7 +12,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
-public class SkatClient extends BaseClient implements IInputputHandler {
+public class SkatClient extends BaseClient implements IInputputHandler, IDialogInterface {
 
 
     private JButton sortKaro;
@@ -48,6 +45,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
     private Map<JLabel,BaseCard> ouvertCardMap;
     private JPanel ouvertPanel;
     private boolean selectGame;
+    private SkatEndDialog endDialog;
 
 
     public SkatClient(ComClient handler, List<String> players, Configuration c) {
@@ -256,6 +254,9 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                     break;
                 case GrandHand.COMMAND:
                     handleGrandHand(message);
+                    break;
+                case Acknowledge.COMMAND:
+                    endDialog.ackowledge();
                     break;
             }
         }catch (Exception ex){
@@ -613,7 +614,8 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         updateTable();
         ouvertCards = new ArrayList<>();
         createOuvertPanel(ouvertCards);
-        SkatEndDialog e = new SkatEndDialog(
+        endDialog = new SkatEndDialog(
+                this,
                 selectedGame,
                 message.getParams().get("re1").getAsString(),
                 message.getParams().get("kontra1").getAsString(),
@@ -621,7 +623,16 @@ public class SkatClient extends BaseClient implements IInputputHandler {
                 message.getParams().get("player2").getAsString(),
                 message.getParams().get("player3").getAsString(),
                 message.getParams().get("remain").getAsInt());
-        e.showDialog(this.mainFrame);
+        endDialog.showDialog(this.mainFrame);
+
+
+    }
+
+
+    @Override
+    public void quitEnd() {
+        currentCardsOnTable = 0;
+        tableStich.clear();
         clearPlayArea();
         selectCards = false;
         wait4Player = false;
@@ -630,6 +641,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         displayAllServerMessages();
         handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.connection.name)));
     }
+
 
 
     @Override
@@ -830,6 +842,7 @@ public class SkatClient extends BaseClient implements IInputputHandler {
         ouvertCardMap.put(label,card);
         ouvertPanel.add(label);
     }
+
 
 
 }
