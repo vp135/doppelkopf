@@ -19,10 +19,13 @@ import java.util.Random;
 public class MessageTest implements IServerMessageHandler{
 
     private List<Socket> socketList;
+    private Logger testProtokoll = new Logger("Testprotkoll",0);
 
     public static void main(String[] args) {
         new MessageTest();
     }
+
+
 
     public MessageTest() {
 

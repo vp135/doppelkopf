@@ -47,6 +47,8 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
     private boolean selectGame;
     private SkatEndDialog endDialog;
 
+    private GameSelected.GAMES sortGame = null;
+
 
     public SkatClient(ComClient handler, List<String> players, Configuration c) {
         super(handler, players, c);
@@ -76,31 +78,37 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
         sortKaro.addActionListener(e -> {
             createCardButtons(hand = SortHand.sortKaro(hand));
             deselectAllSortButtons();
+            sortGame = GameSelected.GAMES.Karo;
             sortKaro.setBackground(Color.GREEN);
         });
         sortHerz.addActionListener(e -> {
             createCardButtons(hand = SortHand.sortHerz(hand));
             deselectAllSortButtons();
+            sortGame = GameSelected.GAMES.Herz;
             sortHerz.setBackground(Color.GREEN);
         });
         sortPik.addActionListener(e -> {
             createCardButtons(hand = SortHand.sortPik(hand));
             deselectAllSortButtons();
+            sortGame = GameSelected.GAMES.Pik;
             sortPik.setBackground(Color.GREEN);
         });
         sortKreuz.addActionListener(e -> {
             createCardButtons(hand = SortHand.sortKreuz(hand));
             deselectAllSortButtons();
+            sortGame = GameSelected.GAMES.Kreuz;
             sortKreuz.setBackground(Color.GREEN);
         });
         sortNull.addActionListener(e -> {
             createCardButtons(hand = SortHand.sortNull(hand));
             deselectAllSortButtons();
+            sortGame = GameSelected.GAMES.Null;
             sortNull.setBackground(Color.GREEN);
         });
         sortGrand.addActionListener(e -> {
             createCardButtons(hand = SortHand.sortGrand(hand));
             deselectAllSortButtons();
+            sortGame = GameSelected.GAMES.Grand;
             sortGrand.setBackground(Color.GREEN);
         });
         pass.addActionListener(e -> {
@@ -111,6 +119,13 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
 
         nextValue.setVisible(false);
         pass.setVisible(false);
+    }
+
+
+    @Override
+    protected void deselectAllSortButtons() {
+        super.deselectAllSortButtons();
+        sortGame = null;
     }
 
     @Override
@@ -187,10 +202,19 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
                         break;
                     }
                 }
-                middlePanel.revalidate();
-                middlePanel.repaint();
+                //middlePanel.revalidate();
+                //middlePanel.repaint();
             }
         };
+    }
+
+    @Override
+    protected void moveCard2Hand(BaseCard card) {
+        super.moveCard2Hand(card);
+        if(sortGame!=null) {
+            hand = SortHand.sort(hand, sortGame);
+            createCardButtons(hand);
+        }
     }
 
     private void setAnsageButtonState() {
@@ -305,6 +329,8 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
 
     private void handleGameSelected(RequestObject message) {
         selectedGame = GameSelected.GAMES.valueOf(message.getParams().get("game").getAsString());
+        createCardButtons(hand = SortHand.sort(hand,selectedGame));
+        controlPanel.setVisible(false);
         ouvert = message.getParams().get("ouvert").getAsBoolean();
     }
 
@@ -374,6 +400,7 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
         handSpiel = true;
         selectGame = true;
         middlePanel.removeAll();
+        middlePanel.setBackground(Color.BLACK);
         buttonsPanel = new JPanel(new GridLayout(5, 2));
         button_karo = new JButton("Karo");
         button_herz = new JButton("Herz");
@@ -448,6 +475,14 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
             }
             middlePanel.removeAll();
             middlePanel.repaint();
+            overLayer.moveToFront(configPanel);
+            layeredPane.setLayer(table,0);
+            table.setBackground(new Color(0,0,0,0));
+            layeredPane.setLayer(hud,1);
+            hud.setBackground(new Color(0,0,0,0));
+            hud.setOpaque(true);
+            middlePanel.setBackground(new Color(0,0,0,0));
+
             selectCards = false;
             selectGame = false;
         });
@@ -775,6 +810,7 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
     @Override
     protected void handleCards(RequestObject message) {
         selectedGame = GameSelected.GAMES.Ramsch;
+        controlPanel.setVisible(true);
         JsonArray array = message.getParams().getAsJsonArray("cards");
         hand = new ArrayList<>();
         array.forEach(card -> {
@@ -819,10 +855,27 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
         ouvertPanel = new JPanel(new GridLayout(1,10));
         userLabel_2.setOpaque(true);
         userLabel_2.setVisible(false);
-        layeredPane.add(ouvertPanel,3);
+        //layeredPane.add(ouvertPanel,0);
         controlPanel.setVisible(true);
+
+
     }
 
+    @Override
+    protected void createUIConfigPanel() {
+
+        //TODO: OUVERTSTUFF INTO new layer
+        super.createUIConfigPanel();
+        JButton b = new JButton("selectTest");
+        configPanel.add(b);
+        b.addActionListener(e -> {
+            handleSelectGame();
+        });
+        if(hand!=null) {
+            createOuvertPanel(hand);
+            configPanel = ouvertPanel;
+        }
+    }
 
     private void createOuvertPanel(List<BaseCard> cards){
         ouvertPanel.removeAll();

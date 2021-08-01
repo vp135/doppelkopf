@@ -1,19 +1,19 @@
 import base.*;
-import base.messages.StartGame;
 import base.messages.GetVersion;
 import base.messages.PlayersInLobby;
 import base.messages.RequestObject;
+import base.messages.StartGame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Main implements IInputputHandler{
@@ -87,27 +87,6 @@ public class Main implements IInputputHandler{
         JPanel inputs = new JPanel(new GridLayout(5, 2));
         JPanel rightPanel = new JPanel(new GridLayout(3,1));
 
-        JPanel userOptions = new JPanel(new GridLayout(6,2));
-        userOptions.add(new JLabel("Kartenwinkel (rechts/links)"));
-        JTextField angle24Field = new JTextField();
-        userOptions.add(angle24Field);
-        userOptions.add(new JLabel("Kartenwinkel (oben/unten)"));
-        JTextField angle13Field = new JTextField();
-        userOptions.add(angle13Field);
-        userOptions.add(new JLabel("max Abweichung des Winkels"));
-        JTextField angleVariationField = new JTextField();
-        userOptions.add(angleVariationField);
-        userOptions.add(new JLabel("Relativer Abstand der Karten zur Tischmitte"));
-        JTextField distanceField = new JTextField();
-        userOptions.add(distanceField);
-        userOptions.add(new JLabel("max relative Abweichung des Abstands"));
-        JTextField distanceVariationField = new JTextField();
-        userOptions.add(distanceVariationField);
-        JCheckBox repositionCards = new JCheckBox("Karten neu verteilen");
-        userOptions.add(repositionCards);
-        JButton optionsTestButton = new JButton("Einstellungen Testen");
-        userOptions.add(optionsTestButton);
-
 
         panel.add(inputs);
         inputs.add(new JLabel("Spielername"));
@@ -133,28 +112,16 @@ public class Main implements IInputputHandler{
 
 
         rightPanel.add(playerList);
-        rightPanel.add(userOptions);
         panel.add(rightPanel);
         inputs.add(create);
         inputs.add(join);
 
-        optionsTestButton.addActionListener(e -> {
-            overrideConfig(angle24Field, angle13Field, angleVariationField, distanceField,
-                    distanceVariationField, repositionCards, hostname, port, false);
-            createOptionsTestFrame();
-        });
+
 
         if (c != null) {
             playername.setText(c.connection.name);
             hostname.setText(c.connection.server);
             port.setText(String.valueOf(c.connection.port));
-            angle24Field.setText(String.valueOf(c.ui.angle24));
-            angle13Field.setText(String.valueOf(c.ui.angle13));
-            angleVariationField.setText(String.valueOf(c.ui.angleVariation));
-            distanceField.setText(String.valueOf(c.ui.distanceFromCenter));
-            distanceVariationField.setText(String.valueOf(c.ui.distanceVariation));
-            repositionCards.setSelected(c.ui.redrawCards);
-
         }
 
         create.addActionListener(e -> {
@@ -187,10 +154,6 @@ public class Main implements IInputputHandler{
                     inputs.add(start);
                 }
             }
-            overrideConfig(angle24Field, angle13Field,
-                    angleVariationField, distanceField,
-                    distanceVariationField, repositionCards,
-                    hostname, port, true);
         });
 
         join.addActionListener(e -> {
@@ -198,6 +161,9 @@ public class Main implements IInputputHandler{
             new Thread(() -> {
                 name = playername.getText().trim();
                 if (!name.equals("")) {
+                    c.connection.name = name;
+                    c.connection.server = hostname.getText();
+                    c.connection.port = Integer.parseInt(port.getText());
                     comClient = new ComClient(hostname.getText(),Integer.parseInt(port.getText()), this,name);
                     comClient.start();
                     log.info("verbinde");
@@ -222,10 +188,6 @@ public class Main implements IInputputHandler{
                     if (comClient.socketNotNull()){
                         join.setText("verbunden");
                         log.info("verbunden");
-                        overrideConfig(angle24Field, angle13Field,
-                                angleVariationField, distanceField,
-                                distanceVariationField, repositionCards
-                                ,hostname, port, true);
                         create.setEnabled(false);
                         comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
                     } else {
@@ -256,34 +218,6 @@ public class Main implements IInputputHandler{
         }
         server.setAdmin(c.connection.name);
         server.startGame();
-    }
-
-    private void createOptionsTestFrame() {
-        DokoClient client = new DokoClient(null,new ArrayList<>(),c);
-        client.createUI(
-                createJoinFrame.getExtendedState(),
-                createJoinFrame.getX(),
-                createJoinFrame.getY(),
-                createJoinFrame.getSize(),
-                true);
-    }
-
-    private void overrideConfig(JTextField angle24Field, JTextField angle13Field,
-                                JTextField angleVariationField, JTextField distanceField,
-                                JTextField distanceVariationField, JCheckBox repositionCards,
-                                JTextField hostname, JTextField port, boolean save) {
-        c.connection.name = name;
-        c.connection.server = hostname.getText();
-        c.connection.port = Integer.parseInt(port.getText());
-        c.ui.angle24 = Integer.parseInt(angle24Field.getText());
-        c.ui.angle13 = Integer.parseInt(angle13Field.getText());
-        c.ui.angleVariation = Integer.parseInt(angleVariationField.getText());
-        c.ui.distanceFromCenter = Integer.parseInt(distanceField.getText());
-        c.ui.distanceVariation = Integer.parseInt(distanceVariationField.getText());
-        c.ui.redrawCards = repositionCards.isSelected();
-        if(save) {
-            c.saveConfig();
-        }
     }
 
 
@@ -386,7 +320,6 @@ public class Main implements IInputputHandler{
                     rawImages.put(s, ImageIO.read(new File(path)));
                     rawIcons.put(s, new ImageIcon(ImageIO.read(new File(path))));
                 }catch (Exception ex){
-                    System.out.println(ex.toString());
                     log.error(ex.toString());
                 }
             });

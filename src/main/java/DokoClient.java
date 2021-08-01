@@ -42,14 +42,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
     private int aufspieler;
     private int currentCardsOnTable = 0;
 
-
     private DokoEndDialog endDialog;
-
-
-
-    //base.Configuration
-
-    //private final base.ServerConfig serverConfig = new base.ServerConfig();
 
 
     public DokoClient(ComClient handler, List<String> players, Configuration c){
@@ -168,6 +161,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             handler.queueOutMessage(new GameSelected(players.indexOf(c.connection.name),selectedGame));
             controlPanel.setVisible(false);
             controlPanel.removeAll();
+            layeredPane.moveToFront(hud);
         });
 
         controlPanel.add(sortNormal);
@@ -193,7 +187,6 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         controlPanel.add(vorbehalt);
         Dimension d = new Dimension(mainFrame.getSize().width,mainFrame.getSize().height/(30));
         setComponentSizes(controlPanel,d);
-        //controlPanel.setVisible(true);
     }
 
     @Override
@@ -229,12 +222,12 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                         controlPanel.removeAll();
                     }
                 } else {
+                    wait4Player = true;
                     if (wait4Player || test) {
                         wait4Player = false;
                         hand.remove(card);
                         label.setVisible(false);
                         handler.queueOutMessage(new PutCard(players.indexOf(c.connection.name), card.farbe, card.value));
-                        //serverMessageLabel.setText("");
                         if (c.ui.redrawCards) {
                             createCardButtons(hand);
                         }
@@ -345,7 +338,6 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
     // handle messages
     private void handlePlayersInLobby(RequestObject message) {
-
         players.clear();
         DefaultListModel<String> model = new DefaultListModel<>();
         message.getParams().get("players").getAsJsonArray().forEach(player -> {
@@ -394,7 +386,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
             for (int j : tmpList) {
                 if (player == j) {
-                    log.info(tmpList.indexOf(j) + ":" + card.toString());
+                    log.info(tmpList.indexOf(j) + ":" + card);
                     drawCard2Position(card, tmpList.indexOf(j), table.getHeight(), table.getWidth());
                     tableStich.put(tmpList.indexOf(j), card);
                     break;

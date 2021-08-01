@@ -1,17 +1,19 @@
 import base.*;
-import base.doko.Card;
-import base.doko.messages.SendCards;
 import base.messages.*;
 import base.messages.admin.AbortGame;
 import base.messages.admin.SetAdmin;
-import base.skat.messages.RamschSkat;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.*;
 
@@ -21,7 +23,6 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected JFrame mainFrame= null;
     protected JFrame letzterStich;
-    protected JFrame adminFrame;
     protected JLayeredPane layeredPane;
     protected JPanel panel;
     protected JPanel mainPanel;
@@ -29,8 +30,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected JPanel controlPanel;
     protected JPanel hud;
     protected JPanel bottomPanel;
-    protected JScrollPane textAreaScrollPane;
-    protected JTextArea serverMessageLabel;
+    protected JLabel serverMessageLabel;
     protected JLabel gameMessageLabel;
     protected JLabel userLabel_1;
     protected JLabel userLabel_2;
@@ -41,6 +41,8 @@ public abstract class BaseClient implements IInputputHandler {
     protected Map<JLabel,BaseCard> cardMap;
     protected ArrayList<JButton> buttonList;
     protected Graphics playArea;
+
+    protected JLayeredPane overLayer;
 
     protected JButton sendCardsButton;
 
@@ -82,8 +84,8 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected final Random random = new Random(System.currentTimeMillis());
     protected JPanel middlePanel;
-    protected JPanel personalButtons;
-    protected JButton button_adminPanel;
+    protected JPanel configPanel;
+    private JLabel button_config;
 
     public BaseClient(ComClient handler, List<String> players, Configuration c) {
         this.handler = handler;
@@ -102,33 +104,32 @@ public abstract class BaseClient implements IInputputHandler {
         try {
             switch (input.getCommand()) {
                 case DisplayMessage.COMMAND:
-                    serverMessages.add(input.getParams().get("message").getAsString());
+                    String s = LocalTime.now().toString().split("\\.")[0];
+                    serverMessages.add( s +" - "+ input.getParams().get("message").getAsString());
                     displayAllServerMessages();
                     break;
                 case SetAdmin.COMMAND:
                     isAdmin = input.getParams().get("isAdmin").getAsBoolean();
-                    setAdminButton();
                     break;
                 case EndClients.COMMAND:
                     System.exit(0);
                     break;
             }
-        }catch (Exception ex){
+        }
+        catch (Exception ex){
             ex.printStackTrace();
         }
     }
 
-    protected void displayAllServerMessages(){
-        StringBuilder builder = new StringBuilder();
+    protected void displayAllServerMessages() {
+        StringBuilder s = new StringBuilder("<html>");
         for (int i = serverMessages.size()-1;i>-1;i--){
-            builder.append(serverMessages.get(i)).append("\n");
+            s.append(serverMessages.get(i)).append("<br>");
         }
-        serverMessageLabel.setText(builder.toString());
+        s.append("</html>");
+        serverMessageLabel.setText(s.toString());
     }
 
-    private void setAdminButton() {
-        button_adminPanel.setVisible(isAdmin);
-    }
 
     //UI creation functions
 
@@ -191,11 +192,10 @@ public abstract class BaseClient implements IInputputHandler {
         mainFrame.setVisible(true);
         mainFrame.setSize(size);
 
-        //serverMessageLabel = new JLabel("");
 
-        serverMessageLabel = new JTextArea("");
-        serverMessageLabel.setBorder(null);
-        gameMessageLabel = new JLabel("");
+
+        overLayer = new JLayeredPane();
+        setComponentSizes(overLayer,new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
         layeredPane = new JLayeredPane();
         setComponentSizes(layeredPane,new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
         cardSize = mainFrame.getHeight()/30*8;
@@ -209,12 +209,27 @@ public abstract class BaseClient implements IInputputHandler {
         table = new JPanel();
         setComponentSizes(table, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
         table.setBackground(new Color(0,0,0,0));
+        //table.setBackground(Color.RED);
         img = new BufferedImage(table.getWidth(), table.getWidth(), BufferedImage.TYPE_INT_ARGB);
         playArea = img.getGraphics();
         playArea.drawImage(img, 0, 0, table.getHeight(), table.getWidth(), null);
         tableLable = new JLabel(new ImageIcon(img));
         table.add(tableLable);
-        layeredPane.add(table,1);
+        //table.setBackground(Color.BLACK);
+        layeredPane.add(table,0);
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(configPanel!=null
+                        && (e.getX()>configPanel.getSize().width
+                        || e.getY()>configPanel.getSize().height)) {
+                    configPanel.setVisible(false);
+                    button_config.setEnabled(true);
+                    overLayer.moveToFront(layeredPane);
+                    c.saveConfig();
+                }
+            }
+        });
     }
 
     /**
@@ -223,7 +238,8 @@ public abstract class BaseClient implements IInputputHandler {
     protected void createHUD() {
         log.info("creating hud");
         hud = new JPanel(new GridLayout(3,3));
-       hud.setBackground(new Color(0,0,0,0));
+        hud.setBackground(new Color(0,0,0,0));
+        //hud.setBackground(Color.RED);
 
 
 
@@ -231,32 +247,179 @@ public abstract class BaseClient implements IInputputHandler {
         userLabel_1.setOpaque(true);
         userLabel_1.setVerticalAlignment(SwingConstants.CENTER);
         userLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+        userLabel_1.setBackground(new Color(0,0,0,0));
         userLabel_2 = new JLabel();
         userLabel_2.setOpaque(true);
         userLabel_2.setVerticalAlignment(SwingConstants.TOP);
         userLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
+        userLabel_2.setBackground(new Color(0,0,0,0));
         userLabel_3 = new JLabel();
         userLabel_3.setOpaque(true);
         userLabel_3.setVerticalAlignment(SwingConstants.CENTER);
         userLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+        userLabel_3.setBackground(new Color(0,0,0,0));
         userLabel_4 = new JLabel();
         userLabel_4.setOpaque(true);
         userLabel_4.setVerticalAlignment(SwingConstants.BOTTOM);
         userLabel_4.setHorizontalAlignment(SwingConstants.LEFT);
+        userLabel_4.setBackground(new Color(0,0,0,0));
         middlePanel = new JPanel(new GridLayout(1,3));
+        middlePanel.setBackground(new Color(0,0,0,0));
+        //middlePanel.setBackground(Color.CYAN);
 
+        String path = new File(System.getProperty("user.dir") + File.separator+ "resources"+File.separator + "options.png").getAbsolutePath();
+        try {
+            button_config = new JLabel(new ImageIcon(ImageIO.read(new File(path))));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JPanel openPanel = new JPanel(new SpringLayout());
+        openPanel.add(button_config);
 
-        hud.add(new JLabel());
+        openPanel.setBackground(new Color(0,0,0,0));
+        button_config.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        button_config.setEnabled(false);
+                        createUIConfigPanel();
+                        overLayer.add(configPanel, 2);
+                        overLayer.moveToFront(configPanel);
+                    }
+                }
+        );
+
+        hud.add(openPanel);
         hud.add(userLabel_2);
         hud.add(new JLabel());
         hud.add(userLabel_1);
         hud.add(middlePanel);
         hud.add(userLabel_3);
-        hud.add(createControlButtonPanel());
+        hud.add(new JLabel());
         hud.add(userLabel_4);
-        hud.add(createMessageLabelPanel());
+        createMessageLabelPanel();
+        createUIConfigPanel();
 
-        layeredPane.add(hud,2);
+        layeredPane.add(hud,1);
+        layeredPane.moveToFront(hud);
+    }
+
+
+
+    protected void createUIConfigPanel(){
+        configPanel = new JPanel(new GridLayout(15,2));
+        setComponentSizes(configPanel,new Dimension(600,600));
+        configPanel.add(new JLabel("Kartenwinkel (rechts/links)"));
+        JTextField angle24Field = new JTextField();
+        angle24Field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                try{
+                    c.ui.angle24 = Integer.parseInt(((JTextField) e.getComponent()).getText());
+                }
+                catch (Exception ex){
+                    ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.angle24));
+                }
+            }
+        });
+        configPanel.add(angle24Field);
+        configPanel.add(new JLabel("Kartenwinkel (oben/unten)"));
+        JTextField angle13Field = new JTextField();
+        angle13Field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                try{
+                    c.ui.angle13 = Integer.parseInt(((JTextField) e.getComponent()).getText());
+                }
+                catch (Exception ex){
+                    ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.angle13));
+                }
+            }
+        });
+        configPanel.add(angle13Field);
+        configPanel.add(new JLabel("max Abweichung des Winkels"));
+        JTextField angleVariationField = new JTextField();
+        angleVariationField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                try{
+                    c.ui.angleVariation = Integer.parseInt(((JTextField) e.getComponent()).getText());
+                }
+                catch (Exception ex){
+                    ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.angleVariation));
+                }
+            }
+        });
+        configPanel.add(angleVariationField);
+        configPanel.add(new JLabel("Relativer Abstand der Karten zur Tischmitte"));
+        JTextField distanceField = new JTextField();
+        distanceField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                try{
+                    c.ui.distanceFromCenter = Integer.parseInt(((JTextField) e.getComponent()).getText());
+                }
+                catch (Exception ex){
+                    ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.distanceFromCenter));
+                }
+            }
+        });
+        configPanel.add(distanceField);
+        configPanel.add(new JLabel("max relative Abweichung des Abstands"));
+        JTextField distanceVariationField = new JTextField();
+        distanceVariationField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                try{
+                    c.ui.distanceVariation = Integer.parseInt(((JTextField) e.getComponent()).getText());
+                }
+                catch (Exception ex){
+                    ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.distanceVariation));
+                }
+            }
+        });
+        configPanel.add(distanceVariationField);
+        JCheckBox repositionCards = new JCheckBox("Karten neu verteilen");
+        repositionCards.addActionListener(e -> c.ui.redrawCards=repositionCards.isSelected());
+        configPanel.add(repositionCards);
+
+        angle24Field.setText(String.valueOf(c.ui.angle24));
+        angle13Field.setText(String.valueOf(c.ui.angle13));
+        angleVariationField.setText(String.valueOf(c.ui.angleVariation));
+        distanceField.setText(String.valueOf(c.ui.distanceFromCenter));
+        distanceVariationField.setText(String.valueOf(c.ui.distanceVariation));
+        repositionCards.setSelected(c.ui.redrawCards);
+
+        JButton button_abortGame = new JButton("Spiel abbrechen");
+        JButton button_shuffle = new JButton("shuffle");
+        JButton button_ackEnddialogs = new JButton("Dialoge quittieren");
+        JButton button_endClients = new JButton("Clients beenden");
+
+        JButton button_lastStich = new JButton("letzter Stich");
+        JButton button_clearTable = new JButton("Tisch leeren");
+        configPanel.add(new JLabel());
+
+        if(isAdmin) {
+            configPanel.add(new JSeparator());
+            configPanel.add(new JSeparator());
+            configPanel.add(button_abortGame);
+            configPanel.add(button_shuffle);
+            configPanel.add(button_ackEnddialogs);
+            configPanel.add(button_endClients);
+        }
+        configPanel.add(new JSeparator());
+        configPanel.add(new JSeparator());
+        configPanel.add(button_lastStich);
+        configPanel.add(button_clearTable);
+
+
+        button_abortGame.addActionListener(e -> handler.queueOutMessage(new AbortGame()));
+        button_shuffle.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
+        button_ackEnddialogs.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
+        button_endClients.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
+        button_lastStich.addActionListener(e -> handler.queueOutMessage(new CurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
+        button_clearTable.addActionListener(e -> clearPlayArea());
+        configPanel.setBorder(new LineBorder(Color.WHITE,3));
     }
 
     /**
@@ -266,23 +429,24 @@ public abstract class BaseClient implements IInputputHandler {
         panel = new JPanel(new GridLayout(1,13));
 
         log.info("setting components");
-        GridBagConstraints c = new GridBagConstraints();
+        GridBagConstraints cbc = new GridBagConstraints();
 
-        c.gridx=0;
-        c.gridy=0;
-        c.gridheight=20;
-        c.gridwidth=1;
-        c.weighty=20;
-        c.anchor = GridBagConstraints.NORTH;
-        mainPanel.add(layeredPane,c);
+        cbc.gridx=0;
+        cbc.gridy=0;
+        cbc.gridheight=20;
+        cbc.gridwidth=1;
+        cbc.weighty=20;
+        cbc.anchor = GridBagConstraints.NORTH;
+        overLayer.add(layeredPane);
+        mainPanel.add(overLayer,cbc);
         bottomPanel = new JPanel(new BorderLayout());
         setComponentSizes(bottomPanel,new Dimension(mainFrame.getWidth(),mainFrame.getHeight()/30*9));
-        c.gridx=0;
-        c.gridy=21;
-        c.weighty=9;
-        c.gridheight=9;
-        c.gridwidth=1;
-        mainPanel.add(bottomPanel,c);
+        cbc.gridx=0;
+        cbc.gridy=21;
+        cbc.weighty=9;
+        cbc.gridheight=9;
+        cbc.gridwidth=1;
+        mainPanel.add(bottomPanel,cbc);
 
 
         controlPanel = new JPanel(new GridLayout(1,6));
@@ -293,48 +457,30 @@ public abstract class BaseClient implements IInputputHandler {
         log.info("components set");
     }
 
-    /**
-     * Creates UI to interact with the game. Actions will not affect other players or the game
-     * @return JPanel with buttons
-     */
-    protected JPanel createControlButtonPanel() {
-        JPanel tableButtons = new JPanel(new GridLayout(1, 3));
-        personalButtons = new JPanel(new GridLayout(3, 1));
-        JButton button_lastStich = new JButton("letzter Stich");
-        button_lastStich.addActionListener(e -> handler.queueOutMessage(new CurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
-        JButton button_clearTable = new JButton("Tisch leeren");
-        button_clearTable.addActionListener(e -> clearPlayArea());
-        personalButtons.add(button_lastStich);
-        personalButtons.add(button_clearTable);
-        button_adminPanel = new JButton("Admin");
-        button_adminPanel.setVisible(false);
-        personalButtons.add(button_adminPanel);
-        button_adminPanel.addActionListener(e -> {
-            if (adminFrame != null) {
-                adminFrame.dispose();
-            }
-            createAdminUI();
-        });
-        tableButtons.add(personalButtons);
-        tableButtons.add(new JLabel());
-        tableButtons.add(new JLabel());
-        return tableButtons;
-    }
+
 
     /**
      * Creates UI where game messages can be displayed
-     * @return JPanel with labels
      */
-    protected JPanel createMessageLabelPanel(){
-        JPanel panel = new JPanel(new GridLayout(2, 1));
-        serverMessageLabel.setLineWrap(true);
-        textAreaScrollPane = new JScrollPane(serverMessageLabel);
-        textAreaScrollPane.setBorder(null);
-        textAreaScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        textAreaScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,Integer.MAX_VALUE));
-        panel.add(textAreaScrollPane);
-        panel.add(gameMessageLabel);
-        return panel;
+    protected void createMessageLabelPanel() {
+        serverMessageLabel = new JLabel("");
+        serverMessageLabel.setOpaque(true);
+        serverMessageLabel.setBorder(new LineBorder(Color.BLACK));
+        gameMessageLabel = new JLabel("");
+        gameMessageLabel.setBackground(Color.GREEN);
+        JPanel messagesPanel = new JPanel(new GridLayout(2, 1));
+        JScrollPane scrollPane = new JScrollPane(serverMessageLabel);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
+        scrollPane.setOpaque(true);
+        scrollPane.setBorder(new LineBorder(Color.BLACK));
+        scrollPane.setAutoscrolls(true);
+        scrollPane.setWheelScrollingEnabled(true);
+        scrollPane.repaint();
+        messagesPanel.add(scrollPane);
+        messagesPanel.add(gameMessageLabel);
+        hud.add(messagesPanel);
     }
 
     // abstract game specifc methods
@@ -387,42 +533,6 @@ public abstract class BaseClient implements IInputputHandler {
         Graphics2D g = (Graphics2D) playArea;
         g.drawImage(img, at, null);
     }
-
-    /**
-     * Create a new frame with extended functions to manipulate game in an atypical way.
-     * Should only be necessary when something went wrong.
-     */
-    protected void createAdminUI() {
-
-        adminFrame = new JFrame("Admin Panel");
-        JPanel adminMainPanel = new JPanel(new GridLayout(10,1));
-        JButton button_abortGame = new JButton("Spiel abbrechen");
-        JButton button_shuffle = new JButton("shuffle");
-        JButton button_ackEnddialogs = new JButton("Dialoge quittieren");
-        JButton button_endClients = new JButton("Clients beenden");
-
-        adminMainPanel.add(button_abortGame);
-        adminMainPanel.add(button_shuffle);
-        adminMainPanel.add(button_ackEnddialogs);
-        adminMainPanel.add(button_endClients);
-        adminFrame.add(adminMainPanel);
-        adminFrame.pack();
-        adminFrame.setVisible(true);
-
-        button_abortGame.addActionListener(e -> handler.queueOutMessage(new AbortGame()));
-
-        button_shuffle.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
-
-        button_ackEnddialogs.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
-
-        button_endClients.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
-    }
-
-
-
-
-
-
 
 
 
@@ -545,7 +655,6 @@ public abstract class BaseClient implements IInputputHandler {
         createCardButtons(hand);
         setGameSpecificButtons(hand);
         tableStich = new HashMap<>();
-        //serverMessageLabel.setText("");
         gameMessageLabel.setText("");
         bottomPanel.revalidate();
         bottomPanel.repaint();
