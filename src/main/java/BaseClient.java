@@ -29,6 +29,8 @@ public abstract class BaseClient implements IInputputHandler {
     protected JPanel table;
     protected JPanel controlPanel;
     protected JPanel hud;
+    protected JPanel floatPanel;
+
     protected JPanel bottomPanel;
     protected JLabel serverMessageLabel;
     protected JLabel gameMessageLabel;
@@ -86,6 +88,9 @@ public abstract class BaseClient implements IInputputHandler {
     protected JPanel middlePanel;
     protected JPanel configPanel;
     private JLabel button_config;
+    protected JPanel hudBottom;
+    protected JPanel hudMiddle;
+    protected JPanel hudTop;
 
     public BaseClient(ComClient handler, List<String> players, Configuration c) {
         this.handler = handler;
@@ -208,24 +213,37 @@ public abstract class BaseClient implements IInputputHandler {
         log.info("creating play area");
         table = new JPanel();
         setComponentSizes(table, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
-        table.setBackground(new Color(0,0,0,0));
-        //table.setBackground(Color.RED);
+        //table.setBackground(new Color(0,0,0,0));
+        table.setBackground(Color.RED);
         img = new BufferedImage(table.getWidth(), table.getWidth(), BufferedImage.TYPE_INT_ARGB);
         playArea = img.getGraphics();
         playArea.drawImage(img, 0, 0, table.getHeight(), table.getWidth(), null);
         tableLable = new JLabel(new ImageIcon(img));
         table.add(tableLable);
-        //table.setBackground(Color.BLACK);
         layeredPane.add(table,0);
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                /*
                 if(configPanel!=null
                         && (e.getX()>configPanel.getSize().width
                         || e.getY()>configPanel.getSize().height)) {
-                    configPanel.setVisible(false);
                     button_config.setEnabled(true);
+                    overLayer.remove(floatPanel);
+                    //overLayer.remove(configPanel);
                     overLayer.moveToFront(layeredPane);
+                    c.saveConfig();
+                }
+
+                 */
+                if(floatPanel!=null
+                        && (e.getX()>floatPanel.getSize().width
+                        || e.getY()>floatPanel.getSize().height)) {
+                    button_config.setEnabled(true);
+                    overLayer.remove(floatPanel);
+                    overLayer.moveToFront(layeredPane);
+                    floatPanel.remove(configPanel);
+                    button_config.addMouseListener(adapter);
                     c.saveConfig();
                 }
             }
@@ -237,9 +255,8 @@ public abstract class BaseClient implements IInputputHandler {
      */
     protected void createHUD() {
         log.info("creating hud");
-        hud = new JPanel(new GridLayout(3,3));
+        hud = new JPanel(new GridLayout(3,1));
         hud.setBackground(new Color(0,0,0,0));
-        //hud.setBackground(Color.RED);
 
 
 
@@ -273,37 +290,55 @@ public abstract class BaseClient implements IInputputHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JPanel openPanel = new JPanel(new SpringLayout());
-        openPanel.add(button_config);
+        JPanel openPanel = new JPanel(new BorderLayout());
+        JPanel p1 = new JPanel(new BorderLayout());
+        openPanel.add(p1,BorderLayout.SOUTH);
+        p1.add(button_config,BorderLayout.WEST);
 
         openPanel.setBackground(new Color(0,0,0,0));
-        button_config.addMouseListener(
-                new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        button_config.setEnabled(false);
-                        createUIConfigPanel();
-                        overLayer.add(configPanel, 2);
-                        overLayer.moveToFront(configPanel);
-                    }
-                }
-        );
+        button_config.addMouseListener(adapter);
 
-        hud.add(openPanel);
-        hud.add(userLabel_2);
-        hud.add(new JLabel());
-        hud.add(userLabel_1);
-        hud.add(middlePanel);
-        hud.add(userLabel_3);
-        hud.add(new JLabel());
-        hud.add(userLabel_4);
+        hudTop = new JPanel(new GridLayout(1,3));
+        hudTop.setBackground(new Color(0,0,0,0));
+        hudTop.add(new JLabel());
+        hudTop.add(userLabel_2);
+        hudTop.add(new JLabel());
+
+        hudMiddle = new JPanel(new GridLayout(1,3));
+        hudMiddle.setBackground(new Color(0,0,0,0));
+        hudMiddle.add(userLabel_1);
+        hudMiddle.add(middlePanel);
+        hudMiddle.add(userLabel_3);
+
+        hudBottom = new JPanel(new GridLayout(1,3));
+        hudBottom.setBackground(new Color(0,0,0,0));
+        hudBottom.setBackground(new Color(0,0,0,0));
+        hudBottom.add(openPanel);
+        hudBottom.add(userLabel_4);
+
+        hud.add(hudTop);
+        hud.add(hudMiddle);
+        hud.add(hudBottom);
+
         createMessageLabelPanel();
         createUIConfigPanel();
+        floatPanel = new JPanel(new SpringLayout());
+        setComponentSizes(floatPanel,configPanel.getSize());
 
         layeredPane.add(hud,1);
         layeredPane.moveToFront(hud);
     }
 
+    MouseAdapter adapter = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            button_config.removeMouseListener(adapter);
+            createUIConfigPanel();
+            floatPanel.add(configPanel);
+            overLayer.add(floatPanel, 2);
+            overLayer.moveToFront(floatPanel);
+        }
+    };
 
 
     protected void createUIConfigPanel(){
@@ -480,7 +515,7 @@ public abstract class BaseClient implements IInputputHandler {
         scrollPane.repaint();
         messagesPanel.add(scrollPane);
         messagesPanel.add(gameMessageLabel);
-        hud.add(messagesPanel);
+        hudBottom.add(messagesPanel);
     }
 
     // abstract game specifc methods

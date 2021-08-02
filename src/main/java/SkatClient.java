@@ -481,6 +481,9 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
             layeredPane.setLayer(hud,1);
             hud.setBackground(new Color(0,0,0,0));
             hud.setOpaque(true);
+            createOuvertPanel(hand);
+            hudTop.removeAll();
+            hudTop.add(ouvertPanel);
             middlePanel.setBackground(new Color(0,0,0,0));
 
             selectCards = false;
@@ -873,7 +876,7 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
         });
         if(hand!=null) {
             createOuvertPanel(hand);
-            configPanel = ouvertPanel;
+            //hudBottom = ouvertPanel;
         }
     }
 

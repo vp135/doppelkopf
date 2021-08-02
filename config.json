@@ -11,7 +11,7 @@
     "distanceFromCenter": 70,
     "distanceVariation": 0,
     "textsize": 18,
-    "redrawCards": true
+    "redrawCards": false
   },
   "skat": {
     "pflichtRamsch": true,
