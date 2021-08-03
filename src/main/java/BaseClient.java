@@ -213,8 +213,7 @@ public abstract class BaseClient implements IInputputHandler {
         log.info("creating play area");
         table = new JPanel();
         setComponentSizes(table, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
-        //table.setBackground(new Color(0,0,0,0));
-        table.setBackground(Color.RED);
+        table.setBackground(new Color(0,0,0,0));
         img = new BufferedImage(table.getWidth(), table.getWidth(), BufferedImage.TYPE_INT_ARGB);
         playArea = img.getGraphics();
         playArea.drawImage(img, 0, 0, table.getHeight(), table.getWidth(), null);
@@ -224,18 +223,6 @@ public abstract class BaseClient implements IInputputHandler {
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                /*
-                if(configPanel!=null
-                        && (e.getX()>configPanel.getSize().width
-                        || e.getY()>configPanel.getSize().height)) {
-                    button_config.setEnabled(true);
-                    overLayer.remove(floatPanel);
-                    //overLayer.remove(configPanel);
-                    overLayer.moveToFront(layeredPane);
-                    c.saveConfig();
-                }
-
-                 */
                 if(floatPanel!=null
                         && (e.getX()>floatPanel.getSize().width
                         || e.getY()>floatPanel.getSize().height)) {
@@ -282,7 +269,6 @@ public abstract class BaseClient implements IInputputHandler {
         userLabel_4.setBackground(new Color(0,0,0,0));
         middlePanel = new JPanel(new GridLayout(1,3));
         middlePanel.setBackground(new Color(0,0,0,0));
-        //middlePanel.setBackground(Color.CYAN);
 
         String path = new File(System.getProperty("user.dir") + File.separator+ "resources"+File.separator + "options.png").getAbsolutePath();
         try {

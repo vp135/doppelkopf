@@ -481,9 +481,6 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
             layeredPane.setLayer(hud,1);
             hud.setBackground(new Color(0,0,0,0));
             hud.setOpaque(true);
-            createOuvertPanel(hand);
-            hudTop.removeAll();
-            hudTop.add(ouvertPanel);
             middlePanel.setBackground(new Color(0,0,0,0));
 
             selectCards = false;
@@ -515,7 +512,7 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
         button_null.setBackground(Color.BLACK);
         button_grand.setBackground(Color.BLACK);
         if(selectedGame!= GameSelected.GAMES.Ramsch){
-            button_ok.setEnabled(true);
+            setAnsageButtonState();
         }
     }
 
@@ -652,6 +649,7 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
         updateTable();
         ouvertCards = new ArrayList<>();
         createOuvertPanel(ouvertCards);
+
         endDialog = new SkatEndDialog(
                 this,
                 selectedGame,
@@ -858,7 +856,6 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
         ouvertPanel = new JPanel(new GridLayout(1,10));
         userLabel_2.setOpaque(true);
         userLabel_2.setVisible(false);
-        //layeredPane.add(ouvertPanel,0);
         controlPanel.setVisible(true);
 
 
@@ -866,29 +863,28 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
 
     @Override
     protected void createUIConfigPanel() {
-
-        //TODO: OUVERTSTUFF INTO new layer
         super.createUIConfigPanel();
         JButton b = new JButton("selectTest");
+        JButton b1 = new JButton("enddialog");
         configPanel.add(b);
+        configPanel.add(b1);
         b.addActionListener(e -> {
             handleSelectGame();
         });
-        if(hand!=null) {
-            createOuvertPanel(hand);
-            //hudBottom = ouvertPanel;
-        }
+        b1.addActionListener(e -> {
+            handleGameEnd(new GameEnd("","","","","",120));
+        });
     }
 
     private void createOuvertPanel(List<BaseCard> cards){
+        hudTop.removeAll();
         ouvertPanel.removeAll();
         ouvertLabelMap = new HashMap<>();
         ouvertCardMap = new HashMap<>();
         cards = SortHand.sort(cards, selectedGame);
-        setComponentSizes(ouvertPanel, new Dimension(mainFrame.getWidth(),userLabel_2.getHeight()));
+        setComponentSizes(ouvertPanel, new Dimension(mainFrame.getWidth(),hudTop.getHeight()));
         cards.forEach(this::getCardLabel4Ouvert);
-        layeredPane.revalidate();
-        layeredPane.repaint();
+        hudTop.add(ouvertPanel);
     }
 
     private void getCardLabel4Ouvert(BaseCard card){

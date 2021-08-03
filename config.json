@@ -14,22 +14,23 @@
     "redrawCards": false
   },
   "skat": {
-    "pflichtRamsch": true,
+    "pflichtRamsch": false,
     "beginnRamsch": 1,
     "wiederholRamsch": 1,
     "autoAbortNull": true
   },
   "doko": {
+    "regeln": {
+      "zweiteHerz10": true,
+      "schwein": true
+    },
     "sonderpunkte": {
       "fuchsGefangen": true,
       "doppelkopf": true,
       "herzstich": true,
       "karlchen": true
-    },
-    "regeln": {
-      "zweiteHerz10": true,
-      "schwein": true
     }
   },
+  "lastGame": "SKAT",
   "logLevel": 4
 }
