@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static base.DokoConfig.BEDIENEN;
 import static base.doko.messages.GameSelected.GAMES.*;
 
 public class DokoClient extends BaseClient implements IInputputHandler, IDialogInterface {
@@ -43,6 +44,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
     private int currentCardsOnTable = 0;
 
     private DokoEndDialog endDialog;
+    private Card mustPlay = null;
 
 
     public DokoClient(ComClient handler, List<String> players, Configuration c){
@@ -222,14 +224,20 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                         controlPanel.removeAll();
                     }
                 } else {
-                    wait4Player = true;
                     if (wait4Player || test) {
-                        wait4Player = false;
-                        hand.remove(card);
-                        label.setVisible(false);
-                        handler.queueOutMessage(new PutCard(players.indexOf(c.connection.name), card.farbe, card.value));
-                        if (c.ui.redrawCards) {
-                            createCardButtons(hand);
+                        if((boolean)c.doko.regeln.get(BEDIENEN)
+                                || mustPlay==null
+                                || mustPlay.farbe.equals(card.farbe)) {
+                            wait4Player = false;
+                            hand.remove(card);
+                            label.setVisible(false);
+                            handler.queueOutMessage(new PutCard(players.indexOf(c.connection.name), card.farbe, card.value));
+                            if (c.ui.redrawCards) {
+                                createCardButtons(hand);
+                            }
+                        }
+                        else{
+                            System.out.println("nicht bedient (simple test");
                         }
                     }
                 }
@@ -375,6 +383,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 }
                 updateTable();
                 currentCardsOnTable = 0;
+                mustPlay = null;
                 tableStich.clear();
             }
 
@@ -383,6 +392,9 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             Card card = new Card(
                     object.getParams().get("wert").getAsString(),
                     object.getParams().get("farbe").getAsString());
+            if(currentCardsOnTable ==0){
+                mustPlay = card;
+            }
 
             for (int j : tmpList) {
                 if (player == j) {
