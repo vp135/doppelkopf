@@ -1,7 +1,7 @@
 import base.*;
 import base.messages.*;
-import base.messages.admin.AbortGame;
-import base.messages.admin.SetAdmin;
+import base.messages.admin.MessageAbortGame;
+import base.messages.admin.MessageSetAdmin;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,10 +34,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected JPanel bottomPanel;
     protected JLabel serverMessageLabel;
     protected JLabel gameMessageLabel;
-    protected JLabel userLabel_1;
-    protected JLabel userLabel_2;
-    protected JLabel userLabel_3;
-    protected JLabel userLabel_4;
+    protected JLabel[] userLabels;
     protected JLabel tableLable;
     protected Map<BaseCard,JLabel> labelMap;
     protected Map<JLabel,BaseCard> cardMap;
@@ -104,19 +101,22 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
     @Override
-    public void handleInput(RequestObject input) {
-        log.info("received: " +input.getCommand());
+    public void handleInput(Message message) {
+        log.info("received: " +message.getCommand());
         try {
-            switch (input.getCommand()) {
-                case DisplayMessage.COMMAND:
+            switch (message.getCommand()) {
+                case MessageDisplayMessage.COMMAND:
                     String s = LocalTime.now().toString().split("\\.")[0];
-                    serverMessages.add( s +" - "+ input.getParams().get("message").getAsString());
+                    serverMessages.add( s +" - "+ message.getParams().get("message").getAsString());
                     displayAllServerMessages();
                     break;
-                case SetAdmin.COMMAND:
-                    isAdmin = input.getParams().get("isAdmin").getAsBoolean();
+                case MessageWait4Player.COMMAND:
+                    handleWait4Player(message);
                     break;
-                case EndClients.COMMAND:
+                case MessageSetAdmin.COMMAND:
+                    isAdmin = message.getParams().get("isAdmin").getAsBoolean();
+                    break;
+                case MessageEndClients.COMMAND:
                     System.exit(0);
                     break;
             }
@@ -138,31 +138,26 @@ public abstract class BaseClient implements IInputputHandler {
 
     //UI creation functions
 
-    protected void createUI(int state, int posX, int posY, Dimension size, boolean test){
+    protected void createUI(int state, int posX, int posY, Dimension size) {
         createGameSpecificButtons();
         createMainFrame(state, posX, posY, size);
         createPlayArea();
         createHUD();
         createControlArea();
 
-        this.test = test;
-        if(!test) {
-            mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-            mainFrame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    int reply = JOptionPane.showOptionDialog(mainFrame, "Wirklich beenden?", "Beenden?",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Ja", "Nein"},
-                            null);
-                    if (reply == JOptionPane.YES_OPTION) {
-                        System.exit(0);
-                    }
+        mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        mainFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int reply = JOptionPane.showOptionDialog(mainFrame, "Wirklich beenden?", "Beenden?",
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Ja", "Nein"},
+                        null);
+                if (reply == JOptionPane.YES_OPTION) {
+                    System.exit(0);
                 }
-            });
-        }
-        else{
-            uiTest();
-        }
+            }
+        });
+
         log.info("listeners added");
         redrawEverything();
         log.info("finished UI creation");
@@ -173,10 +168,6 @@ public abstract class BaseClient implements IInputputHandler {
                 redrawEverything();
             }
         });
-    }
-
-    protected void uiTest() {
-
     }
 
     /**
@@ -245,28 +236,29 @@ public abstract class BaseClient implements IInputputHandler {
         hud = new JPanel(new GridLayout(3,1));
         hud.setBackground(new Color(0,0,0,0));
 
+        userLabels = new JLabel[4];
+        for(int i = 0; i<userLabels.length;i++){
+            userLabels[i] = new JLabel();
+            userLabels[i].setOpaque(true);
+            userLabels[i].setBackground(new Color(0,0,0,0));
+            switch (i) {
+                case 0:
+                case 2:
+                    userLabels[i].setVerticalAlignment(SwingConstants.CENTER);
+                    userLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
+                    break;
+                case 1:
+                    userLabels[i].setVerticalAlignment(SwingConstants.TOP);
+                    userLabels[i].setHorizontalAlignment(SwingConstants.RIGHT);
+                    break;
+                case 3:
+                    userLabels[i].setVerticalAlignment(SwingConstants.BOTTOM);
+                    userLabels[i].setHorizontalAlignment(SwingConstants.LEFT);
+                    break;
+            }
 
+        }
 
-        userLabel_1= new JLabel();
-        userLabel_1.setOpaque(true);
-        userLabel_1.setVerticalAlignment(SwingConstants.CENTER);
-        userLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-        userLabel_1.setBackground(new Color(0,0,0,0));
-        userLabel_2 = new JLabel();
-        userLabel_2.setOpaque(true);
-        userLabel_2.setVerticalAlignment(SwingConstants.TOP);
-        userLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
-        userLabel_2.setBackground(new Color(0,0,0,0));
-        userLabel_3 = new JLabel();
-        userLabel_3.setOpaque(true);
-        userLabel_3.setVerticalAlignment(SwingConstants.CENTER);
-        userLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-        userLabel_3.setBackground(new Color(0,0,0,0));
-        userLabel_4 = new JLabel();
-        userLabel_4.setOpaque(true);
-        userLabel_4.setVerticalAlignment(SwingConstants.BOTTOM);
-        userLabel_4.setHorizontalAlignment(SwingConstants.LEFT);
-        userLabel_4.setBackground(new Color(0,0,0,0));
         middlePanel = new JPanel(new GridLayout(1,3));
         middlePanel.setBackground(new Color(0,0,0,0));
 
@@ -287,20 +279,20 @@ public abstract class BaseClient implements IInputputHandler {
         hudTop = new JPanel(new GridLayout(1,3));
         hudTop.setBackground(new Color(0,0,0,0));
         hudTop.add(new JLabel());
-        hudTop.add(userLabel_2);
+        hudTop.add(userLabels[1]);
         hudTop.add(new JLabel());
 
         hudMiddle = new JPanel(new GridLayout(1,3));
         hudMiddle.setBackground(new Color(0,0,0,0));
-        hudMiddle.add(userLabel_1);
+        hudMiddle.add(userLabels[0]);
         hudMiddle.add(middlePanel);
-        hudMiddle.add(userLabel_3);
+        hudMiddle.add(userLabels[2]);
 
         hudBottom = new JPanel(new GridLayout(1,3));
         hudBottom.setBackground(new Color(0,0,0,0));
         hudBottom.setBackground(new Color(0,0,0,0));
         hudBottom.add(openPanel);
-        hudBottom.add(userLabel_4);
+        hudBottom.add(userLabels[3]);
 
         hud.add(hudTop);
         hud.add(hudMiddle);
@@ -434,11 +426,11 @@ public abstract class BaseClient implements IInputputHandler {
         configPanel.add(button_clearTable);
 
 
-        button_abortGame.addActionListener(e -> handler.queueOutMessage(new AbortGame()));
-        button_shuffle.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
-        button_ackEnddialogs.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
-        button_endClients.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
-        button_lastStich.addActionListener(e -> handler.queueOutMessage(new CurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
+        button_abortGame.addActionListener(e -> handler.queueOutMessage(new MessageAbortGame()));
+        button_shuffle.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
+        button_ackEnddialogs.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
+        button_endClients.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
+        button_lastStich.addActionListener(e -> handler.queueOutMessage(new MessageCurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
         button_clearTable.addActionListener(e -> clearPlayArea());
         configPanel.setBorder(new LineBorder(Color.WHITE,3));
     }
@@ -526,7 +518,7 @@ public abstract class BaseClient implements IInputputHandler {
         int distFromCenter = cardSize*c.ui.distanceFromCenter/100;
         int theta = c.ui.angleVariation - random.nextInt(c.ui.angleVariation*2 + 1);
         int distVar = distFromCenter +  c.ui.distanceVariation - random.nextInt(c.ui.distanceVariation*2 + 1);
-        BufferedImage img = cardImages.get(card.farbe+card.value);
+        BufferedImage img = cardImages.get(card.suit +card.kind);
         int halfHeight = canvasHeight/2;
         int halfWidth = canvasWidth/2;
         int anchorY = (int) (halfHeight*heightCorrection);
@@ -615,7 +607,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected void getCardLabel4Hand(BaseCard card){
         JPanel p = new JPanel();
         JLabel label = new JLabel();
-        label.setIcon(cardIcons.get(card.farbe+card.value));
+        label.setIcon(cardIcons.get(card.suit +card.kind));
         labelMap.put(card,label);
         cardMap.put(label,card);
         label.addMouseListener(handCardClickAdapter);
@@ -670,7 +662,7 @@ public abstract class BaseClient implements IInputputHandler {
         layeredPane.repaint();
     }
 
-    protected void handleCards(RequestObject message) {
+    protected void handleCards(Message message) {
         updateTable();
         panel.removeAll();
         createCardButtons(hand);
@@ -681,7 +673,7 @@ public abstract class BaseClient implements IInputputHandler {
         bottomPanel.repaint();
     }
 
-    protected void handleWait4Player(RequestObject message) {
+    protected void handleWait4Player(Message message) {
         if (message.getParams().get("player").getAsString().equals(c.connection.name)) {
             gameMessageLabel.setText("Du bist am Zug");
             wait4Player = true;
@@ -710,7 +702,7 @@ public abstract class BaseClient implements IInputputHandler {
                 try {
                     if (exchangeCards[i] == null) {
                         exchangeCards[i] = card;
-                        cLabels[i].setIcon(cardIcons.get(card.farbe + card.value));
+                        cLabels[i].setIcon(cardIcons.get(card.suit + card.kind));
                         cLabels[i].setVisible(true);
                         middlePanel.add(cLabels[i]);
                         break;

@@ -1,22 +1,21 @@
 import base.*;
-import base.doko.Card;
-import base.doko.messages.GameEnd;
+import base.doko.DokoCards;
 import base.doko.SortHand;
 import base.doko.messages.*;
 import base.messages.*;
-import com.google.gson.JsonArray;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static base.DokoConfig.BEDIENEN;
-import static base.doko.messages.GameSelected.GAMES.*;
+import static base.doko.messages.MessageGameSelected.GAMES.*;
 
 public class DokoClient extends BaseClient implements IInputputHandler, IDialogInterface {
 
@@ -38,13 +37,13 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
     //Spielvariablen
 
     private boolean schweinExists = false;
-    private GameSelected.GAMES selectedGame = NORMAL;
+    private MessageGameSelected.GAMES selectedGame = NORMAL;
     private int spectator;
     private int aufspieler;
     private int currentCardsOnTable = 0;
 
     private DokoEndDialog endDialog;
-    private Card mustPlay = null;
+    private BaseCard mustPlay = null;
 
 
     public DokoClient(ComClient handler, List<String> players, Configuration c){
@@ -85,74 +84,96 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             deselectAllSortButtons();
             sortNormal.setBackground(Color.GREEN);
             selectedGame = NORMAL;
+            setTrumpfCards();
         });
         sortDamen.addActionListener(e->{
             createCardButtons(hand=SortHand.sortDamenSolo(hand));
             deselectAllSortButtons();
             sortDamen.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.DAMEN;
+            selectedGame = MessageGameSelected.GAMES.DAMEN;
+            setTrumpfCards();
         });
         sortBuben.addActionListener(e->{
             createCardButtons(hand=SortHand.sortBubenSolo(hand));
             deselectAllSortButtons();
             sortBuben.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.BUBEN;
+            selectedGame = MessageGameSelected.GAMES.BUBEN;
+            setTrumpfCards();
         });
         sortBubenDamen.addActionListener(e->{
             createCardButtons(hand=SortHand.sortBubenDamenSolo(hand));
             deselectAllSortButtons();
             sortBubenDamen.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.BUBENDAMEN;
+            selectedGame = MessageGameSelected.GAMES.BUBENDAMEN;
+            setTrumpfCards();
         });
         sortFleischlos.addActionListener(e->{
             createCardButtons(hand=SortHand.sortFleischlos(hand));
             deselectAllSortButtons();
             sortFleischlos.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.FLEISCHLOS;
+            selectedGame = MessageGameSelected.GAMES.FLEISCHLOS;
+            setTrumpfCards();
         });
         sortKreuz.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortKreuz(hand));
             deselectAllSortButtons();
             sortKreuz.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.KREUZ;
+            selectedGame = MessageGameSelected.GAMES.KREUZ;
+            setTrumpfCards();
         });
         sortPik.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortPik(hand));
             deselectAllSortButtons();
             sortPik.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.PIK;
+            selectedGame = MessageGameSelected.GAMES.PIK;
+            setTrumpfCards();
         });
         sortHerz.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortHerz(hand));
             deselectAllSortButtons();
             sortHerz.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.HERZ;
+            selectedGame = MessageGameSelected.GAMES.HERZ;
+            setTrumpfCards();
         });
         sortKaro.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortKaro(hand, schweinExists));
             deselectAllSortButtons();
             sortKaro.setBackground(Color.GREEN);
             selectedGame = KARO;
+            setTrumpfCards();
         });
         sortArmut.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortArmut(hand, schweinExists));
             deselectAllSortButtons();
             sortArmut.setBackground(Color.GREEN);
             selectedGame = ARMUT;
+            setTrumpfCards();
         });
         sortKoenige.addActionListener(e->{
             createCardButtons(hand=SortHand.sortKaro(hand, schweinExists));
             deselectAllSortButtons();
             sortKoenige.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.KOENIGE;
+            selectedGame = MessageGameSelected.GAMES.KOENIGE;
+            setTrumpfCards();
         });
         sortHochzeit.addActionListener(e -> {
             createCardButtons(hand=SortHand.sortNormal(hand,schweinExists));
             deselectAllSortButtons();
             sortHochzeit.setBackground(Color.GREEN);
-            selectedGame = GameSelected.GAMES.HOCHZEIT;
+            selectedGame = MessageGameSelected.GAMES.HOCHZEIT;
+            setTrumpfCards();
         });
     }
+
+
+
+    private void setTrumpfCards() {
+        if(hand!=null) {
+            hand.forEach(card -> card.trump = DokoCards.isTrumpf(card, selectedGame));
+            gameMessageLabel.setText(String.valueOf(hand.stream().filter(card -> card.trump).count()));
+        }
+    }
+
 
     @Override
     protected void setGameSpecificButtons(List<BaseCard> cards){
@@ -160,7 +181,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         controlPanel.removeAll();
         JButton vorbehalt = new JButton("OK");
         vorbehalt.addActionListener(e ->{
-            handler.queueOutMessage(new GameSelected(players.indexOf(c.connection.name),selectedGame));
+            handler.queueOutMessage(new MessageGameSelected(players.indexOf(c.connection.name),selectedGame));
             controlPanel.setVisible(false);
             controlPanel.removeAll();
             layeredPane.moveToFront(hud);
@@ -176,13 +197,13 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         controlPanel.add(sortHerz);
         controlPanel.add(sortKaro);
 
-        if(cards.stream().filter(p->p.trumpf).count()<4){
+        if(cards.stream().filter(p->p.trump).count()<4){
             controlPanel.add(sortArmut);
         }
-        if(cards.stream().filter(p->p.value.equals(Statics.KOENIG)).count()>4) {
+        if(cards.stream().filter(p->p.kind.equals(Statics.KOENIG)).count()>4) {
             controlPanel.add(sortKoenige);
         }
-        if(cards.stream().filter(p->p.value.equals(Statics.DAME)&&p.farbe.equals(Statics.KREUZ)).count()>1){
+        if(cards.stream().filter(p->p.kind.equals(Statics.DAME)&&p.suit.equals(Statics.KREUZ)).count()>1){
             controlPanel.add(sortHochzeit);
         }
 
@@ -218,7 +239,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 if (selectCards) {
                     moveCard2Exchange(card);
                     if(hand.size()==10){
-                        setSendCardButton(SendCards.POOR, "Karten zurückgeben");
+                        setSendCardButton(MessageSendCards.POOR, "Karten zurückgeben");
                     }
                     else{
                         controlPanel.removeAll();
@@ -227,16 +248,17 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                     if (wait4Player || test) {
                         if((boolean)c.doko.regeln.get(BEDIENEN)
                                 || mustPlay==null
-                                || mustPlay.farbe.equals(card.farbe)) {
+                                || mustPlay.suit.equals(card.suit)) {
                             wait4Player = false;
                             hand.remove(card);
                             label.setVisible(false);
-                            handler.queueOutMessage(new PutCard(players.indexOf(c.connection.name), card.farbe, card.value));
+                            handler.queueOutMessage(new MessagePutCard(players.indexOf(c.connection.name), card.suit, card.kind));
                             if (c.ui.redrawCards) {
                                 createCardButtons(hand);
                             }
                         }
                         else{
+                            //TODO:
                             System.out.println("nicht bedient (simple test");
                         }
                     }
@@ -256,7 +278,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 }
                 moveCard2Hand(card);
                 if(hand.size()==10){
-                    setSendCardButton(SendCards.POOR, "Karten zurückgeben");
+                    setSendCardButton(MessageSendCards.POOR, "Karten zurückgeben");
                 }
                 else{
                     controlPanel.removeAll();
@@ -277,66 +299,62 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
 
     @Override
-    public void handleInput(RequestObject message) {
+    public void handleInput(Message message) {
         super.handleInput(message);
         switch (message.getCommand()) {
-            case Cards.COMMAND: {
+            case MessageCards.COMMAND: {
                 deselectAllSortButtons();
                 handleCards(message);
                 break;
             }
-            case PutCard.COMMAND: {
+            case MessagePutCard.COMMAND: {
                 handlePutCard(message);
                 break;
             }
-            case CurrentStich.LAST: { }
-            case CurrentStich.SPECIFIC: {
+            case MessageCurrentStich.LAST: { }
+            case MessageCurrentStich.SPECIFIC: {
                 if(letzterStich==null) {
                     handleLastStich(message);
                 }
                 break;
             }
-            case Wait4Player.COMMAND: {
-                handleWait4Player(message);
-                break;
-            }
-            case GameEnd.COMMAND: {
+            case MessageGameEnd.COMMAND: {
                 handleGameEnd(message);
                 break;
             }
-            case SelectGame.COMMAND: {
+            case MessageSelectGame.COMMAND: {
                 controlPanel.setVisible(players.indexOf(c.connection.name) != spectator);
                 break;
             }
-            case GameType.COMMAND: {
+            case MessageGameType.COMMAND: {
                 handleGameType(message);
                 break;
             }
-            case SelectCards4Armut.COMMAND: {
+            case MessageSelectCards4Armut.COMMAND: {
                 selectCards4Armut();
                 break;
             }
-            case SendCards.COMMAND: {
+            case MessageSendCards.COMMAND: {
                 handleSendCards(message);
                 break;
             }
-            case GetArmut.COMMAND: {
+            case MessageGetArmut.COMMAND: {
                 handleGetArmut();
                 break;
             }
-            case UpdateUserPanel.COMMAND: {
+            case MessageUpdateUserPanel.COMMAND: {
                 handleUserPanelUpdate(message);
                 break;
             }
-            case AnnounceSpectator.COMMAND: {
+            case MessageAnnounceSpectator.COMMAND: {
                 handleAnnounceSpectator(message);
                 break;
             }
-            case PlayersInLobby.COMMAND:{
+            case MessagePlayerList.IN_LOBBY:{
                 handlePlayersInLobby(message);
                 break;
             }
-            case Acknowledge.COMMAND:{
+            case MessageAcknowledge.COMMAND:{
                 endDialog.ackowledge();
             }
             default:
@@ -345,16 +363,15 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
     }
 
     // handle messages
-    private void handlePlayersInLobby(RequestObject message) {
-        players.clear();
+    private void handlePlayersInLobby(Message message) {
+        MessagePlayerList messagePlayersInLobby = new MessagePlayerList(message);
         DefaultListModel<String> model = new DefaultListModel<>();
-        message.getParams().get("players").getAsJsonArray().forEach(player -> {
-            model.addElement(player.getAsString());
-            players.add(player.getAsString());
-        });
+        players.clear();
+        players.addAll(messagePlayersInLobby.getPlayerNamesList());
+        model.addAll(players);
     }
 
-    private void handlePutCard(RequestObject object){
+    private void handlePutCard(Message message){
         try {
             int ownNumber = players.indexOf(c.connection.name);
             List<Integer> tmpList = new ArrayList<>();
@@ -387,11 +404,11 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 tableStich.clear();
             }
 
-            int player = object.getParams().get("player").getAsInt();
+            MessagePutCard messagePutCard = new MessagePutCard(message);
+            int player = messagePutCard.getPlayerNumber();
             log.info("player:" + i);
-            Card card = new Card(
-                    object.getParams().get("wert").getAsString(),
-                    object.getParams().get("farbe").getAsString());
+            BaseCard card = messagePutCard.getCard();
+            card.trump = DokoCards.isTrumpf(card,selectedGame);
             if(currentCardsOnTable ==0){
                 mustPlay = card;
             }
@@ -412,42 +429,35 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         }
     }
 
-    private void handleAnnounceSpectator(RequestObject message) {
-        spectator = message.getParams().get("player").getAsInt();
-        aufspieler = message.getParams().get("starter").getAsInt();
+    private void handleAnnounceSpectator(Message message) {
+        MessageAnnounceSpectator messageAnnounceSpectator = new MessageAnnounceSpectator(message);
+        spectator = messageAnnounceSpectator.getSpectatorNumber();
+        aufspieler = messageAnnounceSpectator.getStarterNumber();
         if(players.size()>4 && players.get(spectator).equals(c.connection.name)) {
-            handler.queueOutMessage(new DisplayMessage("Du bist jetzt Zuschauer"));
+            handler.queueOutMessage(new MessageDisplayMessage("Du bist jetzt Zuschauer"));
             hand.clear();
             clearPlayArea();
             createCardButtons(hand);
         }
     }
 
-    @Override
-    protected void handleWait4Player(RequestObject message) {
-        super.handleWait4Player(message);
-    }
+
 
     private void handleGetArmut() {
         if (JOptionPane.showConfirmDialog(mainFrame, "Armut mitnehmen?",
                 "Armut mitnehmen", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            handler.queueOutMessage(new GetArmut(players.indexOf(c.connection.name), true));
+            handler.queueOutMessage(new MessageGetArmut(players.indexOf(c.connection.name), true));
         } else {
-            handler.queueOutMessage(new GetArmut(players.indexOf(c.connection.name), false));
+            handler.queueOutMessage(new MessageGetArmut(players.indexOf(c.connection.name), false));
         }
     }
 
-    private void handleSendCards(RequestObject message) {
-        boolean isRich = (message.getParams().get("receiver").getAsString().equals(SendCards.RICH));
+    private void handleSendCards(Message message) {
+        MessageSendCards messageSendCards = new MessageSendCards(message);
+        boolean isRich = messageSendCards.getReceiver().equals(MessageSendCards.RICH);
         middlePanel.removeAll();
         selectCards = isRich;
-        JsonArray array = message.getParams().getAsJsonArray("cards");
-        exchangeCards = new Card[array.size()];
-        for (int i = 0; i< exchangeCards.length;i++){
-            exchangeCards[i]= new Card(array.get(i).getAsString().split(" ")[1], array.get(i).getAsString().split(" ")[0]);
-        }
-
-
+        exchangeCards = messageSendCards.getCards().toArray(new BaseCard[0]);
 
         cLabels = new JLabel[exchangeCards.length];
         for (int i = 0;i<exchangeCards.length;i++){
@@ -459,7 +469,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         }
 
         if(isRich){
-            setSendCardButton(SendCards.POOR, "Karten zurückgeben");
+            setSendCardButton(MessageSendCards.POOR, "Karten zurückgeben");
         }
         else {
             setAcceptArmutReturn();
@@ -478,7 +488,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             for (BaseCard exchangeCard : exchangeCards) {
                 moveCard2Hand(exchangeCard);
             }
-            handler.queueOutMessage(new CardsReturned());
+            handler.queueOutMessage(new MessageCardsReturned());
             middlePanel.removeAll();
             middlePanel.setVisible(false);
             controlPanel.removeAll();
@@ -489,17 +499,18 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         controlPanel.setVisible(true);
     }
 
-    private void handleGameType(RequestObject message) {
-        selectedGame = GameSelected.GAMES.getName(message.getParams().get(GameType.COMMAND).getAsInt());
+    private void handleGameType(Message message) {
+        MessageGameType messageGameType = new MessageGameType(message);
+        selectedGame = messageGameType.getSelectedGame();
         if (hand != null && hand.size() > 0) {
             hand = SortHand.sort(hand,selectedGame,schweinExists);
             createCardButtons(hand);
             if (selectedGame==NORMAL
                     || selectedGame==KARO
                     || selectedGame==ARMUT) {
-                if (hand.stream().filter(p -> p.farbe.equals(Statics.KARO)
-                        && p.value.equals(Statics.ASS)).count() > 1) {
-                    handler.queueOutMessage(new SchweinExists());
+                if (hand.stream().filter(p -> p.suit.equals(Statics.KARO)
+                        && p.kind.equals(Statics.ASS)).count() > 1) {
+                    handler.queueOutMessage(new MessageSchweinExists());
                     schweinExists = true;
                 } else {
                     schweinExists = false;
@@ -509,14 +520,9 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         aufspieler = -1;
     }
 
-    private void handleGameEnd(RequestObject message) {
+    private void handleGameEnd(Message message) {
         updateTable();
-        endDialog = new DokoEndDialog(this,
-                message.getParams().get("re1").getAsString(),
-                message.getParams().get("re2").getAsString(),
-                message.getParams().get("kontra1").getAsString(),
-                message.getParams().get("kontra2").getAsString(),
-                message.getParams().get("remain").getAsInt());
+        endDialog = new MessageGameEnd(message).getEndDialog(this);
         endDialog.showDialog(this.mainFrame);
 
     }
@@ -532,23 +538,18 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         hand = new ArrayList<>();
         serverMessages = new ArrayList<>();
         displayAllServerMessages();
-        handler.queueOutMessage(new ReadyForNextRound(players.indexOf(c.connection.name)));
+        handler.queueOutMessage(new MessageReadyForNextRound(players.indexOf(c.connection.name)));
     }
 
     @Override
-    protected void handleCards(RequestObject message) {
+    protected void handleCards(Message message) {
+        MessageCards messageCards = new MessageCards(message);
         selectedGame = NORMAL;
-        JsonArray array = message.getParams().getAsJsonArray("cards");
-        hand = new ArrayList<>();
-        array.forEach(card->{
-            Card c = new Card(card.getAsString().split(" ")[1],
-                    card.getAsString().split(" ")[0]);
-            hand.add(c);
-        });
+        hand = messageCards.getCards();
         super.handleCards(message);
     }
 
-    private void handleLastStich(RequestObject stich) {
+    private void handleLastStich(Message message) {
         JLabel cardPos1 = new JLabel();
         JLabel cardPos2 = new JLabel();
         JLabel cardPos3 = new JLabel();
@@ -566,28 +567,18 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             }
         }
 
+        MessageCurrentStich messageCurrentStich = new MessageCurrentStich(message);
+        Map<Integer,BaseCard> map = messageCurrentStich.GetStichMap();
         for(int j = 0;j<tmpList.size();j++){
-            if (stich.getParams().has(String.valueOf(tmpList.get(j)))) {
+            if (map.containsKey(tmpList.get(j))) {
                 if (j == 0) {
-                    cardPos4 = getCardLabel(new Card(
-                            stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
-                            stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
-                    );
+                    cardPos4 = getCardLabel(map.get(tmpList.get(j)));
                 } else if (j == 1) {
-                    cardPos1 = getCardLabel(new Card(
-                            stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
-                            stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
-                    );
+                    cardPos1 =  getCardLabel(map.get(tmpList.get(j)));
                 } else if (j == 2) {
-                    cardPos2 = getCardLabel(new Card(
-                            stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
-                            stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
-                    );
+                    cardPos2 =  getCardLabel(map.get(tmpList.get(j)));
                 } else if (j == 3) {
-                    cardPos3 = getCardLabel(new Card(
-                            stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[1],
-                            stich.getParams().get(String.valueOf(tmpList.get(j))).getAsString().split(" ")[0])
-                    );
+                    cardPos3 =  getCardLabel(map.get(tmpList.get(j)));
                 }
             }
         }
@@ -616,8 +607,8 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
     }
 
-    private void handleUserPanelUpdate(RequestObject object) {
-
+    private void handleUserPanelUpdate(Message message) {
+        MessageUpdateUserPanel messageUpdateUserPanel = new MessageUpdateUserPanel(message);
         int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList= new ArrayList<>();
         int i = ownNumber;
@@ -630,41 +621,29 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 i = 0;
             }
         }
-        int otherNumber = players.indexOf(object.getParams().get("player").getAsString());
+
+        int otherNumber = players.indexOf(messageUpdateUserPanel.getPlayerName());
 
         switch (tmpList.indexOf(otherNumber)){
-            case 1:{
-                userLabel_1.setText(createUserLabelString(
-                        object.getParams().get("text").getAsString(),
-                        object.getParams().get("player").getAsString(),
+            case 1:
+            case 2:
+            case 3:
+                userLabels[tmpList.indexOf(otherNumber)].setText(createUserLabelString(
+                        messageUpdateUserPanel.getText(),
+                        messageUpdateUserPanel.getPlayerName(),
                         true));
                 break;
-            }
-            case 2:{
-                userLabel_2.setText(createUserLabelString(
-                        object.getParams().get("text").getAsString(),
-                        object.getParams().get("player").getAsString(),
-                        true));
-                break;
-            }
-            case 3:{
-                userLabel_3.setText(createUserLabelString(
-                        object.getParams().get("text").getAsString(),
-                        object.getParams().get("player").getAsString(),
-                        true));
-                break;
-            }
             case 0:{
-                if(object.getParams().get("player").getAsString().equals(c.connection.name)){
-                    userLabel_4.setText(createUserLabelString(
-                            object.getParams().get("text").getAsString(),
+                if(messageUpdateUserPanel.getPlayerName().equals(c.connection.name)){
+                    userLabels[tmpList.indexOf(otherNumber)].setText(createUserLabelString(
+                             messageUpdateUserPanel.getText(),
                             "Du",
                             false));
                 }
                 else{
-                    userLabel_4.setText(createUserLabelString(
-                            object.getParams().get("text").getAsString(),
-                            object.getParams().get("player").getAsString(),
+                    userLabels[tmpList.indexOf(otherNumber)].setText(createUserLabelString(
+                            messageUpdateUserPanel.getText(),
+                            messageUpdateUserPanel.getPlayerName(),
                             true));
                 }
                 break;
@@ -682,14 +661,14 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
     private void selectCards4Armut() {
         controlPanel.removeAll();
         autoSelectArmutCards();
-        setSendCardButton(SendCards.RICH, "Armut anbieten");
+        setSendCardButton(MessageSendCards.RICH, "Armut anbieten");
     }
 
     private void setSendCardButton(String receiver, String buttonText) {
         controlPanel.removeAll();
         sendCardsButton = new JButton(buttonText);
         sendCardsButton.addActionListener(e -> {
-            handler.queueOutMessage(new SendCards(Arrays.asList(exchangeCards), receiver));
+            handler.queueOutMessage(new MessageSendCards(Arrays.asList(exchangeCards), receiver));
             selectCards = false;
             controlPanel.setVisible(false);
             middlePanel.removeAll();
@@ -704,7 +683,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
     private void autoSelectArmutCards() {
          middlePanel.removeAll();
-         List<BaseCard> cards = hand.stream().filter(card->card.trumpf).collect(Collectors.toList());
+         List<BaseCard> cards = hand.stream().filter(card->card.trump).collect(Collectors.toList());
          exchangeCards = new BaseCard[cards.size()];
          cLabels = new JLabel[cards.size()];
          for(int i =0; i < cards.size();i++){
@@ -739,28 +718,6 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 "\">" +
                 s +
                 "</font></html>";
-    }
-
-    @Override
-    protected void uiTest() {
-        hand = new ArrayList<>();
-        List<Card> list = Card.createCardList();
-        while(hand.size()<10){
-            hand.add(Card.randomCard(list,random));
-        }
-        createCardButtons(hand);
-        setGameSpecificButtons(hand);
-
-        userLabel_1.setText("Spieler 1");
-        userLabel_2.setText("Spieler 2");
-        userLabel_3.setText("Spieler 3");
-        userLabel_4.setText("Spieler 4");
-        serverMessageLabel.setText("Dieses Feld wird vom Server verwendet");
-        gameMessageLabel.setText("Dieses Feld wird vom Client verwendet");
-        tableStich = new HashMap<>();
-        for(int i = 0;i<4;i++){
-            tableStich.put(i,Card.randomCard(list,random));
-        }
     }
 
 

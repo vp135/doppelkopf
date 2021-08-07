@@ -1,8 +1,8 @@
 import base.AutoResetEvent;
 import base.IInputputHandler;
 import base.Logger;
-import base.messages.AddPlayer;
-import base.messages.RequestObject;
+import base.messages.MessageAddPlayer;
+import base.messages.Message;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,7 +14,7 @@ public class ComClient {
 
     private static final long TIMEOUT = 5000;
     private final AutoResetEvent ev = new AutoResetEvent(true);
-    private final ConcurrentLinkedDeque<RequestObject> outMessages = new ConcurrentLinkedDeque<>();
+    private final ConcurrentLinkedDeque<Message> outMessages = new ConcurrentLinkedDeque<>();
 
     private Socket socket;
     private final String hostname;
@@ -57,11 +57,11 @@ public class ComClient {
         }).start();
     }
 
-    public void queueOutMessage(RequestObject message) {
+    public void queueOutMessage(Message message) {
         log.info("queue: " + message.getCommand());
-        if (message.getCommand().equals(AddPlayer.COMMAND)) {
+        if (message.getCommand().equals(MessageAddPlayer.COMMAND)) {
             outMessages.forEach(requestObject -> {
-                if (requestObject.getCommand().equals(AddPlayer.COMMAND)) {
+                if (requestObject.getCommand().equals(MessageAddPlayer.COMMAND)) {
                     outMessages.remove(requestObject);
                 }
             });
@@ -73,14 +73,14 @@ public class ComClient {
 
     }
 
-    private boolean SendByTCP(RequestObject requestObject) {
+    private boolean SendByTCP(Message message) {
         boolean sent = false;
         if (socket!=null && !socket.isClosed()) {
             try {
                 PrintWriter out = new PrintWriter(new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream())), true);
-                String s = requestObject.toJson();
-                log.info("Sending to server: " + requestObject.getCommand());
+                String s = message.toJson();
+                log.info("Sending to server: " + message.getCommand());
                 out.println(s);
                 sent = true;
             } catch (IOException ex) {
@@ -112,7 +112,7 @@ public class ComClient {
                             if ((ServerReply = in.readLine()) != null) {
                                 if (ServerReply.length() > 0) {
                                     //log.info(ServerReply);
-                                    client.handleInput(RequestObject.fromString(ServerReply));
+                                    client.handleInput(Message.fromString(ServerReply));
                                 }
                             }
                         } catch (Exception ex) {
@@ -126,7 +126,7 @@ public class ComClient {
     }
 
     public void openTCPConnection() {
-        queueOutMessage(new AddPlayer(name));
+        queueOutMessage(new MessageAddPlayer(name));
         wait.set(true);
         new Thread(() -> {
             while (socket == null) {

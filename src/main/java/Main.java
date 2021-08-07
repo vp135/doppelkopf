@@ -124,7 +124,7 @@ public class Main implements IInputputHandler{
                                 players.set(playerList.getSelectedIndex() - 1, playerUp);
                                 players.set(playerList.getSelectedIndex(), playerDown);
                                 selectionPlayer = playerUp;
-                                comClient.queueOutMessage(new ChangePlayerOrder(players));
+                                comClient.queueOutMessage(MessagePlayerList.playerOrderChanged(players));
                             }
                             break;
                         case 34://page down
@@ -135,7 +135,7 @@ public class Main implements IInputputHandler{
                                 players.set(playerList.getSelectedIndex() + 1, playerUp);
                                 players.set(playerList.getSelectedIndex(), playerDown);
                                 selectionPlayer = playerUp;
-                                comClient.queueOutMessage(new ChangePlayerOrder(players));
+                                comClient.queueOutMessage(MessagePlayerList.playerOrderChanged(players));
                             }
                             break;
                     }
@@ -186,7 +186,7 @@ public class Main implements IInputputHandler{
                     create.setEnabled(false);
                     join.setEnabled(false);
                     comClient = new ComClient(hostname.getText(), Integer.parseInt(port.getText()), this, name);
-                    comClient.queueOutMessage(new GetVersion(name, Statics.VERSION));
+                    comClient.queueOutMessage(new MessageGetVersion(name, Statics.VERSION));
                     comClient.start();
                     inputs.add(gameList);
                     inputs.add(start);
@@ -194,6 +194,9 @@ public class Main implements IInputputHandler{
                     rightPanel.add(configPanel);
                     gameList.setSelectedItem(Statics.game.valueOf(c.lastGame));
                     setConfigMenu();
+
+
+                    new FakeClient(c);
                 }
             }
         });
@@ -231,7 +234,7 @@ public class Main implements IInputputHandler{
                         join.setText("verbunden");
                         log.info("verbunden");
                         create.setEnabled(false);
-                        comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
+                        comClient.queueOutMessage(new MessageGetVersion(name,Statics.VERSION));
                     } else {
                         comClient.clearQueue();
                         join.setText("beitreten");
@@ -241,7 +244,9 @@ public class Main implements IInputputHandler{
             }).start();
 
         });
-        start.addActionListener(e -> startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem())));
+        start.addActionListener(e ->{
+            startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem()));
+        });
         createJoinFrame.pack();
         createJoinFrame.add(panel);
         createJoinFrame.setVisible(true);
@@ -263,18 +268,18 @@ public class Main implements IInputputHandler{
     }
 
 
-    public void handleInput(RequestObject message) {
+    public void handleInput(Message message) {
         log.info("received: " +message.getCommand());
         switch (message.getCommand()) {
-            case PlayersInLobby.COMMAND: {
+            case MessagePlayerList.IN_LOBBY: {
                 handlePlayersInLobby(message);
                 break;
             }
-            case StartGame.COMMAND: {
+            case MessageStartGame.COMMAND: {
                 handleStart(message);
                 break;
             }
-            case GetVersion.COMMAND: {
+            case MessageGetVersion.COMMAND: {
                 handleGetVersion(message);
                 break;
             }
@@ -282,23 +287,23 @@ public class Main implements IInputputHandler{
     }
 
 
-    private void handleGetVersion(RequestObject message) {
-        if (!Statics.VERSION.equals(message.getParams().get("version").getAsString())) {
+    private void handleGetVersion(Message message) {
+        MessageGetVersion messageGetVersion = new MessageGetVersion(message);
+        if (!Statics.VERSION.equals(messageGetVersion.getVersion())) {
             JOptionPane.showMessageDialog(createJoinFrame,
-                    "Version(Server): " + message.getParams().get("version").getAsString() + "\n" +
+                    "Version(Server): " + messageGetVersion.getVersion() + "\n" +
                             "Version(lokal): " + Statics.VERSION);
         }
     }
 
 
-    private void handlePlayersInLobby(RequestObject message) {
+    private void handlePlayersInLobby(Message message) {
+        MessagePlayerList messagePlayersInLobby = new MessagePlayerList(message);
         playerList.removeAll();
         players = new ArrayList<>();
         DefaultListModel<String> model = new DefaultListModel<>();
-        message.getParams().get("players").getAsJsonArray().forEach(player -> {
-            model.addElement(player.getAsString());
-            players.add(player.getAsString());
-        });
+        players.addAll(messagePlayersInLobby.getPlayerNamesList());
+        model.addAll(players);
         playerList.setModel(model);
         if(!selectionPlayer.equals("")){
             playerList.setSelectedValue(selectionPlayer,true);
@@ -311,11 +316,11 @@ public class Main implements IInputputHandler{
     }
 
 
-    private void handleStart(RequestObject message) {
+    private void handleStart(Message message) {
+        MessageStartGame messageStartGame = new MessageStartGame(message);
         if(client==null || client.mainFrame==null) {
             while (!ready) {
                 try {
-                    System.out.println("not ready yet");
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -323,10 +328,9 @@ public class Main implements IInputputHandler{
 
             }
 
-            Statics.game game = Statics.game.valueOf(message.getParams().get("game").getAsString());
-            c.lastGame = game.name();
+            c.lastGame =  messageStartGame.getGame().name();
             c.saveConfig();
-            switch (game) {
+            switch (messageStartGame.getGame()) {
                 case DOKO:
                     client = new DokoClient(comClient, players, c);
                     break;
@@ -340,8 +344,7 @@ public class Main implements IInputputHandler{
                     createJoinFrame.getExtendedState(),
                     createJoinFrame.getX(),
                     createJoinFrame.getY(),
-                    createJoinFrame.getSize(),
-                    false);
+                    createJoinFrame.getSize());
             new Thread(() -> {
                 try {
                     Thread.sleep(500);
@@ -397,26 +400,6 @@ public class Main implements IInputputHandler{
                 configPanel.removeAll();
                 configPanel.add(createSkatConfigPanel(c.skat),BorderLayout.CENTER);
                 break;
-            default:
-                configPanel.removeAll();
-                JPanel test = new JPanel();
-                JCheckBox cb = new JCheckBox("test");
-                cb.addActionListener(e1 ->{
-                    createConfigFromJPanel();
-                });
-                test.add(cb);
-                JPanel test2 = new JPanel();
-                test2.add(new JLabel("labelTest"));
-                test2.add(new JTextField("WERT"));
-                JPanel test3 = new JPanel();
-                test3.add(new JLabel("testLabel"));
-                test3.add(new JCheckBox("cb1"));
-                test3.add(new JCheckBox("cb2"));
-                test3.add(new JCheckBox("cb3"));
-                test.add(test2);
-                test.add(test3);
-                configPanel.add(test,BorderLayout.CENTER);
-                break;
         }
 
         configPanel.revalidate();
@@ -427,7 +410,7 @@ public class Main implements IInputputHandler{
         JPanel panel = new JPanel();
         Gson gson = new GsonBuilder().create();
         JsonObject jObject=  gson.toJsonTree(skat).getAsJsonObject();
-        panel.add(test("skat" ,jObject));
+        panel.add(createConfigPanelFromJson("skat" ,jObject));
         return panel;
     }
 
@@ -435,11 +418,11 @@ public class Main implements IInputputHandler{
         JPanel panel = new JPanel();
         Gson gson = new GsonBuilder().create();
         JsonObject jObject=  gson.toJsonTree(doko).getAsJsonObject();
-        panel.add(test("doko" ,jObject));
+        panel.add(createConfigPanelFromJson("doko" ,jObject));
         return panel;
     }
 
-    private JComponent test (String name, JsonElement element){
+    private JComponent createConfigPanelFromJson(String name, JsonElement element){
 
         if(element.isJsonPrimitive()){
             JsonPrimitive p = element.getAsJsonPrimitive();
@@ -470,7 +453,7 @@ public class Main implements IInputputHandler{
             panel.add(new JLabel(name));
             for (String s: o.keySet()) {
                 JsonElement e = o.get(s);
-                panel.add(test(s,e));
+                panel.add(createConfigPanelFromJson(s,e));
             }
             return panel;
         }
