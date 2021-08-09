@@ -196,7 +196,9 @@ public class Main implements IInputputHandler{
                     setConfigMenu();
 
 
-                    new FakeClient(c);
+                    new FakeClient(c,"STEVE");
+                    new FakeClient(c,"BOB");
+                    new FakeClient(c,"KINGSLEY");
                 }
             }
         });

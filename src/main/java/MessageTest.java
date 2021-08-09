@@ -52,9 +52,6 @@ public class MessageTest implements IServerMessageHandler{
 
         cards.addActionListener(e ->{
             List<BaseCard> baseCardList = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                baseCardList.add(DokoCards.randomCard(r));
-            }
             server.send2All(socketList, new MessageCards(baseCardList));
         });
         basePanel.add(cards);
@@ -92,9 +89,6 @@ public class MessageTest implements IServerMessageHandler{
         JButton sendCards = new JButton("SendCards");
         sendCards.addActionListener(e -> {
             List<BaseCard> cardList = new ArrayList<>();
-            for(int i = 0 ; i<3; i++) {
-                cardList.add(DokoCards.randomCard(r));
-            }
             server.send2All(socketList, new MessageSendCards(cardList, MessageSendCards.RICH));
         });
         dokoPanel.add(sendCards);

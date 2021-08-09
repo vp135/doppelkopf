@@ -21,6 +21,7 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected Logger log;
 
+    //UI
     protected JFrame mainFrame= null;
     protected JFrame letzterStich;
     protected JLayeredPane layeredPane;
@@ -40,54 +41,52 @@ public abstract class BaseClient implements IInputputHandler {
     protected Map<JLabel,BaseCard> cardMap;
     protected ArrayList<JButton> buttonList;
     protected Graphics playArea;
-
     protected JLayeredPane overLayer;
 
-    protected JButton sendCardsButton;
+    protected JPanel middlePanel;
+    protected JPanel configPanel;
+    protected JPanel hudBottom;
+    protected JPanel hudMiddle;
+    protected JPanel hudTop;
+    private JLabel button_config;
+
+    //Spielvariablen
+    protected final Random random = new Random(System.currentTimeMillis());
+    protected final List<String> players;
 
     protected List<String> serverMessages;
-
+    protected int spectator;
+    protected int aufspieler;
+    protected int currentCardsOnTable = 0;
+    protected Configuration c;
+    protected ComClient handler;
+    protected boolean isAdmin;
+    protected Statics.game currentGame;
 
     //Cards
+    private final HashMap<String,BufferedImage> cardImages = new HashMap<>();
 
     private HashMap<String,BufferedImage> rawImages = new HashMap<>();
     private HashMap<String,ImageIcon> rawIcons = new HashMap<>();
-
     private BufferedImage img;
-    public static final double RATIO = 0.67;
-    protected final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
-    private final HashMap<String,BufferedImage> cardImages = new HashMap<>();
-    protected int cardSize;
     private int cardHeight4Hand;
 
+    public static final double RATIO = 0.67;
 
+    protected final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
+    protected int cardSize;
     protected MouseAdapter handCardClickAdapter;
     protected MouseAdapter exchangeCardClickAdapter;
     protected HashMap<Integer, BaseCard> tableStich = new HashMap<>();
     protected boolean wait4Player = false;
     protected boolean selectCards = false;
     protected List<BaseCard> hand;
-
     protected BaseCard[] exchangeCards;
     protected JLabel[] cLabels;
-
-
-    protected Configuration c;
-    protected ComClient handler;
-    protected final List<String> players;
     protected int maxHandCards = 13;
     protected float heightCorrection;
 
-    protected boolean test;
-    protected boolean isAdmin;
 
-    protected final Random random = new Random(System.currentTimeMillis());
-    protected JPanel middlePanel;
-    protected JPanel configPanel;
-    private JLabel button_config;
-    protected JPanel hudBottom;
-    protected JPanel hudMiddle;
-    protected JPanel hudTop;
 
     public BaseClient(ComClient handler, List<String> players, Configuration c) {
         this.handler = handler;
@@ -242,16 +241,16 @@ public abstract class BaseClient implements IInputputHandler {
             userLabels[i].setOpaque(true);
             userLabels[i].setBackground(new Color(0,0,0,0));
             switch (i) {
-                case 0:
-                case 2:
+                case 1:
+                case 3:
                     userLabels[i].setVerticalAlignment(SwingConstants.CENTER);
                     userLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
                     break;
-                case 1:
+                case 2:
                     userLabels[i].setVerticalAlignment(SwingConstants.TOP);
                     userLabels[i].setHorizontalAlignment(SwingConstants.RIGHT);
                     break;
-                case 3:
+                case 0:
                     userLabels[i].setVerticalAlignment(SwingConstants.BOTTOM);
                     userLabels[i].setHorizontalAlignment(SwingConstants.LEFT);
                     break;
@@ -279,20 +278,20 @@ public abstract class BaseClient implements IInputputHandler {
         hudTop = new JPanel(new GridLayout(1,3));
         hudTop.setBackground(new Color(0,0,0,0));
         hudTop.add(new JLabel());
-        hudTop.add(userLabels[1]);
+        hudTop.add(userLabels[2]);
         hudTop.add(new JLabel());
 
         hudMiddle = new JPanel(new GridLayout(1,3));
         hudMiddle.setBackground(new Color(0,0,0,0));
-        hudMiddle.add(userLabels[0]);
+        hudMiddle.add(userLabels[1]);
         hudMiddle.add(middlePanel);
-        hudMiddle.add(userLabels[2]);
+        hudMiddle.add(userLabels[3]);
 
         hudBottom = new JPanel(new GridLayout(1,3));
         hudBottom.setBackground(new Color(0,0,0,0));
         hudBottom.setBackground(new Color(0,0,0,0));
         hudBottom.add(openPanel);
-        hudBottom.add(userLabels[3]);
+        hudBottom.add(userLabels[0]);
 
         hud.add(hudTop);
         hud.add(hudMiddle);
@@ -671,6 +670,63 @@ public abstract class BaseClient implements IInputputHandler {
         gameMessageLabel.setText("");
         bottomPanel.revalidate();
         bottomPanel.repaint();
+    }
+
+    public void handleLastStich(Message message, int playerCount, int spectator) {
+        int ownNumber = players.indexOf(c.connection.name);
+        List<Integer> tmpList = new ArrayList<>();
+        int i = ownNumber;
+        while (tmpList.size() < playerCount) {
+            if (i != spectator) {
+                tmpList.add(i);
+            }
+            i++;
+            if (i > players.size() - 1) {
+                i = 0;
+            }
+        }
+
+        JLabel cardPos1 = new JLabel();
+        JLabel cardPos2 = new JLabel();
+        JLabel cardPos3 = new JLabel();
+        JLabel cardPos4 = new JLabel();
+        MessageCurrentStich messageCurrentStich = new MessageCurrentStich(message);
+        Map<Integer,BaseCard> map = messageCurrentStich.GetStichMap(currentGame);
+        for(int j = 0;j<tmpList.size();j++){
+            if (map.containsKey(tmpList.get(j))) {
+                if (j == 0) {
+                    cardPos4 = getCardLabel(map.get(tmpList.get(j)));
+                } else if (j == 1) {
+                    cardPos1 =  getCardLabel(map.get(tmpList.get(j)));
+                } else if (j == 2) {
+                    cardPos2 =  getCardLabel(map.get(tmpList.get(j)));
+                } else if (j == 3) {
+                    cardPos3 =  getCardLabel(map.get(tmpList.get(j)));
+                }
+            }
+        }
+
+        letzterStich = new JFrame("letzter Stich");
+        letzterStich.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                letzterStich=null;
+            }
+        });
+        JPanel jPanel = new JPanel(new GridLayout(3, 3));
+        jPanel.add(new JLabel());
+        jPanel.add(cardPos2);
+        jPanel.add(new JLabel());
+        jPanel.add(cardPos1);
+        jPanel.add(new JLabel());
+        jPanel.add(cardPos3);
+        jPanel.add(new JLabel());
+        jPanel.add(cardPos4);
+        jPanel.add(new JLabel());
+        letzterStich.add(jPanel);
+        letzterStich.pack();
+        letzterStich.setVisible(true);
     }
 
     protected void handleWait4Player(Message message) {
