@@ -1,19 +1,18 @@
 import base.*;
-import base.messages.StartGame;
-import base.messages.GetVersion;
-import base.messages.PlayersInLobby;
-import base.messages.RequestObject;
+import base.messages.*;
+import com.google.gson.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Main implements IInputputHandler{
@@ -31,10 +30,13 @@ public class Main implements IInputputHandler{
     private JButton join;
     private JFrame createJoinFrame;
     private Configuration c;
+    private boolean isAdmin = false;
 
 
     private ComClient comClient;
     private JComboBox<Statics.game> gameList;
+    private JPanel configPanel;
+    private String selectionPlayer ="";
 
     public static void main(String[] args) {
         m = new Main();
@@ -87,27 +89,6 @@ public class Main implements IInputputHandler{
         JPanel inputs = new JPanel(new GridLayout(5, 2));
         JPanel rightPanel = new JPanel(new GridLayout(3,1));
 
-        JPanel userOptions = new JPanel(new GridLayout(6,2));
-        userOptions.add(new JLabel("Kartenwinkel (rechts/links)"));
-        JTextField angle24Field = new JTextField();
-        userOptions.add(angle24Field);
-        userOptions.add(new JLabel("Kartenwinkel (oben/unten)"));
-        JTextField angle13Field = new JTextField();
-        userOptions.add(angle13Field);
-        userOptions.add(new JLabel("max Abweichung des Winkels"));
-        JTextField angleVariationField = new JTextField();
-        userOptions.add(angleVariationField);
-        userOptions.add(new JLabel("Relativer Abstand der Karten zur Tischmitte"));
-        JTextField distanceField = new JTextField();
-        userOptions.add(distanceField);
-        userOptions.add(new JLabel("max relative Abweichung des Abstands"));
-        JTextField distanceVariationField = new JTextField();
-        userOptions.add(distanceVariationField);
-        JCheckBox repositionCards = new JCheckBox("Karten neu verteilen");
-        userOptions.add(repositionCards);
-        JButton optionsTestButton = new JButton("Einstellungen Testen");
-        userOptions.add(optionsTestButton);
-
 
         panel.add(inputs);
         inputs.add(new JLabel("Spielername"));
@@ -130,35 +111,59 @@ public class Main implements IInputputHandler{
         playerList.setBackground(Color.BLACK);
         playerList.setForeground(Color.WHITE);
         playerList.setFont(playerList.getFont().deriveFont((float)c.ui.textsize));
+        playerList.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(isAdmin) {
+                    switch (e.getKeyCode()) {
+                        case 33://page up
+                        case 38://arrow up
+                            if (playerList.getSelectedIndex() > 0) {
+                                String playerDown = players.get(playerList.getSelectedIndex() - 1);
+                                String playerUp = players.get(playerList.getSelectedIndex());
+                                players.set(playerList.getSelectedIndex() - 1, playerUp);
+                                players.set(playerList.getSelectedIndex(), playerDown);
+                                selectionPlayer = playerUp;
+                                comClient.queueOutMessage(MessagePlayerList.playerOrderChanged(players));
+                            }
+                            break;
+                        case 34://page down
+                        case 40://arrow down
+                            if (playerList.getSelectedIndex() < players.size() - 1 && playerList.getSelectedIndex() > -1) {
+                                String playerDown = players.get(playerList.getSelectedIndex() + 1);
+                                String playerUp = players.get(playerList.getSelectedIndex());
+                                players.set(playerList.getSelectedIndex() + 1, playerUp);
+                                players.set(playerList.getSelectedIndex(), playerDown);
+                                selectionPlayer = playerUp;
+                                comClient.queueOutMessage(MessagePlayerList.playerOrderChanged(players));
+                            }
+                            break;
+                    }
+                }
+            }
+        });
 
 
         rightPanel.add(playerList);
-        rightPanel.add(userOptions);
         panel.add(rightPanel);
         inputs.add(create);
         inputs.add(join);
 
-        optionsTestButton.addActionListener(e -> {
-            overrideConfig(angle24Field, angle13Field, angleVariationField, distanceField,
-                    distanceVariationField, repositionCards, hostname, port, false);
-            createOptionsTestFrame();
-        });
+
 
         if (c != null) {
             playername.setText(c.connection.name);
             hostname.setText(c.connection.server);
             port.setText(String.valueOf(c.connection.port));
-            angle24Field.setText(String.valueOf(c.ui.angle24));
-            angle13Field.setText(String.valueOf(c.ui.angle13));
-            angleVariationField.setText(String.valueOf(c.ui.angleVariation));
-            distanceField.setText(String.valueOf(c.ui.distanceFromCenter));
-            distanceVariationField.setText(String.valueOf(c.ui.distanceVariation));
-            repositionCards.setSelected(c.ui.redrawCards);
 
         }
 
         create.addActionListener(e -> {
+            isAdmin = true;
             name = playername.getText();
+            c.connection.name = name;
+            c.connection.server = hostname.getText();
+            c.connection.port = Integer.parseInt(port.getText());
             if (!playername.getText().trim().equals("") && !port.getText().trim().equals("")) {
                 server = new BaseServer(c, new ComServer(Integer.parseInt(port.getText())));
                 playerList.addListSelectionListener(p -> {
@@ -181,16 +186,21 @@ public class Main implements IInputputHandler{
                     create.setEnabled(false);
                     join.setEnabled(false);
                     comClient = new ComClient(hostname.getText(), Integer.parseInt(port.getText()), this, name);
-                    comClient.queueOutMessage(new GetVersion(name, Statics.VERSION));
+                    comClient.queueOutMessage(new MessageGetVersion(name, Statics.VERSION));
                     comClient.start();
                     inputs.add(gameList);
                     inputs.add(start);
+                    createConfigPanel();
+                    rightPanel.add(configPanel);
+                    gameList.setSelectedItem(Statics.game.valueOf(c.lastGame));
+                    setConfigMenu();
+
+
+                    //new FakeClient(c,"STEVE");
+                    //new FakeClient(c,"BOB");
+                    //new FakeClient(c,"KINGSLEY");
                 }
             }
-            overrideConfig(angle24Field, angle13Field,
-                    angleVariationField, distanceField,
-                    distanceVariationField, repositionCards,
-                    hostname, port, true);
         });
 
         join.addActionListener(e -> {
@@ -198,6 +208,9 @@ public class Main implements IInputputHandler{
             new Thread(() -> {
                 name = playername.getText().trim();
                 if (!name.equals("")) {
+                    c.connection.name = name;
+                    c.connection.server = hostname.getText();
+                    c.connection.port = Integer.parseInt(port.getText());
                     comClient = new ComClient(hostname.getText(),Integer.parseInt(port.getText()), this,name);
                     comClient.start();
                     log.info("verbinde");
@@ -222,12 +235,8 @@ public class Main implements IInputputHandler{
                     if (comClient.socketNotNull()){
                         join.setText("verbunden");
                         log.info("verbunden");
-                        overrideConfig(angle24Field, angle13Field,
-                                angleVariationField, distanceField,
-                                distanceVariationField, repositionCards
-                                ,hostname, port, true);
                         create.setEnabled(false);
-                        comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
+                        comClient.queueOutMessage(new MessageGetVersion(name,Statics.VERSION));
                     } else {
                         comClient.clearQueue();
                         join.setText("beitreten");
@@ -237,7 +246,9 @@ public class Main implements IInputputHandler{
             }).start();
 
         });
-        start.addActionListener(e -> startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem())));
+        start.addActionListener(e ->{
+            startGameServer((Statics.game) Objects.requireNonNull(gameList.getSelectedItem()));
+        });
         createJoinFrame.pack();
         createJoinFrame.add(panel);
         createJoinFrame.setVisible(true);
@@ -258,72 +269,45 @@ public class Main implements IInputputHandler{
         server.startGame();
     }
 
-    private void createOptionsTestFrame() {
-        DokoClient client = new DokoClient(null,new ArrayList<>(),c);
-        client.createUI(
-                createJoinFrame.getExtendedState(),
-                createJoinFrame.getX(),
-                createJoinFrame.getY(),
-                createJoinFrame.getSize(),
-                true);
-    }
 
-    private void overrideConfig(JTextField angle24Field, JTextField angle13Field,
-                                JTextField angleVariationField, JTextField distanceField,
-                                JTextField distanceVariationField, JCheckBox repositionCards,
-                                JTextField hostname, JTextField port, boolean save) {
-        c.connection.name = name;
-        c.connection.server = hostname.getText();
-        c.connection.port = Integer.parseInt(port.getText());
-        c.ui.angle24 = Integer.parseInt(angle24Field.getText());
-        c.ui.angle13 = Integer.parseInt(angle13Field.getText());
-        c.ui.angleVariation = Integer.parseInt(angleVariationField.getText());
-        c.ui.distanceFromCenter = Integer.parseInt(distanceField.getText());
-        c.ui.distanceVariation = Integer.parseInt(distanceVariationField.getText());
-        c.ui.redrawCards = repositionCards.isSelected();
-        if(save) {
-            c.saveConfig();
-        }
-    }
-
-
-    public void handleInput(RequestObject message) {
+    public void handleInput(Message message) {
         log.info("received: " +message.getCommand());
         switch (message.getCommand()) {
-            case PlayersInLobby.COMMAND: {
+            case MessagePlayerList.IN_LOBBY:
+            case MessagePlayerList.CHANGE_ORDER:
                 handlePlayersInLobby(message);
                 break;
-            }
-            case StartGame.COMMAND: {
+            case MessageStartGame.COMMAND:
                 handleStart(message);
                 break;
-            }
-            case GetVersion.COMMAND: {
+            case MessageGetVersion.COMMAND:
                 handleGetVersion(message);
                 break;
-            }
         }
     }
 
 
-    private void handleGetVersion(RequestObject message) {
-        if (!Statics.VERSION.equals(message.getParams().get("version").getAsString())) {
+    private void handleGetVersion(Message message) {
+        MessageGetVersion messageGetVersion = new MessageGetVersion(message);
+        if (!Statics.VERSION.equals(messageGetVersion.getVersion())) {
             JOptionPane.showMessageDialog(createJoinFrame,
-                    "Version(Server): " + message.getParams().get("version").getAsString() + "\n" +
+                    "Version(Server): " + messageGetVersion.getVersion() + "\n" +
                             "Version(lokal): " + Statics.VERSION);
         }
     }
 
 
-    private void handlePlayersInLobby(RequestObject message) {
+    private void handlePlayersInLobby(Message message) {
+        MessagePlayerList messagePlayersInLobby = new MessagePlayerList(message);
         playerList.removeAll();
         players = new ArrayList<>();
         DefaultListModel<String> model = new DefaultListModel<>();
-        message.getParams().get("players").getAsJsonArray().forEach(player -> {
-            model.addElement(player.getAsString());
-            players.add(player.getAsString());
-        });
+        players.addAll(messagePlayersInLobby.getPlayerNamesList());
+        model.addAll(players);
         playerList.setModel(model);
+        if(!selectionPlayer.equals("")){
+            playerList.setSelectedValue(selectionPlayer,true);
+        }
         if (players.size() > 0) {
             start.setEnabled(true);
         }
@@ -332,11 +316,11 @@ public class Main implements IInputputHandler{
     }
 
 
-    private void handleStart(RequestObject message) {
+    private void handleStart(Message message) {
+        MessageStartGame messageStartGame = new MessageStartGame(message);
         if(client==null || client.mainFrame==null) {
             while (!ready) {
                 try {
-                    System.out.println("not ready yet");
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -344,7 +328,9 @@ public class Main implements IInputputHandler{
 
             }
 
-            switch (Statics.game.valueOf(message.getParams().get("game").getAsString())) {
+            c.lastGame =  messageStartGame.getGame().name();
+            c.saveConfig();
+            switch (messageStartGame.getGame()) {
                 case DOKO:
                     client = new DokoClient(comClient, players, c);
                     break;
@@ -358,8 +344,7 @@ public class Main implements IInputputHandler{
                     createJoinFrame.getExtendedState(),
                     createJoinFrame.getX(),
                     createJoinFrame.getY(),
-                    createJoinFrame.getSize(),
-                    false);
+                    createJoinFrame.getSize());
             new Thread(() -> {
                 try {
                     Thread.sleep(500);
@@ -380,13 +365,12 @@ public class Main implements IInputputHandler{
 
     public void createRawCardMaps(){
         new Thread(() ->{
-            BaseCard.UNIQUE_CARDS.forEach(s -> {
+            Card.UNIQUE_CARDS.forEach(s -> {
                 String path = new File(System.getProperty("user.dir") + File.separator+ "resources"+File.separator + s + ".png").getAbsolutePath();
                 try {
                     rawImages.put(s, ImageIO.read(new File(path)));
                     rawIcons.put(s, new ImageIcon(ImageIO.read(new File(path))));
                 }catch (Exception ex){
-                    System.out.println(ex.toString());
                     log.error(ex.toString());
                 }
             });
@@ -394,4 +378,128 @@ public class Main implements IInputputHandler{
             log.info( "Cards created");
         }).start();
     }
+
+    public void createConfigPanel(){
+        configPanel = new JPanel(new BorderLayout());
+        gameList.addItemListener(e ->{
+            if(e.getStateChange()== ItemEvent.SELECTED) {
+                setConfigMenu();
+            }
+        });
+
+
+    }
+
+    private void setConfigMenu() {
+        switch ((Statics.game) gameList.getSelectedItem()) {
+            case DOKO:
+                configPanel.removeAll();
+                configPanel.add(createDokoConfigPanel(c.doko),BorderLayout.CENTER);
+                break;
+            case SKAT:
+                configPanel.removeAll();
+                configPanel.add(createSkatConfigPanel(c.skat),BorderLayout.CENTER);
+                break;
+        }
+
+        configPanel.revalidate();
+        configPanel.repaint();
+    }
+
+    private Component createSkatConfigPanel(SkatConfig skat) {
+        JPanel panel = new JPanel();
+        Gson gson = new GsonBuilder().create();
+        JsonObject jObject=  gson.toJsonTree(skat).getAsJsonObject();
+        panel.add(createConfigPanelFromJson("skat" ,jObject));
+        return panel;
+    }
+
+    private JPanel createDokoConfigPanel(DokoConfig doko) {
+        JPanel panel = new JPanel();
+        Gson gson = new GsonBuilder().create();
+        JsonObject jObject=  gson.toJsonTree(doko).getAsJsonObject();
+        panel.add(createConfigPanelFromJson("doko" ,jObject));
+        return panel;
+    }
+
+    private JComponent createConfigPanelFromJson(String name, JsonElement element){
+
+        if(element.isJsonPrimitive()){
+            JsonPrimitive p = element.getAsJsonPrimitive();
+            if(p.isBoolean()){
+                JCheckBox cb = new JCheckBox(name,p.getAsBoolean());
+                cb.addActionListener(e ->  createConfigFromJPanel());
+                return cb;
+            }
+            else if(p.isNumber()){
+                JPanel pan = new JPanel(new GridLayout(1,2));
+                pan.add(new JLabel(name));
+                JTextField textField = new JTextField(p.getAsNumber().toString());
+                textField.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        createConfigFromJPanel();
+                    }
+                });
+                pan.add(textField);
+                return pan;
+            }
+        }
+        else if(element.isJsonObject()){
+            JsonObject o = element.getAsJsonObject();
+            JPanel panel = new JPanel();
+            BoxLayout b = new BoxLayout(panel,BoxLayout.PAGE_AXIS);
+            panel.setLayout(b);
+            panel.add(new JLabel(name));
+            for (String s: o.keySet()) {
+                JsonElement e = o.get(s);
+                panel.add(createConfigPanelFromJson(s,e));
+            }
+            return panel;
+        }
+        return new JPanel();
+    }
+
+    private void createConfigFromJPanel() {
+        for (Component comp: configPanel.getComponents()) {
+            JsonObject jsonObject = getElementFromComponent((JComponent) comp).getAsJsonObject();
+            if(jsonObject.has("doko")) {
+                c.doko = new GsonBuilder().create().fromJson(jsonObject.getAsJsonObject("doko"), DokoConfig.class);
+            }
+            if(jsonObject.has("skat")){
+                c.skat = new GsonBuilder().create().fromJson(jsonObject.getAsJsonObject("skat"), SkatConfig.class);
+            }
+            c.saveConfig();
+        }
+    }
+
+    private JsonElement getElementFromComponent(JComponent component){
+        JsonElement element;
+        JsonObject jsonObject = new JsonObject();
+        for (Component component1: component.getComponents()) {
+            if(component1 instanceof JCheckBox){
+                JCheckBox checkBox = (JCheckBox) component1;
+                jsonObject.add(checkBox.getText(),new JsonPrimitive(checkBox.isSelected()));
+            }
+            else if(component1 instanceof JPanel){
+                JPanel panel = (JPanel) component1;
+                if(panel.getComponents().length==2
+                        && panel.getComponents()[0] instanceof JLabel
+                        && panel.getComponents()[1] instanceof JTextField){
+                    jsonObject.add(((JLabel) panel.getComponents()[0]).getText(),
+                            new JsonPrimitive(((JTextField) panel.getComponents()[1]).getText()));
+                }
+                else {
+                    jsonObject.add(
+                            ((JLabel)panel.getComponent(0)).getText(),
+                            getElementFromComponent(panel));
+                }
+            }
+        }
+
+        element = jsonObject;
+
+        return element;
+    }
+
 }
