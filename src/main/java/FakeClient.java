@@ -1,6 +1,9 @@
 import base.*;
+import base.doko.Compare;
 import base.doko.DokoCards;
 import base.doko.SortHand;
+import base.doko.assist.Assist;
+import base.doko.assist.Bucket;
 import base.doko.messages.MessageGameEnd;
 import base.doko.messages.MessageGameSelected;
 import base.doko.messages.MessageSchweinExists;
@@ -8,11 +11,7 @@ import base.doko.messages.MessageSelectGame;
 import base.messages.*;
 
 import javax.swing.*;
-import java.awt.*;
-import java.security.PublicKey;
 import java.util.*;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static base.doko.messages.MessageGameSelected.GAMES.*;
 
@@ -24,30 +23,30 @@ public class FakeClient implements IInputputHandler {
     private int currentCardsOnTable = 0;
     private boolean schweinExists = false;
     private boolean wait4Player = false;
-    private List<BaseCard> hand = new ArrayList<>();
+    private List<Card> hand = new ArrayList<>();
     private String playerName;
     private List<String> players = new ArrayList<>();
     private int spectator;
-    private BaseCard mustPlay;
-    private HashMap<Integer, BaseCard> tableStich = new HashMap<>();
+    private Card mustPlay;
+    private HashMap<Integer, Card> tableStich = new HashMap<>();
     private int aufspieler;
-    private Map<String,List<BaseCard>> playerBuckets;
-    private Map<String,List<BaseCard>> gameBuckets;
+    private Assist assist;
 
 
     private Logger log;
+    private List<Player> pList;
 
     public FakeClient(Configuration config, String playerName) {
         this.config = config;
         this.comClient = new ComClient(config.connection.server,config.connection.port, this,playerName);
         this.comClient.start();
         this.playerName = playerName;
+        this.assist = new Assist();
         log = new Logger(playerName,4);
     }
 
     @Override
     public void handleInput(Message message) {
-        //log.info(String.format("handled Message: %s",message.toJson()));
         switch (message.getCommand()){
             case MessageCards.COMMAND:
                 handleCards(message);
@@ -60,9 +59,6 @@ public class FakeClient implements IInputputHandler {
                 break;
             case MessageSelectGame.COMMAND:
                 handleSelectGame(message);
-                break;
-            case MessageGameType.COMMAND:
-                handleGameType(message);
                 break;
             case MessageGameEnd.COMMAND:
                 handleGameEnd(message);
@@ -77,9 +73,12 @@ public class FakeClient implements IInputputHandler {
         }
     }
 
-    private void handleGameType(Message message) {
-        MessageGameType messageGameType = new MessageGameType(message);
-        selectedGame = messageGameType.getSelectedGame();
+
+    //handle server messages
+
+    private void handleGameSelected(Message message) {
+        MessageGameSelected messageGameSelected = new MessageGameSelected(message);
+        selectedGame = messageGameSelected.getSelectedGame();
         if (hand != null && hand.size() > 0) {
             hand = SortHand.sort(hand,selectedGame,schweinExists);
             if (selectedGame==NORMAL
@@ -95,6 +94,8 @@ public class FakeClient implements IInputputHandler {
             }
         }
         aufspieler = -1;
+        assist.setHand(hand);
+        assist.setGame(selectedGame);
     }
 
     private void handlePlayersInLobby(Message message) {
@@ -107,47 +108,36 @@ public class FakeClient implements IInputputHandler {
 
     private void handleWait4Player(Message message) {
         if (message.getParams().get("player").getAsString().equals(playerName)) {
-            Optional<BaseCard> optCard = Optional.empty();
+
+            Optional<Card> optCard;
             if (mustPlay != null) {
-                if (mustPlay.trump && playerBuckets.get(Statics.TRUMPF).size() > 0) {
-                    optCard = playerBuckets.get(Statics.TRUMPF).stream().findAny();
-                } else if (playerBuckets.get(mustPlay.suit).size() > 0) {
-                    optCard = playerBuckets.get(mustPlay.suit).stream().findAny();
-                } else {
-                    optCard = hand.stream().findAny();
-                }
-            } else {
-                Decision decision = new Decision();
-                gameBuckets.keySet().forEach(key-> {
-                    if(!key.equals(Statics.TRUMPF)) {
-                        decision.setSuit(key,gameBuckets.get(key).size() - playerBuckets.get(key).size());
+                if (mustPlay.trump) {
+                    if (assist.playerBucket.trumpf.size() > 0) {
+                        optCard = playTrumpCard();
                     }
-                });
-                for (Probability p: decision.getOrderedSuitList()) {
-                    if(p.prob>2){
-                       optCard = playerBuckets.get(p.suit).stream().filter(card -> card.kind.equals(Statics.ASS)).findFirst();
-                       if (optCard.isPresent()){
-                           log.info(String.format("ich spiele %s, weil noch %s verteilt sind.", optCard.get(),p.prob));
-                           break;
-                       }
-                       else {
-                           optCard = hand.stream().findAny();
-                       }
-                    }
-                    else {
-                        optCard = hand.stream().findAny();
+                    else{
+                        optCard = getBackupCard();
                     }
                 }
-                if (!optCard.isPresent()){
-                    optCard = hand.stream().findAny();
+                else
+                {
+                    if (assist.playerBucket.getListBySuit(mustPlay.suit).size() > 0) {
+                        optCard = playFehlCard();
+                    }
+                    else{
+                        optCard = getBackupCard();
+                    }
                 }
+            }
+            else{
+                optCard = hand.stream().findAny();
             }
             optCard.ifPresent(card ->{
                 send(new MessagePutCard(players.indexOf(playerName), card), true);
                 log.info(String.format("played %s", card));
                 hand.remove(card);
             });
-            playerBuckets = DevideCards(hand);
+            assist.playerBucket = new Bucket(hand, selectedGame,false);
         }
     }
 
@@ -160,11 +150,16 @@ public class FakeClient implements IInputputHandler {
     }
 
     private void handleSelectGame(Message message) {
-        send(new MessageGameSelected(players.indexOf(playerName), MessageGameSelected.GAMES.NORMAL));
-    }
-
-    private void handleGameSelected(Message message) {
-
+        Assist assist = new Assist(hand);
+        for (MessageGameSelected.GAMES g:MessageGameSelected.GAMES.values()) {
+            assist.setGame(g);
+            double risk = 4.5;
+            if(assist.playSolo()<risk){
+                send(new MessageGameSelected(players.indexOf(playerName), g));
+                return;
+            }
+        }
+        send(new MessageGameSelected(players.indexOf(playerName), NORMAL));
     }
 
     private void handlePutCard(Message message) {
@@ -182,19 +177,26 @@ public class FakeClient implements IInputputHandler {
                     i = 0;
                 }
             }
-
-
             currentCardsOnTable++;
             MessagePutCard messagePutCard = new MessagePutCard(message);
-            BaseCard card = messagePutCard.getCard(Statics.game.DOKO);
+            Card card = messagePutCard.getCard(Statics.game.DOKO);
             card.trump = DokoCards.isTrumpf(card,selectedGame);
-
-            removeCardFromBuckets(card);
-
+            assist.putCard(card);
+            checkForPartner(messagePutCard.getPlayerNumber(),card);
+            if(mustPlay!=null){
+                if(mustPlay.trump) {
+                    if (!card.trump) {
+                        pList.get(messagePutCard.getPlayerNumber()).hasTrumpf = 0;
+                    }
+                }
+                else if(!mustPlay.suit.equals(card.suit)){
+                    pList.get(messagePutCard.getPlayerNumber()).setSuit(mustPlay.suit,0);
+                    log.info(pList.get(messagePutCard.getPlayerNumber()).name + " hat keine " + mustPlay.suit+ " mehr");
+                }
+            }
             if(currentCardsOnTable ==1){
                 mustPlay = card;
             }
-
             if (currentCardsOnTable > 3) {
                 mustPlay = null;
                 currentCardsOnTable = 0;
@@ -205,13 +207,20 @@ public class FakeClient implements IInputputHandler {
         }
     }
 
-    private void removeCardFromBuckets(BaseCard card) {
-        if (card.trump && gameBuckets.get(Statics.TRUMPF).size() > 0 && gameBuckets.get(Statics.TRUMPF).contains(card)) {
-            gameBuckets.get(Statics.TRUMPF).remove(card);
-        } else if (playerBuckets.get(card.suit).size() > 0 && gameBuckets.get(card.suit).contains(card)) {
-            gameBuckets.get(card.suit);
-        } else {
-            log.error("card could not be removed");
+    private void checkForPartner(int playerNumber, Card card) {
+        switch (selectedGame){
+            case NORMAL:
+                if(card.suit.equals(Statics.KREUZ) && card.kind.equals(Statics.DAME)){
+                    pList.get(playerNumber).party = 1;
+                    if(!assist.gameBucket.contains(card)){
+                        pList.forEach(player -> {
+                            if(player.party == 0){
+                                player.party = -1;
+                            }
+                        });
+                    }
+                }
+                break;
         }
     }
 
@@ -219,34 +228,113 @@ public class FakeClient implements IInputputHandler {
         MessageCards messageCards = new MessageCards(message);
         selectedGame = MessageGameSelected.GAMES.NORMAL;
         hand = messageCards.getCards(Statics.game.DOKO);
-        playerBuckets = DevideCards(hand);
-        gameBuckets = DevideCards(DokoCards.ALL_CARDS);
+        pList = new ArrayList<>();
+        players.forEach(p->pList.add(new Player(p)));
+        setSelf();
     }
 
 
-    private Map<String,List<BaseCard>> DevideCards(List<BaseCard> list){
-        list.forEach(card -> card.trump = DokoCards.isTrumpf(card, selectedGame));
-        List<BaseCard> localCardList = new ArrayList<>(list);
-        Map<String,List<BaseCard>> buckets = new HashMap<>();
+
+    //Decicionmaking for different situations
+
+    private Optional<Card> playFehlCard(){
+        List<Card> cards = assist.playerBucket.getListBySuit(mustPlay.suit);
+        Comparator<Card> comp = Compare.getComparer(selectedGame,false).reversed();
+        cards.sort(comp);
+        Optional<Card> optCard;
+        if((assist.calcHighCardForBucket(mustPlay.suit)>0) && (comp.compare(cards.get(0),mustPlay)>0)){
+            optCard = cards.stream().findFirst();
+        }
+        else{
+            optCard = getCardByValueLowest(cards);
+        }
+        return optCard;
+    }
 
 
-        buckets.put(Statics.TRUMPF,localCardList.stream().filter(card -> card.trump).collect(Collectors.toList()));
-        buckets.get(Statics.TRUMPF).forEach(localCardList::remove);
-        buckets.put(Statics.KREUZ,localCardList.stream().filter(card -> card.suit.equals(Statics.KREUZ)).collect(Collectors.toList()));
-        buckets.get(Statics.KREUZ).forEach(localCardList::remove);
-        buckets.put(Statics.PIK,localCardList.stream().filter(card -> card.suit.equals(Statics.PIK)).collect(Collectors.toList()));
-        buckets.get(Statics.PIK).forEach(localCardList::remove);
-        buckets.put(Statics.HERZ,localCardList.stream().filter(card -> card.suit.equals(Statics.HERZ)).collect(Collectors.toList()));
-        buckets.get(Statics.HERZ).forEach(localCardList::remove);
-        buckets.put(Statics.KARO,localCardList.stream().filter(card -> card.suit.equals(Statics.KARO)).collect(Collectors.toList()));
-        buckets.get(Statics.KARO).forEach(localCardList::remove);
-        log.info(String.format("buckets:\nTrumpf:%s\nKreuz:%s\nPik:%s\nHerz:%s\nKaro:%s\n",
-                buckets.get(Statics.TRUMPF).size(),
-                buckets.get(Statics.KREUZ).size(),
-                buckets.get(Statics.PIK).size(),
-                buckets.get(Statics.HERZ).size(),
-                buckets.get(Statics.KARO).size()));
-        return buckets;
+    private Optional<Card> playTrumpCard() {
+        List<Card> winning = new ArrayList<>();
+        List<Card> losing = new ArrayList<>();
+        assist.playerBucket.trumpf.forEach(card->
+        {
+            if(Compare.getComparer(selectedGame,false).compare(card,mustPlay)>0) {
+                winning.add(card);
+            }
+            else{
+                losing.add(card);
+            }
+        });
+        Optional<Card> optCard;
+        if(winning.size()>losing.size()){
+            optCard = winning.stream().findAny();
+        }
+        else{
+            optCard = getCardByValueLowest(losing);
+        }
+        return optCard;
+    }
+
+
+    private Optional<Card> getCardByValueLowest(List<Card> cards) {
+        Optional<Card> optCard;
+        if (cards.stream().anyMatch(card -> card.value == 2)) {
+            optCard = cards.stream().filter(card -> card.value == 2).findAny();
+        } else if (cards.stream().anyMatch(card -> card.value == 3)) {
+            optCard = cards.stream().filter(card -> card.value == 3).findAny();
+        } else if (cards.stream().anyMatch(card -> card.value == 4)) {
+            optCard = cards.stream().filter(card -> card.value == 4).findAny();
+        } else if (cards.stream().anyMatch(card -> card.value == 10)) {
+            optCard = cards.stream().filter(card -> card.value == 10).findAny();
+        } else {
+            optCard = cards.stream().filter(card -> card.value == 11).findAny();
+        }
+        return optCard;
+    }
+
+    private Optional<Card> getBackupCard() {
+        Optional<Card> optCard;
+        if(hand.stream().anyMatch(card -> !card.trump && card.value == 2)){
+            optCard = hand.stream().filter(card -> !card.trump && card.value==2).findAny();
+        }else if(hand.stream().anyMatch(card -> !card.trump && card.value == 3)){
+            optCard = hand.stream().filter(card -> !card.trump && card.value==3).findAny();
+
+        }else if(hand.stream().anyMatch(card -> !card.trump && card.value == 4)){
+            optCard = hand.stream().filter(card -> !card.trump && card.value==4).findAny();
+
+        }else if(hand.stream().anyMatch(card -> !card.trump && card.value == 10)){
+            optCard = hand.stream().filter(card -> !card.trump && card.value==10).findAny();
+
+        }else if(hand.stream().anyMatch(card -> !card.trump && card.value == 11)){
+            optCard = hand.stream().filter(card -> !card.trump && card.value==11).findAny();
+        }else{
+            optCard = hand.stream().findAny();
+        }
+        return optCard;
+    }
+
+    //
+
+
+    private void setSelf() {
+        Player player = pList.stream().filter(p->p.name.equals(playerName)).findFirst().get();
+        if(hand.stream().anyMatch(card -> card.suit.equals(Statics.KREUZ) && card.kind.equals(Statics.DAME))){
+            player.party = 1;
+        }
+        else{
+            player.party =-1;
+        }
+        if(assist.playerBucket.kreuz.size()<1){
+            player.hasKreuz = 0;
+        }
+        if(assist.playerBucket.pik.size()<1){
+            player.hasPik = 0;
+        }
+        if(assist.playerBucket.herz.size()<1){
+            player.hasHerz = 0;
+        }
+        if(assist.playerBucket.karo.size()<1){
+            player.hasKaro = 0;
+        }
     }
 
 
@@ -254,10 +342,11 @@ public class FakeClient implements IInputputHandler {
         send(message,false);
     }
 
+
     private void send(Message message, boolean delayed){
         if (delayed) {
             try {
-                Thread.sleep(1100);
+                Thread.sleep(0);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -265,28 +354,37 @@ public class FakeClient implements IInputputHandler {
         comClient.queueOutMessage(message);
     }
 
-    public static class Decision{
 
-        List<Probability> list = new ArrayList<>();
+    public static class Player{
 
-        public void setSuit(String suit, int value){
-            list.add(new Probability(suit, value));
+        public String name;
+        public boolean isPartner;
+        public int party=0;
+        public float hasKreuz = 100f;
+        public float hasPik = 100f;
+        public float hasHerz = 100f;
+        public float hasKaro = 100f;
+        public float hasTrumpf = 100f;
+
+        public Player(String name){
+            this.name = name;
         }
-
-        public List<Probability> getOrderedSuitList(){
-            Comparator<Probability> comparator = Comparator.comparing(probability -> probability.prob);
-            list.sort(comparator);
-            return list;
+        public void setSuit(String suit, float i) {
+            switch (suit){
+                case (Statics.KREUZ):
+                    hasKreuz = i;
+                    break;
+                case (Statics.PIK):
+                    hasPik = i;
+                    break;
+                case (Statics.HERZ):
+                    hasHerz = i;
+                    break;
+                case (Statics.KARO):
+                    hasKaro = i;
+                    break;
+            }
         }
     }
 
-    public static class Probability{
-        private String suit;
-        private int prob;
-
-        public Probability(String suit, int value) {
-            this.suit=suit;
-            this.prob=value;
-        }
-    }
 }

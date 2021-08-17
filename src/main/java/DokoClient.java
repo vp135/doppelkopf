@@ -1,6 +1,7 @@
 import base.*;
 import base.doko.DokoCards;
 import base.doko.SortHand;
+import base.doko.assist.Assist;
 import base.doko.messages.*;
 import base.messages.*;
 
@@ -36,7 +37,8 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
     private boolean schweinExists = false;
     private MessageGameSelected.GAMES selectedGame = NORMAL;
     private DokoEndDialog endDialog;
-    private BaseCard mustPlay = null;
+    private Card mustPlay = null;
+    private Assist assist;
 
 
     public DokoClient(ComClient handler, List<String> players, Configuration c){
@@ -165,11 +167,12 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         if(hand!=null) {
             hand.forEach(card -> card.trump = DokoCards.isTrumpf(card, selectedGame));
         }
+        new Assist(hand,selectedGame);
     }
 
 
     @Override
-    protected void setGameSpecificButtons(List<BaseCard> cards){
+    protected void setGameSpecificButtons(List<Card> cards){
 
         controlPanel.removeAll();
         JButton vorbehalt = new JButton("OK");
@@ -228,11 +231,11 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             @Override
             public void mouseClicked(MouseEvent e) {
                 JLabel label = (JLabel) e.getSource();
-                BaseCard card = cardMap.get(label);
+                Card card = cardMap.get(label);
                 if (selectCards) {
                     moveCard2Exchange(card);
                     if(hand.size()==10){
-                        setSendCardButton(MessageSendCards.POOR, "Karten zurückgeben");
+                        setSendCardButton(MessageSendCards.POOR, "Karten zurueckgeben");
                     }
                     else{
                         controlPanel.removeAll();
@@ -270,7 +273,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             @Override
             public void mouseClicked(MouseEvent e) {
                 JLabel label = (JLabel) e.getSource();
-                BaseCard card = null;
+                Card card = null;
                 for(int i = 0; i<exchangeCards.length;i++){
                     if(cLabels[i]!=null && cLabels[i]==label){
                         card = exchangeCards[i];
@@ -279,7 +282,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 }
                 moveCard2Hand(card);
                 if(hand.size()==10){
-                    setSendCardButton(MessageSendCards.POOR, "Karten zurückgeben");
+                    setSendCardButton(MessageSendCards.POOR, "Karten zurueckgeben");
                 }
                 else{
                     controlPanel.removeAll();
@@ -293,6 +296,14 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 }
                 middlePanel.revalidate();
                 middlePanel.repaint();
+                hudMiddle.revalidate();
+                hudMiddle.repaint();
+                hud.revalidate();
+                hud.repaint();
+                layeredPane.revalidate();
+                layeredPane.repaint();
+                overLayer.revalidate();
+                overLayer.repaint();
             }
         };
     }
@@ -327,8 +338,8 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
                 controlPanel.setVisible(players.indexOf(c.connection.name) != spectator);
                 break;
             }
-            case MessageGameType.COMMAND: {
-                handleGameType(message);
+            case MessageGameSelected.COMMAND: {
+                handleGameSelected(message);
                 break;
             }
             case MessageSelectCards4Armut.COMMAND: {
@@ -374,6 +385,8 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
     private void handlePutCard(Message message){
         try {
+            middlePanel.setBackground(new Color(0,0,0,0));
+            middlePanel.setOpaque(false);
             int ownNumber = players.indexOf(c.connection.name);
             List<Integer> tmpList = new ArrayList<>();
             int i = ownNumber;
@@ -407,7 +420,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
             MessagePutCard messagePutCard = new MessagePutCard(message);
             log.info("player:" + i);
-            BaseCard card = messagePutCard.getCard(Statics.game.DOKO);
+            Card card = messagePutCard.getCard(Statics.game.DOKO);
             card.trump = DokoCards.isTrumpf(card,selectedGame);
             if(currentCardsOnTable ==0){
                 mustPlay = card;
@@ -423,6 +436,9 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             }
             currentCardsOnTable++;
             updateTable();
+            if(assist!=null){
+                assist.putCard(messagePutCard.getCard(Statics.game.DOKO));
+            }
         }
         catch (Exception ex){
             log.error(ex.toString());
@@ -453,11 +469,13 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
     }
 
     private void handleSendCards(Message message) {
+        middlePanel.setBackground(Color.BLACK);
+        middlePanel.setOpaque(true);
         MessageSendCards messageSendCards = new MessageSendCards(message);
         boolean isRich = messageSendCards.getReceiver().equals(MessageSendCards.RICH);
         middlePanel.removeAll();
         selectCards = isRich;
-        exchangeCards = messageSendCards.getCards().toArray(new BaseCard[0]);
+        exchangeCards = messageSendCards.getCards().toArray(new Card[0]);
 
         cLabels = new JLabel[exchangeCards.length];
         for (int i = 0;i<exchangeCards.length;i++){
@@ -469,7 +487,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         }
 
         if(isRich){
-            setSendCardButton(MessageSendCards.POOR, "Karten zurückgeben");
+            setSendCardButton(MessageSendCards.POOR, "Karten zurueckgeben");
         }
         else {
             setAcceptArmutReturn();
@@ -482,10 +500,12 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
     }
 
     private void setAcceptArmutReturn() {
+        middlePanel.setBackground(Color.BLACK);
+        middlePanel.setOpaque(true);
         controlPanel.removeAll();
         JButton button = new JButton("Karten aufnehmen");
         button.addActionListener(e -> {
-            for (BaseCard exchangeCard : exchangeCards) {
+            for (Card exchangeCard : exchangeCards) {
                 moveCard2Hand(exchangeCard);
             }
             handler.queueOutMessage(new MessageCardsReturned());
@@ -499,9 +519,9 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         controlPanel.setVisible(true);
     }
 
-    private void handleGameType(Message message) {
-        MessageGameType messageGameType = new MessageGameType(message);
-        selectedGame = messageGameType.getSelectedGame();
+    private void handleGameSelected(Message message) {
+        MessageGameSelected messageGameSelected = new MessageGameSelected(message);
+        selectedGame = messageGameSelected.getSelectedGame();
         if (hand != null && hand.size() > 0) {
             hand = SortHand.sort(hand,selectedGame,schweinExists);
             createCardButtons(hand);
@@ -518,6 +538,10 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
             }
         }
         aufspieler = -1;
+        if (assist!=null){
+            assist.close();
+        }
+        assist =  new Assist(hand,selectedGame);
     }
 
     private void handleGameEnd(Message message) {
@@ -547,6 +571,16 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
         selectedGame = NORMAL;
         hand = messageCards.getCards(Statics.game.DOKO);
         super.handleCards(message);
+
+        new Assist(hand,NORMAL);
+        new Assist(hand,DAMEN);
+        new Assist(hand,BUBEN);
+        new Assist(hand,BUBENDAMEN);
+        new Assist(hand,FLEISCHLOS);
+        new Assist(hand,KREUZ);
+        new Assist(hand,PIK);
+        new Assist(hand,HERZ);
+        new Assist(hand,KARO);
     }
 
     private void handleLastStich(Message message) {
@@ -605,6 +639,8 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
 
     private void selectCards4Armut() {
+        middlePanel.setBackground(Color.BLACK);
+        middlePanel.setOpaque(true);
         controlPanel.removeAll();
         autoSelectArmutCards();
         setSendCardButton(MessageSendCards.RICH, "Armut anbieten");
@@ -629,8 +665,8 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
     private void autoSelectArmutCards() {
          middlePanel.removeAll();
-         List<BaseCard> cards = hand.stream().filter(card->card.trump).collect(Collectors.toList());
-         exchangeCards = new BaseCard[cards.size()];
+         List<Card> cards = hand.stream().filter(card->card.trump).collect(Collectors.toList());
+         exchangeCards = new Card[cards.size()];
          cLabels = new JLabel[cards.size()];
          for(int i =0; i < cards.size();i++){
              cLabels[i] = new JLabel();
@@ -668,7 +704,7 @@ public class DokoClient extends BaseClient implements IInputputHandler, IDialogI
 
 
     @Override
-    protected void moveCard2Hand(BaseCard card) {
+    protected void moveCard2Hand(Card card) {
         hand.add(card);
         hand = SortHand.sort(hand,selectedGame,true);
         createCardButtons(hand);
