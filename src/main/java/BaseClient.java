@@ -37,8 +37,8 @@ public abstract class BaseClient implements IInputputHandler {
     protected JLabel gameMessageLabel;
     protected JLabel[] userLabels;
     protected JLabel tableLable;
-    protected Map<BaseCard,JLabel> labelMap;
-    protected Map<JLabel,BaseCard> cardMap;
+    protected Map<Card,JLabel> labelMap;
+    protected Map<JLabel, Card> cardMap;
     protected ArrayList<JButton> buttonList;
     protected Graphics playArea;
     protected JLayeredPane overLayer;
@@ -77,11 +77,11 @@ public abstract class BaseClient implements IInputputHandler {
     protected int cardSize;
     protected MouseAdapter handCardClickAdapter;
     protected MouseAdapter exchangeCardClickAdapter;
-    protected HashMap<Integer, BaseCard> tableStich = new HashMap<>();
+    protected HashMap<Integer, Card> tableStich = new HashMap<>();
     protected boolean wait4Player = false;
     protected boolean selectCards = false;
-    protected List<BaseCard> hand;
-    protected BaseCard[] exchangeCards;
+    protected List<Card> hand;
+    protected Card[] exchangeCards;
     protected JLabel[] cLabels;
     protected int maxHandCards = 13;
     protected float heightCorrection;
@@ -259,7 +259,8 @@ public abstract class BaseClient implements IInputputHandler {
         }
 
         middlePanel = new JPanel(new GridLayout(1,3));
-        middlePanel.setBackground(new Color(0,0,0,0));
+        middlePanel.setBackground(Color.BLACK);
+        //middlePanel.setBackground(new Color(0,0,0,0));
 
         String path = new File(System.getProperty("user.dir") + File.separator+ "resources"+File.separator + "options.png").getAbsolutePath();
         try {
@@ -312,8 +313,13 @@ public abstract class BaseClient implements IInputputHandler {
             button_config.removeMouseListener(adapter);
             createUIConfigPanel();
             floatPanel.add(configPanel);
-            overLayer.add(floatPanel, 2);
-            overLayer.moveToFront(floatPanel);
+            try {
+                overLayer.add(floatPanel, 2);
+                overLayer.moveToFront(floatPanel);
+            }
+            catch (Exception ex){
+                ex.printStackTrace();
+            }
         }
     };
 
@@ -499,7 +505,7 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected abstract void createGameSpecificButtons();
 
-    protected abstract void setGameSpecificButtons(List<BaseCard> hand);
+    protected abstract void setGameSpecificButtons(List<Card> hand);
 
     protected abstract void setGameSpecifics();
 
@@ -512,7 +518,7 @@ public abstract class BaseClient implements IInputputHandler {
      * @param canvasHeight height of the play area
      * @param canvasWidth widht of the play area
      */
-    protected void drawCard2Position(BaseCard card, int pos, int canvasHeight, int canvasWidth){
+    protected void drawCard2Position(Card card, int pos, int canvasHeight, int canvasWidth){
         AffineTransform at;
         int distFromCenter = cardSize*c.ui.distanceFromCenter/100;
         int theta = c.ui.angleVariation - random.nextInt(c.ui.angleVariation*2 + 1);
@@ -555,7 +561,7 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
 
-    protected void createCardButtons(List<BaseCard> cards) {
+    protected void createCardButtons(List<Card> cards) {
         panel.removeAll();
         labelMap = new HashMap<>();
         cardMap = new HashMap<>();
@@ -569,7 +575,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected void createCards() {
         int cardWidth4Hand = panel.getWidth() / maxHandCards;
         cardHeight4Hand = (int) (cardWidth4Hand / RATIO);
-        BaseCard.UNIQUE_CARDS.forEach(s -> {
+        Card.UNIQUE_CARDS.forEach(s -> {
             try {
                 double factor = Math.min(cardHeight4Hand, cardSize) * RATIO / (double) rawImages.get(s).getWidth();
                 BufferedImage cardImage = new BufferedImage(
@@ -603,7 +609,7 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
 
-    protected void getCardLabel4Hand(BaseCard card){
+    protected void getCardLabel4Hand(Card card){
         JPanel p = new JPanel();
         JLabel label = new JLabel();
         label.setIcon(cardIcons.get(card.suit +card.kind));
@@ -645,7 +651,7 @@ public abstract class BaseClient implements IInputputHandler {
         updateTable();
     }
 
-    protected JLabel getCardLabel(BaseCard card){
+    protected JLabel getCardLabel(Card card){
         int size = 10;
         JLabel label = new JLabel(rawIcons.get(card.toTrimedString()));
         label.setSize(new Dimension((int)mainFrame.getSize().getWidth()/size,110));
@@ -691,7 +697,7 @@ public abstract class BaseClient implements IInputputHandler {
         JLabel cardPos3 = new JLabel();
         JLabel cardPos4 = new JLabel();
         MessageCurrentStich messageCurrentStich = new MessageCurrentStich(message);
-        Map<Integer,BaseCard> map = messageCurrentStich.GetStichMap(currentGame);
+        Map<Integer, Card> map = messageCurrentStich.GetStichMap(currentGame);
         for(int j = 0;j<tmpList.size();j++){
             if (map.containsKey(tmpList.get(j))) {
                 if (j == 0) {
@@ -743,16 +749,16 @@ public abstract class BaseClient implements IInputputHandler {
         this.rawImages = rawImages;
     }
 
-    protected void moveCard2Hand(BaseCard card) {
+    protected void moveCard2Hand(Card card) {
         hand.add(card);
         getCardLabel4Hand(card);
     }
 
-    protected  void moveCard2Exchange(BaseCard card){
+    protected  void moveCard2Exchange(Card card){
         moveCard2Exchange(card,false);
     }
 
-    protected void moveCard2Exchange(BaseCard card, boolean force) {
+    protected void moveCard2Exchange(Card card, boolean force) {
         if(hand.size()>10 || force) {
             for (int i = 0; i < exchangeCards.length; i++) {
                 try {

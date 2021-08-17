@@ -1,5 +1,4 @@
 import base.*;
-import base.doko.DokoCards;
 import base.doko.messages.MessageGameEnd;
 import base.doko.messages.MessageSelectCards4Armut;
 import base.doko.messages.MessageSelectGame;
@@ -51,8 +50,8 @@ public class MessageTest implements IServerMessageHandler{
         JButton cards = new JButton("Cards");
 
         cards.addActionListener(e ->{
-            List<BaseCard> baseCardList = new ArrayList<>();
-            server.send2All(socketList, new MessageCards(baseCardList));
+            List<Card> cardList = new ArrayList<>();
+            server.send2All(socketList, new MessageCards(cardList));
         });
         basePanel.add(cards);
         JButton currentStich = new JButton("currentStich");
@@ -88,7 +87,7 @@ public class MessageTest implements IServerMessageHandler{
         dokoPanel.add(gameEnd);
         JButton sendCards = new JButton("SendCards");
         sendCards.addActionListener(e -> {
-            List<BaseCard> cardList = new ArrayList<>();
+            List<Card> cardList = new ArrayList<>();
             server.send2All(socketList, new MessageSendCards(cardList, MessageSendCards.RICH));
         });
         dokoPanel.add(sendCards);

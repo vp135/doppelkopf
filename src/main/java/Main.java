@@ -196,9 +196,9 @@ public class Main implements IInputputHandler{
                     setConfigMenu();
 
 
-                    new FakeClient(c,"STEVE");
-                    new FakeClient(c,"BOB");
-                    new FakeClient(c,"KINGSLEY");
+                    //new FakeClient(c,"STEVE");
+                    //new FakeClient(c,"BOB");
+                    //new FakeClient(c,"KINGSLEY");
                 }
             }
         });
@@ -273,18 +273,16 @@ public class Main implements IInputputHandler{
     public void handleInput(Message message) {
         log.info("received: " +message.getCommand());
         switch (message.getCommand()) {
-            case MessagePlayerList.IN_LOBBY: {
+            case MessagePlayerList.IN_LOBBY:
+            case MessagePlayerList.CHANGE_ORDER:
                 handlePlayersInLobby(message);
                 break;
-            }
-            case MessageStartGame.COMMAND: {
+            case MessageStartGame.COMMAND:
                 handleStart(message);
                 break;
-            }
-            case MessageGetVersion.COMMAND: {
+            case MessageGetVersion.COMMAND:
                 handleGetVersion(message);
                 break;
-            }
         }
     }
 
@@ -367,7 +365,7 @@ public class Main implements IInputputHandler{
 
     public void createRawCardMaps(){
         new Thread(() ->{
-            BaseCard.UNIQUE_CARDS.forEach(s -> {
+            Card.UNIQUE_CARDS.forEach(s -> {
                 String path = new File(System.getProperty("user.dir") + File.separator+ "resources"+File.separator + s + ".png").getAbsolutePath();
                 try {
                     rawImages.put(s, ImageIO.read(new File(path)));
