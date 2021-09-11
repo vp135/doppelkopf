@@ -1,5 +1,9 @@
 import base.*;
+import base.doko.DokoConfig;
+import base.doko.DokoServer;
 import base.messages.*;
+import base.skat.SkatConfig;
+import base.skat.SkatServer;
 import com.google.gson.*;
 
 import javax.imageio.ImageIO;
@@ -17,7 +21,7 @@ import java.util.Objects;
 
 public class Main implements IInputputHandler{
 
-    private final Logger log = new Logger(this.getClass().getName(),1);
+    private final Logger log = new Logger("Client",4);
 
     static Main m;
 
@@ -76,6 +80,15 @@ public class Main implements IInputputHandler{
     }
 
     public Main(){
+        new Thread(() -> {
+            while(true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
         createOrJoin();
         createRawCardMaps();
     }
@@ -165,7 +178,7 @@ public class Main implements IInputputHandler{
             c.connection.server = hostname.getText();
             c.connection.port = Integer.parseInt(port.getText());
             if (!playername.getText().trim().equals("") && !port.getText().trim().equals("")) {
-                server = new BaseServer(c, new ComServer(Integer.parseInt(port.getText())));
+                server = new BaseServer(c, new ComServer(Integer.parseInt(port.getText()),c.logLevel));
                 playerList.addListSelectionListener(p -> {
                     if(server!=null){
                         server.setStartPlayer(playerList.getSelectedIndex());
@@ -184,8 +197,8 @@ public class Main implements IInputputHandler{
                 }
                 if(server.comServer.listening) {
                     create.setEnabled(false);
-                    join.setEnabled(false);
-                    comClient = new ComClient(hostname.getText(), Integer.parseInt(port.getText()), this, name);
+                    //join.setEnabled(false);
+                    comClient = new ComClient(hostname.getText(), Integer.parseInt(port.getText()), this, name, c.logLevel);
                     comClient.queueOutMessage(new MessageGetVersion(name, Statics.VERSION));
                     comClient.start();
                     inputs.add(gameList);
@@ -196,9 +209,7 @@ public class Main implements IInputputHandler{
                     setConfigMenu();
 
 
-                    //new FakeClient(c,"STEVE");
-                    //new FakeClient(c,"BOB");
-                    //new FakeClient(c,"KINGSLEY");
+                    addNPC();
                 }
             }
         });
@@ -211,7 +222,7 @@ public class Main implements IInputputHandler{
                     c.connection.name = name;
                     c.connection.server = hostname.getText();
                     c.connection.port = Integer.parseInt(port.getText());
-                    comClient = new ComClient(hostname.getText(),Integer.parseInt(port.getText()), this,name);
+                    comClient = new ComClient(hostname.getText(),Integer.parseInt(port.getText()), this,name,c.logLevel);
                     comClient.start();
                     log.info("verbinde");
                     int dots = 0;
@@ -256,6 +267,21 @@ public class Main implements IInputputHandler{
         createJoinFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    private void addNPC() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            String[] fakeNames = new String[]{"Steve","Bob","Kinsley"};
+            for(int i = 0; i<c.comPlayer&&i<3;i++){
+                new FakeClient(c,fakeNames[i]);
+            }
+        }).start();
+
+    }
+
     private void startGameServer(Statics.game game) {
         switch (game){
             case DOKO:
@@ -271,7 +297,6 @@ public class Main implements IInputputHandler{
 
 
     public void handleInput(Message message) {
-        log.info("received: " +message.getCommand());
         switch (message.getCommand()) {
             case MessagePlayerList.IN_LOBBY:
             case MessagePlayerList.CHANGE_ORDER:
@@ -288,73 +313,87 @@ public class Main implements IInputputHandler{
 
 
     private void handleGetVersion(Message message) {
-        MessageGetVersion messageGetVersion = new MessageGetVersion(message);
-        if (!Statics.VERSION.equals(messageGetVersion.getVersion())) {
-            JOptionPane.showMessageDialog(createJoinFrame,
-                    "Version(Server): " + messageGetVersion.getVersion() + "\n" +
-                            "Version(lokal): " + Statics.VERSION);
+        try {
+            MessageGetVersion messageGetVersion = new MessageGetVersion(message);
+            if (!Statics.VERSION.equals(messageGetVersion.getVersion())) {
+                JOptionPane.showMessageDialog(createJoinFrame,
+                        "Version(Server): " + messageGetVersion.getVersion() + "\n" +
+                                "Version(lokal): " + Statics.VERSION);
+            }
+        }catch (Exception ex){
+            log.error(ex.toString());
         }
     }
 
 
     private void handlePlayersInLobby(Message message) {
-        MessagePlayerList messagePlayersInLobby = new MessagePlayerList(message);
-        playerList.removeAll();
-        players = new ArrayList<>();
-        DefaultListModel<String> model = new DefaultListModel<>();
-        players.addAll(messagePlayersInLobby.getPlayerNamesList());
-        model.addAll(players);
-        playerList.setModel(model);
-        if(!selectionPlayer.equals("")){
-            playerList.setSelectedValue(selectionPlayer,true);
+        try {
+            log.info("draw playerlist");
+            MessagePlayerList messagePlayersInLobby = new MessagePlayerList(message);
+            players = messagePlayersInLobby.getPlayerNamesList();
+            playerList.removeAll();
+            DefaultListModel<String> model = new DefaultListModel<>();
+            model.addAll(players);
+            playerList.setModel(model);
+            if (!selectionPlayer.equals("")) {
+                playerList.setSelectedValue(selectionPlayer, true);
+            }
+            if (players.size() > 0) {
+                start.setEnabled(true);
+            }
+            join.setEnabled(false);
+            join.setText("verbunden");
         }
-        if (players.size() > 0) {
-            start.setEnabled(true);
+        catch (Exception ex){
+            log.error(ex.toString());
         }
-        join.setEnabled(false);
-        join.setText("verbunden");
     }
 
 
     private void handleStart(Message message) {
-        MessageStartGame messageStartGame = new MessageStartGame(message);
-        if(client==null || client.mainFrame==null) {
-            while (!ready) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        try {
+            MessageStartGame messageStartGame = new MessageStartGame(message);
+            if (client == null || client.mainFrame == null) {
+                while (!ready) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
-            }
-
-            c.lastGame =  messageStartGame.getGame().name();
-            c.saveConfig();
-            switch (messageStartGame.getGame()) {
-                case DOKO:
-                    client = new DokoClient(comClient, players, c);
-                    break;
-                case SKAT:
-                    client = new SkatClient(comClient, players, c);
-                    break;
-            }
-            client.setRawCards(rawIcons, rawImages);
-            comClient.setClient(client);
-            client.createUI(
-                    createJoinFrame.getExtendedState(),
-                    createJoinFrame.getX(),
-                    createJoinFrame.getY(),
-                    createJoinFrame.getSize());
-            new Thread(() -> {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                c.lastGame = messageStartGame.getGame().name();
+                c.saveConfig();
+                switch (messageStartGame.getGame()) {
+                    case DOKO:
+                        client = new DokoClient(comClient, players, c);
+                        break;
+                    case SKAT:
+                        client = new SkatClient(comClient, players, c);
+                        break;
                 }
-                createJoinFrame.setVisible(false);
-                createJoinFrame.dispose();
-                log.info("disposed of lobby frame");
-            }).start();
+                client.setRawCards(rawIcons, rawImages);
+                comClient.setClient(client);
+                client.createUI(
+                        createJoinFrame.getExtendedState(),
+                        createJoinFrame.getX(),
+                        createJoinFrame.getY(),
+                        createJoinFrame.getSize());
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    createJoinFrame.setVisible(false);
+                    createJoinFrame.dispose();
+                    log.info("disposed of lobby frame");
+                }).start();
+            }
+        }
+        catch (Exception ex){
+            log.error(ex.toString());
         }
     }
 

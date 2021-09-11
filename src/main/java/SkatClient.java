@@ -1,5 +1,6 @@
 import base.*;
 import base.messages.*;
+import base.skat.SkatEndDialog;
 import base.skat.SortHand;
 import base.skat.messages.*;
 
@@ -753,6 +754,7 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
     @Override
     protected void createUIConfigPanel() {
         super.createUIConfigPanel();
+        /*
         JButton b = new JButton("selectTest");
         JButton b1 = new JButton("enddialog");
         configPanel.add(b);
@@ -763,6 +765,7 @@ public class SkatClient extends BaseClient implements IInputputHandler, IDialogI
         b1.addActionListener(e -> {
             handleGameEnd(new MessageGameEnd("","","","","",120));
         });
+         */
     }
 
     private void createOuvertPanel(List<Card> cards){

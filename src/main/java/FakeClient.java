@@ -2,6 +2,7 @@ import base.*;
 import base.doko.Compare;
 import base.doko.DokoCards;
 import base.doko.SortHand;
+import base.doko.Stich;
 import base.doko.assist.Assist;
 import base.doko.assist.Bucket;
 import base.doko.messages.MessageGameEnd;
@@ -12,6 +13,7 @@ import base.messages.*;
 
 import javax.swing.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static base.doko.messages.MessageGameSelected.GAMES.*;
 
@@ -21,6 +23,7 @@ public class FakeClient implements IInputputHandler {
     private final Configuration config;
     private MessageGameSelected.GAMES selectedGame = MessageGameSelected.GAMES.NORMAL;
     private int currentCardsOnTable = 0;
+    private Stich currentTrick;
     private boolean schweinExists = false;
     private boolean wait4Player = false;
     private List<Card> hand = new ArrayList<>();
@@ -35,19 +38,20 @@ public class FakeClient implements IInputputHandler {
 
     private Logger log;
     private List<Player> pList;
+    private ArrayList<String> partners;
 
     public FakeClient(Configuration config, String playerName) {
         this.config = config;
-        this.comClient = new ComClient(config.connection.server,config.connection.port, this,playerName);
+        this.comClient = new ComClient(config.connection.server,config.connection.port, this,playerName,0);
         this.comClient.start();
         this.playerName = playerName;
         this.assist = new Assist();
-        log = new Logger(playerName,4);
+        log = new Logger(playerName,0,true);
     }
 
     @Override
     public void handleInput(Message message) {
-        switch (message.getCommand()){
+        switch (message.getCommand()) {
             case MessageCards.COMMAND:
                 handleCards(message);
                 break;
@@ -66,10 +70,11 @@ public class FakeClient implements IInputputHandler {
             case MessageWait4Player.COMMAND:
                 handleWait4Player(message);
                 break;
-            case MessagePlayerList.IN_LOBBY:{
+            case MessagePlayerList.IN_LOBBY:
+            case MessagePlayerList.CHANGE_ORDER:
                 handlePlayersInLobby(message);
                 break;
-            }
+
         }
     }
 
@@ -108,7 +113,6 @@ public class FakeClient implements IInputputHandler {
 
     private void handleWait4Player(Message message) {
         if (message.getParams().get("player").getAsString().equals(playerName)) {
-
             Optional<Card> optCard;
             if (mustPlay != null) {
                 if (mustPlay.trump) {
@@ -195,6 +199,8 @@ public class FakeClient implements IInputputHandler {
                 }
             }
             if(currentCardsOnTable ==1){
+                currentTrick = new Stich(selectedGame,config.doko);
+                currentTrick.addCard(messagePutCard.getPlayerNumber(),card);
                 mustPlay = card;
             }
             if (currentCardsOnTable > 3) {
@@ -222,6 +228,15 @@ public class FakeClient implements IInputputHandler {
                 }
                 break;
         }
+
+        Player player = pList.stream().filter(p->p.name.equals(playerName)).findFirst().get();
+        partners = new ArrayList<>();
+        pList.stream().filter(p -> p.party== player.party).collect(Collectors.toList()).forEach(p-> {
+            if(!p.name.equals(playerName)) {
+                partners.add(p.name);
+                //System.out.println(p.name + " ist " + playerName + "s Partner");
+            }
+        });
     }
 
     private void handleCards(Message message) {
@@ -269,9 +284,23 @@ public class FakeClient implements IInputputHandler {
             optCard = winning.stream().findAny();
         }
         else{
-            optCard = getCardByValueLowest(losing);
+            if(checkIfPartnerGetsTrick()){
+                optCard = getCardByValueHighest(assist.playerBucket.trumpf);
+            }
+            else {
+                optCard = getCardByValueLowest(losing);
+            }
         }
         return optCard;
+    }
+
+    private boolean checkIfPartnerGetsTrick() {
+        boolean rv = false;
+
+        if (partners.contains(pList.get(currentTrick.getWinner(schweinExists)).name)) {
+            rv = true;
+        }
+        return rv;
     }
 
 
@@ -287,6 +316,22 @@ public class FakeClient implements IInputputHandler {
             optCard = cards.stream().filter(card -> card.value == 10).findAny();
         } else {
             optCard = cards.stream().filter(card -> card.value == 11).findAny();
+        }
+        return optCard;
+    }
+
+    private Optional<Card> getCardByValueHighest(List<Card> cards) {
+        Optional<Card> optCard;
+        if (cards.stream().anyMatch(card -> card.value == 11)) {
+            optCard = cards.stream().filter(card -> card.value == 11).findAny();
+        } else if (cards.stream().anyMatch(card -> card.value == 10)) {
+            optCard = cards.stream().filter(card -> card.value == 10).findAny();
+        } else if (cards.stream().anyMatch(card -> card.value == 4)) {
+            optCard = cards.stream().filter(card -> card.value == 4).findAny();
+        } else if (cards.stream().anyMatch(card -> card.value == 3)) {
+            optCard = cards.stream().filter(card -> card.value == 3).findAny();
+        } else {
+            optCard = cards.stream().filter(card -> card.value == 2).findAny();
         }
         return optCard;
     }
@@ -323,18 +368,6 @@ public class FakeClient implements IInputputHandler {
         else{
             player.party =-1;
         }
-        if(assist.playerBucket.kreuz.size()<1){
-            player.hasKreuz = 0;
-        }
-        if(assist.playerBucket.pik.size()<1){
-            player.hasPik = 0;
-        }
-        if(assist.playerBucket.herz.size()<1){
-            player.hasHerz = 0;
-        }
-        if(assist.playerBucket.karo.size()<1){
-            player.hasKaro = 0;
-        }
     }
 
 
@@ -346,7 +379,7 @@ public class FakeClient implements IInputputHandler {
     private void send(Message message, boolean delayed){
         if (delayed) {
             try {
-                Thread.sleep(0);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -30,7 +30,7 @@ public class MessageTest implements IServerMessageHandler{
 
         Random r = new Random(System.currentTimeMillis());
         this.socketList = new ArrayList<>();
-        ComServer server = new ComServer(5000);
+        ComServer server = new ComServer(5000,4);
         server.setServer(this);
 
         JFrame testFrame = new JFrame("MessageTest");

@@ -92,7 +92,7 @@ public abstract class BaseClient implements IInputputHandler {
         this.handler = handler;
         this.players = players;
         this.c = c;
-        log = new Logger(c.connection.name, 4,true);
+        log = new Logger("Client", 4,true);
         serverMessages = new ArrayList<>();
         setGameSpecifics();
         setCardClickAdapter();
@@ -101,7 +101,6 @@ public abstract class BaseClient implements IInputputHandler {
 
     @Override
     public void handleInput(Message message) {
-        log.info("received: " +message.getCommand());
         try {
             switch (message.getCommand()) {
                 case MessageDisplayMessage.COMMAND:
@@ -269,9 +268,14 @@ public abstract class BaseClient implements IInputputHandler {
             e.printStackTrace();
         }
         JPanel openPanel = new JPanel(new BorderLayout());
-        JPanel p1 = new JPanel(new BorderLayout());
-        openPanel.add(p1,BorderLayout.SOUTH);
-        p1.add(button_config,BorderLayout.WEST);
+        JPanel p2 = new JPanel(new BorderLayout());
+        JPanel p1 = new JPanel();
+        openPanel.add(p2,BorderLayout.WEST);
+        p2.add(p1,BorderLayout.SOUTH);
+        p1.add(button_config);
+        JButton button_last = new JButton("letzer");
+        p1.add(button_last);
+        button_last.addActionListener(e -> queueOut(new MessageCurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
 
         openPanel.setBackground(new Color(0,0,0,0));
         button_config.addMouseListener(adapter);
@@ -431,11 +435,11 @@ public abstract class BaseClient implements IInputputHandler {
         configPanel.add(button_clearTable);
 
 
-        button_abortGame.addActionListener(e -> handler.queueOutMessage(new MessageAbortGame()));
-        button_shuffle.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
-        button_ackEnddialogs.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
-        button_endClients.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
-        button_lastStich.addActionListener(e -> handler.queueOutMessage(new MessageCurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
+        button_abortGame.addActionListener(e -> queueOut(new MessageAbortGame()));
+        button_shuffle.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
+        button_ackEnddialogs.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
+        button_endClients.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
+        button_lastStich.addActionListener(e -> queueOut(new MessageCurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
         button_clearTable.addActionListener(e -> clearPlayArea());
         configPanel.setBorder(new LineBorder(Color.WHITE,3));
     }
@@ -735,12 +739,18 @@ public abstract class BaseClient implements IInputputHandler {
         letzterStich.setVisible(true);
     }
 
+    protected void queueOut(Message message){
+        message.sender = c.connection.name;
+        handler.queueOutMessage(message);
+    }
+
     protected void handleWait4Player(Message message) {
-        if (message.getParams().get("player").getAsString().equals(c.connection.name)) {
+        MessageWait4Player messageWait4Player = new MessageWait4Player(message);
+        if (messageWait4Player.getPlayerName().equals(c.connection.name)) {
             gameMessageLabel.setText("Du bist am Zug");
             wait4Player = true;
         } else {
-            gameMessageLabel.setText(message.getParams().get("player").getAsString() + " ist am Zug");
+            gameMessageLabel.setText(messageWait4Player.getPlayerName() + " ist am Zug");
         }
     }
 
