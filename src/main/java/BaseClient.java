@@ -1,6 +1,13 @@
-import base.*;
+import base.Statics;
+import base.communication.ComClient;
+import base.config.Configuration;
+import base.game.Card;
+import base.helper.Logger;
+import base.interfaces.IInputputHandler;
 import base.messages.*;
 import base.messages.admin.MessageAbortGame;
+import base.messages.admin.MessageAdminRequest;
+import base.messages.admin.MessageEndClients;
 import base.messages.admin.MessageSetAdmin;
 
 import javax.imageio.ImageIO;
@@ -22,7 +29,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected Logger log;
 
     //UI
-    protected JFrame mainFrame= null;
+    protected JFrame mainFrame = null;
     protected JFrame letzterStich;
     protected JLayeredPane layeredPane;
     protected JPanel panel;
@@ -37,7 +44,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected JLabel gameMessageLabel;
     protected JLabel[] userLabels;
     protected JLabel tableLable;
-    protected Map<Card,JLabel> labelMap;
+    protected Map<Card, JLabel> labelMap;
     protected Map<JLabel, Card> cardMap;
     protected ArrayList<JButton> buttonList;
     protected Graphics playArea;
@@ -64,16 +71,16 @@ public abstract class BaseClient implements IInputputHandler {
     protected Statics.game currentGame;
 
     //Cards
-    private final HashMap<String,BufferedImage> cardImages = new HashMap<>();
+    private final HashMap<String, BufferedImage> cardImages = new HashMap<>();
 
-    private HashMap<String,BufferedImage> rawImages = new HashMap<>();
-    private HashMap<String,ImageIcon> rawIcons = new HashMap<>();
+    private HashMap<String, BufferedImage> rawImages = new HashMap<>();
+    private HashMap<String, ImageIcon> rawIcons = new HashMap<>();
     private BufferedImage img;
     private int cardHeight4Hand;
 
     public static final double RATIO = 0.67;
 
-    protected final HashMap<String,ImageIcon> cardIcons = new HashMap<>();
+    protected final HashMap<String, ImageIcon> cardIcons = new HashMap<>();
     protected int cardSize;
     protected MouseAdapter handCardClickAdapter;
     protected MouseAdapter exchangeCardClickAdapter;
@@ -87,12 +94,11 @@ public abstract class BaseClient implements IInputputHandler {
     protected float heightCorrection;
 
 
-
     public BaseClient(ComClient handler, List<String> players, Configuration c) {
         this.handler = handler;
         this.players = players;
         this.c = c;
-        log = new Logger("Client", 4,true);
+        log = new Logger("Client", 4, true);
         serverMessages = new ArrayList<>();
         setGameSpecifics();
         setCardClickAdapter();
@@ -105,28 +111,27 @@ public abstract class BaseClient implements IInputputHandler {
             switch (message.getCommand()) {
                 case MessageDisplayMessage.COMMAND:
                     String s = LocalTime.now().toString().split("\\.")[0];
-                    serverMessages.add( s +" - "+ message.getParams().get("message").getAsString());
+                    serverMessages.add(s + " - " + message.getParams().get("message").getAsString());
                     displayAllServerMessages();
                     break;
                 case MessageWait4Player.COMMAND:
                     handleWait4Player(message);
                     break;
                 case MessageSetAdmin.COMMAND:
-                    isAdmin = message.getParams().get("isAdmin").getAsBoolean();
+                    isAdmin = (new MessageSetAdmin(message)).isAdmin();
                     break;
                 case MessageEndClients.COMMAND:
                     System.exit(0);
                     break;
             }
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     protected void displayAllServerMessages() {
         StringBuilder s = new StringBuilder("<html>");
-        for (int i = serverMessages.size()-1;i>-1;i--){
+        for (int i = serverMessages.size() - 1; i > -1; i--) {
             s.append(serverMessages.get(i)).append("<br>");
         }
         s.append("</html>");
@@ -170,15 +175,16 @@ public abstract class BaseClient implements IInputputHandler {
 
     /**
      * Creates the Main Window for the Game. The following parameters are used to display the window in a specific way
+     *
      * @param state window state  (maximized or not)
-     * @param posX x position where the upper left corner will be set to
-     * @param posY y position where the upper left corner will be set to
-     * @param size dimension of the new Window at startup
+     * @param posX  x position where the upper left corner will be set to
+     * @param posY  y position where the upper left corner will be set to
+     * @param size  dimension of the new Window at startup
      */
     private void createMainFrame(int state, int posX, int posY, Dimension size) {
         log.info("creating UI");
-        mainFrame = new JFrame("Doppelkopf/Skat Version "+ Statics.VERSION + " " + c.connection.name );
-        mainPanel =new JPanel(new GridBagLayout());
+        mainFrame = new JFrame("Doppelkopf/Skat Version " + Statics.VERSION + " " + c.connection.name);
+        mainPanel = new JPanel(new GridBagLayout());
         mainFrame.setExtendedState(state);
         mainFrame.setLocation(posX, posY);
         mainFrame.add(mainPanel);
@@ -187,12 +193,11 @@ public abstract class BaseClient implements IInputputHandler {
         mainFrame.setSize(size);
 
 
-
         overLayer = new JLayeredPane();
-        setComponentSizes(overLayer,new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
+        setComponentSizes(overLayer, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
         layeredPane = new JLayeredPane();
-        setComponentSizes(layeredPane,new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
-        cardSize = mainFrame.getHeight()/30*8;
+        setComponentSizes(layeredPane, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
+        cardSize = mainFrame.getHeight() / 30 * 8;
     }
 
     /**
@@ -202,19 +207,19 @@ public abstract class BaseClient implements IInputputHandler {
         log.info("creating play area");
         table = new JPanel();
         setComponentSizes(table, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 15 * 10));
-        table.setBackground(new Color(0,0,0,0));
+        table.setBackground(new Color(0, 0, 0, 0));
         img = new BufferedImage(table.getWidth(), table.getWidth(), BufferedImage.TYPE_INT_ARGB);
         playArea = img.getGraphics();
         playArea.drawImage(img, 0, 0, table.getHeight(), table.getWidth(), null);
         tableLable = new JLabel(new ImageIcon(img));
         table.add(tableLable);
-        layeredPane.add(table,0);
+        layeredPane.add(table, 0);
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(floatPanel!=null
-                        && (e.getX()>floatPanel.getSize().width
-                        || e.getY()>floatPanel.getSize().height)) {
+                if (floatPanel != null
+                        && (e.getX() > floatPanel.getSize().width
+                        || e.getY() > floatPanel.getSize().height)) {
                     button_config.setEnabled(true);
                     overLayer.remove(floatPanel);
                     overLayer.moveToFront(layeredPane);
@@ -231,14 +236,14 @@ public abstract class BaseClient implements IInputputHandler {
      */
     protected void createHUD() {
         log.info("creating hud");
-        hud = new JPanel(new GridLayout(3,1));
-        hud.setBackground(new Color(0,0,0,0));
+        hud = new JPanel(new GridLayout(3, 1));
+        hud.setBackground(new Color(0, 0, 0, 0));
 
         userLabels = new JLabel[4];
-        for(int i = 0; i<userLabels.length;i++){
+        for (int i = 0; i < userLabels.length; i++) {
             userLabels[i] = new JLabel();
             userLabels[i].setOpaque(true);
-            userLabels[i].setBackground(new Color(0,0,0,0));
+            userLabels[i].setBackground(new Color(0, 0, 0, 0));
             switch (i) {
                 case 1:
                 case 3:
@@ -257,11 +262,11 @@ public abstract class BaseClient implements IInputputHandler {
 
         }
 
-        middlePanel = new JPanel(new GridLayout(1,3));
+        middlePanel = new JPanel(new GridLayout(1, 3));
         middlePanel.setBackground(Color.BLACK);
         //middlePanel.setBackground(new Color(0,0,0,0));
 
-        String path = new File(System.getProperty("user.dir") + File.separator+ "resources"+File.separator + "options.png").getAbsolutePath();
+        String path = new File(System.getProperty("user.dir") + File.separator + "resources" + File.separator + "options.png").getAbsolutePath();
         try {
             button_config = new JLabel(new ImageIcon(ImageIO.read(new File(path))));
         } catch (IOException e) {
@@ -270,31 +275,31 @@ public abstract class BaseClient implements IInputputHandler {
         JPanel openPanel = new JPanel(new BorderLayout());
         JPanel p2 = new JPanel(new BorderLayout());
         JPanel p1 = new JPanel();
-        openPanel.add(p2,BorderLayout.WEST);
-        p2.add(p1,BorderLayout.SOUTH);
+        openPanel.add(p2, BorderLayout.WEST);
+        p2.add(p1, BorderLayout.SOUTH);
         p1.add(button_config);
         JButton button_last = new JButton("letzer");
         p1.add(button_last);
         button_last.addActionListener(e -> queueOut(new MessageCurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
 
-        openPanel.setBackground(new Color(0,0,0,0));
+        openPanel.setBackground(new Color(0, 0, 0, 0));
         button_config.addMouseListener(adapter);
 
-        hudTop = new JPanel(new GridLayout(1,3));
-        hudTop.setBackground(new Color(0,0,0,0));
+        hudTop = new JPanel(new GridLayout(1, 3));
+        hudTop.setBackground(new Color(0, 0, 0, 0));
         hudTop.add(new JLabel());
         hudTop.add(userLabels[2]);
         hudTop.add(new JLabel());
 
-        hudMiddle = new JPanel(new GridLayout(1,3));
-        hudMiddle.setBackground(new Color(0,0,0,0));
+        hudMiddle = new JPanel(new GridLayout(1, 3));
+        hudMiddle.setBackground(new Color(0, 0, 0, 0));
         hudMiddle.add(userLabels[1]);
         hudMiddle.add(middlePanel);
         hudMiddle.add(userLabels[3]);
 
-        hudBottom = new JPanel(new GridLayout(1,3));
-        hudBottom.setBackground(new Color(0,0,0,0));
-        hudBottom.setBackground(new Color(0,0,0,0));
+        hudBottom = new JPanel(new GridLayout(1, 3));
+        hudBottom.setBackground(new Color(0, 0, 0, 0));
+        hudBottom.setBackground(new Color(0, 0, 0, 0));
         hudBottom.add(openPanel);
         hudBottom.add(userLabels[0]);
 
@@ -305,9 +310,9 @@ public abstract class BaseClient implements IInputputHandler {
         createMessageLabelPanel();
         createUIConfigPanel();
         floatPanel = new JPanel(new SpringLayout());
-        setComponentSizes(floatPanel,configPanel.getSize());
+        setComponentSizes(floatPanel, configPanel.getSize());
 
-        layeredPane.add(hud,1);
+        layeredPane.add(hud, 1);
         layeredPane.moveToFront(hud);
     }
 
@@ -320,26 +325,24 @@ public abstract class BaseClient implements IInputputHandler {
             try {
                 overLayer.add(floatPanel, 2);
                 overLayer.moveToFront(floatPanel);
-            }
-            catch (Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
     };
 
 
-    protected void createUIConfigPanel(){
-        configPanel = new JPanel(new GridLayout(15,2));
-        setComponentSizes(configPanel,new Dimension(600,600));
+    protected void createUIConfigPanel() {
+        configPanel = new JPanel(new GridLayout(15, 2));
+        setComponentSizes(configPanel, new Dimension(600, 600));
         configPanel.add(new JLabel("Kartenwinkel (rechts/links)"));
         JTextField angle24Field = new JTextField();
         angle24Field.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                try{
+                try {
                     c.ui.angle24 = Integer.parseInt(((JTextField) e.getComponent()).getText());
-                }
-                catch (Exception ex){
+                } catch (Exception ex) {
                     ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.angle24));
                 }
             }
@@ -350,10 +353,9 @@ public abstract class BaseClient implements IInputputHandler {
         angle13Field.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                try{
+                try {
                     c.ui.angle13 = Integer.parseInt(((JTextField) e.getComponent()).getText());
-                }
-                catch (Exception ex){
+                } catch (Exception ex) {
                     ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.angle13));
                 }
             }
@@ -364,10 +366,9 @@ public abstract class BaseClient implements IInputputHandler {
         angleVariationField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                try{
+                try {
                     c.ui.angleVariation = Integer.parseInt(((JTextField) e.getComponent()).getText());
-                }
-                catch (Exception ex){
+                } catch (Exception ex) {
                     ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.angleVariation));
                 }
             }
@@ -378,10 +379,9 @@ public abstract class BaseClient implements IInputputHandler {
         distanceField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                try{
+                try {
                     c.ui.distanceFromCenter = Integer.parseInt(((JTextField) e.getComponent()).getText());
-                }
-                catch (Exception ex){
+                } catch (Exception ex) {
                     ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.distanceFromCenter));
                 }
             }
@@ -392,17 +392,16 @@ public abstract class BaseClient implements IInputputHandler {
         distanceVariationField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
-                try{
+                try {
                     c.ui.distanceVariation = Integer.parseInt(((JTextField) e.getComponent()).getText());
-                }
-                catch (Exception ex){
+                } catch (Exception ex) {
                     ((JTextField) e.getComponent()).setText(String.valueOf(c.ui.distanceVariation));
                 }
             }
         });
         configPanel.add(distanceVariationField);
         JCheckBox repositionCards = new JCheckBox("Karten neu verteilen");
-        repositionCards.addActionListener(e -> c.ui.redrawCards=repositionCards.isSelected());
+        repositionCards.addActionListener(e -> c.ui.redrawCards = repositionCards.isSelected());
         configPanel.add(repositionCards);
 
         angle24Field.setText(String.valueOf(c.ui.angle24));
@@ -421,7 +420,7 @@ public abstract class BaseClient implements IInputputHandler {
         JButton button_clearTable = new JButton("Tisch leeren");
         configPanel.add(new JLabel());
 
-        if(isAdmin) {
+        if (isAdmin) {
             configPanel.add(new JSeparator());
             configPanel.add(new JSeparator());
             configPanel.add(button_abortGame);
@@ -441,44 +440,43 @@ public abstract class BaseClient implements IInputputHandler {
         button_endClients.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
         button_lastStich.addActionListener(e -> queueOut(new MessageCurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
         button_clearTable.addActionListener(e -> clearPlayArea());
-        configPanel.setBorder(new LineBorder(Color.WHITE,3));
+        configPanel.setBorder(new LineBorder(Color.WHITE, 3));
     }
 
     /**
      * Creates area where the player can interact with the game and other players (own cards, sort cards, select game to play etc.)
      */
     private void createControlArea() {
-        panel = new JPanel(new GridLayout(1,13));
+        panel = new JPanel(new GridLayout(1, 13));
 
         log.info("setting components");
         GridBagConstraints cbc = new GridBagConstraints();
 
-        cbc.gridx=0;
-        cbc.gridy=0;
-        cbc.gridheight=20;
-        cbc.gridwidth=1;
-        cbc.weighty=20;
+        cbc.gridx = 0;
+        cbc.gridy = 0;
+        cbc.gridheight = 20;
+        cbc.gridwidth = 1;
+        cbc.weighty = 20;
         cbc.anchor = GridBagConstraints.NORTH;
         overLayer.add(layeredPane);
-        mainPanel.add(overLayer,cbc);
+        mainPanel.add(overLayer, cbc);
         bottomPanel = new JPanel(new BorderLayout());
-        setComponentSizes(bottomPanel,new Dimension(mainFrame.getWidth(),mainFrame.getHeight()/30*9));
-        cbc.gridx=0;
-        cbc.gridy=21;
-        cbc.weighty=9;
-        cbc.gridheight=9;
-        cbc.gridwidth=1;
-        mainPanel.add(bottomPanel,cbc);
+        setComponentSizes(bottomPanel, new Dimension(mainFrame.getWidth(), mainFrame.getHeight() / 30 * 9));
+        cbc.gridx = 0;
+        cbc.gridy = 21;
+        cbc.weighty = 9;
+        cbc.gridheight = 9;
+        cbc.gridwidth = 1;
+        mainPanel.add(bottomPanel, cbc);
 
 
-        controlPanel = new JPanel(new GridLayout(1,6));
-        bottomPanel.add(controlPanel,BorderLayout.NORTH);
+        controlPanel = new JPanel(new GridLayout(1, 6));
+        bottomPanel.add(controlPanel, BorderLayout.NORTH);
         bottomPanel.add(panel);
         controlPanel.setVisible(false);
 
         log.info("components set");
     }
-
 
 
     /**
@@ -494,7 +492,7 @@ public abstract class BaseClient implements IInputputHandler {
         JScrollPane scrollPane = new JScrollPane(serverMessageLabel);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
+        scrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
         scrollPane.setOpaque(true);
         scrollPane.setBorder(new LineBorder(Color.BLACK));
         scrollPane.setAutoscrolls(true);
@@ -517,24 +515,25 @@ public abstract class BaseClient implements IInputputHandler {
 
     /**
      * Draws card onto the play area.
-     * @param card defines the card which will be drawn
-     * @param pos sets position where the card will be placed/which player used the card
+     *
+     * @param card         defines the card which will be drawn
+     * @param pos          sets position where the card will be placed/which player used the card
      * @param canvasHeight height of the play area
-     * @param canvasWidth widht of the play area
+     * @param canvasWidth  widht of the play area
      */
-    protected void drawCard2Position(Card card, int pos, int canvasHeight, int canvasWidth){
+    protected void drawCard2Position(Card card, int pos, int canvasHeight, int canvasWidth) {
         AffineTransform at;
-        int distFromCenter = cardSize*c.ui.distanceFromCenter/100;
-        int theta = c.ui.angleVariation - random.nextInt(c.ui.angleVariation*2 + 1);
-        int distVar = distFromCenter +  c.ui.distanceVariation - random.nextInt(c.ui.distanceVariation*2 + 1);
-        BufferedImage img = cardImages.get(card.suit +card.kind);
-        int halfHeight = canvasHeight/2;
-        int halfWidth = canvasWidth/2;
-        int anchorY = (int) (halfHeight*heightCorrection);
+        int distFromCenter = cardSize * c.ui.distanceFromCenter / 100;
+        int theta = c.ui.angleVariation - random.nextInt(c.ui.angleVariation * 2 + 1);
+        int distVar = distFromCenter + c.ui.distanceVariation - random.nextInt(c.ui.distanceVariation * 2 + 1);
+        BufferedImage img = cardImages.get(card.suit + card.kind);
+        int halfHeight = canvasHeight / 2;
+        int halfWidth = canvasWidth / 2;
+        int anchorY = (int) (halfHeight * heightCorrection);
         int anchorX = halfWidth;
-        switch (pos){
+        switch (pos) {
             case 0:
-                anchorY= halfHeight + distVar;
+                anchorY = halfHeight + distVar;
                 theta += c.ui.angle13;
                 break;
             case 1:
@@ -550,18 +549,17 @@ public abstract class BaseClient implements IInputputHandler {
                 theta += c.ui.angle24;
                 break;
         }
-        at = AffineTransform.getRotateInstance(Math.toRadians(theta),anchorX,anchorY);
-        at.translate(anchorX-(cardSize*RATIO/2),anchorY-(double)cardSize/2);
+        at = AffineTransform.getRotateInstance(Math.toRadians(theta), anchorX, anchorY);
+        at.translate(anchorX - (cardSize * RATIO / 2), anchorY - (double) cardSize / 2);
         Graphics2D g = (Graphics2D) playArea;
         g.drawImage(img, at, null);
     }
 
 
-
     //UI helper functions
 
-    protected void deselectAllSortButtons(){
-        buttonList.forEach(button-> button.setBackground(Color.BLACK));
+    protected void deselectAllSortButtons() {
+        buttonList.forEach(button -> button.setBackground(Color.BLACK));
     }
 
 
@@ -569,7 +567,7 @@ public abstract class BaseClient implements IInputputHandler {
         panel.removeAll();
         labelMap = new HashMap<>();
         cardMap = new HashMap<>();
-        setComponentSizes(panel,new Dimension((int)(cardSize*RATIO*maxHandCards),panel.getHeight()));
+        setComponentSizes(panel, new Dimension((int) (cardSize * RATIO * maxHandCards), panel.getHeight()));
         cards.forEach(this::getCardLabel4Hand);
         panel.revalidate();
         panel.repaint();
@@ -613,12 +611,12 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
 
-    protected void getCardLabel4Hand(Card card){
+    protected void getCardLabel4Hand(Card card) {
         JPanel p = new JPanel();
         JLabel label = new JLabel();
-        label.setIcon(cardIcons.get(card.suit +card.kind));
-        labelMap.put(card,label);
-        cardMap.put(label,card);
+        label.setIcon(cardIcons.get(card.suit + card.kind));
+        labelMap.put(card, label);
+        cardMap.put(label, card);
         label.addMouseListener(handCardClickAdapter);
         p.add(label);
         panel.add(p);
@@ -638,14 +636,14 @@ public abstract class BaseClient implements IInputputHandler {
         log.info("finished redrawing");
     }
 
-    protected void setComponentSizes(JComponent p, Dimension d){
+    protected void setComponentSizes(JComponent p, Dimension d) {
         p.setPreferredSize(d);
         p.setSize(p.getPreferredSize());
         p.setMinimumSize(p.getPreferredSize());
         p.setMaximumSize(p.getPreferredSize());
     }
 
-    protected void clearPlayArea(){
+    protected void clearPlayArea() {
         img = new BufferedImage(table.getWidth(), table.getWidth(), BufferedImage.TYPE_INT_ARGB);
         playArea = img.getGraphics();
         playArea.drawImage(img, 0, 0, table.getHeight(), table.getWidth(), null);
@@ -655,14 +653,14 @@ public abstract class BaseClient implements IInputputHandler {
         updateTable();
     }
 
-    protected JLabel getCardLabel(Card card){
+    protected JLabel getCardLabel(Card card) {
         int size = 10;
         JLabel label = new JLabel(rawIcons.get(card.toTrimedString()));
-        label.setSize(new Dimension((int)mainFrame.getSize().getWidth()/size,110));
+        label.setSize(new Dimension((int) mainFrame.getSize().getWidth() / size, 110));
         return label;
     }
 
-    protected void updateTable(){
+    protected void updateTable() {
         tableLable.revalidate();
         tableLable.repaint();
         table.revalidate();
@@ -702,16 +700,16 @@ public abstract class BaseClient implements IInputputHandler {
         JLabel cardPos4 = new JLabel();
         MessageCurrentStich messageCurrentStich = new MessageCurrentStich(message);
         Map<Integer, Card> map = messageCurrentStich.GetStichMap(currentGame);
-        for(int j = 0;j<tmpList.size();j++){
+        for (int j = 0; j < tmpList.size(); j++) {
             if (map.containsKey(tmpList.get(j))) {
                 if (j == 0) {
                     cardPos4 = getCardLabel(map.get(tmpList.get(j)));
                 } else if (j == 1) {
-                    cardPos1 =  getCardLabel(map.get(tmpList.get(j)));
+                    cardPos1 = getCardLabel(map.get(tmpList.get(j)));
                 } else if (j == 2) {
-                    cardPos2 =  getCardLabel(map.get(tmpList.get(j)));
+                    cardPos2 = getCardLabel(map.get(tmpList.get(j)));
                 } else if (j == 3) {
-                    cardPos3 =  getCardLabel(map.get(tmpList.get(j)));
+                    cardPos3 = getCardLabel(map.get(tmpList.get(j)));
                 }
             }
         }
@@ -721,7 +719,7 @@ public abstract class BaseClient implements IInputputHandler {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                letzterStich=null;
+                letzterStich = null;
             }
         });
         JPanel jPanel = new JPanel(new GridLayout(3, 3));
@@ -739,7 +737,7 @@ public abstract class BaseClient implements IInputputHandler {
         letzterStich.setVisible(true);
     }
 
-    protected void queueOut(Message message){
+    protected void queueOut(Message message) {
         message.sender = c.connection.name;
         handler.queueOutMessage(message);
     }
@@ -764,12 +762,12 @@ public abstract class BaseClient implements IInputputHandler {
         getCardLabel4Hand(card);
     }
 
-    protected  void moveCard2Exchange(Card card){
-        moveCard2Exchange(card,false);
+    protected void moveCard2Exchange(Card card) {
+        moveCard2Exchange(card, false);
     }
 
     protected void moveCard2Exchange(Card card, boolean force) {
-        if(hand.size()>10 || force) {
+        if (hand.size() > 10 || force) {
             for (int i = 0; i < exchangeCards.length; i++) {
                 try {
                     if (exchangeCards[i] == null) {
@@ -779,7 +777,7 @@ public abstract class BaseClient implements IInputputHandler {
                         middlePanel.add(cLabels[i]);
                         break;
                     }
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
