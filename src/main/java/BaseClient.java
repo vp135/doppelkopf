@@ -338,7 +338,7 @@ public abstract class BaseClient implements IClientMessageHandler {
         else{
             configPanel = new JPanel(new GridLayout(8, 2));
         }
-        setComponentSizes(configPanel, new Dimension(800, 600));
+        setComponentSizes(configPanel, new Dimension(table.getWidth()/2, table.getHeight()));
         configPanel.add(new JLabel("Kartenwinkel (rechts/links)"));
         JTextField angle24Field = new JTextField();
         angle24Field.addFocusListener(new FocusAdapter() {
