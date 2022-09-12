@@ -296,19 +296,6 @@ public class Main implements IClientMessageHandler {
         setConfigMenu();
     }
 
-    private void addNPCs() {
-        new Thread(() -> {
-            List<String> fakeNames = c.other.players;
-            for (int i = 0; i < c.other.comPlayer; i++) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                addNPC(fakeNames.get(i));
-            }
-        }).start();
-    }
 
     private void addNPC(String npcName) {
         if(npcName!=null && !npcName.equals("")) {
