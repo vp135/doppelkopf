@@ -253,9 +253,8 @@ public class Main implements IClientMessageHandler {
                         log.info("verbunden");
                         create.setEnabled(false);
                     } else {
-                        comClient.clearQueue();
-                        join.setText("beitreten");
-                        log.info("beitreten");
+                        join.setText("verbinde...");
+                        log.info("connection retry continues in background");
                     }
                 }
             }).start();
