@@ -1,11 +1,11 @@
 import base.*;
-import base.doko.messages.MessageGameEnd;
-import base.doko.messages.MessageSelectCards4Armut;
-import base.doko.messages.MessageSelectGame;
-import base.doko.messages.MessageSendCards;
+import base.doko.messages.GameEnd;
+import base.doko.messages.SelectCards4Armut;
+import base.doko.messages.SelectGame;
+import base.doko.messages.SendCards;
 import base.messages.*;
-import base.messages.admin.MessageAbortGame;
-import base.messages.admin.MessageSetAdmin;
+import base.messages.admin.AbortGame;
+import base.messages.admin.SetAdmin;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,33 +39,33 @@ public class MessageTest implements IServerMessageHandler{
         JPanel dokoPanel = new JPanel(new GridLayout(10, 1));
 
         JButton abortGame = new JButton("AbortGame");
-        abortGame.addActionListener(e -> server.send2All(socketList, new MessageAbortGame()));
+        abortGame.addActionListener(e -> server.send2All(socketList, new AbortGame()));
         basePanel.add(abortGame);
         JButton setAdmin = new JButton("SetAdmin");
-        setAdmin.addActionListener(e -> server.send2All(socketList, new MessageSetAdmin(true)));
+        setAdmin.addActionListener(e -> server.send2All(socketList, new SetAdmin(true)));
         basePanel.add(setAdmin);
         JButton announceSpectator = new JButton("AnnounceSpectator");
-        announceSpectator.addActionListener(e -> server.send2All(socketList, new MessageAnnounceSpectator(0, 0)));
+        announceSpectator.addActionListener(e -> server.send2All(socketList, new AnnounceSpectator(0, 0)));
         basePanel.add(announceSpectator);
         JButton cards = new JButton("Cards");
 
         cards.addActionListener(e ->{
             List<Card> cardList = new ArrayList<>();
-            server.send2All(socketList, new MessageCards(cardList));
+            server.send2All(socketList, new Cards(cardList));
         });
         basePanel.add(cards);
         JButton currentStich = new JButton("currentStich");
         basePanel.add(currentStich);
         JButton displayMessage = new JButton("displayMessage");
-        displayMessage.addActionListener(e -> server.send2All(socketList, new MessageDisplayMessage("" + System.currentTimeMillis())));
+        displayMessage.addActionListener(e -> server.send2All(socketList, new DisplayMessage("" + System.currentTimeMillis())));
         basePanel.add(displayMessage);
         JButton startGame = new JButton("startGame");
-        startGame.addActionListener(e -> server.send2All(socketList, new MessageStartGame(Statics.game.DOKO.name())));
+        startGame.addActionListener(e -> server.send2All(socketList, new StartGame(Statics.game.DOKO.name())));
         basePanel.add(startGame);
         JButton playersInLobby = new JButton("PlayersInLobby");
         playersInLobby.addActionListener(e ->{
             List<String> players = Arrays.asList("Android","test1","test2","test3");
-            server.send2All(socketList, MessagePlayerList.playersInLobby(players));
+            server.send2All(socketList, new PlayersInLobby(players));
         });
         basePanel.add(playersInLobby);
 
@@ -78,7 +78,7 @@ public class MessageTest implements IServerMessageHandler{
 
 
         JButton gameEnd = new JButton("gameEnd");
-        gameEnd.addActionListener(e -> server.send2All(socketList, new MessageGameEnd(
+        gameEnd.addActionListener(e -> server.send2All(socketList, new GameEnd(
                 "Test<br>Test1<br>Test2",
                 "1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>0",
                 "Test<br>Test1<br>Test2",
@@ -88,14 +88,14 @@ public class MessageTest implements IServerMessageHandler{
         JButton sendCards = new JButton("SendCards");
         sendCards.addActionListener(e -> {
             List<Card> cardList = new ArrayList<>();
-            server.send2All(socketList, new MessageSendCards(cardList, MessageSendCards.RICH));
+            server.send2All(socketList, new SendCards(cardList, SendCards.RICH));
         });
         dokoPanel.add(sendCards);
         JButton selectCards4Armut = new JButton("selectCards4Armut");
-        selectCards4Armut.addActionListener(e -> server.send2All(socketList,new MessageSelectCards4Armut()));
+        selectCards4Armut.addActionListener(e -> server.send2All(socketList,new SelectCards4Armut()));
         dokoPanel.add(selectCards4Armut);
         JButton selectGame = new JButton("selectGame");
-        selectGame.addActionListener(e -> server.send2All(socketList,new MessageSelectGame()));
+        selectGame.addActionListener(e -> server.send2All(socketList,new SelectGame()));
         dokoPanel.add(selectGame);
 
         mainPanel.add(dokoPanel);

@@ -124,7 +124,6 @@ public class Main implements IInputputHandler{
                                 players.set(playerList.getSelectedIndex() - 1, playerUp);
                                 players.set(playerList.getSelectedIndex(), playerDown);
                                 selectionPlayer = playerUp;
-                                comClient.queueOutMessage(MessagePlayerList.playerOrderChanged(players));
                             }
                             break;
                         case 34://page down
@@ -135,7 +134,6 @@ public class Main implements IInputputHandler{
                                 players.set(playerList.getSelectedIndex() + 1, playerUp);
                                 players.set(playerList.getSelectedIndex(), playerDown);
                                 selectionPlayer = playerUp;
-                                comClient.queueOutMessage(MessagePlayerList.playerOrderChanged(players));
                             }
                             break;
                     }
@@ -186,13 +184,13 @@ public class Main implements IInputputHandler{
                     create.setEnabled(false);
                     join.setEnabled(false);
                     comClient = new ComClient(hostname.getText(), Integer.parseInt(port.getText()), this, name);
-                    comClient.queueOutMessage(new MessageGetVersion(name, Statics.VERSION));
+                    comClient.queueOutMessage(new GetVersion(name, Statics.VERSION));
                     comClient.start();
                     inputs.add(gameList);
                     inputs.add(start);
                     createConfigPanel();
                     rightPanel.add(configPanel);
-                    gameList.setSelectedItem(Statics.game.valueOf(c.lastGame));
+                    gameList.setSelectedItem(Statics.game.DOKO);
                     setConfigMenu();
 
 
@@ -236,7 +234,7 @@ public class Main implements IInputputHandler{
                         join.setText("verbunden");
                         log.info("verbunden");
                         create.setEnabled(false);
-                        comClient.queueOutMessage(new MessageGetVersion(name,Statics.VERSION));
+                        comClient.queueOutMessage(new GetVersion(name,Statics.VERSION));
                     } else {
                         comClient.clearQueue();
                         join.setText("beitreten");
@@ -270,39 +268,38 @@ public class Main implements IInputputHandler{
     }
 
 
-    public void handleInput(Message message) {
+    public void handleInput(RequestObject message) {
         log.info("received: " +message.getCommand());
         switch (message.getCommand()) {
-            case MessagePlayerList.IN_LOBBY:
-            case MessagePlayerList.CHANGE_ORDER:
+            case PlayersInLobby.COMMAND:
                 handlePlayersInLobby(message);
                 break;
-            case MessageStartGame.COMMAND:
+            case StartGame.COMMAND:
                 handleStart(message);
                 break;
-            case MessageGetVersion.COMMAND:
+            case GetVersion.COMMAND:
                 handleGetVersion(message);
                 break;
         }
     }
 
 
-    private void handleGetVersion(Message message) {
-        MessageGetVersion messageGetVersion = new MessageGetVersion(message);
-        if (!Statics.VERSION.equals(messageGetVersion.getVersion())) {
+    private void handleGetVersion(RequestObject message) {
+        String version = message.getParams().get("version").getAsString();
+        if (!Statics.VERSION.equals(version)) {
             JOptionPane.showMessageDialog(createJoinFrame,
-                    "Version(Server): " + messageGetVersion.getVersion() + "\n" +
+                    "Version(Server): " + version + "\n" +
                             "Version(lokal): " + Statics.VERSION);
         }
     }
 
 
-    private void handlePlayersInLobby(Message message) {
-        MessagePlayerList messagePlayersInLobby = new MessagePlayerList(message);
+    private void handlePlayersInLobby(RequestObject message) {
         playerList.removeAll();
         players = new ArrayList<>();
         DefaultListModel<String> model = new DefaultListModel<>();
-        players.addAll(messagePlayersInLobby.getPlayerNamesList());
+        message.getParams().getAsJsonArray("players").forEach(player ->
+                players.add(player.getAsString()));
         model.addAll(players);
         playerList.setModel(model);
         if(!selectionPlayer.equals("")){
@@ -316,8 +313,7 @@ public class Main implements IInputputHandler{
     }
 
 
-    private void handleStart(Message message) {
-        MessageStartGame messageStartGame = new MessageStartGame(message);
+    private void handleStart(RequestObject message) {
         if(client==null || client.mainFrame==null) {
             while (!ready) {
                 try {
@@ -328,15 +324,11 @@ public class Main implements IInputputHandler{
 
             }
 
-            c.lastGame =  messageStartGame.getGame().name();
-            c.saveConfig();
-            switch (messageStartGame.getGame()) {
-                case DOKO:
-                    client = new DokoClient(comClient, players, c);
-                    break;
-                case SKAT:
-                    client = new SkatClient(comClient, players, c);
-                    break;
+            Statics.game game = Statics.game.valueOf(message.getParams().get("game").getAsString());
+            if (game == Statics.game.DOKO) {
+                client = new DokoClient(comClient, players, c);
+            } else {
+                client = new SkatClient(comClient, players, c);
             }
             client.setRawCards(rawIcons, rawImages);
             comClient.setClient(client);

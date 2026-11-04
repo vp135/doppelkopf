@@ -1,7 +1,7 @@
 import base.*;
 import base.messages.*;
-import base.messages.admin.MessageAbortGame;
-import base.messages.admin.MessageSetAdmin;
+import base.messages.admin.AbortGame;
+import base.messages.admin.SetAdmin;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -37,8 +37,8 @@ public abstract class BaseClient implements IInputputHandler {
     protected JLabel gameMessageLabel;
     protected JLabel[] userLabels;
     protected JLabel tableLable;
-    protected Map<Card,JLabel> labelMap;
-    protected Map<JLabel, Card> cardMap;
+    protected Map<BaseCard,JLabel> labelMap;
+    protected Map<JLabel, BaseCard> cardMap;
     protected ArrayList<JButton> buttonList;
     protected Graphics playArea;
     protected JLayeredPane overLayer;
@@ -77,11 +77,11 @@ public abstract class BaseClient implements IInputputHandler {
     protected int cardSize;
     protected MouseAdapter handCardClickAdapter;
     protected MouseAdapter exchangeCardClickAdapter;
-    protected HashMap<Integer, Card> tableStich = new HashMap<>();
+    protected HashMap<Integer, BaseCard> tableStich = new HashMap<>();
     protected boolean wait4Player = false;
     protected boolean selectCards = false;
-    protected List<Card> hand;
-    protected Card[] exchangeCards;
+    protected List<BaseCard> hand;
+    protected BaseCard[] exchangeCards;
     protected JLabel[] cLabels;
     protected int maxHandCards = 13;
     protected float heightCorrection;
@@ -100,22 +100,22 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
     @Override
-    public void handleInput(Message message) {
+    public void handleInput(RequestObject message) {
         log.info("received: " +message.getCommand());
         try {
             switch (message.getCommand()) {
-                case MessageDisplayMessage.COMMAND:
+                case DisplayMessage.COMMAND:
                     String s = LocalTime.now().toString().split("\\.")[0];
                     serverMessages.add( s +" - "+ message.getParams().get("message").getAsString());
                     displayAllServerMessages();
                     break;
-                case MessageWait4Player.COMMAND:
+                case Wait4Player.COMMAND:
                     handleWait4Player(message);
                     break;
-                case MessageSetAdmin.COMMAND:
+                case SetAdmin.COMMAND:
                     isAdmin = message.getParams().get("isAdmin").getAsBoolean();
                     break;
-                case MessageEndClients.COMMAND:
+                case EndClients.COMMAND:
                     System.exit(0);
                     break;
             }
@@ -431,11 +431,11 @@ public abstract class BaseClient implements IInputputHandler {
         configPanel.add(button_clearTable);
 
 
-        button_abortGame.addActionListener(e -> handler.queueOutMessage(new MessageAbortGame()));
-        button_shuffle.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
-        button_ackEnddialogs.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
-        button_endClients.addActionListener(e -> handler.queueOutMessage(new MessageAdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
-        button_lastStich.addActionListener(e -> handler.queueOutMessage(new MessageCurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
+        button_abortGame.addActionListener(e -> handler.queueOutMessage(new AbortGame()));
+        button_shuffle.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
+        button_ackEnddialogs.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
+        button_endClients.addActionListener(e -> handler.queueOutMessage(new AdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
+        button_lastStich.addActionListener(e -> handler.queueOutMessage(new CurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
         button_clearTable.addActionListener(e -> clearPlayArea());
         configPanel.setBorder(new LineBorder(Color.WHITE,3));
     }
@@ -505,7 +505,7 @@ public abstract class BaseClient implements IInputputHandler {
 
     protected abstract void createGameSpecificButtons();
 
-    protected abstract void setGameSpecificButtons(List<Card> hand);
+    protected abstract void setGameSpecificButtons(List<BaseCard> hand);
 
     protected abstract void setGameSpecifics();
 
@@ -518,12 +518,12 @@ public abstract class BaseClient implements IInputputHandler {
      * @param canvasHeight height of the play area
      * @param canvasWidth widht of the play area
      */
-    protected void drawCard2Position(Card card, int pos, int canvasHeight, int canvasWidth){
+    protected void drawCard2Position(BaseCard card, int pos, int canvasHeight, int canvasWidth){
         AffineTransform at;
         int distFromCenter = cardSize*c.ui.distanceFromCenter/100;
         int theta = c.ui.angleVariation - random.nextInt(c.ui.angleVariation*2 + 1);
         int distVar = distFromCenter +  c.ui.distanceVariation - random.nextInt(c.ui.distanceVariation*2 + 1);
-        BufferedImage img = cardImages.get(card.suit +card.kind);
+        BufferedImage img = cardImages.get(card.farbe +card.value);
         int halfHeight = canvasHeight/2;
         int halfWidth = canvasWidth/2;
         int anchorY = (int) (halfHeight*heightCorrection);
@@ -561,7 +561,7 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
 
-    protected void createCardButtons(List<Card> cards) {
+    protected void createCardButtons(List<BaseCard> cards) {
         panel.removeAll();
         labelMap = new HashMap<>();
         cardMap = new HashMap<>();
@@ -575,7 +575,7 @@ public abstract class BaseClient implements IInputputHandler {
     protected void createCards() {
         int cardWidth4Hand = panel.getWidth() / maxHandCards;
         cardHeight4Hand = (int) (cardWidth4Hand / RATIO);
-        Card.UNIQUE_CARDS.forEach(s -> {
+        BaseCard.UNIQUE_CARDS.forEach(s -> {
             try {
                 double factor = Math.min(cardHeight4Hand, cardSize) * RATIO / (double) rawImages.get(s).getWidth();
                 BufferedImage cardImage = new BufferedImage(
@@ -609,10 +609,10 @@ public abstract class BaseClient implements IInputputHandler {
     }
 
 
-    protected void getCardLabel4Hand(Card card){
+    protected void getCardLabel4Hand(BaseCard card){
         JPanel p = new JPanel();
         JLabel label = new JLabel();
-        label.setIcon(cardIcons.get(card.suit +card.kind));
+        label.setIcon(cardIcons.get(card.farbe +card.value));
         labelMap.put(card,label);
         cardMap.put(label,card);
         label.addMouseListener(handCardClickAdapter);
@@ -651,7 +651,7 @@ public abstract class BaseClient implements IInputputHandler {
         updateTable();
     }
 
-    protected JLabel getCardLabel(Card card){
+    protected JLabel getCardLabel(BaseCard card){
         int size = 10;
         JLabel label = new JLabel(rawIcons.get(card.toTrimedString()));
         label.setSize(new Dimension((int)mainFrame.getSize().getWidth()/size,110));
@@ -667,7 +667,7 @@ public abstract class BaseClient implements IInputputHandler {
         layeredPane.repaint();
     }
 
-    protected void handleCards(Message message) {
+    protected void handleCards(RequestObject message) {
         updateTable();
         panel.removeAll();
         createCardButtons(hand);
@@ -678,7 +678,7 @@ public abstract class BaseClient implements IInputputHandler {
         bottomPanel.repaint();
     }
 
-    public void handleLastStich(Message message, int playerCount, int spectator) {
+    public void handleLastStich(RequestObject message, int playerCount, int spectator) {
         int ownNumber = players.indexOf(c.connection.name);
         List<Integer> tmpList = new ArrayList<>();
         int i = ownNumber;
@@ -696,8 +696,8 @@ public abstract class BaseClient implements IInputputHandler {
         JLabel cardPos2 = new JLabel();
         JLabel cardPos3 = new JLabel();
         JLabel cardPos4 = new JLabel();
-        MessageCurrentStich messageCurrentStich = new MessageCurrentStich(message);
-        Map<Integer, Card> map = messageCurrentStich.GetStichMap(currentGame);
+        CurrentStich currentStich = new CurrentStich(message);
+        Map<Integer, BaseCard> map = currentStich.getMap(currentGame);
         for(int j = 0;j<tmpList.size();j++){
             if (map.containsKey(tmpList.get(j))) {
                 if (j == 0) {
@@ -735,7 +735,7 @@ public abstract class BaseClient implements IInputputHandler {
         letzterStich.setVisible(true);
     }
 
-    protected void handleWait4Player(Message message) {
+    protected void handleWait4Player(RequestObject message) {
         if (message.getParams().get("player").getAsString().equals(c.connection.name)) {
             gameMessageLabel.setText("Du bist am Zug");
             wait4Player = true;
@@ -749,22 +749,22 @@ public abstract class BaseClient implements IInputputHandler {
         this.rawImages = rawImages;
     }
 
-    protected void moveCard2Hand(Card card) {
+    protected void moveCard2Hand(BaseCard card) {
         hand.add(card);
         getCardLabel4Hand(card);
     }
 
-    protected  void moveCard2Exchange(Card card){
+    protected  void moveCard2Exchange(BaseCard card){
         moveCard2Exchange(card,false);
     }
 
-    protected void moveCard2Exchange(Card card, boolean force) {
+    protected void moveCard2Exchange(BaseCard card, boolean force) {
         if(hand.size()>10 || force) {
             for (int i = 0; i < exchangeCards.length; i++) {
                 try {
                     if (exchangeCards[i] == null) {
                         exchangeCards[i] = card;
-                        cLabels[i].setIcon(cardIcons.get(card.suit + card.kind));
+                        cLabels[i].setIcon(cardIcons.get(card.farbe + card.value));
                         cLabels[i].setVisible(true);
                         middlePanel.add(cLabels[i]);
                         break;
