@@ -1,3 +1,4 @@
+import base.Constants;
 import base.Statics;
 import base.communication.ComClient;
 import base.communication.ComServer;
@@ -9,10 +10,11 @@ import base.game.BaseServer;
 import base.game.Card;
 import base.game.NPCClient;
 import base.helper.Helper;
-import base.helper.Logger;
+import base.helper.Loggers;
 import base.interfaces.IClientMessageHandler;
 import base.messages.*;
 import com.google.gson.*;
+import org.slf4j.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,7 +31,7 @@ import java.util.Objects;
 
 public class Main implements IClientMessageHandler {
 
-    private Logger log;
+    private volatile Logger log;
 
 
     private String name;
@@ -40,7 +42,7 @@ public class Main implements IClientMessageHandler {
     private JButton start;
     private JButton join;
     private JFrame createJoinFrame;
-    private Configuration c;
+    private final Configuration config;
     private boolean isAdmin = false;
 
 
@@ -48,47 +50,46 @@ public class Main implements IClientMessageHandler {
     private JComboBox<Statics.game> gameList;
     private JPanel configPanel;
     private JPanel configPanelPassive;
-    private String selectionPlayer = "";
+    private String selectionPlayer = Constants.EMPTY_STRING;
     private JPanel inputs;
     private JPanel rightPanel;
     private JPanel leftPanel;
 
     public static void main(String[] args) {
-        Configuration c = Configuration.fromFile();
+        Configuration config = Configuration.fromFile();
         if (args.length > 0) {
             if (args[0].equals("-serverOnly")) {
-                c.logType = 1;
-                new BaseServer(c, new ComServer(c));
+                new BaseServer(config, new ComServer(config));
             }
         } else {
-            new Main(c);
+            new Main(config);
         }
     }
 
 
     private void modifyUIManager() {
-        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("Label.font", new FontUIResource(new Font(Constants.DIALOG, Font.BOLD, config.ui.textsize)));
         UIManager.put("Label.background", Color.BLACK);
         UIManager.put("Label.foreground", Color.WHITE);
-        UIManager.put("Button.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("Button.font", new FontUIResource(new Font(Constants.DIALOG, Font.BOLD, config.ui.textsize)));
         UIManager.put("Button.background", Color.BLACK);
         UIManager.put("Button.foreground", Color.WHITE);
-        UIManager.put("TextField.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("TextField.font", new FontUIResource(new Font(Constants.DIALOG, Font.BOLD, config.ui.textsize)));
         UIManager.put("TextField.background", new Color(70, 70, 70));
         UIManager.put("TextField.foreground", Color.WHITE);
         UIManager.put("Panel.background", Color.BLACK);
-        UIManager.put("TextArea.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("TextArea.font", new FontUIResource(new Font(Constants.DIALOG, Font.BOLD, config.ui.textsize)));
         UIManager.put("TextArea.background", Color.BLACK);
         UIManager.put("TextArea.foreground", Color.WHITE);
-        UIManager.put("CheckBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("CheckBox.font", new FontUIResource(new Font(Constants.DIALOG, Font.BOLD, config.ui.textsize)));
         UIManager.put("CheckBox.background", Color.BLACK);
         UIManager.put("CheckBox.foreground", Color.WHITE);
-        UIManager.put("ComboBox.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("ComboBox.font", new FontUIResource(new Font(Constants.DIALOG, Font.BOLD, config.ui.textsize)));
         UIManager.put("ComboBox.background", Color.BLACK);
         UIManager.put("ComboBox.foreground", Color.WHITE);
         UIManager.put("OptionPane.messageForeground", Color.WHITE);
         //This shit does not work for some fucking reason
-        UIManager.put("List.font", new FontUIResource(new Font("Dialog", Font.BOLD, c.ui.textsize)));
+        UIManager.put("List.font", new FontUIResource(new Font(Constants.DIALOG, Font.BOLD, config.ui.textsize)));
         UIManager.put("List.background", Color.BLACK);
         UIManager.put("List.foreground", Color.WHITE);
         UIManager.put("List.selectionBackground", Color.GREEN);
@@ -98,18 +99,20 @@ public class Main implements IClientMessageHandler {
         Toolkit.getDefaultToolkit().setDynamicLayout(false);
     }
 
-    public Main(Configuration c) {
-        this.c = c;
+    public Main(Configuration config) {
+        this.config = config;
+        log = Loggers.client(config.connection.name);
         new Thread(() -> {
             while (true) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    log.warn("Background thread interrupted", e);
+                    Thread.currentThread().interrupt();
+                    return;
                 }
             }
         }).start();
-        log = new Logger("Client", c.logLevel, true, c.logType);
         log.info("Loading UI");
         createOrJoin();
 
@@ -146,7 +149,7 @@ public class Main implements IClientMessageHandler {
         //This part is only here because the UIManager does not want to accept my settings for JList
         playerList.setBackground(Color.BLACK);
         playerList.setForeground(Color.WHITE);
-        playerList.setFont(playerList.getFont().deriveFont((float) c.ui.textsize));
+        playerList.setFont(playerList.getFont().deriveFont((float) config.ui.textsize));
         playerList.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -190,18 +193,19 @@ public class Main implements IClientMessageHandler {
         inputs.add(join);
 
 
-        playername.setText(c.connection.name);
-        hostname.setText(c.connection.server);
-        port.setText(String.valueOf(c.connection.port));
+        playername.setText(config.connection.name);
+        hostname.setText(config.connection.server);
+        port.setText(String.valueOf(config.connection.port));
 
         create.addActionListener(e -> {
             isAdmin = true;
             name = playername.getText();
-            c.connection.name = name;
-            c.connection.server = hostname.getText();
-            c.connection.port = Integer.parseInt(port.getText());
-            if (!playername.getText().trim().equals("") && !port.getText().trim().equals("")) {
-                server = new BaseServer(c, new ComServer(c));
+            log = Loggers.client(name);
+            config.connection.name = name;
+            config.connection.server = hostname.getText();
+            config.connection.port = Integer.parseInt(port.getText());
+            if (!playername.getText().trim().equals(Constants.EMPTY_STRING) && !port.getText().trim().equals(Constants.EMPTY_STRING)) {
+                server = new BaseServer(config, new ComServer(config));
                 int nmbRetries = 15;
                 for (int i = 0; !server.comServer.listening && i < nmbRetries; i++) {
                     log.info("not listening");
@@ -209,12 +213,12 @@ public class Main implements IClientMessageHandler {
                         i++;
                         Thread.sleep(200);
                     } catch (InterruptedException interruptedException) {
-                        log.error(interruptedException.toString());
+                        log.error("Interrupted while waiting for server", interruptedException);
                     }
                 }
                 if (server.comServer.listening) {
                     create.setEnabled(false);
-                    comClient = new ComClient(c, this);
+                    comClient = new ComClient(config, this);
                 }
             }
         });
@@ -224,19 +228,20 @@ public class Main implements IClientMessageHandler {
             name = playername.getText();
             new Thread(() -> {
                 name = playername.getText().trim();
-                if (!name.equals("")) {
-                    c.connection.name = name;
-                    c.connection.server = hostname.getText();
-                    c.connection.port = Integer.parseInt(port.getText());
-                    comClient = new ComClient(c, this);
-                    log.info("verbinde");
+                if (!name.equals(Constants.EMPTY_STRING)) {
+                    log = Loggers.client(name);
+                    config.connection.name = name;
+                    config.connection.server = hostname.getText();
+                    config.connection.port = Integer.parseInt(port.getText());
+                    comClient = new ComClient(config, this);
+                    log.info(Constants.VERBINDE);
                     int dots = 0;
                     long time = System.currentTimeMillis() + 5000;
                     while (comClient.wait.get() && System.currentTimeMillis() < time) {
                         if (dots > 3) {
                             dots = 0;
                         }
-                        StringBuilder text = new StringBuilder("verbinde");
+                        StringBuilder text = new StringBuilder(Constants.VERBINDE);
                         for (int i = 0; i < dots; i++) {
                             text.append(".");
                         }
@@ -245,12 +250,12 @@ public class Main implements IClientMessageHandler {
                             Thread.sleep(300);
                             dots++;
                         } catch (InterruptedException interruptedException) {
-                            log.error(interruptedException.toString());
+                            log.error("Interrupted while waiting for connection", interruptedException);
                         }
                     }
                     if (comClient.socketNotNull()) {
-                        join.setText("verbunden");
-                        log.info("verbunden");
+                        join.setText(Constants.VERBUNDEN);
+                        log.info(Constants.VERBUNDEN);
                         create.setEnabled(false);
                     } else {
                         join.setText("verbinde...");
@@ -290,15 +295,15 @@ public class Main implements IClientMessageHandler {
         inputs.add(start);
         createConfigPanel();
         rightPanel.add(configPanel);
-        gameList.setSelectedItem(Statics.game.valueOf(c.other.lastGame));
+        gameList.setSelectedItem(Statics.game.valueOf(config.other.lastGame));
         playerList.addListSelectionListener(p -> comClient.queueOut(new MessageSetStartPlayer(playerList.getSelectedIndex())));
         setConfigMenu();
     }
 
 
     private void addNPC(String npcName) {
-        if(npcName!=null && !npcName.equals("")) {
-            new NPCClient(c, npcName);
+        if(npcName!=null && !npcName.equals(Constants.EMPTY_STRING)) {
+            new NPCClient(config, npcName);
         }
     }
 
@@ -323,20 +328,20 @@ public class Main implements IClientMessageHandler {
                 handleConfiguration(message);
                 break;
         }
-        log.info("handled message: " + message.getCommand());
+        log.info("handled message: {}", message.getCommand());
     }
 
     private void handleConfiguration(Message message) {
         MessageConfiguration messageConfiguration = new MessageConfiguration(message);
-        c.skat = messageConfiguration.getSkatConfig();
-        c.doko = messageConfiguration.getDokoConfig();
-        c.other = messageConfiguration.getOtherConfig();
+        config.skat = messageConfiguration.getSkatConfig();
+        config.doko = messageConfiguration.getDokoConfig();
+        config.other = messageConfiguration.getOtherConfig();
         configPanelPassive.removeAll();
-        configPanelPassive.add(new JTextArea(Helper.removeJsonChars(c.other.toPrettyJson())));
-        if (c.other.lastGame.equals(Statics.game.SKAT.name())) {
-            configPanelPassive.add(new JTextArea(Helper.removeJsonChars(c.skat.toPrettyJson())));
+        configPanelPassive.add(new JTextArea(Helper.removeJsonChars(config.other.toPrettyJson())));
+        if (config.other.lastGame.equals(Statics.game.SKAT.name())) {
+            configPanelPassive.add(new JTextArea(Helper.removeJsonChars(config.skat.toPrettyJson())));
         } else {
-            configPanelPassive.add(new JTextArea(Helper.removeJsonChars(c.doko.toPrettyJson())));
+            configPanelPassive.add(new JTextArea(Helper.removeJsonChars(config.doko.toPrettyJson())));
         }
         configPanelPassive.revalidate();
         configPanelPassive.repaint();
@@ -348,11 +353,11 @@ public class Main implements IClientMessageHandler {
             MessageGetVersion messageGetVersion = new MessageGetVersion(message);
             if (!Statics.VERSION.equals(messageGetVersion.getVersion())) {
                 JOptionPane.showMessageDialog(createJoinFrame,
-                        "Version(Server): " + messageGetVersion.getVersion() + "\n" +
+                        "Version(Server): " + messageGetVersion.getVersion() + Constants.NEWLINE +
                                 "Version(lokal): " + Statics.VERSION);
             }
         } catch (Exception ex) {
-            log.error(ex.toString());
+            log.error("Failed to handle message", ex);
         }
     }
 
@@ -369,16 +374,16 @@ public class Main implements IClientMessageHandler {
             DefaultListModel<String> model = new DefaultListModel<>();
             model.addAll(players);
             playerList.setModel(model);
-            if (!selectionPlayer.equals("")) {
+            if (!selectionPlayer.equals(Constants.EMPTY_STRING)) {
                 playerList.setSelectedValue(selectionPlayer, true);
             }
-            if (players.size() > 0) {
+            if (!players.isEmpty()) {
                 start.setEnabled(true);
             }
             join.setEnabled(false);
-            join.setText("verbunden");
+            join.setText(Constants.VERBUNDEN);
         } catch (Exception ex) {
-            log.error(ex.toString());
+            log.error("Failed to connect to server", ex);
         }
 
     }
@@ -392,19 +397,21 @@ public class Main implements IClientMessageHandler {
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        log.warn("Interrupted while waiting for cards to load", e);
+                        Thread.currentThread().interrupt();
+                        return;
                     }
 
                 }
 
-                c.other.lastGame = messageStartGame.getGame().name();
-                c.saveConfig();
+                config.other.lastGame = messageStartGame.getGame().name();
+                config.saveConfig();
                 switch (messageStartGame.getGame()) {
                     case DOKO:
-                        client = new DokoClient(comClient, players, c);
+                        client = new DokoClient(comClient, players, config);
                         break;
                     case SKAT:
-                        client = new SkatClient(comClient, players, c);
+                        client = new SkatClient(comClient, players, config);
                         break;
                 }
                 client.setRawCards(rawIcons, rawImages);
@@ -418,7 +425,9 @@ public class Main implements IClientMessageHandler {
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        log.warn("Interrupted before closing lobby frame", e);
+                        Thread.currentThread().interrupt();
+                        return;
                     }
                     createJoinFrame.setVisible(false);
                     createJoinFrame.dispose();
@@ -426,7 +435,7 @@ public class Main implements IClientMessageHandler {
                 }).start();
             }
         } catch (Exception ex) {
-            log.error(ex.toString());
+            log.error("Failed to create UI", ex);
         }
     }
 
@@ -438,12 +447,12 @@ public class Main implements IClientMessageHandler {
     public void createRawCardMaps() {
         new Thread(() -> {
             Card.UNIQUE_CARDS.forEach(s -> {
-                String path = new File(System.getProperty("user.dir") + File.separator + "resources" + File.separator + s + ".png").getAbsolutePath();
+                String path = new File(System.getProperty(Constants.USER_DIRECTORY) + File.separator + Constants.RESOURCES + File.separator + s + ".png").getAbsolutePath();
                 try {
                     rawImages.put(s, ImageIO.read(new File(path)));
                     rawIcons.put(s, new ImageIcon(ImageIO.read(new File(path))));
                 } catch (Exception ex) {
-                    log.error(ex.toString());
+                    log.error(Constants.FAILED_TO_LOAD_CARD_IMAGE, ex);
                 }
             });
             ready = true;
@@ -464,17 +473,17 @@ public class Main implements IClientMessageHandler {
 
     private void setConfigMenu() {
         configPanel.removeAll();
-        c.other.lastGame = Objects.requireNonNull(gameList.getSelectedItem()).toString();
-        configPanel.add(createOtherConfigPanel(c.other));
+        config.other.lastGame = Objects.requireNonNull(gameList.getSelectedItem()).toString();
+        configPanel.add(createOtherConfigPanel(config.other));
         switch ((Statics.game) Objects.requireNonNull(gameList.getSelectedItem())) {
             case DOKO:
-                configPanel.add(createDokoConfigPanel(c.doko));
+                configPanel.add(createDokoConfigPanel(config.doko));
                 break;
             case SKAT:
-                configPanel.add(createSkatConfigPanel(c.skat));
+                configPanel.add(createSkatConfigPanel(config.skat));
                 break;
         }
-        comClient.queueOut(new MessageConfiguration(c));
+        comClient.queueOut(new MessageConfiguration(config));
         configPanel.revalidate();
         configPanel.repaint();
     }
@@ -483,7 +492,7 @@ public class Main implements IClientMessageHandler {
         JPanel panel = new JPanel();
         Gson gson = new GsonBuilder().create();
         JsonObject jObject = gson.toJsonTree(skat).getAsJsonObject();
-        panel.add(createConfigPanelFromJson("skat", jObject));
+        panel.add(createConfigPanelFromJson(Constants.SKAT, jObject));
         return panel;
     }
 
@@ -491,7 +500,7 @@ public class Main implements IClientMessageHandler {
         JPanel panel = new JPanel();
         Gson gson = new GsonBuilder().create();
         JsonObject jObject = gson.toJsonTree(doko).getAsJsonObject();
-        panel.add(createConfigPanelFromJson("doko", jObject));
+        panel.add(createConfigPanelFromJson(Constants.DOKO, jObject));
         return panel;
     }
 
@@ -499,7 +508,7 @@ public class Main implements IClientMessageHandler {
         JPanel panel = new JPanel();
         Gson gson = new GsonBuilder().create();
         JsonObject jObject = gson.toJsonTree(other).getAsJsonObject();
-        panel.add(createConfigPanelFromJson("other", jObject));
+        panel.add(createConfigPanelFromJson(Constants.OTHER, jObject));
         return panel;
     }
 
@@ -511,7 +520,7 @@ public class Main implements IClientMessageHandler {
                 JCheckBox cb = new JCheckBox(name, p.getAsBoolean());
                 cb.addActionListener(e -> {
                     createConfigFromJPanel();
-                    comClient.queueOut(new MessageConfiguration(c));
+                    comClient.queueOut(new MessageConfiguration(config));
                 });
                 return cb;
             } else if (p.isNumber()) {
@@ -573,16 +582,16 @@ public class Main implements IClientMessageHandler {
     private void createConfigFromJPanel() {
         for (Component comp : configPanel.getComponents()) {
             JsonObject jsonObject = getElementFromComponent((JComponent) comp).getAsJsonObject();
-            if (jsonObject.has("doko")) {
-                c.doko = new GsonBuilder().create().fromJson(jsonObject.getAsJsonObject("doko"), DokoConfig.class);
+            if (jsonObject.has(Constants.DOKO)) {
+                config.doko = new GsonBuilder().create().fromJson(jsonObject.getAsJsonObject(Constants.DOKO), DokoConfig.class);
             }
-            if (jsonObject.has("skat")) {
-                c.skat = new GsonBuilder().create().fromJson(jsonObject.getAsJsonObject("skat"), SkatConfig.class);
+            if (jsonObject.has(Constants.SKAT)) {
+                config.skat = new GsonBuilder().create().fromJson(jsonObject.getAsJsonObject(Constants.SKAT), SkatConfig.class);
             }
-            if (jsonObject.has("other")) {
-                c.other = new GsonBuilder().create().fromJson(jsonObject.getAsJsonObject(("other")), OtherConfig.class);
+            if (jsonObject.has(Constants.OTHER)) {
+                config.other = new GsonBuilder().create().fromJson(jsonObject.getAsJsonObject((Constants.OTHER)), OtherConfig.class);
             }
-            c.saveConfig();
+            config.saveConfig();
         }
     }
 
@@ -604,7 +613,7 @@ public class Main implements IClientMessageHandler {
                         && panel.getComponents()[0] instanceof JLabel
                         && panel.getComponents()[1] instanceof JTextArea) {
                     JsonArray array = new JsonArray();
-                    String[] splits = ((JTextArea) panel.getComponents()[1]).getText().split("\n");
+                    String[] splits = ((JTextArea) panel.getComponents()[1]).getText().split(Constants.NEWLINE);
                     for (String s : splits) {
                         array.add(s);
                     }

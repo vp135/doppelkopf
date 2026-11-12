@@ -1,3 +1,4 @@
+import base.Constants;
 import base.Statics;
 import base.communication.ComClient;
 import base.config.Configuration;
@@ -62,14 +63,14 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
 
     @Override
     protected void createGameSpecificButtons() {
-        sortKaro = new JButton("Karo");
-        sortHerz = new JButton("Herz");
-        sortPik = new JButton("Pik");
-        sortKreuz = new JButton("Kreuz");
-        sortNull = new JButton("Null");
-        sortGrand = new JButton("Grand");
+        sortKaro = new JButton(Constants.KARO);
+        sortHerz = new JButton(Constants.HERZ);
+        sortPik = new JButton(Constants.PIK);
+        sortKreuz = new JButton(Constants.KREUZ);
+        sortNull = new JButton(Constants.NULL);
+        sortGrand = new JButton(Constants.GRAND);
         nextValue = new JButton("18");
-        pass = new JButton("weg");
+        pass = new JButton(Constants.WEG);
         buttonList = new ArrayList<>();
         buttonList.add(sortKaro);
         buttonList.add(sortHerz);
@@ -281,7 +282,7 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Failed to handle Skat client message", ex);
         }
     }
 
@@ -296,14 +297,14 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
             middlePanel.removeAll();
             middlePanel.revalidate();
             middlePanel.repaint();
-            gameMessageLabel.setText("");
+            gameMessageLabel.setText(Constants.EMPTY_STRING);
         });
         ramsch.addActionListener(e -> {
             handler.queueOut(new MessageGrandHand(c.connection.name, false));
             middlePanel.removeAll();
             middlePanel.revalidate();
             middlePanel.repaint();
-            gameMessageLabel.setText("");
+            gameMessageLabel.setText(Constants.EMPTY_STRING);
         });
 
         middlePanel.add(gh);
@@ -338,8 +339,6 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
             cLabels[i] = new JLabel(cardIcons.get(exchangeCards[i].toTrimedString()));
             cLabels[i].setBackground(Color.BLACK);
             cLabels[i].addMouseListener(exchangeCardClickAdapter);
-            //midllePanel.setOpaque(false);
-            //middlePanel.setBackground(Color.Black);
             middlePanel.add(cLabels[i]);
         }
         button_ok.setVisible(true);
@@ -352,7 +351,7 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
         buttonsPanel = new JPanel(new GridLayout(1, 1));
         button_ok = new JButton("Ok");
         button_ok.setVisible(false);
-        button_skat = new JButton("Skat aufnehmen");
+        button_skat = new JButton(Constants.SKAT_AUFNEHMEN);
         JButton button_schieben = new JButton("Schieben");
 
         button_ok.addActionListener(e -> {
@@ -389,12 +388,12 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
         selectGame = true;
         middlePanel.removeAll();
         buttonsPanel = new JPanel(new GridLayout(5, 2));
-        button_karo = new JButton("Karo");
-        button_herz = new JButton("Herz");
-        button_pik = new JButton("Pik");
-        button_kreuz = new JButton("Kreuz");
-        button_null = new JButton("Null");
-        button_grand = new JButton("Grand");
+        button_karo = new JButton(Constants.KARO);
+        button_herz = new JButton(Constants.HERZ);
+        button_pik = new JButton(Constants.PIK);
+        button_kreuz = new JButton(Constants.KREUZ);
+        button_null = new JButton(Constants.NULL);
+        button_grand = new JButton(Constants.GRAND);
         button_ouvert = new JButton("Ouvert");
 
         button_karo.addActionListener(e -> {
@@ -471,7 +470,7 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
         });
 
         buttonsPanel.add(button_ok);
-        button_skat = new JButton("Skat aufnehmen");
+        button_skat = new JButton(Constants.SKAT_AUFNEHMEN);
         button_skat.addActionListener(e -> {
             handler.queueOut(new MessageGetSkat(c.connection.name));
             selectCards = true;
@@ -533,13 +532,13 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
             }
             nextValue.addActionListener(sagen);
         } else {
-            nextValue.setText("Ja");
+            nextValue.setText(Constants.JA);
 
             for (ActionListener actionListener : nextValue.getActionListeners()) {
                 nextValue.removeActionListener(actionListener);
             }
             nextValue.addActionListener(hoeren);
-            pass.setText("weg");
+            pass.setText(Constants.WEG);
         }
         nextValue.setVisible(true);
         pass.setVisible(true);
@@ -564,7 +563,7 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
         spectator = messageAnnounceSpectator.getSpectatorNumber();
         aufspieler = messageAnnounceSpectator.getStarterNumber();
         if (players.size() > 3 && players.get(spectator).equals(c.connection.name)) {
-            handler.queueOut(new MessageDisplayMessage("Du bist jetzt Zuschauer"));
+            handler.queueOut(new MessageDisplayMessage(Constants.DU_BIST_JETZT_ZUSCHAUER));
             hand.clear();
             clearPlayArea();
             createCardButtons(hand);
@@ -607,7 +606,7 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
                 if (messageUpdateUserPanel.getPlayerName().equals(c.connection.name)) {
                     userLabels[tmpList.indexOf(otherNumber)].setText(createUserLabelString(
                             messageUpdateUserPanel.getText(),
-                            "Du",
+                            Constants.DU,
                             false));
                 } else {
                     userLabels[tmpList.indexOf(otherNumber)].setText(createUserLabelString(
@@ -719,29 +718,29 @@ public class SkatClient extends BaseClient implements IClientMessageHandler, IDi
 
     private String createUserLabelString(String msg, String player, boolean append2Name) {
         StringBuilder s = new StringBuilder();
-        String color = "white";
+        String color = Constants.WHITE;
         try {
             if (aufspieler > -1 && player.equals(players.get(aufspieler))) {
-                color = "red";
+                color = Constants.RED;
             }
         } catch (Exception ex) {
-            log.error("Aufspieler: " + aufspieler);
+            log.error(Constants.FAILED_TO_DETERMINE_AUFSPIELER, aufspieler, ex);
         }
         if (append2Name) {
             s.append(player);
         }
-        if (msg.length() > 0) {
-            s.append("<br>hat Stich(e)");
+        if (!msg.isEmpty()) {
+            s.append(Constants.HTML_BREAK_HAT_STICHE);
         }
         return addColor(s.toString(), color);
     }
 
     private static String addColor(String s, String color) {
-        return "<html><font color=\"" +
+        return Constants.HTML_OPEN_FONT_COLOR_ATTRIBUTE +
                 color +
-                "\">" +
+                Constants.QUOTE +
                 s +
-                "</font></html>";
+                Constants.HTML_CLOSE_FONT_AND_DOCUMENT;
     }
 
     @Override

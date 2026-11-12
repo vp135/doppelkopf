@@ -1,8 +1,9 @@
+import base.Constants;
 import base.Statics;
 import base.communication.ComClient;
 import base.config.Configuration;
 import base.game.Card;
-import base.helper.Logger;
+import base.helper.Loggers;
 import base.interfaces.IClientMessageHandler;
 import base.messages.*;
 import base.messages.admin.MessageAbortGame;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.*;
+import org.slf4j.Logger;
 
 public abstract class BaseClient implements IClientMessageHandler {
 
@@ -98,7 +100,7 @@ public abstract class BaseClient implements IClientMessageHandler {
         this.handler = handler;
         this.players = players;
         this.c = c;
-        log = new Logger("Client", c.logLevel, true,c.logType);
+        log = Loggers.client(c.connection.name);
         serverMessages = new ArrayList<>();
         setGameSpecifics();
         setCardClickAdapter();
@@ -111,7 +113,7 @@ public abstract class BaseClient implements IClientMessageHandler {
             switch (message.getCommand()) {
                 case MessageDisplayMessage.COMMAND:
                     String s = LocalTime.now().toString().split("\\.")[0];
-                    serverMessages.add(s + " - " + message.getParams().get("message").getAsString());
+                    serverMessages.add(s + " - " + message.getParams().get(Constants.MESSAGE).getAsString());
                     displayAllServerMessages();
                     break;
                 case MessageWait4Player.COMMAND:
@@ -125,16 +127,16 @@ public abstract class BaseClient implements IClientMessageHandler {
                     break;
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Failed to handle client message", ex);
         }
     }
 
     protected void displayAllServerMessages() {
-        StringBuilder s = new StringBuilder("<html>");
+        StringBuilder s = new StringBuilder(Constants.HTML_OPEN);
         for (int i = serverMessages.size() - 1; i > -1; i--) {
-            s.append(serverMessages.get(i)).append("<br>");
+            s.append(serverMessages.get(i)).append(Constants.HTML_BREAK);
         }
-        s.append("</html>");
+        s.append(Constants.HTML_CLOSE);
         serverMessageLabel.setText(s.toString());
     }
 
@@ -153,7 +155,7 @@ public abstract class BaseClient implements IClientMessageHandler {
             @Override
             public void windowClosing(WindowEvent e) {
                 int reply = JOptionPane.showOptionDialog(mainFrame, "Wirklich beenden?", "Beenden?",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Ja", "Nein"},
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{Constants.JA, "Nein"},
                         null);
                 if (reply == JOptionPane.YES_OPTION) {
                     System.exit(0);
@@ -183,7 +185,7 @@ public abstract class BaseClient implements IClientMessageHandler {
      */
     private void createMainFrame(int state, int posX, int posY, Dimension size) {
         log.info("creating UI");
-        mainFrame = new JFrame("Doppelkopf/Skat Version " + Statics.VERSION + " " + c.connection.name);
+        mainFrame = new JFrame("Doppelkopf/Skat Version " + Statics.VERSION + Constants.SPACE + c.connection.name);
         mainPanel = new JPanel(new GridBagLayout());
         mainFrame.setExtendedState(state);
         mainFrame.setLocation(posX, posY);
@@ -265,11 +267,11 @@ public abstract class BaseClient implements IClientMessageHandler {
         middlePanel = new JPanel(new GridLayout(1, 3));
         middlePanel.setBackground(Color.BLACK);
 
-        String path = new File(System.getProperty("user.dir") + File.separator + "resources" + File.separator + "options.png").getAbsolutePath();
+        String path = new File(System.getProperty(Constants.USER_DIRECTORY) + File.separator + Constants.RESOURCES + File.separator + "options.png").getAbsolutePath();
         try {
             button_config = new JLabel(new ImageIcon(ImageIO.read(new File(path))));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.debug("Failed to load options icon from {}",path, e);
         }
         JPanel openPanel = new JPanel(new BorderLayout());
         JPanel p2 = new JPanel(new BorderLayout());
@@ -325,7 +327,7 @@ public abstract class BaseClient implements IClientMessageHandler {
                 overLayer.add(floatPanel, 2);
                 overLayer.moveToFront(floatPanel);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                log.error("Failed to show configuration panel", ex);
             }
         }
     };
@@ -417,11 +419,11 @@ public abstract class BaseClient implements IClientMessageHandler {
 
         JButton button_abortGame = new JButton("Spiel abbrechen");
         JButton button_shuffle = new JButton("shuffle");
-        JButton button_ackEnddialogs = new JButton("Dialoge quittieren");
+        JButton button_ackEndDialogs = new JButton("Dialoge quittieren");
         JButton button_endClients = new JButton("Clients beenden");
         JButton button_endServer = new JButton("Server beenden");
 
-        JButton button_lastStich = new JButton("letzter Stich");
+        JButton button_lastStich = new JButton(Constants.LETZTER_STICH);
         JButton button_clearTable = new JButton("Tisch leeren");
         configPanel.add(new JLabel());
 
@@ -430,7 +432,7 @@ public abstract class BaseClient implements IClientMessageHandler {
             configPanel.add(new JSeparator());
             configPanel.add(button_abortGame);
             configPanel.add(button_shuffle);
-            configPanel.add(button_ackEnddialogs);
+            configPanel.add(button_ackEndDialogs);
             configPanel.add(button_endClients);
             configPanel.add(button_endServer);
             configPanel.add(new JLabel());
@@ -442,10 +444,10 @@ public abstract class BaseClient implements IClientMessageHandler {
 
 
         button_abortGame.addActionListener(e -> queueOut(new MessageAbortGame()));
-        button_shuffle.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMINREQUESTS.SHUFFLE)));
-        button_ackEnddialogs.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMINREQUESTS.ACKNOWLEDGE)));
-        button_endClients.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMINREQUESTS.END_CLIENTS)));
-        button_endServer.addActionListener(e-> queueOut(new MessageAdminRequest(Statics.ADMINREQUESTS.END_SERVER)));
+        button_shuffle.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMIN_REQUESTS.SHUFFLE)));
+        button_ackEndDialogs.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMIN_REQUESTS.ACKNOWLEDGE)));
+        button_endClients.addActionListener(e -> queueOut(new MessageAdminRequest(Statics.ADMIN_REQUESTS.END_CLIENTS)));
+        button_endServer.addActionListener(e-> queueOut(new MessageAdminRequest(Statics.ADMIN_REQUESTS.END_SERVER)));
         button_lastStich.addActionListener(e -> queueOut(new MessageCurrentStich(new HashMap<>(), players.indexOf(c.connection.name), true)));
         button_clearTable.addActionListener(e -> clearPlayArea());
         configPanel.setBorder(new LineBorder(Color.WHITE, 3));
@@ -491,10 +493,10 @@ public abstract class BaseClient implements IClientMessageHandler {
      * Creates UI where game messages can be displayed
      */
     protected void createMessageLabelPanel() {
-        serverMessageLabel = new JLabel("");
+        serverMessageLabel = new JLabel(Constants.EMPTY_STRING);
         serverMessageLabel.setOpaque(true);
         serverMessageLabel.setBorder(new LineBorder(Color.BLACK));
-        gameMessageLabel = new JLabel("");
+        gameMessageLabel = new JLabel(Constants.EMPTY_STRING);
         gameMessageLabel.setBackground(Color.GREEN);
         JPanel messagesPanel = new JPanel(new GridLayout(2, 1));
         JScrollPane scrollPane = new JScrollPane(serverMessageLabel);
@@ -613,7 +615,7 @@ public abstract class BaseClient implements IClientMessageHandler {
                 }
                 cardImages.put(s, cardImage);
             } catch (Exception e) {
-                log.warn(e.toString());
+                log.warn(Constants.FAILED_TO_LOAD_CARD_IMAGE, e);
             }
         });
     }
@@ -684,7 +686,7 @@ public abstract class BaseClient implements IClientMessageHandler {
         createCardButtons(hand);
         setGameSpecificButtons();
         tableStich = new HashMap<>();
-        gameMessageLabel.setText("");
+        gameMessageLabel.setText(Constants.EMPTY_STRING);
         bottomPanel.revalidate();
         bottomPanel.repaint();
     }
@@ -723,7 +725,7 @@ public abstract class BaseClient implements IClientMessageHandler {
             }
         }
 
-        letzterStich = new JFrame("letzter Stich");
+        letzterStich = new JFrame(Constants.LETZTER_STICH);
         letzterStich.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -787,7 +789,7 @@ public abstract class BaseClient implements IClientMessageHandler {
                         break;
                     }
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    log.error("Failed to move card to exchange area", ex);
                 }
             }
             hand.remove(card);
