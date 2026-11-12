@@ -1,3 +1,4 @@
+import base.Constants;
 import base.Statics;
 import base.communication.ComClient;
 import base.config.Configuration;
@@ -59,11 +60,11 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
         sortBuben = new JButton("Buben");
         sortDamen = new JButton("Damen");
         sortBubenDamen = new JButton("Buben-Damen");
-        sortFleischlos = new JButton("Fleischlos");
-        sortKreuz = new JButton("Kreuz");
-        sortPik = new JButton("Pik");
-        sortHerz = new JButton("Herz");
-        sortKaro = new JButton("Karo");
+        sortFleischlos = new JButton(Constants.FLEISCHLOS);
+        sortKreuz = new JButton(Constants.KREUZ);
+        sortPik = new JButton(Constants.PIK);
+        sortHerz = new JButton(Constants.HERZ);
+        sortKaro = new JButton(Constants.KARO);
         sortArmut = new JButton("Armut");
         sortHochzeit = new JButton("Hochzeit");
         sortKoenige = new JButton(">4 Koenige");
@@ -181,7 +182,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
     protected void setGameSpecificButtons() {
 
         controlPanel.removeAll();
-        JButton vorbehalt = new JButton("OK");
+        JButton vorbehalt = new JButton(Constants.OK);
         vorbehalt.addActionListener(e -> {
             handler.queueOut(new MessageGameSelected(players.indexOf(c.connection.name), selectedGame));
             controlPanel.setVisible(false);
@@ -200,11 +201,13 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
         controlPanel.add(sortKaro);
 
         for(int i = 0 ;i<100;i++){
-            System.out.println(hand.stream().filter(p -> p.trump).count());
+            log.debug("Trump cards in hand: {}", hand.stream().filter(p -> p.trump).count());
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.warn("Interrupted while preparing game buttons", e);
+                Thread.currentThread().interrupt();
+                break;
             }
         }
 
@@ -250,7 +253,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
                 if (selectCards) {
                     moveCard2Exchange(card);
                     if (hand.size() == 10) {
-                        setSendCardButton(MessageSendCards.POOR, "Karten zurueckgeben");
+                        setSendCardButton(MessageSendCards.POOR, Constants.KARTEN_ZURUECKGEBEN);
                     } else {
                         controlPanel.removeAll();
                     }
@@ -260,11 +263,11 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
                             boolean allowed = false;
                             if (mustPlay != null) {
                                 if (mustPlay.trump) {
-                                    if (card.trump || assist.playerBucket.trumpf.size() < 1) {
+                                    if (card.trump || assist.playerBucket.trumpf.isEmpty()) {
                                         allowed = true;
                                     }
                                 } else {
-                                    if (card.suit.equals(mustPlay.suit) || assist.playerBucket.getListBySuit(mustPlay.suit).size() < 1) {
+                                    if (card.suit.equals(mustPlay.suit) || assist.playerBucket.getListBySuit(mustPlay.suit).isEmpty()) {
                                         allowed = true;
                                     }
                                 }
@@ -279,7 +282,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
                                 if (c.ui.redrawCards) {
                                     createCardButtons(hand);
                                 } else {
-                                    System.out.println("Nicht bedient");
+                                    log.debug("Card hand not redrawn after play");
                                 }
                             }
                         } else {
@@ -308,7 +311,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
                 }
                 moveCard2Hand(card);
                 if (hand.size() == 10) {
-                    setSendCardButton(MessageSendCards.POOR, "Karten zurueckgeben");
+                    setSendCardButton(MessageSendCards.POOR, Constants.KARTEN_ZURUECKGEBEN);
                 } else {
                     controlPanel.removeAll();
                 }
@@ -399,7 +402,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
                     break;
             }
         } catch (Exception ex) {
-            log.error(message + " => " + ex);
+            log.error("Failed to handle message {}", message, ex);
         }
     }
 
@@ -466,7 +469,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
                 assist.putCard(messagePutCard.getCard(Statics.game.DOKO));
             }
         } catch (Exception ex) {
-            log.error(ex.toString());
+            log.error("Failed to handle game message", ex);
         }
     }
 
@@ -475,7 +478,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
         spectator = messageAnnounceSpectator.getSpectatorNumber();
         aufspieler = messageAnnounceSpectator.getStarterNumber();
         if (players.size() > 4 && players.get(spectator).equals(c.connection.name)) {
-            handler.queueOut(new MessageDisplayMessage("Du bist jetzt Zuschauer"));
+            handler.queueOut(new MessageDisplayMessage(Constants.DU_BIST_JETZT_ZUSCHAUER));
             hand.clear();
             clearPlayArea();
             createCardButtons(hand);
@@ -511,7 +514,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
         }
 
         if (isRich) {
-            setSendCardButton(MessageSendCards.POOR, "Karten zurueckgeben");
+            setSendCardButton(MessageSendCards.POOR, Constants.KARTEN_ZURUECKGEBEN);
         } else {
             setAcceptArmutReturn();
         }
@@ -545,7 +548,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
     private void handleGameSelected(Message message) {
         MessageGameSelected messageGameSelected = new MessageGameSelected(message);
         selectedGame = messageGameSelected.getSelectedGame();
-        if (hand != null && hand.size() > 0) {
+        if (hand != null && !hand.isEmpty()) {
             hand = SortHand.sort(hand, selectedGame, schweinExists);
             createCardButtons(hand);
             if (selectedGame == NORMAL
@@ -642,7 +645,7 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
                 if (messageUpdateUserPanel.getPlayerName().equals(c.connection.name)) {
                     userLabels[tmpList.indexOf(otherNumber)].setText(createUserLabelString(
                             messageUpdateUserPanel.getText(),
-                            "Du",
+                            Constants.DU,
                             false));
                 } else {
                     userLabels[tmpList.indexOf(otherNumber)].setText(createUserLabelString(
@@ -701,29 +704,29 @@ public class DokoClient extends BaseClient implements IClientMessageHandler, IDi
 
     private String createUserLabelString(String msg, String player, boolean append2Name) {
         StringBuilder s = new StringBuilder();
-        String color = "white";
+        String color = Constants.WHITE;
         try {
             if (aufspieler > -1 && player.equals(players.get(aufspieler))) {
-                color = "red";
+                color = Constants.RED;
             }
         } catch (Exception ex) {
-            log.error("Aufspieler: " + aufspieler);
+            log.error(Constants.FAILED_TO_DETERMINE_AUFSPIELER, aufspieler, ex);
         }
         if (append2Name) {
             s.append(player);
         }
-        if (msg.length() > 0) {
-            s.append("<br>hat Stich(e)");
+        if (!msg.isEmpty()) {
+            s.append(Constants.HTML_BREAK_HAT_STICHE);
         }
         return addColor(s.toString(), color);
     }
 
     private static String addColor(String s, String color) {
-        return "<html><font color=\"" +
+        return Constants.HTML_OPEN_FONT_COLOR_ATTRIBUTE +
                 color +
-                "\">" +
+                Constants.QUOTE +
                 s +
-                "</font></html>";
+                Constants.HTML_CLOSE_FONT_AND_DOCUMENT;
     }
 
 
